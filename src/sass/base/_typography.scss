@@ -7,3 +7,21 @@ body {
     color:$color-grey-dark-2;
     padding: 3rem;
 }
+
+.header-secondary {
+    font-size: 1.6rem;
+    font-weight: 700;
+    padding: 1rem 1rem;
+    color:$color-grey-dark-3;
+    text-transform: uppercase;
+} 
+
+.header-tertiary {
+    font-size: 1.3rem;
+    font-weight: 400;
+    padding: 1rem 3rem;
+    color:$color-grey-dark-3;
+    text-transform: uppercase;
+}
+
+

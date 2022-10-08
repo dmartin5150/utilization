@@ -1,0 +1,14 @@
+.patient {
+
+    display:grid;
+    grid-template-columns: 2fr 3fr;
+
+    &__calendar {
+        background-color: red;
+    }
+
+    // &__info {
+
+    // }
+
+}
