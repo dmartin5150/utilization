@@ -11,7 +11,7 @@ const FinCareTeam = (props) => {
         <h2 className="header-secondary">Show team</h2>
       </header>
       {props.data.map((item) => {
-        return(<FinCareTeamRow key={item.fin} reqDate={item.date} fin={item.fin}size={item.size} />)
+        return(<FinCareTeamRow key={item.fin}  fin={item.fin}size={item.size} />)
       })}
     </div>
   );

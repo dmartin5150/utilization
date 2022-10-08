@@ -1,29 +1,43 @@
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import getFinCareTeam from "../../utilities/fin-data";
 import FinCareTeam from "../../components/fin-careteam/fin-careteam-component";
-import './patient-page.scss';
+import Pagination from "../../components/pagination/pagination-component";
+import "./patient-page.scss";
+
+let pageSize = 10;
 
 const Patient = () => {
-    const [finCareTeam, setFinCareTeam] = useState([]);
+  const [finCareTeam, setFinCareTeam] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
+  const currentFinData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return finCareTeam.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, finCareTeam]);
 
-
-  useEffect( () => {
-    const getFinData = async() => {
-    const finData = await getFinCareTeam("8/1/2022");
-    setFinCareTeam(finData);
-    }
+  useEffect(() => {
+    const getFinData = async () => {
+      const finData = await getFinCareTeam("8/12/2022");
+      setFinCareTeam(finData);
+    };
     getFinData();
   }, []);
 
   return (
-    <section className='patient'>
-        <div className='patient__calendar'>Patient Calendar</div>
-        <div className='patient__info'>
-            <FinCareTeam data={finCareTeam}/>
-        </div>
+    <section className="patient">
+      <div className="patient__calendar">Patient Calendar</div>
+      <div className="patient__info">
+        <FinCareTeam data={currentFinData} />
+        <Pagination
+          className="pagination-bar"
+          currentPage={currentPage}
+          totalCount={finCareTeam.length}
+          pageSize={pageSize}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      </div>
     </section>
-
   );
 };
 

@@ -1,9 +1,10 @@
 import React from 'react';
+import './pagination-component.scss';
 
 
 import classnames from 'classnames';
 
-import { usePagination, DOTS } from '../../utilities/pagination/use-pagination';
+import { usePagination, RDOTS,LDOTS } from '../../utilities/pagination/use-pagination';
 
 const Pagination = (props) => {
 
@@ -23,6 +24,9 @@ const Pagination = (props) => {
         pageSize
     });
 
+
+    console.log('range ', paginationRange);
+  
     if (currentPage === 0 || paginationRange.length <2) {
         return null;
     }
@@ -45,14 +49,18 @@ const Pagination = (props) => {
                 <div className='arrow left'></div>
             </li>
             {paginationRange.map(pageNumber => {
-                if (pageNumber === DOTS){
-                    return <li className='pagination-item dots'>&8320;</li>
+                if (pageNumber === RDOTS){
+                    return <li className='pagination-item dots' key={-1}>&#8230;</li>
+                }
+                if (pageNumber === LDOTS){
+                    return <li className='pagination-item dots' key={-2}>&#8230;</li>
                 }
                 return (
                     <li
                         className={classnames('pagination-item',{
                             selected: pageNumber === currentPage
                         })}
+                        key = {pageNumber}
                         onClick={()=> onPageChange(pageNumber)}>
                             {pageNumber}
                     </li>
