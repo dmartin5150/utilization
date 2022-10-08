@@ -1,0 +1,26 @@
+@import '../../sass/abstracts/variables';
+
+.patient {
+
+    &__calendar {
+        background-color: $color-primary-dark;
+
+        &--heading {
+            background-color: $color-primary-dark;
+            color:$color-grey-dark-4;
+            text-transform: uppercase;
+            text-align:center;
+            font-size:2rem;
+            margin-bottom:1rem;
+        }
+
+    }
+
+
+
+
+    // &__info {
+
+    // }
+
+}

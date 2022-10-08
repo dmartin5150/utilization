@@ -1,6 +1,7 @@
 import "../../sass/base/_typography.scss";
 import "./fin-careteam-row.scss";
 
+let pageSize = 12;
 
 const FinCareTeamRow = ({fin, size }) => {
   return (

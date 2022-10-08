@@ -3,7 +3,7 @@ import './calendar-day-component.scss';
 
 
 const CalendarDay = ({date, admissions}) => {
-
+    console.log('date', date);
     return (
         <div className='calendar-day'>
             <h3 className='calendar-day__date'>{date}</h3>
