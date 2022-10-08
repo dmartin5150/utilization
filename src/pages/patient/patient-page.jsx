@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import getFinCareTeam from "../../utilities/fin-data";
 import FinCareTeam from "../../components/fin-careteam/fin-careteam-component";
 import Pagination from "../../components/pagination/pagination-component";
+import Calendar from "../../components/calendar/calendar-component";
 import "./patient-page.scss";
 
 let pageSize = 10;
@@ -26,7 +27,10 @@ const Patient = () => {
 
   return (
     <section className="patient">
-      <div className="patient__calendar">Patient Calendar</div>
+      <div className= "patient__calendar">
+        <h2 className="patient__calendar--heading">St. Thomas Midtown Admissions</h2>
+        <Calendar />
+      </div>
       <div className="patient__info">
         <FinCareTeam data={currentFinData} />
         <Pagination
