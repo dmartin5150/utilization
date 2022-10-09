@@ -2,7 +2,6 @@ import "./fin-careteam-component.scss";
 import FinCareTeamRow from "./fin-careteam-row";
 
 const FinCareTeam = (props) => {
-    console.log('data =', props.data)
   return (
     <div className="fin-careteam">
       <header className="fin-careteam__header">

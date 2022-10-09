@@ -7,23 +7,30 @@ import "./patient-page.scss";
 
 const Patient = () => {
   const [finCareTeam, setFinCareTeam] = useState([]);
+  const [selectedDate, setSelectedDate] = useState("8/4/2022");
 
   useEffect(() => {
     const getFinData = async () => {
-      const finData = await getFinCareTeam("8/12/2022");
+      const finData = await getFinCareTeam(selectedDate);
       setFinCareTeam(finData);
     };
     getFinData();
-  }, []);
-
+  }, [selectedDate]);
 
   return (
     <section className="patient">
       <div className="patient__calendar">
-        <Calendar admissionData={testData} />
+        <Calendar
+          admissionData={testData}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+        />
       </div>
       <div className="patient__info">
-        <FinCareTeamSummary finCareTeam={finCareTeam} />
+        <FinCareTeamSummary
+          finCareTeam={finCareTeam}
+          selectedDate={selectedDate}
+        />
       </div>
     </section>
   );

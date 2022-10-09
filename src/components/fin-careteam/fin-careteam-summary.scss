@@ -1,26 +1,30 @@
 @import '../../sass/abstracts/variables';
 
-.patient {
+.fincareteam {
+    max-width: 60rem;
+    margin: 4rem auto;
 
-    &__calendar {
-        background-color: $color-primary-dark;
-
-        &--heading {
-            background-color: $color-primary-dark;
-            color:$color-grey-dark-4;
-            text-transform: uppercase;
-            text-align:center;
-            font-size:2rem;
-            margin-bottom:1rem;
-        }
-
+    &__table-outline {
+        box-shadow: 2px 2px 6px rgba($color-black,.2);
     }
 
 
+    &__header {
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $color-primary-dark;
+
+        &--item {
+            // background-color: $color-primary-dark;
+            color:$color-grey-dark-4;
+            text-transform: uppercase;
+            text-align:center;
+            font-size:1.5rem;
+            padding:2rem;
+    }
 
 
-    // &__info {
-
-    // }
+    }
 
 }

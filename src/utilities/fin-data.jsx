@@ -10,7 +10,6 @@ const getFinCareTeam = async (requestDate) => {
       });
       if (response) {
         const data = await response.json();
-        console.log(data);
         return data
       }
     } catch (e) {

@@ -6,8 +6,7 @@ import Pagination from "../pagination/pagination-component";
 
 let pageSize = 12;
 
-const Calendar = ({ admissionData }) => {
-  console.log("ad data", admissionData);
+const Calendar = ({ admissionData,selectedDate,onDateChange }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const currentAdmissionData = useMemo(() => {
@@ -15,6 +14,8 @@ const Calendar = ({ admissionData }) => {
     const lastPageIndex = firstPageIndex + pageSize;
     return admissionData.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, admissionData]);
+
+
 
 
 
@@ -28,6 +29,9 @@ const Calendar = ({ admissionData }) => {
               key={admission.date}
               date={admission.date}
               admissions={admission.admissions}
+              data={admission.date}
+              selectedDate={selectedDate}
+              onDateChange={onDateChange}
             />
           );
         })}

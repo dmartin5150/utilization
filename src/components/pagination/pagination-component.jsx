@@ -25,7 +25,6 @@ const Pagination = (props) => {
     });
 
 
-    console.log('range ', paginationRange);
   
     if (currentPage === 0 || paginationRange.length <2) {
         return null;
