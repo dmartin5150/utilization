@@ -3,7 +3,7 @@ import FinCareTeam from "./fin-careteam-component";
 import Pagination from "../pagination/pagination-component";
 import "./fin-careteam-summary.scss";
 
-let pageSize = 10;
+let pageSize = 11;
 
 const FinCareTeamSummary = ({ finCareTeam, selectedDate }) => {
   const [currentPage, setCurrentPage] = useState(1);

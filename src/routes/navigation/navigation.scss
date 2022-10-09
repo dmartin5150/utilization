@@ -1,0 +1,46 @@
+@import "../../sass/abstracts/variables";
+
+.nav {
+    height:6rem;
+
+    display:flex;
+    justify-content: space-between;
+
+
+
+    &__ascension-logo {
+        display:flex;
+        align-items: center;
+        height:6rem;
+        margin-bottom: 1rem;
+        img {
+            height:100%;
+        }
+    }
+
+    &__seamless-logo {
+        font-size:3rem;
+        color: $color-grey-dark-4;
+    }
+
+    &__links-container {
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-right:2rem;
+
+    }
+
+    &__link:link,
+    &__link:visited{
+        font-size:1.5rem;
+        color:$color-primary-dark;
+        margin-right:2rem;
+    }
+
+    &__link:hover,
+    &__link:active {
+        color:$color-primary-light; 
+    }
+
+}
