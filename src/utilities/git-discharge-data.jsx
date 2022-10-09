@@ -1,12 +1,10 @@
-const getFinCareTeam = async (requestDate) => {
+const getDischargeData = async () => {
     try {
-      console.log('getting data');
-      const response = await fetch("http://localhost:5000/", {
-        method:'POST',
+      const response = await fetch("http://localhost:5000/discharges", {
+        method:'GET',
         headers: {
           'Content-Type': 'application/json'
         },
-        body:JSON.stringify({'date': requestDate})
 
       });
       if (response) {
@@ -19,4 +17,4 @@ const getFinCareTeam = async (requestDate) => {
     }
   };
 
-  export default getFinCareTeam;
+  export default getDischargeData;

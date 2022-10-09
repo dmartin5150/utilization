@@ -2,7 +2,7 @@ import React from "react";
 import "./calendar-day-component.scss";
 import classnames from "classnames";
 
-const CalendarDay = ({ date, admissions, selectedDate,onDateChange }) => {
+const CalendarDay = ({ date, discharges, selectedDate,onDateChange }) => {
   const dateChangeHandler = (event) => {
     console.log(event.target.id);
     onDateChange(event.target.id);
@@ -17,8 +17,8 @@ const CalendarDay = ({ date, admissions, selectedDate,onDateChange }) => {
       onClick={dateChangeHandler}
     >
       <h3 className="calendar-day__date">{date}</h3>
-      <span className="calendar-day__admissions">{admissions}</span>
-      <p className="calendar-day__subtitle">admissions</p>
+      <span className="calendar-day__admissions">{discharges}</span>
+      <p className="calendar-day__subtitle">discharges</p>
     </div>
   );
 };

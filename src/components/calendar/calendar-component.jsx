@@ -24,12 +24,13 @@ const Calendar = ({ admissionData,selectedDate,onDateChange }) => {
       <h2 className="calendar__heading">St. Thomas Midtown Admissions</h2>
       <div className="calendar__layout">
         {currentAdmissionData.map((admission) => {
+          const dischargeDay = admission.date.split(' ')[0];
           return (
             <CalendarDay
-              key={admission.date}
-              date={admission.date}
-              admissions={admission.admissions}
-              data={admission.date}
+              key={dischargeDay}
+              date={dischargeDay}
+              discharges={admission.discharges}
+              data={dischargeDay}
               selectedDate={selectedDate}
               onDateChange={onDateChange}
             />
