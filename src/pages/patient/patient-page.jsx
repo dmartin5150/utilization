@@ -3,9 +3,9 @@ import getFinCareTeam from "../../utilities/fin-data";
 import getDischargeData from "../../utilities/git-discharge-data";
 import FinCareTeamSummary from "../../components/fin-careteam/fin-careteam-summary";
 import Calendar from "../../components/calendar/calendar-component";
-import { testData } from "../../data/test-admission-data";
+import TeamCard from "../../components/team-card/team-card-component";
 import "./patient-page.scss";
-import { set } from "date-fns";
+
 
 const Patient = () => {
   const [finCareTeam, setFinCareTeam] = useState([]);
@@ -30,6 +30,7 @@ const Patient = () => {
 
   return (
     <section className="patient">
+      <TeamCard />
       <div className="patient__calendar">
         <Calendar
           admissionData={dischargeData}

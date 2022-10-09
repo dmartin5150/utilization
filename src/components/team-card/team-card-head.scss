@@ -1,0 +1,26 @@
+@import '../../sass/abstracts/variables';
+
+.teamcardhead {
+
+    color:$color-grey-dark-3;
+    width:70%;
+    margin:0 auto;
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__item{
+        color:$color-grey-dark-3;
+        font-weight: 400;
+        &--name {
+            color:$color-grey-dark-4;
+            font-weight: 800;
+            margin-right:1rem;
+        }
+    }
+
+
+}

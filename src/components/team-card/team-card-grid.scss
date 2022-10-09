@@ -1,0 +1,49 @@
+@import "../../sass/abstracts/variables";
+
+.team-card-grid {
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 80%;
+  margin: 2rem auto;
+  color: $color-grey-dark-3;
+
+  &__header {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 1fr 1fr;
+    border: 2px solid $color-black;
+    text-align: center;
+    color: $color-grey-dark-4;
+
+    &--item {
+      font-weight: 800;
+    }
+
+    &--item:not(:last-child) {
+      border-right: 2px solid $color-black;
+    }
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 1fr 1fr;
+    text-align: center;
+    width: 100%;
+    border-right: 2px solid $color-black;
+    border-left: 2px solid $color-black;
+    border-bottom: 2px solid $color-black;
+
+    &--item {
+      font-weight: 400;
+      text-align: center;
+    }
+
+    &--contact {
+      border-right: 2px solid $color-black;
+    }
+
+    &--item:not(:last-child) {
+      border-right: 2px solid $color-black;
+    }
+  }
+}

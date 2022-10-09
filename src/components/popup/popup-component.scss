@@ -1,0 +1,16 @@
+@import "../../sass/abstracts/variables";
+@import "../../sass/abstracts/mixins";
+
+
+.popup {
+
+    position: fixed;
+    height:100vh;
+    width:100%;
+    top:0;
+    left:0;
+    background-color: rgba($color-black, .8);
+    z-index:1000;
+    
+
+}
