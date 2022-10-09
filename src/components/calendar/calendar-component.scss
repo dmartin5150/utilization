@@ -3,6 +3,8 @@
 
 .calendar {
         margin-left:3rem;
+        max-width: 65rem;
+;
 
         &__heading {
             background-color: $color-primary-dark;
