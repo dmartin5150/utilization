@@ -5,6 +5,7 @@
 
     display:flex;
     justify-content: space-between;
+    background-image: linear-gradient($color-tertiary-light, $color-tertiary-dark);
 
 
 
@@ -34,13 +35,13 @@
     &__link:link,
     &__link:visited{
         font-size:1.5rem;
-        color:$color-primary-dark;
+        color:$color-secondary-dark;
         margin-right:2rem;
     }
 
     &__link:hover,
     &__link:active {
-        color:$color-primary-light; 
+        color:$color-secondary-light; 
     }
 
 }
