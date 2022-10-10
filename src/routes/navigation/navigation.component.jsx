@@ -14,7 +14,7 @@ const Navigation = () => {
         </div>
 
         <div className="nav__seamless-logo">
-          Seamless Transitions Application
+          Seamless Transitions Data
         </div>
 
         <div className="nav__links-container">

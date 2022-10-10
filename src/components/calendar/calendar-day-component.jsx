@@ -4,10 +4,9 @@ import classnames from "classnames";
 
 const CalendarDay = ({ date, discharges, selectedDate,onDateChange }) => {
   const dateChangeHandler = (event) => {
-    console.log(event.target.id);
     onDateChange(event.target.id);
   };
-  console.log('date', date, 'selectedDate', selectedDate)
+  
   return (
     <div
       className={classnames("calendar-day", {

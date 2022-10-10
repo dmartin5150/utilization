@@ -1,7 +1,7 @@
 import "./team-card-head.scss";
 
 const TeamCardHead = ({teamData}) => {
-    console.log('team data head ', teamData);
+    
     return (
         <div className="teamcardhead">
           <div className="teamcardhead__row">

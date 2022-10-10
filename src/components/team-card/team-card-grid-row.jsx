@@ -14,8 +14,8 @@ const TeamCardGridRow = ({ teamData }) => {
           {teamData.phone}
         </div>
       </div>
-      <div className="team-card-grid__row--item">{teamData.last}</div>
-      <div className="team-card-grid__row--item">{teamData.next}</div>
+      <div className="team-card-grid__row--item">{teamData.last.split(' ')[0]}</div>
+      <div className="team-card-grid__row--item">{teamData.next.split(' ')[0]}</div>
     </div>
   );
 };

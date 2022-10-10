@@ -6,9 +6,9 @@ let pageSize = 12;
 const FinCareTeamRow = ({fin, size,onSelectTeam }) => {
 
 
-  const openPopUpHandler = (e)=> {
+  const updateFinHandler = (e)=> {
     console.log(e.target.id);
-    onSelectTeam(true);
+    onSelectTeam(e.target.id);
   }
 
 
@@ -16,7 +16,7 @@ const FinCareTeamRow = ({fin, size,onSelectTeam }) => {
     <div className="fincareteamrow">
       <p className="header-tertiary no-left-border">{fin}</p>
       <p className="header-tertiary">{size}</p>
-      <button onClick={openPopUpHandler} className="fin-btn" id={fin}>Show Team</button>
+      <button onClick={updateFinHandler} className="fin-btn" id={fin}>Show Team</button>
     </div>
   );
 };
