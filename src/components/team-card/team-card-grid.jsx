@@ -11,8 +11,8 @@ const TeamCardGrid = ({ teamData }) => {
         <div className="team-card-grid__header--item">Last Appt.</div>
         <div className="team-card-grid__header--item">Next Appt.</div>
       </header>
-      {teamData.map(team => {
-        return <TeamCardGridRow key={team.id} teamData={team} />
+      {teamData.map((team, idx) => {
+        return <TeamCardGridRow key={idx} teamData={team} />
       })}
       </div>
   );

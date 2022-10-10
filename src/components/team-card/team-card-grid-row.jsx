@@ -1,7 +1,7 @@
 const TeamCardGridRow = ({ teamData }) => {
   return (
     <div className="team-card-grid__row">
-      <div className="team-card-grid__row--item">{teamData.name}</div>
+      <div className="team-card-grid__row--item">{teamData.fname} {teamData.lname}</div>
       <div className="team-card-grid__row--item">{teamData.specialty}</div>
       <div className="team-card-grid__row--contact">
         <div className="team-card-grid__row--contact--address">
