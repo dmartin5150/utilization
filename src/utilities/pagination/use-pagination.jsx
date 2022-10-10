@@ -30,11 +30,7 @@ export const usePagination = ({
     const shouldShowLeftDots = leftSiblingIndex > 2;
     const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2;
 
-    console.log("sli", leftSiblingIndex);
-    console.log("sri", rightSiblingIndex);
-    console.log("sl", shouldShowLeftDots);
-    console.log("sr", shouldShowRightDots);
-    console.log("sc", siblingCount);
+
     const firstPageIndex = 1;
     const lastPageIndex = totalPageCount;
 

@@ -7,10 +7,19 @@
   box-shadow: 0 2rem 4rem rgba($color-black, 0.2);
   background-color: $color-white;
   border-radius: 3px;
+  animation: popup-appear 0.5s;
+  
+
+  
+
+
 
   background: linear-gradient(to right bottom, $color-primary, #9198e5, #e18484);
 //   background: linear-gradient(to right bottom, $color-primary, #9198e5, #e66465);
 //   background: linear-gradient(to right bottom, $color-secondary-dark, $color-secondary-light);
+
+
+
 
   &__heading {
     padding-top: 1rem;
@@ -21,6 +30,7 @@
 
     &--main {
         display:block;
+        line-height:0.8;
     }
 
   }
@@ -33,6 +43,43 @@
     &--item {
         display:inline-block;
     }
+  }
+
+  &__pagination {
+    margin-bottom: 2rem;
+  }
+
+  // &__close-container {
+  //   position: relative;
+  // }
+
+
+  &__close {
+    &:link,
+    &:visited {
+      color:$color-grey-dark-3;
+      position: absolute;
+      top:2.5rem;
+      right: 2.5rem;
+      font-size: 3rem;
+      display:inline-block;
+      line-height: 1;
+    }
+  }
+
+  @keyframes popup-appear {
+    from {
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%,-50%) scale(0.25);
+    }
+
+    to {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%,-50%) scale(1);
+    }
+
   }
 
 }

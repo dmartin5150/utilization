@@ -5,7 +5,7 @@ import "./fin-careteam-summary.scss";
 
 let pageSize = 11;
 
-const FinCareTeamSummary = ({ finCareTeam, selectedDate }) => {
+const FinCareTeamSummary = ({ finCareTeam, selectedDate,onSelectTeam }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const currentFinData = useMemo(() => {
@@ -30,7 +30,7 @@ const FinCareTeamSummary = ({ finCareTeam, selectedDate }) => {
               Number of Discharges: {finCareTeam.length}
             </h2>
           </header>
-          <FinCareTeam data={currentFinData} />
+          <FinCareTeam data={currentFinData} onSelectTeam={onSelectTeam}/>
         </div>
         <Pagination
           className="pagination-bar"

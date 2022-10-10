@@ -4,13 +4,15 @@ import getDischargeData from "../../utilities/git-discharge-data";
 import FinCareTeamSummary from "../../components/fin-careteam/fin-careteam-summary";
 import Calendar from "../../components/calendar/calendar-component";
 import TeamCard from "../../components/team-card/team-card-component";
+import { testTeamData } from "../../data/test-team-data";
 import "./patient-page.scss";
 
 
 const Patient = () => {
   const [finCareTeam, setFinCareTeam] = useState([]);
   const [dischargeData, setDischargeData] = useState([]);
-  const [selectedDate, setSelectedDate] = useState("8/4/2022");
+  const [selectedDate, setSelectedDate] = useState("08/01/22");
+  const [popupOpen, setPopupOpen] = useState(false);
 
   useEffect(() => {
     const getFinData = async () => {
@@ -29,8 +31,8 @@ const Patient = () => {
   }, [])
 
   return (
-    <section className="patient">
-      <TeamCard />
+    <section className="patient" id="patient">
+      {popupOpen && <TeamCard teamData={testTeamData} onClosePopup={setPopupOpen} />}
       <div className="patient__calendar">
         <Calendar
           admissionData={dischargeData}
@@ -42,6 +44,7 @@ const Patient = () => {
         <FinCareTeamSummary
           finCareTeam={finCareTeam}
           selectedDate={selectedDate}
+          onSelectTeam={setPopupOpen}
         />
       </div>
     </section>

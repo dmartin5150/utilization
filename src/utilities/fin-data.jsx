@@ -1,6 +1,6 @@
 const getFinCareTeam = async (requestDate) => {
     try {
-      console.log('getting data');
+
       const response = await fetch("http://localhost:5000/", {
         method:'POST',
         headers: {

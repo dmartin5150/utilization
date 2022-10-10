@@ -1,28 +1,29 @@
 import "./team-card-head.scss";
 
-const TeamCardHead = (props) => {
+const TeamCardHead = ({teamData}) => {
+    console.log('team data head ', teamData);
     return (
         <div className="teamcardhead">
           <div className="teamcardhead__row">
             <h2 className="teamcardhead__item">
               <span className="teamcardhead__item--name">FIN:</span>
-              5555555
+              {teamData.fin}
             </h2>
             <h2 className="teamcardhead__item">
               <span className="teamcardhead__item--name">Discharge Date:</span>
-              8/1/2020
+              {teamData.date}
             </h2>
           </div>
           <div className="teamcardhead__row">
             <h2 className="teamcardhead__item">
               <span className="teamcardhead__item--name">Admission Type:</span>
-              Inpatient
+              {teamData.type}
             </h2>
             <h2 className="teamcardhead__item">
               <span className="teamcardhead__item--name">
                 Discharge Disposition:
               </span>
-              Hospice
+              {teamData.disp}
             </h2>
           </div>
         </div>
