@@ -1,4 +1,8 @@
 const TeamCardGridRow = ({ teamData }) => {
+  let nextAppt = teamData.next.split(' ')[0];
+  if (nextAppt === '2030-01-01'){
+    nextAppt = 'No follow up';
+  }
   return (
     <div className="team-card-grid__row">
       <div className="team-card-grid__row--item">{teamData.fname} {teamData.lname}</div>
@@ -15,7 +19,7 @@ const TeamCardGridRow = ({ teamData }) => {
         </div>
       </div>
       <div className="team-card-grid__row--item">{teamData.last.split(' ')[0]}</div>
-      <div className="team-card-grid__row--item">{teamData.next.split(' ')[0]}</div>
+      <div className="team-card-grid__row--item">{nextAppt}</div>
     </div>
   );
 };
