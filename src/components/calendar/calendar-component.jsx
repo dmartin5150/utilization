@@ -1,50 +1,40 @@
-import React, { Fragment,useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import "./calendar-component.scss";
-import CalendarDay from "./calendar-day-component";
+import Placard from "../placard/placard-component";
+import PlacardBox from "../placard-box/placard-box-component";
 import Pagination from "../pagination/pagination-component";
+import "./calendar-day-component.scss";
 
 
-let pageSize = 12;
+const Calendar = ({ admissionData, selectedDate, onDateChange, heading,pageSize=12 }) => {
+  console.log('admissiomData', admissionData);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [currentAdmissionData, setCurrentAdmissionData] = useState([]);
+  // const [paginationData, setPaginationData] = useState([]);
 
-const Calendar = ({ admissionData,selectedDate,onDateChange }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  // useEffect(() => {
+  //   const firstPageIndex = (currentPage - 1) * pageSize;
+  //   const lastPageIndex = firstPageIndex + pageSize;
+  //   setCurrentAdmissionData(admissionData.slice(firstPageIndex, lastPageIndex));
+  // }, [currentPage, admissionData]);
 
-  const currentAdmissionData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * pageSize;
-    const lastPageIndex = firstPageIndex + pageSize;
-    return admissionData.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, admissionData]);
-
-
-
-
+  // useEffect(() => {
+  //   const pagData = [];
+  //   pagData["currentPage"] = currentPage;
+  //   pagData["recordCount"] = admissionData.length;
+  //   pagData["pageSize"] = pageSize;
+  //   setPaginationData(pagData);
+  // }, [currentPage, admissionData]);
 
   return (
-    <div className="calendar">
-      <h2 className="calendar__heading">St. Thomas Midtown Admissions</h2>
-      <div className="calendar__layout">
-        {currentAdmissionData.map((admission) => {
-          const dischargeDay = admission.date.split(' ')[0];
-          return (
-            <CalendarDay
-              key={dischargeDay}
-              date={dischargeDay}
-              discharges={admission.discharges}
-              data={dischargeDay}
-              selectedDate={selectedDate}
-              onDateChange={onDateChange}
-            />
-          );
-        })}
-      </div>
-      <Pagination
-        className="pagination-bar"
-        currentPage={currentPage}
-        totalCount={admissionData.length}
-        pageSize={pageSize}
-        onPageChange={(page) => setCurrentPage(page)}
-      />
-    </div>
+    <PlacardBox
+      placardData={admissionData}
+      heading={heading}
+      placardClass={"calendar-day"}
+      selectedPlacard={selectedDate}
+      onPlacardChange={onDateChange}
+      pageSize={12}
+    />
   );
 };
 export default Calendar;

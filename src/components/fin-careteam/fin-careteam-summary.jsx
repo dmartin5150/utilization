@@ -1,11 +1,11 @@
-import { Fragment, useState, useMemo, useEffect } from "react";
+import { Fragment, useState, useMemo, useEffect,headings } from "react";
 import FinCareTeam from "./fin-careteam-component";
 import Pagination from "../pagination/pagination-component";
 import "./fin-careteam-summary.scss";
 
 let pageSize = 11;
 
-const FinCareTeamSummary = ({ finCareTeam, selectedDate,onSelectTeam }) => {
+const FinCareTeamSummary = ({ finCareTeam, selectedDate,onSelectTeam,headings,subheadings }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const currentFinData = useMemo(() => {
@@ -24,13 +24,13 @@ const FinCareTeamSummary = ({ finCareTeam, selectedDate,onSelectTeam }) => {
         <div className="fincareteam__table-outline">
           <header className="fincareteam__header">
             <h2 className="fincareteam__header--item">
-              Selected Date: {selectedDate}
+              {headings[0]} {selectedDate}
             </h2>
             <h2 className="fincareteam__header--item">
-              Number of Discharges: {finCareTeam.length}
+              {headings[1]} {finCareTeam.length}
             </h2>
           </header>
-          <FinCareTeam data={currentFinData} onSelectTeam={onSelectTeam}/>
+          <FinCareTeam data={currentFinData} headings={subheadings} onSelectTeam={onSelectTeam}/>
         </div>
         <Pagination
           className="pagination-bar"

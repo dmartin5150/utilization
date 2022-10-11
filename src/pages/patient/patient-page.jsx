@@ -59,6 +59,7 @@ const Patient = () => {
       {popupOpen && <TeamCard teamData={careTeamData} onClosePopup={setPopupOpen} />}
       <div className="patient__calendar">
         <Calendar
+          heading={'St. Thomas Midtown Admissions'}
           admissionData={dischargeData}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
@@ -69,6 +70,8 @@ const Patient = () => {
           finCareTeam={finCareTeam}
           selectedDate={selectedDate}
           onSelectTeam={setCurrentFin}
+          headings={['Selected Date', 'Number of discharges']}
+          subheadings={['FIN', "Care team size", 'Show team']}
         />
       </div>
     </section>
