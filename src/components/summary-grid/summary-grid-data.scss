@@ -1,0 +1,23 @@
+@import "../../sass/abstracts/variables";
+
+.summary-grid-data {
+
+    border: 1px solid $color-black;
+    // max-height:90rem;
+
+    .head {
+        background-color: $color-primary-light;
+        display:grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        text-align: center;
+
+
+        h2 {
+            border: 1px solid $color-black;
+        }
+
+        h2:not(:last-child){
+            border-right:none;
+        }
+    }
+}

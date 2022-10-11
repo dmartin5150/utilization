@@ -1,6 +1,10 @@
 import "./team-card-head.scss";
 
 const TeamCardHead = ({teamData}) => {
+
+    if(!teamData) {
+      return null;
+    }
     
     return (
         <div className="teamcardhead">

@@ -5,7 +5,7 @@ import "./fin-careteam-summary.scss";
 
 let pageSize = 11;
 
-const FinCareTeamSummary = ({ finCareTeam, selectedDate,onSelectTeam,headings,subheadings }) => {
+const FinCareTeamSummary = ({finCareTeam, selectedDate,onSelectTeam,headings,subheadings }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const currentFinData = useMemo(() => {

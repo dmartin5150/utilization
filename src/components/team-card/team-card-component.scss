@@ -7,9 +7,33 @@
   box-shadow: 0 2rem 4rem rgba($color-black, 0.2);
   background-color: $color-white;
   border-radius: 3px;
-  animation: popup-appear 0.5s;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%,-50%) scale(0.25);
+  transition: all 0.4s 0.3s;
+  // animation: popup-appear 0.5s;
   
 
+  &.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%,-50%) scale(1);
+  }
+
+  &.close {
+    transition: all 0.4s 0.3s;
+    animation: popup-disappear 0.5s;
+  }
+
+  &__popup {
+    opacity:0;
+    visibility: hidden;
+
+    &.open {
+      opacity:1;
+      visibility: visible;
+    }
+  }
   
 
 
@@ -78,6 +102,21 @@
       opacity: 1;
       visibility: visible;
       transform: translate(-50%,-50%) scale(1);
+    }
+
+  }
+
+  @keyframes popup-disappear {
+    from {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%,-50%) scale(1);
+    }
+
+    to {
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%,-50%) scale(0.25);
     }
 
   }
