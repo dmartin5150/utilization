@@ -5,13 +5,10 @@ let pageSize = 12;
 
 const FinCareTeamRow = ({fin, size,onSelectTeam }) => {
 
-
   const updateFinHandler = (e)=> {
-    console.log(e.target.id);
     onSelectTeam(e.target.id);
   }
-
-
+  
   return (
     <div className="fincareteamrow">
       <p className="header-tertiary no-left-border">{fin}</p>
