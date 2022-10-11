@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import "./team-card-component.scss";
 import Popup from "../popup/popup-component";
 import TeamCardHead from "./team-card-head";
@@ -10,11 +10,12 @@ let pageSize = 4;
 
 const TeamCard = ({ teamData,className, onClosePopup}) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentCareTeam, setCurrentCareTeam] = useState([]);
 
-  const currentCareTeam = useMemo(() => {
+  useEffect(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
-    return teamData.slice(firstPageIndex, lastPageIndex);
+    setCurrentCareTeam(teamData.slice(firstPageIndex, lastPageIndex));
   }, [currentPage, teamData]);
 
 
@@ -22,11 +23,12 @@ const TeamCard = ({ teamData,className, onClosePopup}) => {
     onClosePopup(false);
   }
 
+  console.log(teamData);
 
   return (
-    <Popup className={classnames("teamcard__popup",{open:className== 'open'},{close:className== 'close'})}>
+    <Popup className={classnames("teamcard__popup",{open:className== 'open'})}>
     {/* <Popup className={classnames("teamcard__popup")}> */}
-      <div className={classnames("teamcard",{open:className== 'open'}, {close:className== 'close'})}>
+      <div className={classnames("teamcard",{open:className== 'open'})}>
         {/* <div className="teamcard__close-container"> */}
           <a href="#" className="teamcard__close" onClick={closePopupHandler}>
             &times;

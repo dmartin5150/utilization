@@ -6,7 +6,7 @@ import "./summary-grid-row.scss";
 const SummaryGridRow = ({unit, stat,onSelectItem }) => {
 
   const updateItemHandler = (e)=> {
-    e.preventDefault();
+    // e.preventDefault();
     onSelectItem(e.target.id);
   }
   

@@ -4,8 +4,8 @@ import Pagination from "../pagination/pagination-component";
 import "./summary-grid.scss";
 
 
-let pageSize = 11;
-const SummaryGrid = ({data, selectedItem,onSelectItem,headings,subheadings}) => {
+
+const SummaryGrid = ({data, selectedItem,onSelectItem,headings,subheadings,pageSize=11}) => {
 
       const [currentPage, setCurrentPage] = useState(1);
       const [currentData, setCurrentData]= useState([]);

@@ -8,8 +8,9 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Navigation />}>
-        <Route index element={<Patient />}></Route>
-        <Route path="/physician" element={<Physician />}></Route>
+        {/* <Route index element={<Patient />}></Route> */}
+        <Route path="/" element={<Patient />}></Route>
+        <Route index  path="/physician" element={<Physician />}></Route>
       </Route>
     </Routes>
   );

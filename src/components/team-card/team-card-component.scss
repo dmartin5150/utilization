@@ -20,10 +20,7 @@
     transform: translate(-50%,-50%) scale(1);
   }
 
-  &.close {
-    transition: all 0.4s 0.3s;
-    animation: popup-disappear 0.5s;
-  }
+
 
   &__popup {
     opacity:0;

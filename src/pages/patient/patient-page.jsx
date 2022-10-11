@@ -24,6 +24,12 @@ const Patient = () => {
     updateCareTeam(currentFin);
   }, [currentFin]);
 
+  useEffect(()=> {
+    if(!popupOpen) {
+      setCurrentFin('0');
+    }
+  },[popupOpen])
+
   useEffect(() => {
     if (careTeamData.length) {
       setPopupOpen(true);

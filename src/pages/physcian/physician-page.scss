@@ -1,0 +1,9 @@
+@import '../../sass/abstracts/variables';
+
+.provider {
+
+    display:grid;
+    grid-template-columns: 2.6fr 3fr;
+    margin-top:1rem;
+
+}

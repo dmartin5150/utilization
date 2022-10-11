@@ -7,6 +7,7 @@ import classnames from "classnames";
 
 const PlacardBox = ({
   placardData,
+  subtitle,
   className,
   heading,
   placardClass,
@@ -30,13 +31,13 @@ const PlacardBox = ({
       <ul className="layout">
         {currentPlacardData.map((placard) => {
           return (
-            <li  key={placard.date}>
+            <li  key={placard.key}>
               <Placard
-                id={placard.date}
-                className={placardClass}
-                title={placard.date}
-                focus={placard.discharges}
-                subtitle={"discharges"}
+                id={placard.id}
+                className={placard.className}
+                title={placard.title}
+                focus={placard.focus}
+                subtitle={placard.subtitle}
                 selectedPlacard={selectedPlacard}
                 onPlacardChange={onPlacardChange}
               ></Placard>

@@ -5,12 +5,27 @@ import PlacardBox from "../placard-box/placard-box-component";
 import Pagination from "../pagination/pagination-component";
 import "./calendar-day-component.scss";
 
-
-const Calendar = ({ admissionData, selectedDate, onDateChange, heading,pageSize=12 }) => {
-
+const Calendar = ({
+  admissionData,
+  selectedDate,
+  onDateChange,
+  heading,
+  pageSize = 12,
+}) => {
+  const calendarData = admissionData.map((data) => {
+    return {
+      key: data.date,
+      id: data.date,
+      title: data.date,
+      focus: data.discharges,
+      subtitle: "discharges",
+    };
+  });
+  console.log(calendarData);
   return (
     <PlacardBox
-      placardData={admissionData}
+      placardData={calendarData}
+      subtitle={"discharges"}
       heading={heading}
       placardClass={"calendar-day"}
       selectedPlacard={selectedDate}
