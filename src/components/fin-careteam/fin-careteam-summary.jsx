@@ -7,11 +7,12 @@ let pageSize = 11;
 
 const FinCareTeamSummary = ({finCareTeam, selectedDate,onSelectTeam,headings,subheadings }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentFinData,setCurrentFinData]= useState ([]);
 
-  const currentFinData = useMemo(() => {
+  useEffect(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
-    return finCareTeam.slice(firstPageIndex, lastPageIndex);
+    setCurrentFinData(finCareTeam.slice(firstPageIndex, lastPageIndex));
   }, [currentPage, finCareTeam]);
 
   useEffect(() => {

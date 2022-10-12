@@ -3,21 +3,20 @@ import "./summary-grid-row.scss";
 
 
 
-const SummaryGridRow = ({unit, stat,buttonText, onSelectItem }) => {
+const SummaryGridRow = ({unit, stat,itemid, buttonText, onSelectItem }) => {
 
 
     
   const updateItemHandler = (e)=> {
-    onSelectItem(true)
+    onSelectItem(e.target.id);
     console.log('npi', e.target.id)
-    // onSelectItem(e.target.id);
   }
   
   return (
     <div className="summary-grid-row">
       <p className="header-tertiary no-left-border">{unit}</p>
       <p className="header-tertiary">{stat}</p>
-      <button onClick={updateItemHandler} className="item-btn" id={unit}>{buttonText}</button>
+      <button onClick={updateItemHandler} className="item-btn" id={itemid}>{buttonText}</button>
     </div>
   );
 };

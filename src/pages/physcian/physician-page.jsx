@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import SummaryGrid from "../../components/summary-grid/summary-grid";
 import Directory from "../../components/directory/directory";
 import { directoryData } from "../../data/directory-data";
-import getProviderList from "../../utilities/pateint-list";
+import getProviderList from "../../utilities/provider-list";
 import ProviderCard from "../../components/provider-card/provider-card";
+import getPatientList from "../../utilities/patient-list";
 import "./physician-page.scss";
 
 const Physician = () => {
   const [providerList, setProviderList] = useState([]);
-  // const [patientList, setPatientList] = useState([]);
+  const [patientList, setPatientList] = useState([]);
   const [selectedLetter, setSelectedLetter] = useState("A");
-  const [currentLetter, setCurrentLetter] = useState("");
+  const [currentNPI, setCurrentNPI] = useState("0");
   const [popupOpen, setPopupOpen] = useState(false);
 
   useEffect(() => {
@@ -23,48 +24,30 @@ const Physician = () => {
 
   useEffect(() => {
     if (!popupOpen) {
-      setCurrentLetter("");
+      setCurrentNPI('0');
     }
   }, [popupOpen]);
 
-  // useEffect(() => {
-  //   if (patientList.length) {
-  //     setPopupOpen(true);
-  //   }
-  // }, [patientList]);
+  useEffect(() => {
+    if (patientList.length) {
+      setPopupOpen(true);
+    }
+  }, [patientList]);
 
 
 
-  // useEffect(() => {
-  //   const getFinData = async () => {
-  //     const finData = await getFinCareTeam(selectedDate);
-  //     setFinCareTeam(finData);
-  //   };
-  //   getFinData();
-  // }, [selectedDate]);
-
-  // useEffect(() => {
-  //   const getDischarge = async () => {
-  //     const dcData = await getDischargeData();
-  //     setDischargeData(dcData);
-  //   };
-  //   getDischarge();
-  // }, []);
+  useEffect(() => {
+    const getPatientData = async (npi) => {
+      const patients = await getPatientList(npi);
+      setPatientList(patients);
+    };
+    getPatientData(currentNPI);
+  }, [currentNPI]);
 
 
-  const patientList = [
-      {
-        npi: "1",
-        fname: "David",
-        lname: "Martin",
-        specialty:'Internal Medicine',
-        fin: "5555555",
-        discharge: "8/4/2022",
-        disp: "To Home",
-        prev: '8/2/2020',
-        next: '9/3/2020'
-      },
-    ];
+
+
+
 
 
   return (
@@ -86,7 +69,7 @@ const Physician = () => {
         <SummaryGrid
           data={providerList}
           selectedItem={selectedLetter}
-          onSelectItem={setPopupOpen}
+          onSelectItem={setCurrentNPI}
           headings={["Lastname: ", "Number of Providers: "]}
           subheadings={["Name", "Number of Patients", "Show List"]}
         ></SummaryGrid>
