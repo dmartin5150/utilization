@@ -7,6 +7,7 @@ import Calendar from "../../components/calendar/calendar-component";
 import Directory from "../../components/directory/directory";
 import TeamCard from "../../components/team-card/team-card-component";
 import { directoryData } from "../../data/directory-data";
+import getProviderList from "../../utilities/pateint-list";
 import "./physician-page.scss";
 
 const Physician = () => {
@@ -20,17 +21,13 @@ const Physician = () => {
   const [popupOpen, setPopupOpen] = useState(false);
 
   useEffect(() => {
-    // const updateProviderList = async (currentLetter) => {
-    //   const careTeam = await getCareTeam(currentFin);
-    //   console.log(careTeam);
-    //   setProviderList([{name: "David Martin", patients:"6"}]);
-    // };
 
-    const updateCareTeam = (currentLetter) => {
-            setProviderList([{name: "David Martin", size:"6"}]);
-    }
-    updateCareTeam(currentLetter);
-  }, [currentLetter]);
+    const updateProviderList = async (selectedLetter) => {
+      const providers = await getProviderList(selectedLetter);
+      setProviderList(providers);
+    };
+    updateProviderList(selectedLetter)
+  }, [selectedLetter]);
 
   useEffect(()=> {
     if(!popupOpen) {
