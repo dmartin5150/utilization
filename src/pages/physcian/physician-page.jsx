@@ -1,45 +1,39 @@
 import { useEffect, useState } from "react";
-import getFinCareTeam from "../../utilities/fin-data";
-import getDischargeData from "../../utilities/git-discharge-data";
-import getCareTeam from "../../utilities/careteam";
 import SummaryGrid from "../../components/summary-grid/summary-grid";
-import Calendar from "../../components/calendar/calendar-component";
 import Directory from "../../components/directory/directory";
-import TeamCard from "../../components/team-card/team-card-component";
 import { directoryData } from "../../data/directory-data";
 import getProviderList from "../../utilities/pateint-list";
+import ProviderCard from "../../components/provider-card/provider-card";
 import "./physician-page.scss";
 
 const Physician = () => {
-
   const [providerList, setProviderList] = useState([]);
-  const [finCareTeam, setFinCareTeam] = useState([]);
-  const [dischargeData, setDischargeData] = useState([]);
-  const [careTeamData, setCareTeamData] = useState([]);
+  // const [patientList, setPatientList] = useState([]);
   const [selectedLetter, setSelectedLetter] = useState("A");
   const [currentLetter, setCurrentLetter] = useState("");
   const [popupOpen, setPopupOpen] = useState(false);
 
   useEffect(() => {
-
     const updateProviderList = async (selectedLetter) => {
       const providers = await getProviderList(selectedLetter);
       setProviderList(providers);
     };
-    updateProviderList(selectedLetter)
+    updateProviderList(selectedLetter);
   }, [selectedLetter]);
 
-  useEffect(()=> {
-    if(!popupOpen) {
-      setCurrentLetter('');
-    }
-  },[popupOpen])
-
   useEffect(() => {
-    if (careTeamData.length) {
-      setPopupOpen(true);
+    if (!popupOpen) {
+      setCurrentLetter("");
     }
-  }, [careTeamData]);
+  }, [popupOpen]);
+
+  // useEffect(() => {
+  //   if (patientList.length) {
+  //     setPopupOpen(true);
+  //   }
+  // }, [patientList]);
+
+
 
   // useEffect(() => {
   //   const getFinData = async () => {
@@ -57,10 +51,30 @@ const Physician = () => {
   //   getDischarge();
   // }, []);
 
+
+  const patientList = [
+      {
+        id: "1",
+        fname: "David",
+        lname: "Martin",
+        specialty:'Internal Medicine',
+        fin: "5555555",
+        discharge: "8/4/2022",
+        disp: "To Home",
+        prev: '8/2/2020',
+        next: '9/3/2020'
+      },
+    ];
+
+
   return (
-    <section className="patient" id="patient">
-      {/* <TeamCard teamData={careTeamData} onClosePopup={setPopupOpen} className={`${popupOpen ? "open" : "close"}`} /> */}
-      <div className="patient__calendar">
+    <section className="provider" >
+      <ProviderCard
+        patientData={patientList}
+        onClosePopup={setPopupOpen}
+        className={`${popupOpen ? "open" : "close"}`}
+      />
+      <div className="provider__directory">
         <Directory
           heading={"St. Thomas Midtown Clinicians"}
           directoryData={directoryData}
@@ -73,7 +87,7 @@ const Physician = () => {
           data={providerList}
           selectedItem={selectedLetter}
           onSelectItem={setCurrentLetter}
-          headings={["Lastname: ",'Number of Providers: ']}
+          headings={["Lastname: ", "Number of Providers: "]}
           subheadings={["Name", "Number of Patients", "Show List"]}
         ></SummaryGrid>
       </div>

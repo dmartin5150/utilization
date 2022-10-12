@@ -1,0 +1,122 @@
+@import "../../sass/abstracts/variables";
+@import "../../sass/abstracts/mixins";
+
+.providercard {
+  @include absCenter;
+  width: 70%;
+  box-shadow: 0 2rem 4rem rgba($color-black, 0.2);
+  background-color: $color-white;
+  border-radius: 3px;
+  opacity: 0;
+  visibility:  hidden;
+
+  transform: translate(-50%,-50%) scale(0.25);
+  transition: all 0.4s 0.3s;
+  // animation: popup-appear 0.5s;
+  
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%,-50%) scale(1);
+  }
+
+
+
+  .popup {
+    opacity:0;
+    visibility: hidden;
+
+    &.open {
+      opacity:1;
+      visibility: visible;
+    }
+  }
+  
+
+
+
+  // background: linear-gradient(to right bottom, $color-primary, #9198e5, #e18484);
+  // background: linear-gradient(to right bottom, $color-primary, #9198e5, #e66465);
+  // background: linear-gradient(to right bottom, $color-secondary-dark, $color-secondary-light);
+
+
+
+
+  .heading {
+    padding-top: 1rem;
+    font-size: 3rem;
+    font-weight: 600;
+    text-align: center;
+    color: $color-grey-dark-4;
+
+    &--main {
+        display:block;
+        line-height:0.8;
+    }
+
+  }
+
+  .head {
+    display:inline-block;
+    background-color: $color-white;
+    margin:0 auto;
+
+    &--item {
+        display:inline-block;
+    }
+  }
+
+  .pagination {
+    margin-bottom: 2rem;
+  }
+
+  // &__close-container {
+  //   position: relative;
+  // }
+
+
+  .close {
+    &:link,
+    &:visited {
+      color:$color-grey-dark-3;
+      position: absolute;
+      top:2.5rem;
+      right: 2.5rem;
+      font-size: 3rem;
+      display:inline-block;
+      line-height: 1;
+    }
+  }
+
+  @keyframes popup-appear {
+    from {
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%,-50%) scale(0.25);
+    }
+
+    to {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%,-50%) scale(1);
+    }
+
+  }
+
+  @keyframes popup-disappear {
+    from {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%,-50%) scale(1);
+    }
+
+    to {
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%,-50%) scale(0.25);
+    }
+
+  }
+
+}
