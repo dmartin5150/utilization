@@ -23,7 +23,6 @@ const TeamCard = ({ teamData,className, onClosePopup}) => {
     onClosePopup(false);
   }
 
-  console.log(teamData);
 
   return (
     <Popup className={classnames("teamcard__popup",{open:className== 'open'})}>

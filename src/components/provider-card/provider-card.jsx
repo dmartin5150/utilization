@@ -9,7 +9,7 @@ import classnames from "classnames";
 const ProviderCard = ({
   patientData,
   className,
-  onClosePopup,
+  onOpenPopup,
   pageSize = 4,
 }) => {
 
@@ -24,8 +24,7 @@ const ProviderCard = ({
   }, [currentPage, patientData, pageSize]);
 
   const closePopupHandler = () => {
-    console.log('click')
-    onClosePopup(false);
+    onOpenPopup(false);
   };
 
   return (

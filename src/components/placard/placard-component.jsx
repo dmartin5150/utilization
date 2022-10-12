@@ -7,7 +7,6 @@ const Placard = ({id,className, title, focus, subtitle, selectedPlacard,onPlacar
 
   const placardChangeHandler = (event) => {
     onPlacardChange(event.target.id);
-    console.log(event.target.id);
   };
   
   return (

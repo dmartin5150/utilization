@@ -8,7 +8,9 @@ const SummaryGridRow = ({unit, stat,buttonText, onSelectItem }) => {
 
     
   const updateItemHandler = (e)=> {
-    onSelectItem(e.target.id);
+    onSelectItem(true)
+    console.log('npi', e.target.id)
+    // onSelectItem(e.target.id);
   }
   
   return (

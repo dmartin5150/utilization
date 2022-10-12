@@ -54,7 +54,7 @@ const Physician = () => {
 
   const patientList = [
       {
-        id: "1",
+        npi: "1",
         fname: "David",
         lname: "Martin",
         specialty:'Internal Medicine',
@@ -71,7 +71,7 @@ const Physician = () => {
     <section className="provider" >
       <ProviderCard
         patientData={patientList}
-        onClosePopup={setPopupOpen}
+        onOpenPopup={setPopupOpen}
         className={`${popupOpen ? "open" : "close"}`}
       />
       <div className="provider__directory">
@@ -86,7 +86,7 @@ const Physician = () => {
         <SummaryGrid
           data={providerList}
           selectedItem={selectedLetter}
-          onSelectItem={setCurrentLetter}
+          onSelectItem={setPopupOpen}
           headings={["Lastname: ", "Number of Providers: "]}
           subheadings={["Name", "Number of Patients", "Show List"]}
         ></SummaryGrid>

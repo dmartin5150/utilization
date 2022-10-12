@@ -2,7 +2,6 @@ const getCareTeam = async (fin = "0") => {
   try {
     const time = new Date().getTime();
     const request = `http://localhost:5000/careteam?time=${time}`
-    console.log(request);
     const response = await fetch(request, {
       method: "POST",
       headers: {

@@ -1,9 +1,8 @@
 import ProviderCardRow from "./provider-card-row";
 import "./provider-card-grid.scss";
 
-const ProviderCardGrid = ({ providerData }) => {
-    console.log('in provider grid')
-    console.log('griddata', providerData)
+const ProviderCardGrid = ({ providerData}) => {
+
 
     if (!providerData){
         return;
