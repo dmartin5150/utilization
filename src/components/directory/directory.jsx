@@ -6,8 +6,6 @@ import "./directory.scss";
 
 const Directory = ({ directoryData, selectedLetter, onLetterChange, heading,pageSize=12 }) => {
     
-
-
   return (
     <PlacardBox
       placardData={directoryData}

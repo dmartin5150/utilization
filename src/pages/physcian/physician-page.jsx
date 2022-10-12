@@ -27,7 +27,7 @@ const Physician = () => {
     // };
 
     const updateCareTeam = (currentLetter) => {
-            setProviderList([{name: "David Martin", patients:"6"}]);
+            setProviderList([{name: "David Martin", size:"6"}]);
     }
     updateCareTeam(currentLetter);
   }, [currentLetter]);
@@ -71,15 +71,15 @@ const Physician = () => {
           onLetterChange={setSelectedLetter}
         />
       </div>
-      {/* <div className="patient__info">
+      <div className="provider__info">
         <SummaryGrid
-          data={finCareTeam}
-          selectedItem={selectedDate}
-          onSelectItem={setCurrentFin}
-          headings={["Selected Date", "Number of discharges"]}
-          subheadings={["FIN", "Care team size", "Show team"]}
+          data={providerList}
+          selectedItem={selectedLetter}
+          onSelectItem={setCurrentLetter}
+          headings={["Lastname: ",'Number of Providers: ']}
+          subheadings={["Name", "Number of Patients", "Show List"]}
         ></SummaryGrid>
-      </div> */}
+      </div>
     </section>
   );
 };

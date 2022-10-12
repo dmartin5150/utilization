@@ -3,6 +3,7 @@ import "./summary-grid-data.scss";
 
 const SummaryGridData = (props) => {
     const {headings} = props;
+    console.log('sdata', props.data)
     return (
       <div className="summary-grid-data">
         <header className="head">
@@ -11,7 +12,7 @@ const SummaryGridData = (props) => {
           <h2 className="header-secondary">{headings[2]}</h2>
         </header>
         {props.data.map((item) => {
-          return(<SummaryGridRow key={item.fin}  unit={item.fin} stat={item.size} onSelectItem={props.onSelectItem} />)
+          return(<SummaryGridRow key={item.id}  unit={item.name} stat={item.size} onSelectItem={props.onSelectItem} />)
         })}
       </div>
     );

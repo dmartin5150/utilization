@@ -15,10 +15,12 @@ const Patient = () => {
   const [selectedDate, setSelectedDate] = useState("08/01/22");
   const [popupOpen, setPopupOpen] = useState(false);
 
+
+
+
   useEffect(() => {
     const updateCareTeam = async (currentFin) => {
       const careTeam = await getCareTeam(currentFin);
-      console.log(careTeam);
       setCareTeamData(careTeam);
     };
     updateCareTeam(currentFin);
@@ -36,10 +38,21 @@ const Patient = () => {
     }
   }, [careTeamData]);
 
+
+  const mappedCareTeam = (data) => {
+    const mappedData= data.map((item) => {
+      return {id:item.fin, name:item.fin, size:item.size}
+    });
+    return mappedData;
+  }
+
+
+
   useEffect(() => {
     const getFinData = async () => {
       const finData = await getFinCareTeam(selectedDate);
-      setFinCareTeam(finData);
+      const mappedFinData = mappedCareTeam(finData)
+      setFinCareTeam(mappedFinData);
     };
     getFinData();
   }, [selectedDate]);

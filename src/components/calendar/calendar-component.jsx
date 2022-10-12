@@ -21,7 +21,6 @@ const Calendar = ({
       subtitle: "discharges",
     };
   });
-  console.log(calendarData);
   return (
     <PlacardBox
       placardData={calendarData}
