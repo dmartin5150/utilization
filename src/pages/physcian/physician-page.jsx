@@ -39,6 +39,7 @@ const Physician = () => {
   useEffect(() => {
     const getPatientData = async (npi) => {
       const patients = await getPatientList(npi);
+      console.log(patients);
       setPatientList(patients);
     };
     getPatientData(currentNPI);
@@ -52,11 +53,11 @@ const Physician = () => {
 
   return (
     <section className="provider" >
-      <ProviderCard
+      {popupOpen && <ProviderCard
         patientData={patientList}
         onOpenPopup={setPopupOpen}
         className={`${popupOpen ? "open" : "close"}`}
-      />
+      />}
       <div className="provider__directory">
         <Directory
           heading={"St. Thomas Midtown Clinicians"}

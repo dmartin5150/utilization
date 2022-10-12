@@ -11,7 +11,7 @@ const ProviderCardGrid = ({ providerData}) => {
   return (
     <div className="providercard-grid">
       <header className="header">
-        <div className="header--item">Name</div>
+        <div className="header--item">FIN</div>
         <div className="header--item">Discharge Date</div>
         <div className="header--item">Disposition</div>
         <div className="header--item">Last Appt.</div>

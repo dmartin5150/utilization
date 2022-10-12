@@ -16,6 +16,9 @@ const ProviderCard = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [patientList, setPatientList] = useState([]);
 
+
+  console.log('pd', patientData)
+
   useEffect(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;

@@ -33,6 +33,7 @@ const Patient = () => {
   },[popupOpen])
 
   useEffect(() => {
+    console.log('care team',careTeamData);
     if (careTeamData.length) {
       setPopupOpen(true);
     }
@@ -67,7 +68,8 @@ const Patient = () => {
 
   return (
     <section className="patient" id="patient">
-      <TeamCard teamData={careTeamData} onClosePopup={setPopupOpen} className={`${popupOpen ? "open" : "close"}`} />
+      {/* <TeamCard teamData={careTeamData} onClosePopup={setPopupOpen} className={`${popupOpen ? "open" : "close"}`} /> */}
+      {popupOpen && <TeamCard teamData={careTeamData} onClosePopup={setPopupOpen} />}
       <div className="patient__calendar">
         <Calendar
           heading={"St. Thomas Midtown Admissions"}
