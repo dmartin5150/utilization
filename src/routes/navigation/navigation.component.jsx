@@ -8,9 +8,9 @@ const Navigation = () => {
       <nav className="nav">
         <div className="nav__ascension-logo">
           <img src="./ascension.png" alt="Ascension logo" />
-          <div className="nav__clincialstudio">
+          {/* <div className="nav__clincialstudio">
             <p className="nav__clinicalstudio--text">Clinical Studio</p>
-          </div>
+          </div> */}
         </div>
 
         <div className="nav__seamless-logo">

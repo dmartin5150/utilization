@@ -5,7 +5,7 @@
 
     display:flex;
     justify-content: space-between;
-    background-image: linear-gradient($color-tertiary-light, $color-tertiary-dark);
+    // background-image: linear-gradient($color-tertiary-light, $color-tertiary-dark);
     
 
 
@@ -34,7 +34,7 @@
     &__seamless-logo {
         font-size:3rem;
         margin-right:18rem;
-        color: $color-grey-dark-4;
+        color: #1b4297;
     }
 
     &__links-container {
@@ -42,19 +42,21 @@
         justify-content: space-between;
         align-items: center;
         margin-right:8rem;
+        font-family: 'Cabin'
 
     }
 
     &__link:link,
     &__link:visited{
+
         font-size:1.5rem;
-        color:$color-secondary-dark;
+        color: #626262;
         margin-right:2rem;
     }
 
     &__link:hover,
     &__link:active {
-        color:$color-secondary-light; 
+        text-decoration: underline;
     }
 
 }

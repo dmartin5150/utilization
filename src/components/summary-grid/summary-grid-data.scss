@@ -6,13 +6,15 @@
     // max-height:90rem;
 
     .head {
-        background-color: $color-primary-light;
+        background-color: #b40f87;
         display:grid;
         grid-template-columns: 1fr 1fr 1fr;
         text-align: center;
+        color:$color-white;
 
 
         h2 {
+            color:$color-white;
             border: 1px solid $color-black;
         }
 

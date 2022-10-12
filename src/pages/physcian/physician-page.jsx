@@ -57,7 +57,7 @@ const Physician = () => {
         patientData={patientList}
         onOpenPopup={setPopupOpen}
         className={`${popupOpen ? "open" : "close"}`}
-      />}
+      />  }
       <div className="provider__directory">
         <Directory
           heading={"St. Thomas Midtown Clinicians"}

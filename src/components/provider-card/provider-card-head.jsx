@@ -11,8 +11,7 @@ const ProviderCardHead = ({providerData}) => {
           <div className="row">
             <h2 className="item">
               <span className="item--name">Provider:</span>
-              {providerData.fname} {providerData.lname}
-            </h2>
+              {providerData.fname} {providerData.lname}</h2>
             <h2 className="item">
               <span className="item--name">Specialty:</span>
               {providerData.specialty}

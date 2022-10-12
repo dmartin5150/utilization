@@ -72,7 +72,7 @@ const Patient = () => {
       {popupOpen && <TeamCard teamData={careTeamData} onClosePopup={setPopupOpen} />}
       <div className="patient__calendar">
         <Calendar
-          heading={"St. Thomas Midtown Admissions"}
+          heading={"St. Thomas Midtown Discharges"}
           admissionData={dischargeData}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}

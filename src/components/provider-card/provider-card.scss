@@ -11,9 +11,9 @@
 //   visibility:  hidden;
 
 //   transform: translate(-50%,-50%) scale(0.25);
-  transform: translate(-50%,-50%);
+//   transform: translate(-50%,-50%);
   transition: all 0.4s 0.2s;
-  // animation: popup-appear 0.5s;
+  animation: popup-appear 0.5s;
   
 
   &.open {
@@ -32,6 +32,13 @@
       opacity:1;
       visibility: visible;
     }
+
+
+    }
+    .pagination {
+        .pagination-item  {
+            color:#1e69d2;
+        }
   }
   
 

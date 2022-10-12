@@ -11,10 +11,14 @@
   }
 
   .header {
+    font-family:'Cabin';
+    font-size:2rem;
+    font-weight:400;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: $color-primary-dark;
+    background-color: #00A393;;
+    color:$color-white;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 
@@ -23,8 +27,15 @@
       color: $color-grey-dark-4;
       text-transform: uppercase;
       text-align: center;
-      font-size: 1.5rem;
+      font-size: 1.9rem;
+      font-weight:400;
+      color:$color-white;
       padding: 2rem;
     }
   }
+  .pagination-bar {
+    .pagination-item  {
+        color:#00a896;
+    }
+}
 }

@@ -68,7 +68,15 @@
   }
 
   &__pagination {
+    
     margin-bottom: 2rem;
+
+  }
+
+  .pagination-container{
+    .pagination-item {
+      color:#1e69d2;
+    }
   }
 
   // &__close-container {

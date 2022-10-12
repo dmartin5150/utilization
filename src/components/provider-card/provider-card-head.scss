@@ -13,13 +13,11 @@
         align-items: center;
 
 
+
         .item{
             color:$color-grey-dark-3;
             font-weight: 400;
-    
-            &:not(:last-child) {
-                border-right: 2px solid $color-black;
-              }
+
     
             &--name {
                 color:$color-grey-dark-4;

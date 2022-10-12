@@ -26,10 +26,10 @@ const SummaryGrid = ({data, selectedItem,onSelectItem,headings,subheadings,pageS
             <div className="outline">
               <header className="header">
                 <h2 className="header--item">
-                  {headings[0]} {selectedItem}
+                  {headings[0]} : {selectedItem}
                 </h2>
                 <h2 className="header--item">
-                  {headings[1]} {data.length}
+                  {headings[1]}: {data.length}
                 </h2>
               </header>
               <SummaryGridData data={currentData} headings={subheadings} onSelectItem={onSelectItem}/>
