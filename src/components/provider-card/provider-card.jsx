@@ -28,6 +28,7 @@ const ProviderCard = ({
 
   const closePopupHandler = () => {
     onOpenPopup(false);
+    setCurrentPage(1);
   };
 
   return (

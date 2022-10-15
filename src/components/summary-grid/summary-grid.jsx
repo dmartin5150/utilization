@@ -14,7 +14,7 @@ const SummaryGrid = ({data, selectedItem,onSelectItem,headings,subheadings,pageS
         const firstPageIndex = (currentPage - 1) * pageSize;
         const lastPageIndex = firstPageIndex + pageSize;
         setCurrentData(data.slice(firstPageIndex, lastPageIndex));
-      }, [currentPage, data]);
+      }, [currentPage,pageSize, data]);
     
       useEffect(() => {
         setCurrentPage(1);

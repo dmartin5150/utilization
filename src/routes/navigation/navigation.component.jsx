@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, NavLink} from "react-router-dom";
 import "./navigation.scss";
 
 const Navigation = () => {
@@ -18,12 +18,13 @@ const Navigation = () => {
         </div>
 
         <div className="nav__links-container">
-          <Link className="nav__link" to="/physician">
+          <NavLink  to="/physician" className="nav__link" >
             Physician
-          </Link>
-          <Link className="nav__link" to="/">
+          </NavLink>
+          <NavLink  to="/" className="nav__link"
+          >
             Patient
-          </Link>
+          </NavLink>
         </div>
       </nav>
       <Outlet />

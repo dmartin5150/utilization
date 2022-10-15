@@ -15,44 +15,41 @@ const Patient = () => {
   const [selectedDate, setSelectedDate] = useState("08/01/22");
   const [popupOpen, setPopupOpen] = useState(false);
 
-
-
-
   useEffect(() => {
     const updateCareTeam = async (currentFin) => {
       const careTeam = await getCareTeam(currentFin);
       setCareTeamData(careTeam);
     };
+    if (currentFin === '0'){
+      return;
+    }
     updateCareTeam(currentFin);
   }, [currentFin]);
 
-  useEffect(()=> {
-    if(!popupOpen) {
-      setCurrentFin('0');
+  useEffect(() => {
+    if (!popupOpen) {
+      setCurrentFin("0");
     }
-  },[popupOpen])
+  }, [popupOpen]);
 
   useEffect(() => {
-    console.log('care team',careTeamData);
+    console.log("care team", careTeamData);
     if (careTeamData.length) {
       setPopupOpen(true);
     }
   }, [careTeamData]);
 
-
   const mappedCareTeam = (data) => {
-    const mappedData= data.map((item) => {
-      return {id:item.fin, name:item.fin, size:item.size}
+    const mappedData = data.map((item) => {
+      return { id: item.fin, name: item.fin, size: item.size };
     });
     return mappedData;
-  }
-
-
+  };
 
   useEffect(() => {
     const getFinData = async () => {
       const finData = await getFinCareTeam(selectedDate);
-      const mappedFinData = mappedCareTeam(finData)
+      const mappedFinData = mappedCareTeam(finData);
       setFinCareTeam(mappedFinData);
     };
     getFinData();
@@ -67,27 +64,29 @@ const Patient = () => {
   }, []);
 
   return (
-    <section className="patient" id="patient">
-      {/* <TeamCard teamData={careTeamData} onClosePopup={setPopupOpen} className={`${popupOpen ? "open" : "close"}`} /> */}
-      {popupOpen && <TeamCard teamData={careTeamData} onClosePopup={setPopupOpen} />}
-      <div className="patient__calendar">
-        <Calendar
-          heading={"St. Thomas Midtown Discharges"}
-          admissionData={dischargeData}
-          selectedDate={selectedDate}
-          onDateChange={setSelectedDate}
-        />
-      </div>
-      <div className="patient__info">
-        <SummaryGrid
-          data={finCareTeam}
-          selectedItem={selectedDate}
-          onSelectItem={setCurrentFin}
-          headings={["Selected Date", "Number of discharges"]}
-          subheadings={["FIN", "Care team size", "Show team"]}
-        ></SummaryGrid>
-      </div>
-    </section>
+      <section className="patient">
+        <TeamCard teamData={careTeamData} onClosePopup={setPopupOpen} className={`${popupOpen ? "open" : "close"}`} />
+        {/* {popupOpen && (
+          <TeamCard teamData={careTeamData} onClosePopup={setPopupOpen} />
+        )} */}
+        <div className="patient__calendar">
+          <Calendar
+            heading={"St. Thomas Midtown Discharges"}
+            admissionData={dischargeData}
+            selectedDate={selectedDate}
+            onDateChange={setSelectedDate}
+          />
+        </div>
+        <div className="patient__info">
+          <SummaryGrid
+            data={finCareTeam}
+            selectedItem={selectedDate}
+            onSelectItem={setCurrentFin}
+            headings={["Selected Date", "# of discharges"]}
+            subheadings={["FIN", "Care team size", "Show team"]}
+          ></SummaryGrid>
+        </div>
+      </section>
   );
 };
 

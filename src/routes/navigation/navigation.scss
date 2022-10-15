@@ -54,6 +54,13 @@
         margin-right:2rem;
     }
 
+    &__link-active {
+        font-size:1.5rem;
+        color: #626262;
+        margin-right:2rem;
+        text-decoration: underline;
+    }
+
     &__link:hover,
     &__link:active {
         text-decoration: underline;

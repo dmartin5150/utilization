@@ -6,9 +6,9 @@ import TeamCardGrid from "./team-card-grid";
 import Pagination from "../pagination/pagination-component";
 import classnames from 'classnames';
 
-let pageSize = 4;
 
-const TeamCard = ({ teamData,className, onClosePopup}) => {
+
+const TeamCard = ({ teamData,className, onClosePopup,pageSize = 4}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentCareTeam, setCurrentCareTeam] = useState([]);
 
@@ -16,18 +16,19 @@ const TeamCard = ({ teamData,className, onClosePopup}) => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
     setCurrentCareTeam(teamData.slice(firstPageIndex, lastPageIndex));
-  }, [currentPage, teamData]);
+  }, [currentPage, teamData,pageSize]);
 
 
   const closePopupHandler = () => {
+    setCurrentPage(1);
     onClosePopup(false);
   }
 
 
   return (
-    <Popup className={classnames("teamcard__popup",{open:className== 'open'})}>
+    <Popup className={classnames("teamcard__popup",{open:className=== 'open'})}>
     {/* <Popup className={classnames("teamcard__popup")}> */}
-      <div className={classnames("teamcard",{open:className== 'open'})}>
+      <div className={classnames("teamcard",{open:className=== 'open'})}>
         {/* <div className="teamcard__close-container"> */}
           <a href="#" className="teamcard__close" onClick={closePopupHandler}>
             &times;

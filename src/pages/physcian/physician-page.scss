@@ -2,9 +2,23 @@
 
 .provider {
 
-    display:grid;
-    grid-template-columns: 2.6fr 3fr;
-    margin-top:1rem;
+    // display:grid;
+    // grid-template-columns: 2.6fr 3fr;
+    display:flex;
+    max-width: 160rem;
 
+    
+    // &__directory {
+        
+    // }
+
+    // &__info {
+    //     display:table-cell;
+    //     margin-left:2rem;
+    // }
+
+    .pagination-bar {
+        margin-top:2rem;
+    }
 
 }

@@ -42,18 +42,16 @@ const Physician = () => {
       console.log(patients);
       setPatientList(patients);
     };
+    if (currentNPI === '0'){
+      return;
+    }
     getPatientData(currentNPI);
   }, [currentNPI]);
 
 
-
-
-
-
-
   return (
     <section className="provider" >
-      {popupOpen && <ProviderCard
+      {<ProviderCard
         patientData={patientList}
         onOpenPopup={setPopupOpen}
         className={`${popupOpen ? "open" : "close"}`}
@@ -71,7 +69,7 @@ const Physician = () => {
           data={providerList}
           selectedItem={selectedLetter}
           onSelectItem={setCurrentNPI}
-          headings={["Lastname: ", "Number of Providers: "]}
+          headings={["Lastname ", "Number of Providers "]}
           subheadings={["Name", "Number of Patients", "Show List"]}
         ></SummaryGrid>
       </div>

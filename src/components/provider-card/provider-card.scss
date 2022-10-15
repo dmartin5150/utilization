@@ -7,49 +7,39 @@
   box-shadow: 0 2rem 4rem rgba($color-black, 0.2);
   background-color: $color-white;
   border-radius: 3px;
-//   opacity: 0;
-//   visibility:  hidden;
+  opacity: 0;
+  visibility: hidden;
 
-//   transform: translate(-50%,-50%) scale(0.25);
-//   transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%) scale(0.25);
+  //   transform: translate(-50%,-50%);
   transition: all 0.4s 0.2s;
   animation: popup-appear 0.5s;
-  
 
   &.open {
     opacity: 1;
     visibility: visible;
-    transform: translate(-50%,-50%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
 
+  // .popup {
+  //   opacity: 0;
+  //   visibility: hidden;
+  //   transition: all 0.8s;
 
-
-  .popup {
-    opacity:0;
-    visibility: hidden;
-
-    &.open {
-      opacity:1;
-      visibility: visible;
+  //   &.open {
+  //     opacity: 1;
+  //     visibility: visible;
+  //   }
+  // }
+  .pagination {
+    .pagination-item {
+      color: #1e69d2;
     }
-
-
-    }
-    .pagination {
-        .pagination-item  {
-            color:#1e69d2;
-        }
   }
-  
-
-
 
   // background: linear-gradient(to right bottom, $color-primary, #9198e5, #e18484);
   // background: linear-gradient(to right bottom, $color-primary, #9198e5, #e66465);
   // background: linear-gradient(to right bottom, $color-secondary-dark, $color-secondary-light);
-
-
-
 
   .heading {
     padding-top: 1rem;
@@ -59,19 +49,18 @@
     color: $color-grey-dark-4;
 
     &--main {
-        display:block;
-        line-height:0.8;
+      display: block;
+      line-height: 0.8;
     }
-
   }
 
   .head {
-    display:inline-block;
+    display: inline-block;
     background-color: $color-white;
-    margin:0 auto;
+    margin: 0 auto;
 
     &--item {
-        display:inline-block;
+      display: inline-block;
     }
   }
 
@@ -83,16 +72,15 @@
   //   position: relative;
   // }
 
-
   .close {
     &:link,
     &:visited {
-      color:$color-grey-dark-3;
+      color: $color-grey-dark-3;
       position: absolute;
-      top:2.5rem;
+      top: 2.5rem;
       right: 2.5rem;
       font-size: 3rem;
-      display:inline-block;
+      display: inline-block;
       line-height: 1;
     }
   }
@@ -101,30 +89,27 @@
     from {
       opacity: 0;
       visibility: hidden;
-      transform: translate(-50%,-50%) scale(0.25);
+      transform: translate(-50%, -50%) scale(0.25);
     }
 
     to {
       opacity: 1;
       visibility: visible;
-      transform: translate(-50%,-50%) scale(1);
+      transform: translate(-50%, -50%) scale(1);
     }
-
   }
 
   @keyframes popup-disappear {
     from {
       opacity: 1;
       visibility: visible;
-      transform: translate(-50%,-50%) scale(1);
+      transform: translate(-50%, -50%) scale(1);
     }
 
     to {
       opacity: 0;
       visibility: hidden;
-      transform: translate(-50%,-50%) scale(0.25);
+      transform: translate(-50%, -50%) scale(0.25);
     }
-
   }
-
 }
