@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import getFinCareTeam from "../../utilities/fin-data";
 import getDischargeData from "../../utilities/git-discharge-data";
 import getCareTeam from "../../utilities/careteam";
-// import SummaryGrid from "../../components/summary-grid/summary-grid";
+import SummaryGrid from "../../components/summary-grid/summary-grid";
 import Calendar from "../../components/calendar/calendar";
 // import TeamCard from "../../components/team-card/team-card-component";
 import "./utilization.scss";
 import {testData} from "../../data/test-admission-data"
+import { testGridData } from "../../data/test-grid-data";
 
 
 
@@ -17,7 +18,7 @@ const Utilization = () => {
   const [dischargeData, setDischargeData] = useState([]);
   const [careTeamData, setCareTeamData] = useState<CareTeam[]>([]);
   const [currentFin, setCurrentFin] = useState("0");
-  const [selectedDate, setSelectedDate] = useState("08/01/22");
+  const [selectedDate, setSelectedDate] = useState('8/1/2022');
   const [popupOpen, setPopupOpen] = useState(false);
 
   useEffect(() => {
@@ -89,18 +90,21 @@ const Utilization = () => {
             calendarData={testData}
             selectedDate={selectedDate}
             onDateChange={setSelectedDate}
-            pageSize={12}
+            pageSize={15}
           />
         </div>
-        {/* <div className="patient__info">
+
+
+        <div className="patient__info">
           <SummaryGrid
-            data={finCareTeam}
-            selectedItem={selectedDate}
+            data={testGridData}
+            title={`JRI Room Data ${selectedDate}`}
             onSelectItem={setCurrentFin}
-            headings={["Selected Date", "# of discharges"]}
-            subheadings={["FIN", "Care team size", "Show team"]}
+            firstColumnName={'Room'}
+            secondColumnName={'Utilization'}
+            pageSize={10}
           ></SummaryGrid>
-        </div> */}
+        </div>
       </section>
   );
 };

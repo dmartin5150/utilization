@@ -1,24 +1,23 @@
 import React from "react";
+import "./summary-grid-header.scss";
 
 
-export interface SummaryRowHeaderCols {
-    firstColumnName:string;
-    secondColumnName:string
-  }
 
-interface SummaryRowHeaderProps {
-    headers:SummaryRowHeaderCols
+export interface SummaryRowHeaderProps {
+    firstColumnName: string,
+    secondColumnName: string
+
 }
 
 
 
 
 
-const SummaryRowHeader: React.FC<SummaryRowHeaderProps> = ({headers}) => {
+const SummaryRowHeader: React.FC<SummaryRowHeaderProps> = ({firstColumnName,secondColumnName}) => {
     return (
         <header className="head">
-        <h2 className="header-secondary">{headers.firstColumnName}</h2>
-        <h2 className="header-secondary">{headers.secondColumnName}</h2>
+        <h2 className="header-secondary">{firstColumnName}</h2>
+        <h2 className="header-secondary">{secondColumnName}</h2>
       </header>
     );
 

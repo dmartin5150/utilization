@@ -6,7 +6,7 @@
         margin-left:10rem;
         margin-bottom:4rem;
         margin-right:10rem;
-        width: 60rem;
+        width: 65rem;
 
         .heading {
             font-family: 'Cabin';
@@ -26,7 +26,7 @@
 
         .layout{
             display:grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
             grid-template-rows: repeat(3, 1fr);
             column-gap: 2.5rem;
             row-gap: 3rem;

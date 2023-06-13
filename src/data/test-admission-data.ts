@@ -10,7 +10,7 @@ export const testData = [
 {date:'8/7/2022', display:'10%'},
 {date:'8/8/2022', display:'10%'},
 {date:'8/9/2022', display:'10%'},
-{date:'8/10%/2022', display:'10%'},
+{date:'8/10/2022', display:'10%'},
 {date:'8/11/2022', display:'10%'},
 {date:'8/12/2022', display:'10%'},
 {date:'8/13/2022', display:'10%'},

@@ -8,7 +8,7 @@ interface CalendarDayProps {
   id: string;
   calendarDay: CalendarData
   selectedDay:string,
-  onDateChange: (date: string)=>void;
+  onDateChange: (id: string)=>void;
 }
 
 
@@ -17,7 +17,6 @@ const CalendarDay: React.FC<CalendarDayProps> = ({id, calendarDay, selectedDay,o
   const onDateChangeHandler = (event: React.MouseEvent<HTMLDivElement> ) => {
     onDateChange((event.target as HTMLDivElement).id);
   };
-
   return (
     <div
       className={classnames("calendar-day",

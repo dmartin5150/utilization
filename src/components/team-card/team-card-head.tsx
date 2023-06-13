@@ -1,3 +1,4 @@
+import React from "react";
 import "./team-card-head.scss";
 
 const TeamCardHead = ({teamData}) => {
