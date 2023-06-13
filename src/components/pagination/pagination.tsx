@@ -1,22 +1,22 @@
 import React from 'react';
-import './pagination-component.scss';
+import './pagination.scss';
 
 
 import classnames from 'classnames';
 
 import { usePagination, RDOTS,LDOTS } from '../../utilities/pagination/use-pagination';
 
-const Pagination = (props) => {
 
-    const {
-        onPageChange,
-        totalCount,
-        siblingCount=1,
-        currentPage,
-        pageSize,
-        className
-    } = props;
+interface PaginationProps {
+    currentPage:number,
+    totalCount:number,
+    pageSize:number,
+    onPageChange:(page:number) => void
+}
 
+
+const Pagination: React.FC<PaginationProps> = ({currentPage,totalCount,pageSize,onPageChange}) => {
+    const siblingCount = 1;
     const paginationRange = usePagination({
         currentPage,
         totalCount,
@@ -26,7 +26,7 @@ const Pagination = (props) => {
 
 
   
-    if (currentPage === 0 || paginationRange.length <2) {
+    if (currentPage === 0 || !paginationRange || paginationRange.length <2) {
         return null;
     }
 
@@ -42,7 +42,7 @@ const Pagination = (props) => {
 
 
     return (
-        <ul className={classnames('pagination-container', {[className]: className})}>
+        <ul className={classnames('pagination-container')}>
             <li className={classnames('pagination-item',{disabled: currentPage === 1})}
             onClick={onPrevious}>
                 <div className='arrow left'></div>
@@ -60,7 +60,7 @@ const Pagination = (props) => {
                             selected: pageNumber === currentPage
                         })}
                         key = {pageNumber}
-                        onClick={()=> onPageChange(pageNumber)}>
+                        onClick={()=> onPageChange(pageNumber as number)}>
                             {pageNumber}
                     </li>
                 );

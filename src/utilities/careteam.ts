@@ -1,7 +1,7 @@
-const getCareTeam = async (fin = "0") => {
+const getCareTeam = async (fin:string = "0") => {
   try {
     const time = new Date().getTime();
-    const request = `http://localhost:5000/careteam?time=${time}`
+    const request = `http://localhost:5001/careteam?time=${time}`
     const response = await fetch(request, {
       method: "POST",
       headers: {

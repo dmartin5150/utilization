@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 
 import Placard from "../placard/placard-component";
-import Pagination from "../pagination/pagination-component";
-import "./placard-box-component.scss";
+import Pagination from "../pagination/pagination";
+import "./placard-box.scss";
 import classnames from "classnames";
+
+
 
 const PlacardBox = ({
   placardData,
-  subtitle,
   className,
   heading,
   placardClass,

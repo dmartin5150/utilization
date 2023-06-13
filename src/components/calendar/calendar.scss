@@ -1,0 +1,48 @@
+@import '../../sass/abstracts/variables';
+
+
+.calendar {
+        // margin:0;
+        margin-left:10rem;
+        margin-bottom:4rem;
+        margin-right:10rem;
+        width: 60rem;
+
+        .heading {
+            font-family: 'Cabin';
+            background-color: #1b4297;
+            color:$color-white;
+            text-transform: uppercase;
+            text-align:center;
+            font-size:2rem;
+            font-weight:400;
+            padding:2rem;
+            width:100%;
+            box-shadow: 2px 4px 8px rgba($color-black, 0.2);
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+
+        }
+
+        .layout{
+            display:grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: repeat(3, 1fr);
+            column-gap: 2.5rem;
+            row-gap: 3rem;
+            background-color: #1e69d2;
+            padding:2rem 2rem 4rem 2rem;
+            box-shadow: 2px 4px 8px rgba($color-black, 0.2);
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+
+        }
+
+        .pagination-bar {
+            margin-top:2rem;
+            .pagination-item  {
+                color:#1e69d2;
+            }
+        }
+
+}

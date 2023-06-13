@@ -1,12 +1,12 @@
-const getFinCareTeam = async (requestDate) => {
+const getPatientList = async (npi:string) => {
     try {
 
-      const response = await fetch("http://localhost:5000/", {
+      const response = await fetch("http://localhost:5001/patients", {
         method:'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body:JSON.stringify({'date': requestDate})
+        body:JSON.stringify({'NPI': npi})
 
       });
       if (response) {
@@ -19,4 +19,4 @@ const getFinCareTeam = async (requestDate) => {
     }
   };
 
-  export default getFinCareTeam;
+  export default getPatientList;

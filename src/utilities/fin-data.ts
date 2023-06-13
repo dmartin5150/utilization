@@ -1,12 +1,12 @@
-const getProviderList = async (firstLetter) => {
+const getFinCareTeam = async (requestDate: string) => {
     try {
 
-      const response = await fetch("http://localhost:5000/providers", {
+      const response = await fetch("http://localhost:5001/", {
         method:'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body:JSON.stringify({'letter': firstLetter})
+        body:JSON.stringify({'date': requestDate})
 
       });
       if (response) {
@@ -19,4 +19,4 @@ const getProviderList = async (firstLetter) => {
     }
   };
 
-  export default getProviderList;
+  export default getFinCareTeam;

@@ -3,7 +3,7 @@ import "./team-card-component.scss";
 import Popup from "../popup/popup-component";
 import TeamCardHead from "./team-card-head";
 import TeamCardGrid from "./team-card-grid";
-import Pagination from "../pagination/pagination-component";
+import Pagination from "../pagination/pagination";
 import classnames from 'classnames';
 
 

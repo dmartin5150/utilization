@@ -1,12 +1,10 @@
-const getPatientList = async (npi) => {
+const getDischargeData = async () => {
     try {
-
-      const response = await fetch("http://localhost:5000/patients", {
-        method:'POST',
+      const response = await fetch("http://localhost:5001/discharges", {
+        method:'GET',
         headers: {
           'Content-Type': 'application/json'
         },
-        body:JSON.stringify({'NPI': npi})
 
       });
       if (response) {
@@ -19,4 +17,4 @@ const getPatientList = async (npi) => {
     }
   };
 
-  export default getPatientList;
+  export default getDischargeData;
