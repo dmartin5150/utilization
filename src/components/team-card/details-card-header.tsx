@@ -30,7 +30,7 @@ const DetailsCardHead: React.FC<DetailsCardHeadProps> = ({header}) => {
           </div>
           <div className="teamcardhead__row">
             <h2 className="teamcardhead__item">
-              <span className="teamcardhead__item--name"></span>
+              <span className="teamcardhead__item--name">{header.col3}</span>
             </h2>
             <h2 className="teamcardhead__item">
               <span className="teamcardhead__item--name">

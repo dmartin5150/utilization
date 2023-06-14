@@ -6,6 +6,7 @@ import Pagination from "../pagination/pagination";
 import classnames from 'classnames';
 import { DetailsHeader } from "./details-card-header";
 import { GridNames } from "./details-grid";
+import Popup from "../popup/popup-component";
 
 
 export interface DetailsData {
@@ -48,7 +49,7 @@ const DetailsCard: React.FC<DetailsCardProps> = ({title, columns, data, header, 
 
 
   return (
-    <div className={classnames("popup", "teamcard__popup",{open:classIsOpen=== 'open'})}>
+    <Popup className={classnames("popup", "teamcard__popup",{open:classIsOpen=== 'open'})}>
       <div className={classnames("teamcard",{open:classIsOpen=== 'open'})}>
           <a href="#" className="teamcard__close" onClick={closePopupHandler}>
             &times;
@@ -65,7 +66,7 @@ const DetailsCard: React.FC<DetailsCardProps> = ({title, columns, data, header, 
           onPageChange={(page) => setCurrentPage(page)}
         />
       </div>
-    </div>
+    </Popup>
   );
 };
 export default DetailsCard;

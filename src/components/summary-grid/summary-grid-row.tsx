@@ -1,6 +1,7 @@
 import "../../sass/base/_typography.scss";
 import "./summary-grid-row.scss";
 import React, {Fragment} from "react";
+import { SummaryGridData } from "./summary-grid";
 
 
 
@@ -10,7 +11,7 @@ interface SummaryGridRowProps {
   name:string;
   property:string;
   buttonText:string;
-  onSelectItem: (id:string)=>void
+  onSelectItem: (data:SummaryGridData)=>void
 }
 
 
@@ -19,7 +20,8 @@ const SummaryGridRow: React.FC<SummaryGridRowProps> = ({id, name,property, butto
 
     
   const updateItemHandler = (event:React.MouseEvent<HTMLButtonElement>)=> {
-    onSelectItem((event.target as HTMLButtonElement).name);
+   id = (event.target as HTMLButtonElement).id
+    onSelectItem({"id":id,"name":name,"property":property});
   }
   
   return (

@@ -20,7 +20,7 @@ interface SummaryGridProps {
   firstColumnName: string;
   secondColumnName: string;
   buttonText: string;
-  onSelectItem: (id: string)=>void;
+  onSelectItem: (data: SummaryGridData)=>void;
   pageSize: number;
 }
 
