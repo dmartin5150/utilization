@@ -20,6 +20,10 @@
         color: #1e69d2;
         pointer-events: none;
     }
+    
+    &.hidden {
+        visibility: hidden;
+    }
 
     &:hover:not(&.selected) {
         transform: translateY(-3rem) scale(1.1);

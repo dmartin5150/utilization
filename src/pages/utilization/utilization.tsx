@@ -23,7 +23,7 @@ const Utilization = () => {
   const [unit, setUnit]= useState('BH JRI')
   
 
-
+  const hiddenIDs = ["0","1","2","3","4"]
 
   useEffect(() => {
     const getCalendarData = async(unit:string, date:string) => {
@@ -91,6 +91,7 @@ const Utilization = () => {
             calendarData={calendarData}
             selectedDate={selectedDate}
             onDateChange={setSelectedDate}
+            hiddenID={hiddenIDs}
             pageSize={15}
           />
         </div>

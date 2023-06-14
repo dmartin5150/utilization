@@ -13,6 +13,7 @@ interface CalendarProps {
   title: string,
   selectedDate: string;
   calendarData: CalendarData[];
+  hiddenID: string[]
   onDateChange: (date: string)=>void;
   pageSize: number
 }
@@ -22,6 +23,7 @@ const Calendar: React.FC<CalendarProps> = ({
   selectedDate,
   onDateChange,
   calendarData,
+  hiddenID,
   pageSize,
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -38,12 +40,15 @@ const Calendar: React.FC<CalendarProps> = ({
       <h2 className="heading">{title}</h2>
       <ul className="layout">
         {currentCalendarData.map((calendarDay) => {
+          const hideElement:boolean = hiddenID.includes(calendarDay.date.toString());
+          console.log(calendarDay.date, hideElement)
           return (
             <li key={calendarDay.date}>
               <CalendarDay
                 id={calendarDay.date}
                 calendarDay={calendarDay}
                 selectedDay={selectedDate}
+                hideElement={hideElement}
                 onDateChange={onDateChange}
               ></CalendarDay>
             </li>
