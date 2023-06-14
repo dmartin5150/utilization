@@ -14,6 +14,7 @@ export interface DetailsData {
   col2: string;
   col3: string;
   col4: string;
+  col5: string;
 }
 
 

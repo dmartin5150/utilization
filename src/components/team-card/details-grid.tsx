@@ -10,6 +10,7 @@ export interface GridNames {
   col2: string;
   col3: string;
   col4: string;
+  col5: string;
 }
 
 interface DetailsCardGridProps {
@@ -26,6 +27,7 @@ const DetailsCardGrid: React.FC<DetailsCardGridProps> = ({ headers,data }) => {
         <div className="team-card-grid__header--item">{headers.col2}</div>
         <div className="team-card-grid__header--item">{headers.col3}</div>
         <div className="team-card-grid__header--item">{headers.col4}</div>
+        <div className="team-card-grid__header--item">{headers.col5}</div>
         {/* <div className="team-card-grid__header--item">Next Appt.</div> */}
       </header>
       {data.map((item, idx) => {

@@ -23,23 +23,19 @@ const DetailsCardHead: React.FC<DetailsCardHeadProps> = ({header}) => {
           <div className="teamcardhead__row">
             <h2 className="teamcardhead__item">
               <span className="teamcardhead__item--name">{header.col1}</span>
-              {/* {teamData.fin} */}
             </h2>
             <h2 className="teamcardhead__item">
               <span className="teamcardhead__item--name">{header.col2}</span>
-              {/* {teamData.date} */}
             </h2>
           </div>
           <div className="teamcardhead__row">
             <h2 className="teamcardhead__item">
-              <span className="teamcardhead__item--name">{header.col3}</span>
-              {/* {teamData.type} */}
+              <span className="teamcardhead__item--name"></span>
             </h2>
             <h2 className="teamcardhead__item">
               <span className="teamcardhead__item--name">
                 {header.col4}
               </span>
-              {/*  */}
             </h2>
           </div>
         </div>

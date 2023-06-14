@@ -14,6 +14,7 @@ const DetailsCardGridRow: React.FC<DetailsDataProps> = ({data}) => {
       <div className="team-card-grid__row--item">{data.col2}</div>
       <div className="team-card-grid__row--item">{data.col3}</div>
       <div className="team-card-grid__row--item">{data.col4}</div>
+      <div className="team-card-grid__row--item">{data.col5}</div>
     </div>
   );
 };
