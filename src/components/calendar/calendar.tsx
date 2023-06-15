@@ -3,6 +3,7 @@ import "./calendar.scss";
 import CalendarDay from "./calendarDay";
 import Pagination from "../pagination/pagination";
 import Dropdown from "../dropdown/DropDown";
+import DaysOfWeek from "./daysOfWeek";
 
 
 export interface CalendarData {
@@ -47,7 +48,7 @@ const Calendar: React.FC<CalendarProps> = ({
   const [currentCalendarData, setCurrentCalendarData] = useState<CalendarData[]>([]);
 
 
-
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
   useEffect(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
@@ -80,6 +81,11 @@ const Calendar: React.FC<CalendarProps> = ({
             />
         </div>
       </div>
+      <ul className='daysofweek'>
+        {daysOfWeek.map((day)=> {
+          return <DaysOfWeek day={day} />
+        })}
+      </ul>
       <ul className="layout">
         {currentCalendarData.map((calendarDay) => {
           const hideElement:boolean = hiddenID.includes(calendarDay.date.toString());
