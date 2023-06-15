@@ -16,11 +16,29 @@
             text-align:center;
             font-size:2rem;
             font-weight:400;
-            padding:2rem;
+            // padding:2rem;
+            // padding-bottom: rem;
             width:100%;
-            box-shadow: 2px 4px 8px rgba($color-black, 0.2);
+            // box-shadow: 2px 4px 8px rgba($color-black, 0.2);
             border-top-left-radius: 3px;
             border-top-right-radius: 3px;
+
+        }
+
+        .header-title {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            background-color: #1b4297;
+            padding-bottom: 2rem;
+        
+        
+        }
+
+        .header-text {
+            display: flex;
+            flex-direction: column;
+            padding-top: .5rem;
 
         }
 

@@ -20,7 +20,7 @@ const Utilization = () => {
   const [calendarData, setCalendarData] = useState<CalendarData[]>([])
   const [gridData, setGridData] = useState<SummaryGridData[]>([])
   const [popupOpen, setPopupOpen] = useState(false);
-  const [unit, setUnit]= useState('BH JRI')
+  const [unit, setUnit]= useState('MT OR')
   
 
   const hiddenIDs = ["0","1","2","3","4"]
@@ -87,7 +87,7 @@ const Utilization = () => {
           pageSize={6} />
         <div className="patient__calendar">
           <Calendar
-            title={"TNNAS OR Utilization Data: JRI"}
+            title={unit}
             calendarData={calendarData}
             selectedDate={selectedDate}
             onDateChange={setSelectedDate}
@@ -100,7 +100,7 @@ const Utilization = () => {
         <div className="patient__info">
           <SummaryGrid
             data={gridData}
-            title={`JRI Room Data: ${selectedDate}`}
+            title={`${unit} Room Data: ${selectedDate}`}
             onSelectItem={setCurrentDetailData}
             firstColumnName={'Room'}
             secondColumnName={'Utilization'}
