@@ -25,13 +25,14 @@ interface DetailsCardProps {
   columns: GridNames; 
   data: DetailsData[];
   classIsOpen: string;
+  highlightItems: string[];
   onClosePopup: (popUpOpen:boolean)=> void;
   pageSize: number;
 }
 
 
 
-const DetailsCard: React.FC<DetailsCardProps> = ({title, columns, data, header, classIsOpen, onClosePopup,pageSize = 4}) => {
+const DetailsCard: React.FC<DetailsCardProps> = ({title, columns, data, header, classIsOpen,highlightItems, onClosePopup,pageSize = 4}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentDetailData, setCurrentDetailData] = useState<DetailsData[]>([]);
 
@@ -58,7 +59,7 @@ const DetailsCard: React.FC<DetailsCardProps> = ({title, columns, data, header, 
           <span className="teamcard__heading--main">{title}</span>
         </h2>
         <DetailsCardHead header={header} />
-        <DetailsCardGrid headers={columns} data={currentDetailData} />
+        <DetailsCardGrid headers={columns} data={currentDetailData} highLightItems={highlightItems}/>
         <Pagination
           currentPage={currentPage}
           totalCount={data.length}

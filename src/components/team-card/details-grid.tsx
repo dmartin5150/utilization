@@ -15,11 +15,12 @@ export interface GridNames {
 
 interface DetailsCardGridProps {
   headers: GridNames;
-  data: DetailsData[]
+  data: DetailsData[];
+  highLightItems: string[];
 }
 
 
-const DetailsCardGrid: React.FC<DetailsCardGridProps> = ({ headers,data }) => {
+const DetailsCardGrid: React.FC<DetailsCardGridProps> = ({ headers,data,highLightItems }) => {
   return (
     <div className="team-card-grid">
       <header className="team-card-grid__header">
@@ -31,7 +32,8 @@ const DetailsCardGrid: React.FC<DetailsCardGridProps> = ({ headers,data }) => {
         {/* <div className="team-card-grid__header--item">Next Appt.</div> */}
       </header>
       {data.map((item, idx) => {
-        return (<DetailsCardGridRow key={idx} data={item} />)
+        const highLight = highLightItems.includes(item.col1.toString())
+        return (<DetailsCardGridRow key={idx} data={item} highLight={highLight} />)
       })}
       </div>
   );

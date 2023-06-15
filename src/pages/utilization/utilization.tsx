@@ -90,6 +90,7 @@ const Utilization = () => {
           data ={detailsData}
           onClosePopup={setPopupOpen} 
           classIsOpen={`${popupOpen ? "open" : "close"}`}
+          highlightItems={['Open Time']}
           pageSize={6} />
         <div className="patient__calendar">
           <Calendar
@@ -105,6 +106,8 @@ const Utilization = () => {
             onDateChange={setSelectedDate}
             onSelectItemLeft={setMonth}
             onSelectItemRight={setUnit}
+            disableLeft={true}
+            disableRight={false}
             hiddenID={hiddenIDs}
             pageSize={15}
           />

@@ -25,7 +25,9 @@
       border-right: 2px solid $color-black;
     }
   }
-
+  .highlight {
+    color: red;
+  }
   &__row {
     display: grid;
     grid-template-columns: 2fr 2fr 2fr 1fr 1fr;
@@ -35,10 +37,12 @@
     border-left: 2px solid $color-black;
     border-bottom: 2px solid $color-black;
 
+
     &--item {
       font-weight: 400;
       text-align: center;
     }
+
 
     &--contact {
       border-right: 2px solid $color-black;

@@ -6,6 +6,7 @@ interface DropdownProps {
     title: string;
     selected: string;
     menuItems: string[];
+    disabled: boolean;
     onSelectItem: (item:string)=>void;
 }
 
@@ -32,7 +33,7 @@ const useOutsideClick = (callback: ()=>  void) => {
 
 
 
-const Dropdown: React.FC<DropdownProps> = ({title, selected, menuItems,onSelectItem }) => {
+const Dropdown: React.FC<DropdownProps> = ({title, selected, menuItems,disabled, onSelectItem }) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -56,7 +57,7 @@ const Dropdown: React.FC<DropdownProps> = ({title, selected, menuItems,onSelectI
         <div className='trigger'>
             <div className='trigger-unit'>
                 <label>{title}</label>
-                <button onClick={handleOpen} >{selected}</button>
+                <button onClick={handleOpen} disabled={disabled}>{selected} </button>
             </div>
         </div>
         {open ? (

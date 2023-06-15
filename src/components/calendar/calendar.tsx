@@ -22,6 +22,8 @@ interface CalendarProps {
   selectedItemRight: string;
   dropDownLeftTitle: string;
   dropDownRightTitle:string;
+  disableLeft: boolean;
+  disableRight: boolean;
   onDateChange: (date: string)=>void;
   onSelectItemLeft: (item:string)=>void;
   onSelectItemRight: (item:string)=>void;
@@ -35,11 +37,13 @@ const Calendar: React.FC<CalendarProps> = ({
   calendarData,
   hiddenID,
   menuItemsLeft,
+  menuItemsRight,
   selectedItemLeft,
   selectedItemRight,
   dropDownLeftTitle,
   dropDownRightTitle,
-  menuItemsRight,
+  disableLeft,
+  disableRight,
   onSelectItemLeft,
   onSelectItemRight,
   pageSize,
@@ -68,6 +72,7 @@ const Calendar: React.FC<CalendarProps> = ({
             title={dropDownLeftTitle} 
             selected={selectedItemLeft} 
             menuItems = {menuItemsLeft}
+            disabled={disableLeft}
             onSelectItem={onSelectItemLeft}
             />
 
@@ -77,6 +82,7 @@ const Calendar: React.FC<CalendarProps> = ({
             title={dropDownRightTitle} 
             selected={selectedItemRight} 
             menuItems = {menuItemsRight}
+            disabled={disableRight}
             onSelectItem={onSelectItemRight}
             />
         </div>
