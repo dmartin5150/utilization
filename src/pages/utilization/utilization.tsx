@@ -21,9 +21,15 @@ const Utilization = () => {
   const [gridData, setGridData] = useState<SummaryGridData[]>([])
   const [popupOpen, setPopupOpen] = useState(false);
   const [unit, setUnit]= useState('MT OR')
+  const [month, setMonth] = useState('June')
   
 
   const hiddenIDs = ["0","1","2","3","4"]
+  const UnitMenuItems = ['BH JRI','STM ST OR', 'MT OR']
+  const MonthMenuItems = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
+                          'August', 'September', 'October', 'November', 'December']
+
+
 
   useEffect(() => {
     const getCalendarData = async(unit:string, date:string) => {
@@ -90,11 +96,23 @@ const Utilization = () => {
             title={unit}
             calendarData={calendarData}
             selectedDate={selectedDate}
+            menuItemsLeft={MonthMenuItems}
+            menuItemsRight={UnitMenuItems}
+            dropDownLeftTitle="Select Month"
+            dropDownRightTitle="Select Unit"
+            selectedItemLeft={month}
+            selectedItemRight={unit}
             onDateChange={setSelectedDate}
+            onSelectItemLeft={setMonth}
+            onSelectItemRight={setUnit}
             hiddenID={hiddenIDs}
             pageSize={15}
           />
         </div>
+
+  selectedItemLeft,
+  selectedItemRight,
+
 
 
         <div className="patient__info">

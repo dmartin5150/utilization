@@ -1,4 +1,4 @@
-import React, {useState , useRef} from "react";
+import React, {useState} from "react";
 import './dropdown.scss';
 
 
@@ -6,11 +6,8 @@ interface DropdownProps {
     title: string;
     selected: string;
     menuItems: string[];
+    onSelectItem: (item:string)=>void;
 }
-
-
-
-
 
 
 const useOutsideClick = (callback: ()=>  void) => {
@@ -35,7 +32,7 @@ const useOutsideClick = (callback: ()=>  void) => {
 
 
 
-const Dropdown: React.FC<DropdownProps> = ({title, selected, menuItems }) => {
+const Dropdown: React.FC<DropdownProps> = ({title, selected, menuItems,onSelectItem }) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -44,6 +41,8 @@ const Dropdown: React.FC<DropdownProps> = ({title, selected, menuItems }) => {
     
     const handleSelectItem = (event: React.MouseEvent<HTMLButtonElement>) => {
         console.log('Name:', (event.target as HTMLButtonElement).name)
+        const name = (event.target as HTMLButtonElement).name
+        onSelectItem(name)
         setOpen(false);
     }
 

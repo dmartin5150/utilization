@@ -14,8 +14,16 @@ interface CalendarProps {
   title: string,
   selectedDate: string;
   calendarData: CalendarData[];
-  hiddenID: string[]
+  hiddenID: string[];
+  menuItemsLeft: string[];
+  menuItemsRight: string[];
+  selectedItemLeft: string;
+  selectedItemRight: string;
+  dropDownLeftTitle: string;
+  dropDownRightTitle:string;
   onDateChange: (date: string)=>void;
+  onSelectItemLeft: (item:string)=>void;
+  onSelectItemRight: (item:string)=>void;
   pageSize: number
 }
 
@@ -25,14 +33,20 @@ const Calendar: React.FC<CalendarProps> = ({
   onDateChange,
   calendarData,
   hiddenID,
+  menuItemsLeft,
+  selectedItemLeft,
+  selectedItemRight,
+  dropDownLeftTitle,
+  dropDownRightTitle,
+  menuItemsRight,
+  onSelectItemLeft,
+  onSelectItemRight,
   pageSize,
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentCalendarData, setCurrentCalendarData] = useState<CalendarData[]>([]);
 
-  const MenuItems = ['BH JRI','STM ST OR', 'MT OR']
-  const MonthMenuItems = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
-                          'August', 'September', 'October', 'November', 'December']
+
 
 
   useEffect(() => {
@@ -49,10 +63,21 @@ const Calendar: React.FC<CalendarProps> = ({
           <h2 className="heading">{title}</h2>
         </div>
         <div className="calendar-dropdown">
-          <Dropdown title={'Select Month'} selected={'June'} menuItems = {MonthMenuItems}/>
+          <Dropdown 
+            title={dropDownLeftTitle} 
+            selected={selectedItemLeft} 
+            menuItems = {menuItemsLeft}
+            onSelectItem={onSelectItemLeft}
+            />
+
         </div>
         <div className="calendar-dropdown">
-          <Dropdown title={'Select Unit'} selected={'BH JRI'} menuItems = {MenuItems}/>
+          <Dropdown 
+            title={dropDownRightTitle} 
+            selected={selectedItemRight} 
+            menuItems = {menuItemsRight}
+            onSelectItem={onSelectItemRight}
+            />
         </div>
       </div>
       <ul className="layout">
