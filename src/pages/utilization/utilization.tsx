@@ -110,9 +110,6 @@ const Utilization = () => {
           />
         </div>
 
-  selectedItemLeft,
-  selectedItemRight,
-
 
 
         <div className="patient__info">
