@@ -12,7 +12,7 @@ const sayHello = async () => {
         return data
       }
     } catch (e) {
-      console.log("Error: ", e);
+      // console.log("Error: ", e);
       return 
     }
   };

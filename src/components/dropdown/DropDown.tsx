@@ -41,7 +41,7 @@ const Dropdown: React.FC<DropdownProps> = ({title, selected, menuItems,disabled,
     }
     
     const handleSelectItem = (event: React.MouseEvent<HTMLButtonElement>) => {
-        console.log('Name:', (event.target as HTMLButtonElement).name)
+        // console.log('Name:', (event.target as HTMLButtonElement).name)
         const name = (event.target as HTMLButtonElement).name
         onSelectItem(name)
         setOpen(false);

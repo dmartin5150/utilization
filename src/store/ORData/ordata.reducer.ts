@@ -27,7 +27,7 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
 }
 
 export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):ORDataState =>  {
-    console.log(action.type)
+    // console.log(action.type)
     if (fetchDataStart.match(action)) {
         return {...state, isLoading: true}
     }
@@ -41,11 +41,9 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
         return {...state, gridData:action.payload, isLoading:false}
     }
     if (fetchDetailsSuccess.match(action)) {
-        console.log('updated success')
         return {...state, detailsData: action.payload, isLoading:false, popOpen:true}
     }
     if (closePopUp.match(action)) {
-        console.log('closing popup')
         return {...state, popOpen: false}
     }
     return state;

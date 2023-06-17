@@ -14,7 +14,7 @@ const getFinCareTeam = async (requestDate: string) => {
         return data
       }
     } catch (e) {
-      console.log("Error: ", e);
+      // console.log("Error: ", e);
       return []
     }
   };
