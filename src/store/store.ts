@@ -9,7 +9,7 @@ import { rootReducer } from './rootreducer';
 
 
 
-const middleWares = [logger,thunk];
+const middleWares = [thunk];
 
 const composedEnhancers = compose(applyMiddleware(...middleWares))
 

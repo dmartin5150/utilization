@@ -16,4 +16,9 @@ export const selectGridData = createSelector(
 export const selectDetailData = createSelector(
     [selectORDataReducer],
     (ORDataSlice) => ORDataSlice.detailsData
+);
+
+export const selectPopUpIsOpen = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.popOpen
 )

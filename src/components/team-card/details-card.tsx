@@ -26,7 +26,7 @@ interface DetailsCardProps {
   data: DetailsData[];
   classIsOpen: string;
   highlightItems: string[];
-  onClosePopup: (popUpOpen:boolean)=> void;
+  onClosePopup: ()=> void;
   pageSize: number;
 }
 
@@ -45,7 +45,7 @@ const DetailsCard: React.FC<DetailsCardProps> = ({title, columns, data, header, 
 
   const closePopupHandler = () => {
     setCurrentPage(1);
-    onClosePopup(false);
+    onClosePopup();
   }
 
 

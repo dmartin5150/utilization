@@ -3,27 +3,18 @@ import SummaryGrid from "../../components/summary-grid/summary-grid";
 import Calendar from "../../components/calendar/calendar";
 import DetailsCard from "../../components/team-card/details-card";
 import "./utilization.scss";
-import { DetailsData } from "../../components/team-card/details-card";
-import { SummaryGridData } from "../../components/summary-grid/summary-grid";
-import getDetails from "../../utilities/fetchData/getDetails";
 import { useSelector } from "react-redux";
-import { selectCalendarData, selectDetailData, selectGridData } from "../../store/ORData/ordata.selector";
+import { selectCalendarData, selectDetailData, selectGridData, selectPopUpIsOpen } from "../../store/ORData/ordata.selector";
 import { fetchCalendarDataAsync } from "../../store/ORData/actions/calendar.actions";
 import { fetchGridDataAsync } from "../../store/ORData/actions/grid.actions";
-import { fetchDetailDataAsync } from "../../store/ORData/actions/details.actions";
+import { fetchDetailDataAsync, closePopUp } from "../../store/ORData/actions/details.actions";
 import { useAppDispatch } from "../../hooks/hooks";
 
 
 
 
-
-
 const Utilization = () => {
-  // const [detailsData, setDetailsData] = useState<DetailsData[]>([]);
-  const [currentDetailData, setCurrentDetailData] = useState<SummaryGridData>({"id":"0","name":"0","property":"0"});
   const [selectedDate, setSelectedDate] = useState('2023-06-01');
-  // const [gridData, setGridData] = useState<SummaryGridData[]>([])
-  const [popupOpen, setPopupOpen] = useState(false);
   const [unit, setUnit]= useState('MT OR')
   const [month, setMonth] = useState('June')
   
@@ -34,10 +25,12 @@ const Utilization = () => {
                           'August', 'September', 'October', 'November', 'December']
 
   const dispatch = useAppDispatch();
-  
+
+
   const calendarData = useSelector(selectCalendarData);
   const gridData = useSelector(selectGridData)
   const detailsData = useSelector(selectDetailData)
+  const popupOpen = useSelector(selectPopUpIsOpen);
 
   useEffect(() => {
     dispatch(fetchCalendarDataAsync());
@@ -47,45 +40,22 @@ const Utilization = () => {
     dispatch(fetchGridDataAsync())
   }, [unit, selectedDate]);
   
-
-
-  useEffect(() => {
-    // const getDetailInfo = async (unit:string, date:string, room:string) => {
-    //   const details = await getDetails(unit,date,room)
-    //   if (details) {
-    //     setDetailsData(details);
-    //   }
-    // };
-    if (currentDetailData.name === '0'){
-      return;
-    }
+  const setDetailData = () => {
     dispatch(fetchDetailDataAsync())
-    // getDetailInfo(unit, selectedDate,currentDetailData.name);
-  }, [unit, currentDetailData]);
+  }
 
-  useEffect(() => {
-    if (!popupOpen) {
-      setCurrentDetailData({"id":"0","name":"0","property":"0"});
-    }
-  }, [popupOpen]);
-
-  useEffect(() => {
-    if (detailsData.length) {
-      setPopupOpen(true);
-    }
-  }, [detailsData]);
-
-
- 
+  const closeDetailsCard = () => {
+    dispatch(closePopUp());
+  }
 
   return (
       <section className="utilization">
         <DetailsCard 
           title={"OR Utilization"} 
-          header={{'col1':currentDetailData.name,'col2':selectedDate, 'col3':`Utilization ${currentDetailData.property}`, 'col4': ''}}
+          header={{'col1':'BH JRI','col2':selectedDate, 'col3':`Utilization 10%`, 'col4': ''}}
           columns={{'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Duration'}}
           data ={detailsData}
-          onClosePopup={setPopupOpen} 
+          onClosePopup={closeDetailsCard} 
           classIsOpen={`${popupOpen ? "open" : "close"}`}
           highlightItems={['Open Time']}
           pageSize={6} />
@@ -110,13 +80,11 @@ const Utilization = () => {
           />
         </div>
 
-
-
         <div className="patient__info">
           <SummaryGrid
             data={gridData}
             title={`${unit} Room Data: ${selectedDate}`}
-            onSelectItem={setCurrentDetailData}
+            onSelectItem={setDetailData}
             firstColumnName={'Room'}
             secondColumnName={'Utilization'}
             buttonText={'Details'}
