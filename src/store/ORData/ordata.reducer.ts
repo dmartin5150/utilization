@@ -4,6 +4,7 @@ import { DetailsData } from "../../components/team-card/details-card";
 import { AnyAction } from "redux";
 import { fetchCalendarSuccess} from "./actions/calendar.actions";
 import { fetchGridSuccess} from "./actions/grid.actions";
+import { fetchDetailsSuccess} from "./actions/details.actions";
 import { fetchDataStart, fetchDataFailed } from "./actions/ordata.actions";
 
 export type ORDataState = {
@@ -35,6 +36,9 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     }
     if (fetchGridSuccess.match(action)) {
         return {...state, gridData:action.payload, isLoading:false}
+    }
+    if (fetchDetailsSuccess.match(action)) {
+        return {...state, detailsData: action.payload, isLoading:false}
     }
     return state;
 }

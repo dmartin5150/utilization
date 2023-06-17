@@ -5,11 +5,12 @@ import DetailsCard from "../../components/team-card/details-card";
 import "./utilization.scss";
 import { DetailsData } from "../../components/team-card/details-card";
 import { SummaryGridData } from "../../components/summary-grid/summary-grid";
-import getDetails from "../../utilities/getDetails";
+import getDetails from "../../utilities/fetchData/getDetails";
 import { useSelector } from "react-redux";
-import { selectCalendarData, selectGridData } from "../../store/ORData/ordata.selector";
+import { selectCalendarData, selectDetailData, selectGridData } from "../../store/ORData/ordata.selector";
 import { fetchCalendarDataAsync } from "../../store/ORData/actions/calendar.actions";
 import { fetchGridDataAsync } from "../../store/ORData/actions/grid.actions";
+import { fetchDetailDataAsync } from "../../store/ORData/actions/details.actions";
 import { useAppDispatch } from "../../hooks/hooks";
 
 
@@ -18,7 +19,7 @@ import { useAppDispatch } from "../../hooks/hooks";
 
 
 const Utilization = () => {
-  const [detailsData, setDetailsData] = useState<DetailsData[]>([]);
+  // const [detailsData, setDetailsData] = useState<DetailsData[]>([]);
   const [currentDetailData, setCurrentDetailData] = useState<SummaryGridData>({"id":"0","name":"0","property":"0"});
   const [selectedDate, setSelectedDate] = useState('2023-06-01');
   // const [gridData, setGridData] = useState<SummaryGridData[]>([])
@@ -36,6 +37,7 @@ const Utilization = () => {
   
   const calendarData = useSelector(selectCalendarData);
   const gridData = useSelector(selectGridData)
+  const detailsData = useSelector(selectDetailData)
 
   useEffect(() => {
     dispatch(fetchCalendarDataAsync());
@@ -48,16 +50,17 @@ const Utilization = () => {
 
 
   useEffect(() => {
-    const getDetailInfo = async (unit:string, date:string, room:string) => {
-      const details = await getDetails(unit,date,room)
-      if (details) {
-        setDetailsData(details);
-      }
-    };
+    // const getDetailInfo = async (unit:string, date:string, room:string) => {
+    //   const details = await getDetails(unit,date,room)
+    //   if (details) {
+    //     setDetailsData(details);
+    //   }
+    // };
     if (currentDetailData.name === '0'){
       return;
     }
-    getDetailInfo(unit, selectedDate,currentDetailData.name);
+    dispatch(fetchDetailDataAsync())
+    // getDetailInfo(unit, selectedDate,currentDetailData.name);
   }, [unit, currentDetailData]);
 
   useEffect(() => {

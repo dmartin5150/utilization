@@ -1,8 +1,6 @@
-import { DetailsData } from "../components/team-card/details-card";
+import { DetailsData } from "../../components/team-card/details-card";
 
 const getDetails = async (unit:string, date: string, room:string) => {
-    try {
-
       const response = await fetch("http://localhost:5001/details", {
         method:'POST',
         headers: {
@@ -15,10 +13,6 @@ const getDetails = async (unit:string, date: string, room:string) => {
         const data: DetailsData[] = await response.json();
         return data
       }
-    } catch (e) {
-      console.log("Error: ", e);
       return []
-    }
   };
-
   export default getDetails;
