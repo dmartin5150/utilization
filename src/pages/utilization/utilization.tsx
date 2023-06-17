@@ -9,9 +9,12 @@ import getCalendar from "../../utilities/getCalendar";
 import getGridData from "../../utilities/getGridData";
 import { SummaryGridData } from "../../components/summary-grid/summary-grid";
 import getDetails from "../../utilities/getDetails";
-import { setCalendarData } from "../../store/ORData/ordata.actions";
-import { useDispatch, useSelector } from "react-redux";
+// import { setCalendarData } from "../../store/ORData/ordata.actions";
+import { useSelector } from "react-redux";
 import { selectCalendarData } from "../../store/ORData/ordata.selector";
+import { fetchCalendarDataAsync } from "../../store/ORData/ordata.actions";
+import { useAppDispatch } from "../../hooks/hooks";
+
 
 
 
@@ -33,18 +36,20 @@ const Utilization = () => {
   const MonthMenuItems = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
                           'August', 'September', 'October', 'November', 'December']
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   
   const calendarData = useSelector(selectCalendarData);
 
   useEffect(() => {
     const getCalendarData = async(unit:string, date:string) => {
-       let data = await getCalendar(unit, date)
-       if (data) {
-        dispatch(setCalendarData(data))
-       }
+      //  let data = await getCalendar(unit, date)
+      //  if (data) {
+      //   dispatch(setCalendarData(data))
+      //  }
+  
     }
-    getCalendarData(unit, selectedDate)
+    dispatch(fetchCalendarDataAsync());
+    // getCalendarData(unit, selectedDate)
   }, [unit]);
 
   useEffect(() => {

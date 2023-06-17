@@ -1,8 +1,7 @@
 import { CalendarData } from "../components/calendar/calendar";
 
-const getCalendar = async (unit:string, date: string) => {
-    try {
 
+const getCalendarData = async (unit:string, date: string)=> {
       const response = await fetch("http://localhost:5001/calendar", {
         method:'POST',
         headers: {
@@ -16,10 +15,6 @@ const getCalendar = async (unit:string, date: string) => {
         return data
       }
       return []
-    } catch (e) {
-      console.log("Error: ", e);
-      return e
-    }
   };
 
-  export default getCalendar;
+  export default getCalendarData;
