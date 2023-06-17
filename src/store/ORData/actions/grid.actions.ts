@@ -18,11 +18,11 @@ export const fetchGridSuccess = withMatcher((data:SummaryGridData[]):FetchGridSu
 
 
 
-export const fetchGridDataAsync = () => {
+export const fetchGridDataAsync = (unit: string, date: string) => {
     return async(dispatch:AppDispatch) => {
         dispatch(fetchDataStart);
         try {
-            const gridData  = await getGridData('BH JRI', '2023-06-01')
+            const gridData  = await getGridData(unit, date)
             dispatch(fetchGridSuccess(gridData))
         } catch (error) {
             dispatch(fetchDataFailed(error as Error))

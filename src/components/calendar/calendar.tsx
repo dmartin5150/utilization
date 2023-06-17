@@ -59,7 +59,6 @@ const Calendar: React.FC<CalendarProps> = ({
     const lastPageIndex = firstPageIndex + pageSize;
     setCurrentCalendarData(calendarData.slice(firstPageIndex, lastPageIndex));
   }, [currentPage, calendarData]);
-
   return (
     <div className={"calendar"}>
       <div className='header-title'>

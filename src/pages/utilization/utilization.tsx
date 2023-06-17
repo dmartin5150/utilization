@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SummaryGrid from "../../components/summary-grid/summary-grid";
+import SummaryGrid, { SummaryGridData } from "../../components/summary-grid/summary-grid";
 import Calendar from "../../components/calendar/calendar";
 import DetailsCard from "../../components/team-card/details-card";
 import "./utilization.scss";
@@ -11,12 +11,10 @@ import { fetchGridDataAsync } from "../../store/ORData/actions/grid.actions";
 import { fetchDetailDataAsync, closePopUp } from "../../store/ORData/actions/details.actions";
 import { useAppDispatch } from "../../hooks/hooks";
 import { setRoom, setDate, setUnit } from "../../store/Facility/facilty.actions";
-import { FACILITY_UNITS } from "../../store/Facility/facitlityUnits";
+import { FacilityRoom } from "../../store/Facility/facitlity.reducer";
 
 
 const Utilization = () => {
-  // const [selectedDate, setSelectedDate] = useState('2023-06-01');
-  // const [unit, setUnit]= useState('MT OR')
   const [month, setMonth] = useState('June')
   
   const hiddenIDs = ["0","1","2","3","4"]
@@ -25,25 +23,28 @@ const Utilization = () => {
                           'August', 'September', 'October', 'November', 'December']
 
   const dispatch = useAppDispatch();
-
-
   const calendarData = useSelector(selectCalendarData);
   const gridData = useSelector(selectGridData)
   const detailsData = useSelector(selectDetailData)
   const popupOpen = useSelector(selectPopUpIsOpen);
   const selectedDate = useSelector(selectDate)
-  const unit = useSelector(selectDate)
+  const unit = useSelector(selectUnit)
+  const room = useSelector(selectRoom)
 
   useEffect(() => {
-    dispatch(fetchCalendarDataAsync());
+    dispatch(fetchCalendarDataAsync(unit, selectedDate));
   }, [unit]);
 
   useEffect(() => {
-    dispatch(fetchGridDataAsync())
+    dispatch(fetchGridDataAsync(unit, selectedDate))
   }, [unit, selectedDate]);
   
-  const setDetailData = () => {
-    dispatch(fetchDetailDataAsync())
+  const setDetailData = (data:SummaryGridData) => {
+    const room: FacilityRoom = {"name":data.id, "utilization":data.property}
+    if (room.utilization !== '0%') {
+      dispatch(setRoom(room))
+      dispatch(fetchDetailDataAsync(unit, selectedDate,room))
+    }
   }
 
   const closeDetailsCard = () => {
@@ -62,7 +63,7 @@ const Utilization = () => {
       <section className="utilization">
         <DetailsCard 
           title={"OR Utilization"} 
-          header={{'col1':'BH JRI','col2':selectedDate, 'col3':`Utilization 10%`, 'col4': ''}}
+          header={{'col1':room.name,'col2':selectedDate, 'col3':`Utilization ${room.utilization}`, 'col4': ''}}
           columns={{'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Duration'}}
           data ={detailsData}
           onClosePopup={closeDetailsCard} 
