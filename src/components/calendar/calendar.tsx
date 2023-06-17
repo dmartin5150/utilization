@@ -4,31 +4,26 @@ import CalendarDay from "./calendarDay";
 import Pagination from "../pagination/pagination";
 import Dropdown from "../dropdown/DropDown";
 import DaysOfWeek from "./daysOfWeek";
-
+import { DropDownBox } from "../dropdown/DropDown";
 
 export interface CalendarData {
   date: string;
   display: string;
 }
 
+
+
 interface CalendarProps {
   title: string,
   selectedDate: string;
   calendarData: CalendarData[];
   hiddenID: string[];
-  menuItemsLeft: string[];
-  menuItemsRight: string[];
-  selectedItemLeft: string;
-  selectedItemRight: string;
-  dropDownLeftTitle: string;
-  dropDownRightTitle:string;
-  disableLeft: boolean;
-  disableRight: boolean;
+  dropDownLeft:DropDownBox;
+  dropDownRight: DropDownBox;
   onDateChange: (date: string)=>void;
-  onSelectItemLeft: (item:string)=>void;
-  onSelectItemRight: (item:string)=>void;
   pageSize: number
 }
+
 
 const Calendar: React.FC<CalendarProps> = ({
   title,
@@ -36,16 +31,8 @@ const Calendar: React.FC<CalendarProps> = ({
   onDateChange,
   calendarData,
   hiddenID,
-  menuItemsLeft,
-  menuItemsRight,
-  selectedItemLeft,
-  selectedItemRight,
-  dropDownLeftTitle,
-  dropDownRightTitle,
-  disableLeft,
-  disableRight,
-  onSelectItemLeft,
-  onSelectItemRight,
+  dropDownLeft,
+  dropDownRight,
   pageSize,
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -68,21 +55,21 @@ const Calendar: React.FC<CalendarProps> = ({
         </div>
         <div className="calendar-dropdown">
           <Dropdown 
-            title={dropDownLeftTitle} 
-            selected={selectedItemLeft} 
-            menuItems = {menuItemsLeft}
-            disabled={disableLeft}
-            onSelectItem={onSelectItemLeft}
+            title={dropDownLeft.title} 
+            selected={dropDownLeft.selected} 
+            menuItems = {dropDownLeft.menuItems}
+            disabled={dropDownLeft.disabled}
+            onSelectItem={dropDownLeft.onSelectItem}
             />
 
         </div>
         <div className="calendar-dropdown">
           <Dropdown 
-            title={dropDownRightTitle} 
-            selected={selectedItemRight} 
-            menuItems = {menuItemsRight}
-            disabled={disableRight}
-            onSelectItem={onSelectItemRight}
+            title={dropDownRight.title} 
+            selected={dropDownRight.selected} 
+            menuItems = {dropDownRight.menuItems}
+            disabled={dropDownRight.disabled}
+            onSelectItem={dropDownRight.onSelectItem}
             />
         </div>
       </div>

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import './dropdown.scss';
 
 
-interface DropdownProps {
+export type  DropDownBox = {
     title: string;
     selected: string;
     menuItems: string[];
@@ -33,7 +33,7 @@ const useOutsideClick = (callback: ()=>  void) => {
 
 
 
-const Dropdown: React.FC<DropdownProps> = ({title, selected, menuItems,disabled, onSelectItem }) => {
+const Dropdown: React.FC<DropDownBox> = ({title, selected, menuItems,disabled, onSelectItem }) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {

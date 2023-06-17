@@ -12,6 +12,9 @@ import { fetchDetailDataAsync, closePopUp } from "../../store/ORData/actions/det
 import { useAppDispatch } from "../../hooks/hooks";
 import { setRoom, setDate, setUnit } from "../../store/Facility/facilty.actions";
 import { FacilityRoom } from "../../store/Facility/facitlity.reducer";
+import { DropDownBox } from "../../components/dropdown/DropDown";
+import { GridNames } from "../../components/team-card/details-grid";
+import { DetailsHeader } from "../../components/team-card/details-card-header";
 
 
 const Utilization = () => {
@@ -59,12 +62,31 @@ const Utilization = () => {
     dispatch(setUnit (unit))
   }
 
+
+  const calendarDropDownLeft: DropDownBox = {
+    title: "Select Month",
+    selected: month,
+    menuItems: MonthMenuItems,
+    disabled: true,
+    onSelectItem:setMonth
+  }
+
+  const calendarDropDownRight: DropDownBox = {
+    title: "Select Unit",
+    selected: unit,
+    menuItems: UnitMenuItems,
+    disabled: false,
+    onSelectItem:setSelectedUnit,
+  }
+  const detailsHeader:DetailsHeader = {'col1':room.name,'col2':selectedDate, 'col3':`Utilization ${room.utilization}`, 'col4': ''}
+  const detailsColHeader:GridNames = {'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Duration'}
+
   return (
       <section className="utilization">
         <DetailsCard 
           title={"OR Utilization"} 
-          header={{'col1':room.name,'col2':selectedDate, 'col3':`Utilization ${room.utilization}`, 'col4': ''}}
-          columns={{'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Duration'}}
+          header={detailsHeader}
+          columns={detailsColHeader}
           data ={detailsData}
           onClosePopup={closeDetailsCard} 
           classIsOpen={`${popupOpen ? "open" : "close"}`}
@@ -75,22 +97,13 @@ const Utilization = () => {
             title={unit}
             calendarData={calendarData}
             selectedDate={selectedDate}
-            menuItemsLeft={MonthMenuItems}
-            menuItemsRight={UnitMenuItems}
-            dropDownLeftTitle="Select Month"
-            dropDownRightTitle="Select Unit"
-            selectedItemLeft={month}
-            selectedItemRight={unit}
+            dropDownLeft={calendarDropDownLeft}
+            dropDownRight= {calendarDropDownRight}
             onDateChange={setSelectedDate}
-            onSelectItemLeft={setMonth}
-            onSelectItemRight={setSelectedUnit}
-            disableLeft={true}
-            disableRight={false}
             hiddenID={hiddenIDs}
             pageSize={30}
           />
         </div>
-
         <div className="patient__info">
           <SummaryGrid
             data={gridData}
