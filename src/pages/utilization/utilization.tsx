@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import SummaryGrid from "../../components/summary-grid/summary-grid";
 import Calendar from "../../components/calendar/calendar";
-import { CalendarData } from "../../components/calendar/calendar";
 import DetailsCard from "../../components/team-card/details-card";
 import "./utilization.scss";
 import { DetailsData } from "../../components/team-card/details-card";
-import getCalendar from "../../utilities/getCalendar";
-import getGridData from "../../utilities/getGridData";
 import { SummaryGridData } from "../../components/summary-grid/summary-grid";
 import getDetails from "../../utilities/getDetails";
-// import { setCalendarData } from "../../store/ORData/ordata.actions";
 import { useSelector } from "react-redux";
-import { selectCalendarData } from "../../store/ORData/ordata.selector";
-import { fetchCalendarDataAsync } from "../../store/ORData/ordata.actions";
+import { selectCalendarData, selectGridData } from "../../store/ORData/ordata.selector";
+import { fetchCalendarDataAsync } from "../../store/ORData/actions/calendar.actions";
+import { fetchGridDataAsync } from "../../store/ORData/actions/grid.actions";
 import { useAppDispatch } from "../../hooks/hooks";
 
 
@@ -24,8 +21,7 @@ const Utilization = () => {
   const [detailsData, setDetailsData] = useState<DetailsData[]>([]);
   const [currentDetailData, setCurrentDetailData] = useState<SummaryGridData>({"id":"0","name":"0","property":"0"});
   const [selectedDate, setSelectedDate] = useState('2023-06-01');
-  // const [calendarData, setCalendarData] = useState<CalendarData[]>([])
-  const [gridData, setGridData] = useState<SummaryGridData[]>([])
+  // const [gridData, setGridData] = useState<SummaryGridData[]>([])
   const [popupOpen, setPopupOpen] = useState(false);
   const [unit, setUnit]= useState('MT OR')
   const [month, setMonth] = useState('June')
@@ -39,27 +35,14 @@ const Utilization = () => {
   const dispatch = useAppDispatch();
   
   const calendarData = useSelector(selectCalendarData);
+  const gridData = useSelector(selectGridData)
 
   useEffect(() => {
-    const getCalendarData = async(unit:string, date:string) => {
-      //  let data = await getCalendar(unit, date)
-      //  if (data) {
-      //   dispatch(setCalendarData(data))
-      //  }
-  
-    }
     dispatch(fetchCalendarDataAsync());
-    // getCalendarData(unit, selectedDate)
   }, [unit]);
 
   useEffect(() => {
-    const getGridInfo = async(unit:string, date:string) => {
-       let data = await getGridData(unit, date)
-       if (data) {
-        setGridData(data)
-       }
-    }
-    getGridInfo(unit, selectedDate)
+    dispatch(fetchGridDataAsync())
   }, [unit, selectedDate]);
   
 

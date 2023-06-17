@@ -16,6 +16,4 @@ const composedEnhancers = compose(applyMiddleware(...middleWares))
 export const store = createStore(rootReducer,undefined,composedEnhancers)
 
 export type RootState = ReturnType<typeof rootReducer>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-// export type AppDispatch = typeof store.dispatch
 export type AppDispatch = Dispatch<AnyAction> & ThunkDispatch<RootState, null, AnyAction> 

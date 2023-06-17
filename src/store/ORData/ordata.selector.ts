@@ -8,4 +8,7 @@ export const selectCalendarData = createSelector(
     (ORDataSlice) => ORDataSlice.calendarData
 )
 
-export const selectCalendarData1 = (state:RootState) => state.ORData.calendarData; 
+export const selectGridData = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.gridData
+)
