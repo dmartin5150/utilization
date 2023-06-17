@@ -88,14 +88,13 @@ const Calendar: React.FC<CalendarProps> = ({
         </div>
       </div>
       <ul className='daysofweek'>
-        {daysOfWeek.map((day)=> {
-          return <DaysOfWeek day={day} />
+        {daysOfWeek.map((day, index)=> {
+          return <DaysOfWeek key={index} day={day} />
         })}
       </ul>
       <ul className="layout">
         {currentCalendarData.map((calendarDay) => {
           const hideElement:boolean = hiddenID.includes(calendarDay.date.toString());
-          console.log(calendarDay.date, hideElement)
           return (
             <li key={calendarDay.date}>
               <CalendarDay

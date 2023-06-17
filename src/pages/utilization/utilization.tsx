@@ -9,6 +9,10 @@ import getCalendar from "../../utilities/getCalendar";
 import getGridData from "../../utilities/getGridData";
 import { SummaryGridData } from "../../components/summary-grid/summary-grid";
 import getDetails from "../../utilities/getDetails";
+import { setCalendarData } from "../../store/ORData/ordata.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCalendarData } from "../../store/ORData/ordata.selector";
+
 
 
 
@@ -17,7 +21,7 @@ const Utilization = () => {
   const [detailsData, setDetailsData] = useState<DetailsData[]>([]);
   const [currentDetailData, setCurrentDetailData] = useState<SummaryGridData>({"id":"0","name":"0","property":"0"});
   const [selectedDate, setSelectedDate] = useState('2023-06-01');
-  const [calendarData, setCalendarData] = useState<CalendarData[]>([])
+  // const [calendarData, setCalendarData] = useState<CalendarData[]>([])
   const [gridData, setGridData] = useState<SummaryGridData[]>([])
   const [popupOpen, setPopupOpen] = useState(false);
   const [unit, setUnit]= useState('MT OR')
@@ -29,13 +33,15 @@ const Utilization = () => {
   const MonthMenuItems = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
                           'August', 'September', 'October', 'November', 'December']
 
-
+  const dispatch = useDispatch();
+  
+  const calendarData = useSelector(selectCalendarData);
 
   useEffect(() => {
     const getCalendarData = async(unit:string, date:string) => {
        let data = await getCalendar(unit, date)
        if (data) {
-        setCalendarData(data)
+        dispatch(setCalendarData(data))
        }
     }
     getCalendarData(unit, selectedDate)
@@ -79,7 +85,7 @@ const Utilization = () => {
   }, [detailsData]);
 
 
-
+ 
 
   return (
       <section className="utilization">
@@ -109,7 +115,7 @@ const Utilization = () => {
             disableLeft={true}
             disableRight={false}
             hiddenID={hiddenIDs}
-            pageSize={15}
+            pageSize={30}
           />
         </div>
 
@@ -123,7 +129,7 @@ const Utilization = () => {
             firstColumnName={'Room'}
             secondColumnName={'Utilization'}
             buttonText={'Details'}
-            pageSize={10}
+            pageSize={18}
           ></SummaryGrid>
         </div>
       </section>

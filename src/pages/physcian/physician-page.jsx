@@ -39,7 +39,6 @@ const Physician = () => {
   useEffect(() => {
     const getPatientData = async (npi) => {
       const patients = await getPatientList(npi);
-      console.log(patients);
       setPatientList(patients);
     };
     if (currentNPI === '0'){

@@ -13,7 +13,6 @@ const getDetails = async (unit:string, date: string, room:string) => {
       });
       if (response) {
         const data: DetailsData[] = await response.json();
-        console.log(data);
         return data
       }
     } catch (e) {

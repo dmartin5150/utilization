@@ -33,7 +33,6 @@ const Patient = () => {
   }, [popupOpen]);
 
   useEffect(() => {
-    console.log("care team", careTeamData);
     if (careTeamData.length) {
       setPopupOpen(true);
     }

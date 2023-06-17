@@ -9,7 +9,6 @@ const sayHello = async () => {
       });
       if (response) {
         const data:string = await response.json();
-        console.log(data)
         return data
       }
     } catch (e) {

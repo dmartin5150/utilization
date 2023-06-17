@@ -13,7 +13,7 @@ const getCalendar = async (unit:string, date: string) => {
       });
       if (response) {
         const data: CalendarData[] = await response.json();
-        // console.log(data);
+
         return data
       }
     } catch (e) {
