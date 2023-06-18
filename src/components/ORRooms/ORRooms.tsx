@@ -1,10 +1,20 @@
 import React from "react";
 import "./ORRooms.scss"
 
+import { ORRoom } from "./ORRoomItem";
+import ORRoomItem from "./ORRoomItem";
 
-const ORRooms = () => {
 
+interface ORRoomsProps {
+    unitName: string;
+    roomList: ORRoom[];
+    onRoomChanged: (id:string)=>void;
+}
+const ORRooms: React.FC<ORRoomsProps> = ({unitName,roomList, onRoomChanged}) => {
 
+    const handleAllChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(event.target.value)
+    }
 
     return(
         <div className="ORRooms">
@@ -16,64 +26,20 @@ const ORRooms = () => {
                         <input
                             type="checkbox"
                             checked={true}
-                            // onChange={handleChange}
+                            onChange={handleAllChanged}
                         />
                             ALL
                     </label>
             </div>
             <ul className="rooms">
-                <li className="room">
-                    <label className={"checkbox"}>
-                        <input
-                            type="checkbox"
-                            checked={true}
-                            // onChange={handleChange}
-                        />
-                            JRI 01
-                    </label>
-                </li>
-                <li className="room">
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={true}
-                            // onChange={handleChange}
-                        />
-                            JRI 02
-                    </label>
-                </li>
-                <li className="room">
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={true}
-                            // onChange={handleChange}
-                        />
-                            JRI 03
-                    </label>
-                </li>
-                <li className="room">
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={true}
-                            // onChange={handleChange}
-                        />
-                            JRI 04
-                    </label>
-                </li>
-                <li className="room">
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={true}
-                            // onChange={handleChange}
-                        />
-                            JRI 05
-                    </label>
-                </li>
+            { roomList.map((room) => {
+                    return <li key={room.id}>
+                        <ORRoomItem 
+                        room={room}
+                        onRoomChanged={onRoomChanged}
+                    /></li>
+                })}
             </ul>
-
         </div>
     )
 }

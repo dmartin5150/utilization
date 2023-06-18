@@ -1,7 +1,7 @@
 .ORRooms {
     background-color: white;
     margin-left:5rem;
-    width: 40rem;
+    width: 50rem;
 
 
     .all {
@@ -26,15 +26,6 @@
         grid-template-rows: 1fr;
         grid-gap: 2rem;
         border: 3px solid black;
-
-        & label {
-            font-size: medium;
-            padding-left:0.5rem;
-
-            & input {
-                margin-right:0.5rem;
-            }
-        }
 
     }
 }
