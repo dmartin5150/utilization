@@ -35,6 +35,14 @@
                 margin-right: 0.5rem;
             }
         }
+        a {
+            display:block;
+            font-size:1.5rem;
+            margin-left:0.3rem;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
     }
 
     & .items {

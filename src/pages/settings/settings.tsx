@@ -22,9 +22,9 @@ const Settings = () => {
 
 
     const surgeonList = [
-        {id:0, name: 'Dr. 1', selected: true},
-        {id:1, name: 'Dr. 2', selected: false},
-        {id:3, name:'Dr. 3', selected: true},
+        {id:0, name: 'Martin', selected: true},
+        {id:1, name: 'Mister', selected: false},
+        {id:3, name:'marian', selected: true},
         {id:4, name:'Dr. 4', selected: true},
         {id:5, name:'Dr. 5', selected: true},
         {id:6, name:'Dr 6', selected: true},
@@ -55,21 +55,31 @@ const Settings = () => {
         updateAllSelectedItems(surgeons, setAllSurgeonsSelected);
     },[surgeons])
 
-    const selectAllItems = (items:item[],setItems:(items:item[])=>void ) => {
+    const setAllItems = (items:item[],setItems:(items:item[])=>void,itemSelected:boolean ) => {
         const updatedItems = items.map((item) => {
-            item.selected = true;
+            item.selected = itemSelected;
             return item;
         })
         setItems([...updatedItems])
     }
 
 
+
+
     const onAllRoomsSelected = () => {
-        selectAllItems(rooms, setRooms)
+        setAllItems(rooms, setRooms,true)
     }
 
     const onAllSurgeonsSelected = () => {
-        selectAllItems(surgeons, setSurgeons)
+        setAllItems(surgeons, setSurgeons, true)
+    }
+
+    const onClearAllRooms = () => {
+        setAllItems(rooms, setRooms, false)
+    }
+
+    const onClearAllSurgeons = () => {
+        setAllItems(surgeons, setSurgeons, false)
     }
 
     const onItemChanged = (id:string, items:item[], setItems:(items:item[])=>void) => {
@@ -89,6 +99,18 @@ const Settings = () => {
         onItemChanged(id, surgeons, setSurgeons)
     }
 
+    const onSurgeonSearchTextChanged = (text:string):void => {
+
+        if (text.length === 0) {
+            setSurgeons([...surgeonList])
+            return;
+        }
+        const filteredSurgeons = surgeons.filter((surgeon)=> {
+            return surgeon.name.toLowerCase().includes(text.toLowerCase());
+        });
+        console.log('filtered', filteredSurgeons)
+        setSurgeons([...filteredSurgeons])
+    }
 
     return(<div>
         <div className='time-setting'>
@@ -104,6 +126,7 @@ const Settings = () => {
                     allItemsSelected={allRoomsSelected}
                     onItemChanged={onRoomChanged}
                     onAllItemssSelected={onAllRoomsSelected}
+                    onClearAllSelected={onClearAllRooms}
                     />
             </div>
             <div className="list-selector searchbox">
@@ -115,6 +138,8 @@ const Settings = () => {
                     searchBox={true}
                     onItemChanged={onSurgeonChanged}
                     onAllItemssSelected={onAllSurgeonsSelected}
+                    onClearAllSelected={onClearAllSurgeons}
+                    onSearchTextChanged={onSurgeonSearchTextChanged}
                     />
             </div>
         </div>

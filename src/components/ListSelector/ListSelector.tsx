@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "./ListSelector.scss"
 import classnames from "classnames";
 import { item } from "./ListItem";
@@ -16,11 +16,28 @@ interface ListSelectorProps {
     showTitle?:boolean;
     onItemChanged: (id:string)=>void;
     onAllItemssSelected: ()=>void;
+    onClearAllSelected: ()=>void;
+    onSearchTextChanged?: (searchText:string)=> void
 }
-const ListSelector: React.FC<ListSelectorProps> = ({title,itemList,searchBox,showTitle, allItemsSelected,gridSize, onItemChanged, onAllItemssSelected}) => {
+const ListSelector: React.FC<ListSelectorProps> = (
+    {title,itemList,searchBox,showTitle, allItemsSelected,gridSize, onItemChanged, 
+        onAllItemssSelected,onClearAllSelected,onSearchTextChanged }) => {
+
+
+    const [searchText, setSearchText] = useState('');
+
+    useEffect(()=> {
+        if (onSearchTextChanged) {
+            onSearchTextChanged(searchText)
+        }
+    },[searchText]);
 
     const handleAllChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         onAllItemssSelected();
+    }
+
+    const handleSearchTextChanged = (e:React.ChangeEvent<HTMLInputElement>) => {
+        setSearchText(e.target.value)
     }
 
     return(
@@ -28,7 +45,9 @@ const ListSelector: React.FC<ListSelectorProps> = ({title,itemList,searchBox,sho
             {searchBox  && 
             <div className='searchBox'>
                  <h1>{title}</h1>
-                <input />
+                <input value={searchText} 
+                onChange={handleSearchTextChanged}
+                />
             </div>}
             {!searchBox && 
                 <div className="title">
@@ -40,9 +59,11 @@ const ListSelector: React.FC<ListSelectorProps> = ({title,itemList,searchBox,sho
                             type="checkbox"
                             checked={allItemsSelected}
                             onChange={handleAllChanged}
+                            disabled={searchText.length !== 0}
                         />
                             ALL
                     </label>
+                <a  href="#" className="clear-all" onClick={onClearAllSelected}>Clear all</a>
             </div>
             <ul className={classnames("items",gridSize)}>
             { itemList.map((item) => {
