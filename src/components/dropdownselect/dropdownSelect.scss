@@ -6,7 +6,7 @@
   .trigger {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
   }
   
   .trigger-unit {
@@ -17,6 +17,7 @@
     background-color: #1b4297;
     padding-bottom: 1rem;
     padding-left: 2rem;
+    z-index:10;
   }
 
 
@@ -38,18 +39,18 @@
 
   .menu {
     position: absolute;
-    right: 1rem;
+    left: 1rem;
     list-style-type: none;
     margin: 5px 2rem 0 5px;
     padding: 0;
     border: 1px solid grey;
     width: 15rem;
-    z-index:10;
 
   }
   
   .menu > li {
     margin: 0;
+  
     background-color: white;
   }
   
@@ -69,5 +70,4 @@
     margin: 0;
     font: inherit;
     cursor: pointer;
-
   }

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import './dropdown.scss';
+import './dropdownSelect.scss';
 
 
 export type  DropDownBox = {
@@ -33,7 +33,7 @@ const useOutsideClick = (callback: ()=>  void) => {
 
 
 
-const Dropdown: React.FC<DropDownBox> = ({title, selected, menuItems,disabled, onSelectItem }) => {
+const DropdownSelect: React.FC<DropDownBox> = ({title, selected, menuItems,disabled, onSelectItem }) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -46,7 +46,6 @@ const Dropdown: React.FC<DropDownBox> = ({title, selected, menuItems,disabled, o
         if (onSelectItem) {
           onSelectItem(name)
         }
-        setOpen(false);
     }
 
     const handleClickOutside = () => {
@@ -66,7 +65,7 @@ const Dropdown: React.FC<DropDownBox> = ({title, selected, menuItems,disabled, o
           <ul className="menu">
             {menuItems.map((item, index) => (
               <li key={index} className="menu-item">{
-                <button onClick={handleSelectItem} name={item}>{item}</button>
+                <button className="button" onClick={handleSelectItem} name={item}>{item}</button>
               }</li>
             ))}
           </ul>
@@ -74,4 +73,4 @@ const Dropdown: React.FC<DropDownBox> = ({title, selected, menuItems,disabled, o
       </div>
     );
   };
-  export default Dropdown
+  export default DropdownSelect
