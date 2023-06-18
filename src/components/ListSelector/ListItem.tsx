@@ -1,23 +1,23 @@
 import React from "react";
-import './ORRoomItem.scss'
+import './ListItem.scss'
 
 
-export type ORRoom = {
+export type item = {
         id: number;
-        roomName: string;
+        name: string;
         selected: boolean;
 }
 
-interface ORRoomProps {
-    room:ORRoom;
-    onRoomChanged: (id:string)=>void;
+interface ListItemProps {
+    item:item;
+    onItemChanged: (id:string)=>void;
 }
 
-const ORRoomItem: React.FC<ORRoomProps> = ({room, onRoomChanged}) => {
-    const {id, roomName, selected} = room
+const ListItem: React.FC<ListItemProps> = ({item, onItemChanged}) => {
+    const {id, name, selected} = item
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>):void =>  {
-        onRoomChanged(event.target.id)
+        onItemChanged(event.target.id)
     }
 
     return (
@@ -28,9 +28,8 @@ const ORRoomItem: React.FC<ORRoomProps> = ({room, onRoomChanged}) => {
                     type="checkbox"
                     checked={selected ? true: false}
                     onChange={handleChange}
-                />{roomName}</label>
+                />{name}</label>
         </div>
     )
-
 }
-export default ORRoomItem;
+export default ListItem;

@@ -4,3 +4,20 @@
         margin-left: 5rem;
     }
 }
+
+.list-selectors {
+    display:grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    grid-template-rows: 1fr;
+    grid-gap: 2rem;
+    padding-top: 1rem;
+
+    & .rooms {
+        margin-top: 1rem;
+    }
+
+    & .searchbox {
+        // padding-top:2rem;
+    }
+
+}

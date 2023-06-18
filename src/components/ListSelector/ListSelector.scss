@@ -1,7 +1,25 @@
-.ORRooms {
+.list-selector {
     background-color: white;
-    margin-left:5rem;
+    margin-left:2.5rem;
     width: 35rem;
+    &.small {
+        width:20rem;
+    }
+
+    & .searchBox {
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        width:20rem;
+
+        & input {
+            line-height: 2.5rem;
+            width: 20rem;
+            font: inherit;
+            font-size:15px;
+            padding:0.5rem;
+        }
+    }
+
 
 
     .all {
@@ -19,13 +37,18 @@
         }
     }
 
-    & ul {
+    & .items {
         display:grid;
         margin-top: 0;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 1fr;
         grid-gap: 2rem;
         border: 3px solid black;
+
+        &.small {
+            grid-template-columns: 1fr;
+            grid-gap: 0.1rem;
+        }
 
     }
 }
