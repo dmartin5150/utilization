@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import DateTimeSetting from '../../components/dateTimeSettings/dateTimeSetting';
 import './settings.scss'
 import RoomSelector from '../../components/roomSelector/roomSelector';
@@ -6,14 +6,14 @@ import ORRooms from '../../components/ORRooms/ORRooms';
 import { ORRoom } from '../../components/ORRooms/ORRoomItem';
 
 
-export type MutliSelectListItem = {
-    id: number;
-    label: string;
-}
+// export type MutliSelectListItem = {
+//     id: number;
+//     label: string;
+// }
 
-export type SelectedItems = {
-    items: MutliSelectListItem[];
-}
+// export type SelectedItems = {
+//     items: MutliSelectListItem[];
+// }
 
 
 
@@ -28,8 +28,32 @@ const Settings = () => {
         {id:6, roomName:'BH JRI 07', selected: true},
     ]
     const [rooms, setRooms] = useState<ORRoom[]>(roomList)
-  
+    const [allRoomsSelected, setAllRoomsSelected]= useState(true);
 
+
+   
+
+    const updateAllSelectedRooms = () => {
+        console.log('update')
+        const unselectedRoom = rooms.findIndex((room) => room.selected === false)
+        if (unselectedRoom === -1) {
+            setAllRoomsSelected(true)
+        } else {
+            setAllRoomsSelected(false)
+        }
+    }
+
+    useEffect(() => {
+        updateAllSelectedRooms()
+    },[rooms])
+
+
+    const onAllRoomsSelected = () => {
+        const updatedRooms = rooms.map((room)=> {
+            room.selected = true;
+            return room });
+        setRooms([...updatedRooms])
+    }
 
     const onRoomChanged = (id:string):void => {
         const roomIndex = rooms.findIndex((room => room.id.toString() == id));
@@ -49,7 +73,9 @@ const Settings = () => {
             <ORRooms 
                 unitName='JRI' 
                 roomList={rooms}
+                allRoomsSelected={allRoomsSelected}
                 onRoomChanged={onRoomChanged}
+                onAllRoomsSelected={onAllRoomsSelected}
                 />
         </div>
     </div>);

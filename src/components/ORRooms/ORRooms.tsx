@@ -8,12 +8,14 @@ import ORRoomItem from "./ORRoomItem";
 interface ORRoomsProps {
     unitName: string;
     roomList: ORRoom[];
+    allRoomsSelected: boolean;
     onRoomChanged: (id:string)=>void;
+    onAllRoomsSelected: ()=>void;
 }
-const ORRooms: React.FC<ORRoomsProps> = ({unitName,roomList, onRoomChanged}) => {
+const ORRooms: React.FC<ORRoomsProps> = ({unitName,roomList,allRoomsSelected,  onRoomChanged, onAllRoomsSelected}) => {
 
     const handleAllChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value)
+        onAllRoomsSelected();
     }
 
     return(
@@ -25,7 +27,7 @@ const ORRooms: React.FC<ORRoomsProps> = ({unitName,roomList, onRoomChanged}) => 
                 <label className={"checkbox-all"}>
                         <input
                             type="checkbox"
-                            checked={true}
+                            checked={allRoomsSelected}
                             onChange={handleAllChanged}
                         />
                             ALL
