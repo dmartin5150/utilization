@@ -4,6 +4,7 @@ import './settings.scss'
 
 import { item } from '../../components/ListSelector/ListItem';
 import ListSelector from '../../components/ListSelector/ListSelector';
+import { ITEM_DISPLAY_TYPE } from '../../components/ListSelector/ListItem';
 
 
 const Settings = () => {
@@ -118,6 +119,7 @@ const Settings = () => {
                     title='JRI' 
                     itemList={rooms}
                     allItemsSelected={allRoomsSelected}
+                    displayType={ITEM_DISPLAY_TYPE.checkbox}
                     onItemChanged={onRoomChanged}
                     onAllItemssSelected={onAllRoomsSelected}
                     onClearAllSelected={onClearAllRooms}
@@ -130,7 +132,23 @@ const Settings = () => {
                     allItemsSelected={allSurgeonsSelected}
                     emptySearchMessage='No Surgeon Found'
                     gridSize="small"
+                    displayType={ITEM_DISPLAY_TYPE.checkbox}
                     searchBox={true}
+                    onItemChanged={onSurgeonChanged}
+                    onAllItemssSelected={onAllSurgeonsSelected}
+                    onClearAllSelected={onClearAllSurgeons}
+                    onSearchTextChanged={onSurgeonSearchTextChanged}
+                    />
+            </div>
+            <div className="list-selector searchbox">
+                <ListSelector
+                    title='Selected Surgeon Surgeons' 
+                    itemList={filteredSurgeons}
+                    allItemsSelected={allSurgeonsSelected}
+                    emptySearchMessage='No Surgeon Found'
+                    gridSize="small"
+                    displayType={ITEM_DISPLAY_TYPE.list}
+                    searchBox={false}
                     onItemChanged={onSurgeonChanged}
                     onAllItemssSelected={onAllSurgeonsSelected}
                     onClearAllSelected={onClearAllSurgeons}

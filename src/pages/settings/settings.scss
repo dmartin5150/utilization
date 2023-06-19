@@ -6,10 +6,13 @@
 }
 
 .list-selectors {
-    display:grid;
-    grid-template-columns: 1fr 1fr 2fr;
-    grid-template-rows: 1fr;
-    grid-gap: 2rem;
+    // display:grid;
+    // grid-template-columns: 1fr 0.5fr 1fr;
+    // grid-template-rows: 1fr;
+    // grid-gap: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     padding-top: 1rem;
 
     & .rooms {

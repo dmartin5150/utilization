@@ -1,6 +1,8 @@
 .dtsetting {
     display: flex;
     flex-direction: row;
-    width: 30rem;
+    justify-content: flex-start;
+    width: 100%;
     margin-left: 5rem;
+
 }

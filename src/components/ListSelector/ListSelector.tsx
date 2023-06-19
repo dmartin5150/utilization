@@ -5,7 +5,7 @@ import { item } from "./ListItem";
 import ListItem from "./ListItem";
 
 
-
+import { ITEM_DISPLAY_TYPE } from "./ListItem";
 
 interface ListSelectorProps {
     title: string;
@@ -14,13 +14,14 @@ interface ListSelectorProps {
     allItemsSelected: boolean;
     gridSize?: string;
     searchBox?:boolean;
+    displayType: ITEM_DISPLAY_TYPE;
     onItemChanged: (id:string)=>void;
     onAllItemssSelected: ()=>void;
     onClearAllSelected: ()=>void;
     onSearchTextChanged?: (searchText:string)=> void
 }
 const ListSelector: React.FC<ListSelectorProps> = (
-    {title,itemList,searchBox,emptySearchMessage, allItemsSelected,gridSize, onItemChanged, 
+    {title,itemList,searchBox,emptySearchMessage, allItemsSelected,gridSize, displayType, onItemChanged, 
         onAllItemssSelected,onClearAllSelected,onSearchTextChanged }) => {
 
 
@@ -72,16 +73,10 @@ const ListSelector: React.FC<ListSelectorProps> = (
                     return <li key={item.id}>
                         <ListItem 
                         item={item}
+                        displayType={displayType}
                         onItemChanged={onItemChanged}
                     /></li>
             })}
-            {/* { itemList.map((item) => {
-                    return <li key={item.id}>
-                        <ListItem 
-                        item={item}
-                        onItemChanged={onItemChanged}
-                    /></li>
-                })} */}
             </ul>
         </div>
     )
