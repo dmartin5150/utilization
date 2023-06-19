@@ -9,18 +9,18 @@ import ListItem from "./ListItem";
 
 interface ListSelectorProps {
     title: string;
+    emptySearchMessage?: string
     itemList: item[];
     allItemsSelected: boolean;
     gridSize?: string;
     searchBox?:boolean;
-    showTitle?:boolean;
     onItemChanged: (id:string)=>void;
     onAllItemssSelected: ()=>void;
     onClearAllSelected: ()=>void;
     onSearchTextChanged?: (searchText:string)=> void
 }
 const ListSelector: React.FC<ListSelectorProps> = (
-    {title,itemList,searchBox,showTitle, allItemsSelected,gridSize, onItemChanged, 
+    {title,itemList,searchBox,emptySearchMessage, allItemsSelected,gridSize, onItemChanged, 
         onAllItemssSelected,onClearAllSelected,onSearchTextChanged }) => {
 
 
@@ -39,6 +39,7 @@ const ListSelector: React.FC<ListSelectorProps> = (
     const handleSearchTextChanged = (e:React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.target.value)
     }
+
 
     return(
         <div className={classnames("list-selector", gridSize)}>
@@ -66,7 +67,7 @@ const ListSelector: React.FC<ListSelectorProps> = (
                 <a  href="#" className="clear-all" onClick={onClearAllSelected}>Clear all</a>
             </div>
             <ul className={classnames("items",gridSize)}>
-            {(itemList.length == 0) ? <li className="empty">No Item Found</li> : 
+            {(itemList.length == 0) ? <li className="empty">{emptySearchMessage ? emptySearchMessage : "No Item Found"}</li> : 
                 itemList.map((item) => {
                     return <li key={item.id}>
                         <ListItem 

@@ -117,7 +117,6 @@ const Settings = () => {
                 <ListSelector
                     title='JRI' 
                     itemList={rooms}
-                    showTitle={true}
                     allItemsSelected={allRoomsSelected}
                     onItemChanged={onRoomChanged}
                     onAllItemssSelected={onAllRoomsSelected}
@@ -129,6 +128,7 @@ const Settings = () => {
                     title='Select Surgeon' 
                     itemList={filteredSurgeons}
                     allItemsSelected={allSurgeonsSelected}
+                    emptySearchMessage='No Surgeon Found'
                     gridSize="small"
                     searchBox={true}
                     onItemChanged={onSurgeonChanged}
