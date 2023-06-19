@@ -53,6 +53,11 @@
         grid-gap: 2rem;
         border: 3px solid black;
 
+        & .empty {
+            font-size:medium;
+            padding-left:0.5rem;
+        }
+
         &.small {
             grid-template-columns: 1fr;
             grid-gap: 0.1rem;

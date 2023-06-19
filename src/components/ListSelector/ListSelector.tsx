@@ -66,13 +66,21 @@ const ListSelector: React.FC<ListSelectorProps> = (
                 <a  href="#" className="clear-all" onClick={onClearAllSelected}>Clear all</a>
             </div>
             <ul className={classnames("items",gridSize)}>
-            { itemList.map((item) => {
+            {(itemList.length == 0) ? <li className="empty">No Item Found</li> : 
+                itemList.map((item) => {
                     return <li key={item.id}>
                         <ListItem 
                         item={item}
                         onItemChanged={onItemChanged}
                     /></li>
-                })}
+            })}
+            {/* { itemList.map((item) => {
+                    return <li key={item.id}>
+                        <ListItem 
+                        item={item}
+                        onItemChanged={onItemChanged}
+                    /></li>
+                })} */}
             </ul>
         </div>
     )

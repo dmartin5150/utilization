@@ -6,10 +6,6 @@ import { item } from '../../components/ListSelector/ListItem';
 import ListSelector from '../../components/ListSelector/ListSelector';
 
 
-
-
-
-
 const Settings = () => {
     const roomList = [
         {id:0, name: 'BH JRI 02', selected: true},
@@ -31,19 +27,21 @@ const Settings = () => {
     ]
 
 
+
     const [rooms, setRooms] = useState<item[]>(roomList)
     const [allRoomsSelected, setAllRoomsSelected]= useState(true);
     const [surgeons, setSurgeons] = useState<item[]>(surgeonList);
     const [allSurgeonsSelected, setAllSurgeonsSelected] = useState(true);
+    const [filteredSurgeons, setFilteredSurgeons] = useState<item[]>(surgeonList)
 
 
    
     const updateAllSelectedItems = (items:item[], setItem: (itemStatus: boolean)=>void) => {
         const unselectedItem = items.findIndex((item) => item.selected === false)
         if (unselectedItem === -1) {
-            setItem(true)
+            setItem(true);
         } else {
-            setItem(false)
+            setItem(false);
         }
     }
 
@@ -53,38 +51,37 @@ const Settings = () => {
 
     useEffect(() => {
         updateAllSelectedItems(surgeons, setAllSurgeonsSelected);
+
     },[surgeons])
+
+
 
     const setAllItems = (items:item[],setItems:(items:item[])=>void,itemSelected:boolean ) => {
         const updatedItems = items.map((item) => {
             item.selected = itemSelected;
             return item;
         })
-        setItems([...updatedItems])
+        setItems([...updatedItems]);
     }
 
-
-
-
     const onAllRoomsSelected = () => {
-        setAllItems(rooms, setRooms,true)
+        setAllItems(rooms, setRooms,true);
     }
 
     const onAllSurgeonsSelected = () => {
-        setAllItems(surgeons, setSurgeons, true)
+        setAllItems(surgeons, setSurgeons, true);
     }
 
     const onClearAllRooms = () => {
-        setAllItems(rooms, setRooms, false)
+        setAllItems(rooms, setRooms, false);
     }
 
     const onClearAllSurgeons = () => {
-        setAllItems(surgeons, setSurgeons, false)
+        setAllItems(surgeons, setSurgeons, false);
     }
 
     const onItemChanged = (id:string, items:item[], setItems:(items:item[])=>void) => {
         const itemIndex = items.findIndex((item) => item.id.toString() == id);
-        console.log(id, itemIndex)
         if (itemIndex !== -1) {
             items[itemIndex].selected=  !items[itemIndex].selected
         }
@@ -100,16 +97,14 @@ const Settings = () => {
     }
 
     const onSurgeonSearchTextChanged = (text:string):void => {
-
         if (text.length === 0) {
-            setSurgeons([...surgeonList])
+            setFilteredSurgeons([...surgeons])
             return;
         }
-        const filteredSurgeons = surgeons.filter((surgeon)=> {
+        const filteredList = surgeons.filter((surgeon)=> {
             return surgeon.name.toLowerCase().includes(text.toLowerCase());
         });
-        console.log('filtered', filteredSurgeons)
-        setSurgeons([...filteredSurgeons])
+        setFilteredSurgeons([...filteredList])
     }
 
     return(<div>
@@ -132,7 +127,7 @@ const Settings = () => {
             <div className="list-selector searchbox">
                 <ListSelector
                     title='Select Surgeon' 
-                    itemList={surgeons}
+                    itemList={filteredSurgeons}
                     allItemsSelected={allSurgeonsSelected}
                     gridSize="small"
                     searchBox={true}
