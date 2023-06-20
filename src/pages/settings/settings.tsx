@@ -121,25 +121,27 @@ const Settings = () => {
             <h3>Prime Time</h3>
             <DateTimeSetting />
         </div>
+        <div>
+          
+        </div>
         <div className="list-selectors">
-            <div className="list-selector rooms">
-                <ListSelector
-                    title='JRI' 
-                    itemList={rooms}
-                    allItemsSelected={allRoomsSelected}
-                    displayType={ITEM_DISPLAY_TYPE.checkbox}
-                    onItemChanged={onRoomChanged}
-                    onAllItemsSelected={onAllRoomsSelected}
-                    onClearAllSelected={onClearAllRooms}
-                />
-            </div>
+            <ListSelector
+                title='JRI' 
+                className='OR-Rooms'
+                itemList={rooms}
+                allItemsSelected={allRoomsSelected}
+                displayType={ITEM_DISPLAY_TYPE.checkbox}
+                onItemChanged={onRoomChanged}
+                onAllItemsSelected={onAllRoomsSelected}
+                onClearAllSelected={onClearAllRooms}
+            />
             <div className="list-selector searchbox">
                 <ListSelector
                     title='Select Surgeon' 
+                    className='select-surgeon'
                     itemList={filteredSurgeons}
                     allItemsSelected={allSurgeonsSelected}
                     emptySearchMessage='No Surgeon Found'
-                    gridSize="small"
                     displayType={ITEM_DISPLAY_TYPE.checkbox}
                     searchBox={true}
                     onItemChanged={onSurgeonChanged}
@@ -151,10 +153,10 @@ const Settings = () => {
             <div className="list-selector searchbox">
                 <ListSelector
                     title='Selected Surgeons' 
+                    className='selected'
                     itemList={selectedSurgeons}
                     allItemsSelected={allSurgeonsSelected}
                     emptySearchMessage='No Surgeon Selected'
-                    gridSize="small"
                     displayType={ITEM_DISPLAY_TYPE.list}
                     searchBox={false}
                     hideAllHeading={true}

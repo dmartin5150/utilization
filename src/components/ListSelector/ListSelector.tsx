@@ -12,7 +12,7 @@ interface ListSelectorProps {
     emptySearchMessage?: string
     itemList: item[];
     allItemsSelected: boolean;
-    gridSize?: string;
+    className?: string;
     searchBox?:boolean;
     hideAllHeading?:boolean;
     displayType: ITEM_DISPLAY_TYPE;
@@ -22,7 +22,7 @@ interface ListSelectorProps {
     onSearchTextChanged?: (searchText:string)=> void
 }
 const ListSelector: React.FC<ListSelectorProps> = (
-    {title,itemList,searchBox,emptySearchMessage,hideAllHeading, allItemsSelected,gridSize, displayType, onItemChanged, 
+    {title,itemList,searchBox,emptySearchMessage,hideAllHeading, allItemsSelected,className, displayType, onItemChanged, 
         onAllItemsSelected,onClearAllSelected,onSearchTextChanged }) => {
 
 
@@ -44,7 +44,7 @@ const ListSelector: React.FC<ListSelectorProps> = (
 
 
     return(
-        <div className={classnames("list-selector", gridSize)}>
+        <div className={classnames("list-selector", className)}>
             {searchBox  && 
             <div className='searchBox'>
                  <h1>{title}</h1>
@@ -68,7 +68,7 @@ const ListSelector: React.FC<ListSelectorProps> = (
                     </label>}
                 <a  href="#" className="clear-all" onClick={onClearAllSelected}>Clear all</a>
             </div>
-            <ul className={classnames("items",gridSize)}>
+            <ul className={classnames("items", {small: (searchBox)},{small: (displayType === ITEM_DISPLAY_TYPE.list)})}>
             {(itemList.length == 0) ? <li className="empty">{emptySearchMessage ? emptySearchMessage : "No Item Found"}</li> : 
                 itemList.map((item) => {
                     return <li key={item.id}>

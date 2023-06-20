@@ -42,7 +42,7 @@ const ListItem: React.FC<ListItemProps> = ({item, displayType, onItemChanged}) =
 
     return (
         (displayType === ITEM_DISPLAY_TYPE.checkbox) ? 
-            <div className='room'>
+            <div className='list-items'>
             <label className={"checkbox"}>
                 <input
                     id={id.toString()}

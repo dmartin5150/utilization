@@ -6,21 +6,23 @@
 }
 
 .list-selectors {
-    // display:grid;
-    // grid-template-columns: 1fr 0.5fr 1fr;
-    // grid-template-rows: 1fr;
-    // grid-gap: 2rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding-top: 1rem;
+    display:grid;
+    grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr;
+    grid-gap: 3rem;
+    padding-left: 5rem;
 
-    & .rooms {
-        margin-top: 1rem;
+    & .OR-Rooms {
+        padding-top:5.5rem;
+        width:30rem;
     }
 
-    & .searchbox {
-        // padding-top:2rem;
+    & .selected {
+        padding-top: 1rem;
+        & .all {
+            height:4rem;
+            margin-bottom:0.5rem;
+            border-bottom: 1px solid black;
+        }
     }
 
 }

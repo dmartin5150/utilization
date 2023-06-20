@@ -1,7 +1,8 @@
-.room {
+.list-items {
     & label {
         font-size:medium;
         padding-left:0.5rem;
+        padding-right:0.5rem;
 
         & input {
             margin-right:0.5rem;
@@ -17,6 +18,10 @@
     justify-content: space-between;
     font-size: medium;
     padding:0 1rem;
+
+    & .list-item {
+        padding: 0 1rem;
+    }
 
     a {
         color:grey;
