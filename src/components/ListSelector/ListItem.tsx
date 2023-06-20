@@ -22,8 +22,22 @@ interface ListItemProps {
 const ListItem: React.FC<ListItemProps> = ({item, displayType, onItemChanged}) => {
     const {id, name, selected} = item
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>):void =>  {
-        onItemChanged(event.target.id)
+    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLAnchorElement>) => {
+        console.log('handle')
+        if (event.target as HTMLInputElement) {
+            console.log('returning check')
+            const id = (event.target as HTMLInputElement).id;
+            onItemChanged(id)
+        }
+
+    }
+
+    const handleListChange = (event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLAnchorElement>) => {
+        console.log('handle')
+        if (event.target as HTMLAnchorElement) {
+            const id = (event.target as HTMLAnchorElement).id;
+           onItemChanged(id)
+       }
     }
 
     return (
@@ -34,12 +48,12 @@ const ListItem: React.FC<ListItemProps> = ({item, displayType, onItemChanged}) =
                     id={id.toString()}
                     type="checkbox"
                     checked={selected ? true: false}
-                    onChange={handleChange}
+                    onChange={handleCheckboxChange}
                 />{name}</label>
             </div>  :
             <div className='list-items'>
                 <label className={"list-item"}>{name}</label>
-                <a href="#">Delete</a>
+                <a href="#" id={id.toString()}onClick={handleListChange}>X</a>
         </div>
     )
 }

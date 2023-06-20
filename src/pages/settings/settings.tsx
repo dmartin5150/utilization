@@ -34,6 +34,7 @@ const Settings = () => {
     const [surgeons, setSurgeons] = useState<item[]>(surgeonList);
     const [allSurgeonsSelected, setAllSurgeonsSelected] = useState(true);
     const [filteredSurgeons, setFilteredSurgeons] = useState<item[]>(surgeonList)
+    const [selectedSurgeons, setSelectedSurgeons] = useState<item[]>(surgeonList)
 
 
    
@@ -55,6 +56,10 @@ const Settings = () => {
 
     },[surgeons])
 
+    useEffect(()=>{
+        const selected = surgeons.filter((surgeon)=> surgeon.selected === true)
+        setSelectedSurgeons([...selected])
+    },[surgeons])
 
 
     const setAllItems = (items:item[],setItems:(items:item[])=>void,itemSelected:boolean ) => {
@@ -94,8 +99,11 @@ const Settings = () => {
     }
 
     const onSurgeonChanged = (id:string):void => {
+        console.log('surgeon changed', id)
         onItemChanged(id, surgeons, setSurgeons)
     }
+
+
 
     const onSurgeonSearchTextChanged = (text:string):void => {
         if (text.length === 0) {
@@ -121,9 +129,9 @@ const Settings = () => {
                     allItemsSelected={allRoomsSelected}
                     displayType={ITEM_DISPLAY_TYPE.checkbox}
                     onItemChanged={onRoomChanged}
-                    onAllItemssSelected={onAllRoomsSelected}
+                    onAllItemsSelected={onAllRoomsSelected}
                     onClearAllSelected={onClearAllRooms}
-                    />
+                />
             </div>
             <div className="list-selector searchbox">
                 <ListSelector
@@ -135,25 +143,26 @@ const Settings = () => {
                     displayType={ITEM_DISPLAY_TYPE.checkbox}
                     searchBox={true}
                     onItemChanged={onSurgeonChanged}
-                    onAllItemssSelected={onAllSurgeonsSelected}
+                    onAllItemsSelected={onAllSurgeonsSelected}
                     onClearAllSelected={onClearAllSurgeons}
                     onSearchTextChanged={onSurgeonSearchTextChanged}
-                    />
+                />
             </div>
             <div className="list-selector searchbox">
                 <ListSelector
-                    title='Selected Surgeon Surgeons' 
-                    itemList={filteredSurgeons}
+                    title='Selected Surgeons' 
+                    itemList={selectedSurgeons}
                     allItemsSelected={allSurgeonsSelected}
-                    emptySearchMessage='No Surgeon Found'
+                    emptySearchMessage='No Surgeon Selected'
                     gridSize="small"
                     displayType={ITEM_DISPLAY_TYPE.list}
                     searchBox={false}
+                    hideAllHeading={true}
                     onItemChanged={onSurgeonChanged}
-                    onAllItemssSelected={onAllSurgeonsSelected}
+                    onAllItemsSelected={onAllSurgeonsSelected}
                     onClearAllSelected={onClearAllSurgeons}
                     onSearchTextChanged={onSurgeonSearchTextChanged}
-                    />
+                />
             </div>
         </div>
     </div>);

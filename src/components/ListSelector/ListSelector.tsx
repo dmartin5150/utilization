@@ -14,15 +14,16 @@ interface ListSelectorProps {
     allItemsSelected: boolean;
     gridSize?: string;
     searchBox?:boolean;
+    hideAllHeading?:boolean;
     displayType: ITEM_DISPLAY_TYPE;
     onItemChanged: (id:string)=>void;
-    onAllItemssSelected: ()=>void;
+    onAllItemsSelected: ()=>void;
     onClearAllSelected: ()=>void;
     onSearchTextChanged?: (searchText:string)=> void
 }
 const ListSelector: React.FC<ListSelectorProps> = (
-    {title,itemList,searchBox,emptySearchMessage, allItemsSelected,gridSize, displayType, onItemChanged, 
-        onAllItemssSelected,onClearAllSelected,onSearchTextChanged }) => {
+    {title,itemList,searchBox,emptySearchMessage,hideAllHeading, allItemsSelected,gridSize, displayType, onItemChanged, 
+        onAllItemsSelected,onClearAllSelected,onSearchTextChanged }) => {
 
 
     const [searchText, setSearchText] = useState('');
@@ -34,7 +35,7 @@ const ListSelector: React.FC<ListSelectorProps> = (
     },[searchText]);
 
     const handleAllChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onAllItemssSelected();
+        onAllItemsSelected();
     }
 
     const handleSearchTextChanged = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +57,7 @@ const ListSelector: React.FC<ListSelectorProps> = (
                     <h1>{title}</h1>
                 </div>}
             <div className="all">
-                <label className={"checkbox-all"}>
+               {!hideAllHeading && <label className={"checkbox-all"}>
                         <input
                             type="checkbox"
                             checked={allItemsSelected}
@@ -64,7 +65,7 @@ const ListSelector: React.FC<ListSelectorProps> = (
                             disabled={searchText.length !== 0}
                         />
                             ALL
-                    </label>
+                    </label>}
                 <a  href="#" className="clear-all" onClick={onClearAllSelected}>Clear all</a>
             </div>
             <ul className={classnames("items",gridSize)}>
