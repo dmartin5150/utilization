@@ -1,0 +1,22 @@
+.selectors {
+    display:inline-block;
+    padding:1rem;
+    border: 1px solid black;
+    min-width: 40rem;
+    position:relative;
+    border-radius:2px;
+    
+    h2 {
+        position:absolute;
+        top: -1.3rem;
+        left: 5rem;
+        background-color: white;
+        font-style:italic;
+    }
+
+    & .selector {
+        padding-top:1rem;
+        width: 25rem;
+    }
+}
+

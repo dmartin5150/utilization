@@ -1,5 +1,7 @@
 import React from "react";
 import Select,{SingleValue} from "react-select";
+import Card from "../card/card";
+import "./DualSelectors.scss";
 
 
 export type Option = {
@@ -20,7 +22,6 @@ interface DualSelectorProps<T extends Option, U extends Option> {
 }
 
 
-
 function DualSelectors <T extends Option, U extends Option >({selector1, selector2}: React.PropsWithChildren<DualSelectorProps<T, U>>) {
 
     const handleSelector1 = (option: SingleValue<T> )  => {
@@ -32,16 +33,19 @@ function DualSelectors <T extends Option, U extends Option >({selector1, selecto
     }
 
     return( 
-       <div className='dual-selector'>
-            <div className='first-selector'>
+    <Card className={'Card'}>
+       <div className='selectors'>
+            <h2>Title</h2>
+            <div className='selector'>
                 <label>{selector1.title}</label>
                 <Select value={selector1.selectedOption} options={selector1.optionList} onChange={handleSelector1} />
             </div>
-            <div className='second-selector'>
+            <div className='selector'>
                 <label>{selector2.title}</label>
                 <Select value={selector2.selectedOption} options={selector2.optionList} onChange={handleSelector2}/>
             </div>
        </div>
+       </Card>
     )
 }
 export default DualSelectors;
