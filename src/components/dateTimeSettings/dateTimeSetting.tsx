@@ -46,18 +46,6 @@ const DateTimeSetting =  () => {
                 disabled={false}
                 onSelectItem={setPrimeTimeEnd}
             />           
-             <Dropdown 
-                title={"Min Date"}
-                selected={'6/1/2023'}
-                menuItems={[]}
-                disabled={true}
-            />
-            <Dropdown 
-                title={"Max Date"}
-                selected={'6/30/2023'}
-                menuItems={[]}
-                disabled={true}
-            />
 
         </div>
     )

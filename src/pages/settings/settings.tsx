@@ -5,7 +5,29 @@ import './settings.scss'
 import { item } from '../../components/ListSelector/ListItem';
 import ListSelector from '../../components/ListSelector/ListSelector';
 import { ITEM_DISPLAY_TYPE } from '../../components/ListSelector/ListItem';
+import Select,{SingleValue} from "react-select";
+import DualSelector from '../../components/dualSelectors/DualSelectors';
 
+
+
+export enum TNNASUNIT  {
+    BHJRI = 'BH JRI',
+    STMSTOR = 'STM ST OR',
+    STOR = 'ST OR' 
+}
+
+
+export type Unit = {
+    id: number,
+    name: TNNASUNIT;
+    value: TNNASUNIT;
+    label: TNNASUNIT;
+}
+
+// export type Unit = {
+//     value: TNNASUNIT;
+//     label: TNNASUNIT;
+// }
 
 const Settings = () => {
     const roomList = [
@@ -17,6 +39,8 @@ const Settings = () => {
         {id:6, name:'BH JRI 07', selected: true},
     ]
 
+    const primeTimeStartMenu= ['6:30 AM', '7:00 AM', '7:30 AM', '8:00 AM', '8:30 AM', '9:00 AM', '9:30 AM']
+    const primeTimeEndMenu= ['3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM']
 
     const surgeonList = [
         {id:0, name: 'Martin', selected: true},
@@ -27,14 +51,30 @@ const Settings = () => {
         {id:6, name:'Dr 6', selected: true},
     ]
 
+    const unitList: Unit[] = [
+        {id:0, name:TNNASUNIT.BHJRI, label:TNNASUNIT.BHJRI, value:TNNASUNIT.BHJRI},
+        {id:1, name:TNNASUNIT.STOR, label:TNNASUNIT.STOR, value:TNNASUNIT.STOR},
+        {id:2, name:TNNASUNIT.STMSTOR, label:TNNASUNIT.STMSTOR, value:TNNASUNIT.STMSTOR}
+    ]
 
 
+    // const unitList: Unit[] = [
+    //     {label:TNNASUNIT.BHJRI, value:TNNASUNIT.BHJRI},
+    //     {label:TNNASUNIT.STOR, value:TNNASUNIT.STOR},
+    //     {label:TNNASUNIT.STMSTOR, value:TNNASUNIT.STMSTOR}
+    // ]
+    
+
+    
+    const [startTime, setStartTime] = useState('7:00 AM')
+    const [endTime, setEndTime] = useState('5:00 PM')
     const [rooms, setRooms] = useState<item[]>(roomList)
     const [allRoomsSelected, setAllRoomsSelected]= useState(true);
     const [surgeons, setSurgeons] = useState<item[]>(surgeonList);
     const [allSurgeonsSelected, setAllSurgeonsSelected] = useState(true);
     const [filteredSurgeons, setFilteredSurgeons] = useState<item[]>(surgeonList)
     const [selectedSurgeons, setSelectedSurgeons] = useState<item[]>(surgeonList)
+    const [selectedUnit, setSelectedUnit] = useState<SingleValue<Unit>>(unitList[0])
 
 
    
@@ -116,13 +156,20 @@ const Settings = () => {
         setFilteredSurgeons([...filteredList])
     }
 
-    return(<div>
-        <div className='time-setting'>
+
+    const handleUnitChange = (option: SingleValue<Unit>) => {
+        setSelectedUnit(option)
+    }
+
+    return(<div className='settings'>
+        {/* <div className='time-setting'>
             <h3>Prime Time</h3>
             <DateTimeSetting />
-        </div>
-        <div>
-          
+        </div> */}
+
+        <div className='units'>
+            <h3>Select Unit</h3>
+          <Select value={selectedUnit} onChange={handleUnitChange}  options={unitList} />
         </div>
         <div className="list-selectors">
             <ListSelector
