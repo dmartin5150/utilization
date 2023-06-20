@@ -8,7 +8,6 @@ import { ITEM_DISPLAY_TYPE } from '../../components/ListSelector/ListItem';
 import Select,{SingleValue} from "react-select";
 import DualSelectors from '../../components/dualSelectors/DualSelectors';
 import { SingleSelector } from '../../components/dualSelectors/DualSelectors';
-import TestSelector from '../../components/testSelector/testSelector';
 
 
 export enum TNNASUNIT  {
@@ -98,7 +97,7 @@ const Settings = () => {
     ]
 
     
-
+ 
     
     const [startTime, setStartTime] = useState<SingleValue<PrimeTimeMenuItem>>(primeTimeStartOptions[0])
     const [endTime, setEndTime] = useState<SingleValue<PrimeTimeMenuItem>>(primeTimeEndOptions[0])
@@ -111,6 +110,19 @@ const Settings = () => {
     const [selectedUnit, setSelectedUnit] = useState<SingleValue<Unit>>(unitList[0])
 
 
+    const primeTimeStartSelector: SingleSelector<PrimeTimeMenuItem> = {
+        title: 'Prime Time Start',
+        selectedOption: startTime,
+        optionList: primeTimeStartOptions,
+        onChange: setStartTime,
+    }
+
+    const primeTimeEndSelector: SingleSelector<PrimeTimeMenuItem> = {
+        title: 'Prime Time End',
+        selectedOption: endTime,
+        optionList:primeTimeEndOptions,
+        onChange: setEndTime
+    }
    
     const updateAllSelectedItems = (items:item[], setItem: (itemStatus: boolean)=>void) => {
         const unselectedItem = items.findIndex((item) => item.selected === false)
@@ -206,7 +218,7 @@ const Settings = () => {
           <Select value={selectedUnit} onChange={handleUnitChange}  options={unitList} />
         </div>
         <div className='prime-time'>
-            <TestSelector<PrimeTimeMenuItem> selectedOption={startTime} optionList={primeTimeStartOptions}  />
+            <DualSelectors<PrimeTimeMenuItem, PrimeTimeMenuItem> selector1={primeTimeStartSelector} selector2={primeTimeEndSelector}/>
         </div>
         <div className="list-selectors">
             <ListSelector

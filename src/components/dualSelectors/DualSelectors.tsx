@@ -7,43 +7,40 @@ export type Option = {
     value: string;
 }
 
-export type SingleSelector<T> = {
+export type SingleSelector<T extends Option> = {
     title: string
-    selectedOption: T;
+    selectedOption: SingleValue<T>;
     optionList: T[];
     onChange: (option: SingleValue<T>)=>void;
 }
 
-// interface DualSelectorProps<T> {
-//     selector1: SingleSelector<T>;
-//     // selector2: SingleSelector<U>;
-// }
-
-interface DualSelectorProps<T> {
-    selectedOption: T;
-    optionList: T[]
+interface DualSelectorProps<T extends Option, U extends Option> {
+    selector1: SingleSelector<T>;
+    selector2: SingleSelector<U>;
 }
 
-function DualSelectors <T, U extends Option>({selectedOption, optionList}: React.PropsWithChildren<DualSelectorProps<T>>) {
+
+
+function DualSelectors <T extends Option, U extends Option >({selector1, selector2}: React.PropsWithChildren<DualSelectorProps<T, U>>) {
 
     const handleSelector1 = (option: SingleValue<T> )  => {
-        console.log(option)
+        selector1.onChange(option)
     }
 
-    // const handleSelector2 = (option: SingleValue<U>) => {
-    //     selector2.onChange(option);
-    // }
+    const handleSelector2 = (option: SingleValue<U>) => {
+        selector2.onChange(option);
+    }
 
     return( 
        <div className='dual-selector'>
             <div className='first-selector'>
-                <label>{'Test'}</label>
-                <Select value={selectedOption} options={optionList} onChange={handleSelector1} />
+                <label>{selector1.title}</label>
+                <Select value={selector1.selectedOption} options={selector1.optionList} onChange={handleSelector1} />
             </div>
-            {/* <div className='second-selector'>
+            <div className='second-selector'>
                 <label>{selector2.title}</label>
                 <Select value={selector2.selectedOption} options={selector2.optionList} onChange={handleSelector2}/>
-            </div> */}
+            </div>
        </div>
     )
 }
