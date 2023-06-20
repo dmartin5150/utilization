@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import DateTimeSetting from '../../components/dateTimeSettings/dateTimeSetting';
 import './settings.scss'
 
@@ -6,14 +6,34 @@ import { item } from '../../components/ListSelector/ListItem';
 import ListSelector from '../../components/ListSelector/ListSelector';
 import { ITEM_DISPLAY_TYPE } from '../../components/ListSelector/ListItem';
 import Select,{SingleValue} from "react-select";
-import DualSelector from '../../components/dualSelectors/DualSelectors';
-
+import DualSelectors from '../../components/dualSelectors/DualSelectors';
+import { SingleSelector } from '../../components/dualSelectors/DualSelectors';
+import TestSelector from '../../components/testSelector/testSelector';
 
 
 export enum TNNASUNIT  {
     BHJRI = 'BH JRI',
     STMSTOR = 'STM ST OR',
     STOR = 'ST OR' 
+}
+
+export enum PRIME_TIME_END {
+    T300 = '3:00 PM', 
+    T330 = '3:30 PM', 
+    T400 = '4:00 PM', 
+    T430 = '4:30 PM', 
+    T500 = '5:00 PM', 
+    T530 = '5:30 PM', 
+    T600  ='6:00 PM'
+}
+export enum PRIME_TIME_START {
+    T630 = '6:30 AM', 
+    T700 = '7:00 AM', 
+    T730 = '7:30 AM', 
+    T800 = '8:00 AM', 
+    T830 = '8:30 AM', 
+    T900 = '9:00 AM', 
+    T930  ='9:30 AM'
 }
 
 
@@ -24,10 +44,14 @@ export type Unit = {
     label: TNNASUNIT;
 }
 
-// export type Unit = {
-//     value: TNNASUNIT;
-//     label: TNNASUNIT;
-// }
+type PrimeTimeMenuItem = {
+    id: number;
+    value:PRIME_TIME_START | PRIME_TIME_END;
+    label:PRIME_TIME_START | PRIME_TIME_END;
+}
+
+
+
 
 const Settings = () => {
     const roomList = [
@@ -39,8 +63,6 @@ const Settings = () => {
         {id:6, name:'BH JRI 07', selected: true},
     ]
 
-    const primeTimeStartMenu= ['6:30 AM', '7:00 AM', '7:30 AM', '8:00 AM', '8:30 AM', '9:00 AM', '9:30 AM']
-    const primeTimeEndMenu= ['3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM']
 
     const surgeonList = [
         {id:0, name: 'Martin', selected: true},
@@ -57,17 +79,29 @@ const Settings = () => {
         {id:2, name:TNNASUNIT.STMSTOR, label:TNNASUNIT.STMSTOR, value:TNNASUNIT.STMSTOR}
     ]
 
+    const primeTimeStartOptions: PrimeTimeMenuItem[] = [
+        {id:0, label: PRIME_TIME_START.T630, value:PRIME_TIME_START.T630},
+        {id:1, label: PRIME_TIME_START.T700, value:PRIME_TIME_START.T700},
+        {id:2, label: PRIME_TIME_START.T730, value:PRIME_TIME_START.T730},
+        {id:3, label: PRIME_TIME_START.T800, value:PRIME_TIME_START.T800},
+        {id:4, label: PRIME_TIME_START.T830, value:PRIME_TIME_START.T830},
+        {id:5, label: PRIME_TIME_START.T900, value:PRIME_TIME_START.T900}
+    ]
 
-    // const unitList: Unit[] = [
-    //     {label:TNNASUNIT.BHJRI, value:TNNASUNIT.BHJRI},
-    //     {label:TNNASUNIT.STOR, value:TNNASUNIT.STOR},
-    //     {label:TNNASUNIT.STMSTOR, value:TNNASUNIT.STMSTOR}
-    // ]
+    const primeTimeEndOptions: PrimeTimeMenuItem[] =  [
+        {id:0, label: PRIME_TIME_END.T300, value:PRIME_TIME_END.T300},
+        {id:1, label: PRIME_TIME_END.T330, value:PRIME_TIME_END.T330},
+        {id:2, label: PRIME_TIME_END.T400, value:PRIME_TIME_END.T400},
+        {id:3, label: PRIME_TIME_END.T430, value:PRIME_TIME_END.T430},
+        {id:4, label: PRIME_TIME_END.T500, value:PRIME_TIME_END.T500},
+        {id:5, label: PRIME_TIME_END.T530, value:PRIME_TIME_END.T530},
+    ]
+
     
 
     
-    const [startTime, setStartTime] = useState('7:00 AM')
-    const [endTime, setEndTime] = useState('5:00 PM')
+    const [startTime, setStartTime] = useState<SingleValue<PrimeTimeMenuItem>>(primeTimeStartOptions[0])
+    const [endTime, setEndTime] = useState<SingleValue<PrimeTimeMenuItem>>(primeTimeEndOptions[0])
     const [rooms, setRooms] = useState<item[]>(roomList)
     const [allRoomsSelected, setAllRoomsSelected]= useState(true);
     const [surgeons, setSurgeons] = useState<item[]>(surgeonList);
@@ -170,6 +204,9 @@ const Settings = () => {
         <div className='units'>
             <h3>Select Unit</h3>
           <Select value={selectedUnit} onChange={handleUnitChange}  options={unitList} />
+        </div>
+        <div className='prime-time'>
+            <TestSelector<PrimeTimeMenuItem> selectedOption={startTime} optionList={primeTimeStartOptions}  />
         </div>
         <div className="list-selectors">
             <ListSelector
