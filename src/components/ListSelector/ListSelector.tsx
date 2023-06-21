@@ -8,7 +8,7 @@ import ListItem from "./ListItem";
 import { ITEM_DISPLAY_TYPE } from "./ListItem";
 
 interface ListSelectorProps {
-    title: string;
+    title?: string;
     emptySearchMessage?: string
     itemList: item[];
     allItemsSelected: boolean;

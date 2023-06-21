@@ -1,4 +1,12 @@
 .settings {
+
+    & .set-all {
+        display: flex;
+        flex-direction: row;
+    }
+
+
+
    & .time-setting{
         font-size: medium;
         & h3 {
@@ -7,16 +15,28 @@
     }
 
     & .units {
-        padding-left: 5rem;
+        padding-left: 3rem;
         padding-top: 3rem;
         width:25rem;
     }
 
     & .prime-time {
-        width: 45rem;
+        width: 40rem;
         margin-left:5rem;
         margin-bottom:5rem;
-        margin-top:5rem;
+        // margin-top:5rem;
+    }
+
+    .sel-unit {
+        display:inline-block;
+        margin-left: 3rem;
+    }
+
+    & .date-range {
+        width: 40rem;
+        margin-left:5rem;
+        margin-bottom:3rem;
+        // margin-top:3rem;
     }
 
     & .list-selectors {

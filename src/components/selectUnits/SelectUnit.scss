@@ -1,0 +1,30 @@
+.select-unit {
+    display:inline-block;
+    min-width: 35rem;
+    position:relative;
+    border-radius:2px;
+    border:1px solid black;
+    padding: 1rem;
+
+
+    h2 {
+        position:absolute;
+        top: -1.3rem;
+        left: 5rem;
+        background-color: white;
+        font-style:italic;
+    }
+
+
+    & .units {
+        margin-bottom: 3rem;
+        min-width:30rem;
+    }
+
+    & .unit-list-selector {
+        display:inline-block;
+        margin-left: 3rem;
+        margin-bottom:3rem;
+    }
+
+}

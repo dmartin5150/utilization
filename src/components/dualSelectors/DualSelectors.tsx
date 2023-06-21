@@ -17,12 +17,13 @@ export type SingleSelector<T extends Option> = {
 }
 
 interface DualSelectorProps<T extends Option, U extends Option> {
+    title: string;
     selector1: SingleSelector<T>;
     selector2: SingleSelector<U>;
 }
 
 
-function DualSelectors <T extends Option, U extends Option >({selector1, selector2}: React.PropsWithChildren<DualSelectorProps<T, U>>) {
+function DualSelectors <T extends Option, U extends Option >({title, selector1, selector2}: React.PropsWithChildren<DualSelectorProps<T, U>>) {
 
     const handleSelector1 = (option: SingleValue<T> )  => {
         selector1.onChange(option)
@@ -35,14 +36,35 @@ function DualSelectors <T extends Option, U extends Option >({selector1, selecto
     return( 
     <Card className={'Card'}>
        <div className='selectors'>
-            <h2>Title</h2>
+            <h2>{title}</h2>
             <div className='selector'>
                 <label>{selector1.title}</label>
-                <Select value={selector1.selectedOption} options={selector1.optionList} onChange={handleSelector1} />
+                <Select 
+                    value={selector1.selectedOption} 
+                    options={selector1.optionList} 
+                    onChange={handleSelector1} 
+                    styles={{
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          fontSize: '15px',
+                        }),
+                      }}
+                    
+                    />
             </div>
             <div className='selector'>
                 <label>{selector2.title}</label>
-                <Select value={selector2.selectedOption} options={selector2.optionList} onChange={handleSelector2}/>
+                <Select 
+                    value={selector2.selectedOption} 
+                    options={selector2.optionList} 
+                    onChange={handleSelector2}
+                    styles={{
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          fontSize: '15px',
+                        }),
+                      }}
+                    />
             </div>
        </div>
        </Card>

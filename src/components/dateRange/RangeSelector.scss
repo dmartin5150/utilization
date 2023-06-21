@@ -1,5 +1,5 @@
-.selectors {
-    display:inline-block;
+.range-selectors {
+    display:flex;
     padding:1rem;
     border: 1px solid black;
     min-width: 35rem;
@@ -14,16 +14,13 @@
         font-style:italic;
     }
 
-    & .selector {
+    & .range-selector {
         padding-top:1rem;
         width: 25rem;
 
         label {
+            display: block;
             font-size: 15px;
         }
-
-
-
     }
 }
-

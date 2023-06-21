@@ -1,13 +1,15 @@
-import React, {useState, useEffect, Component} from 'react';
-import DateTimeSetting from '../../components/dateTimeSettings/dateTimeSetting';
+import React, {useState, useEffect} from 'react';
 import './settings.scss'
 
 import { item } from '../../components/ListSelector/ListItem';
 import ListSelector from '../../components/ListSelector/ListSelector';
 import { ITEM_DISPLAY_TYPE } from '../../components/ListSelector/ListItem';
-import Select,{SingleValue} from "react-select";
+import {SingleValue} from "react-select";
 import DualSelectors from '../../components/dualSelectors/DualSelectors';
 import { SingleSelector } from '../../components/dualSelectors/DualSelectors';
+import RangeSelectors from '../../components/dateRange/RangeSelector';
+import { UnitSelector, UnitListSelector } from '../../components/selectUnits/SelectUnit';
+import SelectUnit from '../../components/selectUnits/SelectUnit';
 
 
 export enum TNNASUNIT  {
@@ -60,6 +62,17 @@ const Settings = () => {
         {id:4, name:'BH JRI 05', selected: true},
         {id:5, name:'BH JRI 06', selected: true},
         {id:6, name:'BH JRI 07', selected: true},
+        {id:7, name: 'BH JRI 08', selected: true},
+        {id:8, name:'BH JRI 09', selected: false},
+        {id:9, name:'BH JRI 10', selected: true},
+        {id:10, name:'BH JRI 11', selected: true},
+        {id:11, name:'BH JRI 12', selected: true},
+        {id:12, name:'BH JRI 13', selected: true},
+        {id:13, name:'BH JRI 14', selected: false},
+        {id:14, name:'BH JRI 15', selected: true},
+        {id:15, name:'BH JRI 16', selected: true},
+        {id:16, name:'BH JRI 17', selected: true},
+        {id:17, name:'BH JRI 18', selected: true},
     ]
 
 
@@ -108,6 +121,13 @@ const Settings = () => {
     const [filteredSurgeons, setFilteredSurgeons] = useState<item[]>(surgeonList)
     const [selectedSurgeons, setSelectedSurgeons] = useState<item[]>(surgeonList)
     const [selectedUnit, setSelectedUnit] = useState<SingleValue<Unit>>(unitList[0])
+    const [startDate, setStartDate] = useState<Date>(new Date('6/1/2023'));
+    const [stopDate, setStopDate] = useState<Date>(new Date('6/30/2023'));
+
+
+
+
+
 
 
     const primeTimeStartSelector: SingleSelector<PrimeTimeMenuItem> = {
@@ -189,8 +209,6 @@ const Settings = () => {
         onItemChanged(id, surgeons, setSurgeons)
     }
 
-
-
     const onSurgeonSearchTextChanged = (text:string):void => {
         if (text.length === 0) {
             setFilteredSurgeons([...surgeons])
@@ -202,35 +220,51 @@ const Settings = () => {
         setFilteredSurgeons([...filteredList])
     }
 
-
     const handleUnitChange = (option: SingleValue<Unit>) => {
         setSelectedUnit(option)
     }
 
-    return(<div className='settings'>
-        {/* <div className='time-setting'>
-            <h3>Prime Time</h3>
-            <DateTimeSetting />
-        </div> */}
+    const onStartDateChange = (date:Date) => {
+        console.log(date)
+    }
 
-        <div className='units'>
-            <h3>Select Unit</h3>
-          <Select value={selectedUnit} onChange={handleUnitChange}  options={unitList} />
-        </div>
-        <div className='prime-time'>
-            <DualSelectors<PrimeTimeMenuItem, PrimeTimeMenuItem> selector1={primeTimeStartSelector} selector2={primeTimeEndSelector}/>
+    const unitSelector:UnitSelector = {
+        value:selectedUnit,
+        handleUnitChange:handleUnitChange,
+        options: unitList
+     }
+
+
+
+    const unitListSelector: UnitListSelector = {
+        rooms:rooms,
+        allRoomsSelected:allRoomsSelected,
+        onRoomChanged: onRoomChanged,
+        onAllRoomsSelected:onAllRoomsSelected,
+        onClearAllRooms:onClearAllRooms
+    }
+
+
+    return(<div className='settings'>
+        <div className='set-all'>
+            <div className='set-selector'>
+                <div className='date-range'>
+                    <RangeSelectors 
+                        title='Date Range' 
+                        startDate={startDate} 
+                        stopDate={stopDate} 
+                        onSelectDate1={onStartDateChange}
+                        onSelectDate2={setStopDate} />
+                </div>
+                <div className='prime-time'>
+                    <DualSelectors<PrimeTimeMenuItem, PrimeTimeMenuItem> title='Prime Time' selector1={primeTimeStartSelector} selector2={primeTimeEndSelector}/>
+                </div>
+            </div>
+            <div className='sel-unit'>
+                <SelectUnit title='Select Unit' unitSelector={unitSelector} unitListSelector={unitListSelector} />
+            </div>
         </div>
         <div className="list-selectors">
-            <ListSelector
-                title='JRI' 
-                className='OR-Rooms'
-                itemList={rooms}
-                allItemsSelected={allRoomsSelected}
-                displayType={ITEM_DISPLAY_TYPE.checkbox}
-                onItemChanged={onRoomChanged}
-                onAllItemsSelected={onAllRoomsSelected}
-                onClearAllSelected={onClearAllRooms}
-            />
             <div className="list-selector searchbox">
                 <ListSelector
                     title='Select Surgeon' 
