@@ -2,19 +2,17 @@ import React, { useState, useEffect } from "react";
 import classnames from "classnames";
 
 import { ITEM_DISPLAY_TYPE } from "../ListSelector/ListItem";
+import SearchListItem from "./SearchListItem";
 
 import { item } from "../ListSelector/ListItem";
 
 
 interface SearchListProps {
     title?: string;
+    className?: string;
     emptySearchMessage?: string
     itemList: item[];
     allItemsSelected: boolean;
-    className?: string;
-    searchBox?:boolean;
-    hideAllHeading?:boolean;
-    displayType: ITEM_DISPLAY_TYPE;
     onItemChanged: (id:string)=>void;
     onAllItemsSelected: ()=>void;
     onClearAllSelected: ()=>void;
@@ -23,7 +21,7 @@ interface SearchListProps {
 
 
 
-const SearchList: React.FC<SearchListProps> = ( {title,itemList,searchBox,emptySearchMessage,hideAllHeading, allItemsSelected,className, displayType, onItemChanged, 
+const SearchList: React.FC<SearchListProps> = ({title,itemList,emptySearchMessage, allItemsSelected,className,  onItemChanged, 
         onAllItemsSelected,onClearAllSelected,onSearchTextChanged }) => {
 
 
@@ -46,36 +44,34 @@ const SearchList: React.FC<SearchListProps> = ( {title,itemList,searchBox,emptyS
 
     return(
         <div className={`search-list ${className}`}>
-            {searchBox  && 
+
             <div className='searchBox'>
                  <h1>{title}</h1>
                 <input value={searchText} 
                 onChange={handleSearchTextChanged}
                 />
-            </div>}
-            {!searchBox && 
-                <div className="title">
-                    <h1>{title}</h1>
-                </div>}
+            </div>
+            <div className="title">
+                <h1>{title}</h1>
+            </div>
             <div className="all">
-               {!hideAllHeading && <label className={"checkbox-all"}>
-                        <input
-                            type="checkbox"
-                            checked={allItemsSelected}
-                            onChange={handleAllChanged}
-                            disabled={searchText.length !== 0}
-                        />
-                            ALL
-                    </label>}
+                <label className={"checkbox-all"}>
+                    <input
+                        type="checkbox"
+                        checked={allItemsSelected}
+                        onChange={handleAllChanged}
+                        disabled={searchText.length !== 0}
+                    />
+                        ALL
+                </label>
                 <a  href="#" className="clear-all" onClick={onClearAllSelected}>Clear all</a>
             </div>
-            <ul className={classnames("items", {small: (searchBox)},{small: (displayType === ITEM_DISPLAY_TYPE.list)})}>
+            <ul className={classnames("items")}>
             {(itemList.length == 0) ? <li className="empty">{emptySearchMessage ? emptySearchMessage : "No Item Found"}</li> : 
                 itemList.map((item) => {
                     return <li key={item.id}>
-                        <ListItem 
+                        <SearchListItem 
                         item={item}
-                        displayType={displayType}
                         onItemChanged={onItemChanged}
                     /></li>
             })}
