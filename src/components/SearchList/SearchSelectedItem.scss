@@ -1,0 +1,20 @@
+.selected-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: medium;
+    padding:0 1rem;
+
+    & .selected-item {
+        padding: 0 1rem;
+    }
+
+    a {
+        color:grey;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+}

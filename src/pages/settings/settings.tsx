@@ -10,6 +10,8 @@ import { SingleSelector } from '../../components/dualSelectors/DualSelectors';
 import RangeSelectors from '../../components/dateRange/RangeSelector';
 import { UnitSelector, UnitListSelector } from '../../components/selectUnits/SelectUnit';
 import SelectUnit from '../../components/selectUnits/SelectUnit';
+import SearchList from '../../components/SearchList/SearchList';
+import { SearchListItems } from '../../components/SearchList/SearchList';
 
 
 export enum TNNASUNIT  {
@@ -130,6 +132,7 @@ const Settings = () => {
 
 
 
+
     const primeTimeStartSelector: SingleSelector<PrimeTimeMenuItem> = {
         title: 'Prime Time Start',
         selectedOption: startTime,
@@ -243,7 +246,15 @@ const Settings = () => {
         onAllRoomsSelected:onAllRoomsSelected,
         onClearAllRooms:onClearAllRooms
     }
-
+    const searchCheckboxList: SearchListItems = {
+        itemList: filteredSurgeons,
+        emptySearchMessage:'No Surgeon Selected',
+        allItemsSelected:allSurgeonsSelected,
+        onItemChanged: onSurgeonChanged,
+        onAllItemsSelected:onAllSurgeonsSelected,
+        onClearAllSelected:onClearAllSurgeons,
+        onSearchTextChanged:onSurgeonSearchTextChanged
+    }
 
     return(<div className='settings'>
         <div className='set-all'>
@@ -264,7 +275,7 @@ const Settings = () => {
                 <SelectUnit title='Select Unit' unitSelector={unitSelector} unitListSelector={unitListSelector} />
             </div>
         </div>
-        <div className="list-selectors">
+        {/* <div className="list-selectors">
             <div className="list-selector searchbox">
                 <ListSelector
                     title='Select Surgeon' 
@@ -279,8 +290,8 @@ const Settings = () => {
                     onClearAllSelected={onClearAllSurgeons}
                     onSearchTextChanged={onSurgeonSearchTextChanged}
                 />
-            </div>
-            <div className="list-selector searchbox">
+            </div> */}
+            {/* <div className="list-selector searchbox">
                 <ListSelector
                     title='Selected Surgeons' 
                     className='selected'
@@ -295,8 +306,15 @@ const Settings = () => {
                     onClearAllSelected={onClearAllSurgeons}
                     onSearchTextChanged={onSurgeonSearchTextChanged}
                 />
+            </div> */}
+            <div className='provider-search-list'>
+                <SearchList
+                    title='Surgeons'
+                    checkboxList={searchCheckboxList} />
             </div>
-        </div>
     </div>);
 }
 export default Settings
+
+
+

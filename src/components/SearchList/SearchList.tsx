@@ -1,29 +1,36 @@
 import React, { useState, useEffect } from "react";
 import classnames from "classnames";
-
-import { ITEM_DISPLAY_TYPE } from "../ListSelector/ListItem";
-import SearchListItem from "./SearchListItem";
-
+import SearchListCheckboxItem from "./SearchListCheckboxItem";
 import { item } from "../ListSelector/ListItem";
+import "./SearchList.scss";
+
+
+
+export type SearchListItems ={
+    itemList: item[];
+    emptySearchMessage?:string;
+    allItemsSelected:boolean;
+    onItemChanged: (id:string)=>void;
+    onAllItemsChanged?: ()=>void;
+    onAllItemsSelected: ()=>void;
+    onClearAllSelected:()=>void;
+    onSearchTextChanged?: (searchText:string)=>void;
+
+}
 
 
 interface SearchListProps {
     title?: string;
     className?: string;
-    emptySearchMessage?: string
-    itemList: item[];
-    allItemsSelected: boolean;
-    onItemChanged: (id:string)=>void;
-    onAllItemsSelected: ()=>void;
-    onClearAllSelected: ()=>void;
-    onSearchTextChanged?: (searchText:string)=> void
+    checkboxList:SearchListItems;
+
 }
 
 
+const SearchList: React.FC<SearchListProps> = ({title,className, checkboxList}) => {
 
-const SearchList: React.FC<SearchListProps> = ({title,itemList,emptySearchMessage, allItemsSelected,className,  onItemChanged, 
-        onAllItemsSelected,onClearAllSelected,onSearchTextChanged }) => {
-
+    const {itemList,emptySearchMessage, allItemsSelected,  onItemChanged, 
+        onAllItemsSelected,onClearAllSelected,onSearchTextChanged} = checkboxList;
 
     const [searchText, setSearchText] = useState('');
 
@@ -43,34 +50,30 @@ const SearchList: React.FC<SearchListProps> = ({title,itemList,emptySearchMessag
 
 
     return(
-        <div className={`search-list ${className}`}>
-
+        <div className={classnames("search-list", className)}>
             <div className='searchBox'>
                  <h1>{title}</h1>
                 <input value={searchText} 
                 onChange={handleSearchTextChanged}
                 />
             </div>
-            <div className="title">
-                <h1>{title}</h1>
-            </div>
             <div className="all">
-                <label className={"checkbox-all"}>
-                    <input
-                        type="checkbox"
-                        checked={allItemsSelected}
-                        onChange={handleAllChanged}
-                        disabled={searchText.length !== 0}
-                    />
-                        ALL
-                </label>
+               <label className={"checkbox-all"}>
+                        <input
+                            type="checkbox"
+                            checked={allItemsSelected}
+                            onChange={handleAllChanged}
+                            disabled={searchText.length !== 0}
+                        />
+                            ALL
+                    </label>
                 <a  href="#" className="clear-all" onClick={onClearAllSelected}>Clear all</a>
             </div>
             <ul className={classnames("items")}>
             {(itemList.length == 0) ? <li className="empty">{emptySearchMessage ? emptySearchMessage : "No Item Found"}</li> : 
                 itemList.map((item) => {
                     return <li key={item.id}>
-                        <SearchListItem 
+                        <SearchListCheckboxItem 
                         item={item}
                         onItemChanged={onItemChanged}
                     /></li>

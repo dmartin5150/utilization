@@ -6,7 +6,6 @@ import { ITEM_DISPLAY_TYPE, item } from "../ListSelector/ListItem";
 import Card from "../card/card";
 import './SelectUnit.scss';
 
-
 export type UnitSelector = {
     value: SingleValue<Unit>;
     handleUnitChange: (unit: SingleValue<Unit>) => void;
@@ -48,8 +47,9 @@ const SelectUnit:React.FC<SelectUnitProps> = ({title, unitSelector, unitListSele
                             onItemChanged={onRoomChanged}
                             onAllItemsSelected={onAllRoomsSelected}
                             onClearAllSelected={onClearAllRooms}
-                        />
+                        /> 
                 </div>
+
             </div>
         </Card>
    

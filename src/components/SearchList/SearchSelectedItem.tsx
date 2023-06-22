@@ -1,16 +1,19 @@
 import React from "react";
-import './SearchListItem.scss'
-
-import { item } from "../ListSelector/ListItem";
+import './SearchSelectedItem.scss'
 
 
+export type item = {
+        id: number;
+        name: string;
+        selected: boolean;
+}
 
-interface SearchListItemProps {
+interface SearchSelectedItemProps {
     item:item;
     onItemChanged: (id:string)=>void;
 }
 
-const SearchListItem: React.FC<SearchListItemProps> = ({item, onItemChanged}) => {
+const SearchSelectedItem: React.FC<SearchSelectedItemProps> = ({item, onItemChanged}) => {
     const {id, name} = item
 
 
@@ -21,12 +24,11 @@ const SearchListItem: React.FC<SearchListItemProps> = ({item, onItemChanged}) =>
            onItemChanged(id)
        }
     }
-
     return (
-        <div className='list-items'>
-            <label className={"list-item"}>{name}</label>
+        <div className='selected-items'>
+            <label className={"selected-item"}>{name}</label>
             <a href="#" id={id.toString()}onClick={handleListChange}>X</a>
         </div>
     )
 }
-export default SearchListItem;
+export default SearchSelectedItem;
