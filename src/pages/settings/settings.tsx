@@ -85,6 +85,18 @@ const Settings = () => {
         {id:4, name:'Dr. 4', selected: true},
         {id:5, name:'Dr. 5', selected: true},
         {id:6, name:'Dr 6', selected: true},
+        {id:7, name: 'Martin', selected: true},
+        {id:8, name: 'Mister', selected: false},
+        {id:9, name:'marian', selected: true},
+        {id:10, name:'Dr. 4', selected: true},
+        {id:11, name:'Dr. 5', selected: true},
+        {id:12, name:'Dr 6', selected: true},
+        {id:13, name: 'Martin', selected: true},
+        {id:14, name: 'Mister', selected: false},
+        {id:15, name:'marian', selected: true},
+        {id:16, name:'Dr. 4', selected: true},
+        {id:17, name:'Dr. 5', selected: true},
+        {id:18, name:'Dr 6', selected: true},
     ]
 
     const unitList: Unit[] = [
@@ -166,6 +178,7 @@ const Settings = () => {
     },[surgeons])
 
     useEffect(()=>{
+        console.log('udating selected')
         const selected = surgeons.filter((surgeon)=> surgeon.selected === true)
         setSelectedSurgeons([...selected])
     },[surgeons])
@@ -256,6 +269,20 @@ const Settings = () => {
         onSearchTextChanged:onSurgeonSearchTextChanged
     }
 
+    const searchListBox: SearchListItems = {
+        itemList: selectedSurgeons,
+        allItemsSelected:allSurgeonsSelected,
+        emptySearchMessage:'No Surgeon Selected',
+        onItemChanged:onSurgeonChanged,
+        onAllItemsSelected:onAllSurgeonsSelected,
+        onClearAllSelected:onClearAllSurgeons,
+        onSearchTextChanged:onSurgeonSearchTextChanged
+    }
+
+
+
+
+
     return(<div className='settings'>
         <div className='set-all'>
             <div className='set-selector'>
@@ -274,9 +301,15 @@ const Settings = () => {
             <div className='sel-unit'>
                 <SelectUnit title='Select Unit' unitSelector={unitSelector} unitListSelector={unitListSelector} />
             </div>
+            <div className='provider-search-list'>
+                <SearchList
+                    title='Surgeons'
+                    checkboxList={searchCheckboxList}
+                    selectedList={searchListBox} />
+            </div>
         </div>
-        {/* <div className="list-selectors">
-            <div className="list-selector searchbox">
+        {/* <div className="list-selectors"> */}
+            {/* <div className="list-selector searchbox">
                 <ListSelector
                     title='Select Surgeon' 
                     className='select-surgeon'
@@ -290,7 +323,7 @@ const Settings = () => {
                     onClearAllSelected={onClearAllSurgeons}
                     onSearchTextChanged={onSurgeonSearchTextChanged}
                 />
-            </div> */}
+            </div>  */}
             {/* <div className="list-selector searchbox">
                 <ListSelector
                     title='Selected Surgeons' 
@@ -307,12 +340,14 @@ const Settings = () => {
                     onSearchTextChanged={onSurgeonSearchTextChanged}
                 />
             </div> */}
-            <div className='provider-search-list'>
+            {/* <div className='provider-search-list'>
                 <SearchList
                     title='Surgeons'
-                    checkboxList={searchCheckboxList} />
-            </div>
-    </div>);
+                    checkboxList={searchCheckboxList}
+                    selectedList={searchListBox} />
+            </div> */}
+        {/* </div> */}
+    </div>)
 }
 export default Settings
 

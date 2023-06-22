@@ -1,14 +1,31 @@
 .search-list {
     background-color: white;
 
+    display:inline-block;
+    min-width: 35rem;
+    position:relative;
+    border-radius:2px;
+    border:1px solid black;
+    padding: 1rem;
+
+
+    h2 {
+        position:absolute;
+        top: -1.3rem;
+        left: 5rem;
+        background-color: white;
+        font-style:italic;
+    }
+
+
     & .searchBox {
         margin-top: 1rem;
         margin-bottom: 0.5rem;
-        width:25rem;
+        width:20rem;
 
         & input {
             line-height: 2.5rem;
-            width: 30rem;
+            width: 20rem;
             font: inherit;
             font-size:15px;
             padding:0.5rem;
@@ -23,6 +40,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width:20rem;
 
         .checkbox-all {
             font-size: large;
@@ -43,19 +61,43 @@
         }
     }
 
-    & .items {
-        margin-top: 0;
-        border: 1px solid black;
+    & .search-item-lists {
+        display:flex;
 
-        & .empty {
-            font-size:medium;
-            padding-left:0.5rem;
+        & .items {
+            margin-top: 0;
+            border: 1px solid black;
+            border-right:none;
+            width:20rem;
+
+            & .empty {
+                font-size:medium;
+                padding-left:0.5rem;
+            }
+
+            &.small {
+                grid-template-columns: 1fr;
+                grid-gap: 0.1rem;
+            }
+
+
+
         }
 
-        &.small {
-            grid-template-columns: 1fr;
-            grid-gap: 0.1rem;
-        }
+        & .search-selected-items {
+            margin-top: 0;
+            border: 1px solid black;
 
+            & .empty {
+                font-size:medium;
+                padding-left:0.5rem;
+            }
+
+            &.small {
+                grid-template-columns: 1fr;
+                grid-gap: 0.1rem;
+            }
+
+        }   
     }
 }

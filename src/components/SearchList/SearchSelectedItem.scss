@@ -4,6 +4,9 @@
     justify-content: space-between;
     font-size: medium;
     padding:0 1rem;
+    // border:1px solid black;
+    border-right:none;
+    width:20rem;
 
     & .selected-item {
         padding: 0 1rem;
