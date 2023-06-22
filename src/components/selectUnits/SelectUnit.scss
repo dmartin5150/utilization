@@ -5,7 +5,8 @@
     border-radius:2px;
     border:1px solid black;
     padding: 1rem;
-
+    min-height:32.7rem;
+    padding-right:2rem;
 
     h2 {
         position:absolute;
@@ -24,6 +25,7 @@
     & .unit-list-selector {
         display:inline-block;
         margin-left: 3rem;
+        min-width:30rem;
         // margin-bottom:3rem;
     }
 

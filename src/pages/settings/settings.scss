@@ -16,7 +16,7 @@
 
     & .units {
         padding-left: 3rem;
-        padding-top: 3rem;
+        padding-top: 1rem;
         width:25rem;
     }
 
@@ -27,10 +27,15 @@
         // margin-top:5rem;
     }
 
-    .sel-unit {
-        display:inline-block;
+    // .select-unit-container {
+    //     min-height: 30rem;
+    & .sel-unit {
+        display:block;
         margin-left: 3rem;
+        height:100%;
     }
+    // }
+
 
     & .date-range {
         width: 40rem;
