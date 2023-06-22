@@ -27,6 +27,7 @@ const Settings = () => {
     const [startTime, setStartTime] = useState<SingleValue<PrimeTimeMenuItem>>(primeTimeStartOptions[0])
     const [endTime, setEndTime] = useState<SingleValue<PrimeTimeMenuItem>>(primeTimeEndOptions[0])
     const [rooms, setRooms] = useState<UnitRoomList[]>([])
+    const [roomLists, setRoomLists] = useState<UnitRoomLists>({})
     const [allRoomsSelected, setAllRoomsSelected]= useState(true);
     const [surgeons, setSurgeons] = useState<item[]>([]);
     const [allSurgeonsSelected, setAllSurgeonsSelected] = useState(true);
@@ -52,11 +53,13 @@ const Settings = () => {
     }
    
     const updateAllSelectedItems = (items:item[], setItem: (itemStatus: boolean)=>void) => {
-        const unselectedItem = items.findIndex((item) => item.selected === false)
-        if (unselectedItem === -1) {
-            setItem(true);
-        } else {
-            setItem(false);
+        if (items) {
+            const unselectedItem = items.findIndex((item) => item.selected === false)
+            if (unselectedItem === -1) {
+                setItem(true);
+            } else {
+                setItem(false);
+            }
         }
     }
 
@@ -64,15 +67,21 @@ const Settings = () => {
     useEffect(()=> {
         const getLists = async() => {
             const newList = await getSurgeonLists();      
-            console.log('list', newList[TNNASUNIT.BHJRI])
-            setSurgeons(newList[TNNASUNIT.BHJRI]);
-            setSelectedSurgeons(newList[TNNASUNIT.BHJRI])
-            setFilteredSurgeons(newList[TNNASUNIT.BHJRI])
+            console.log('list', newList)
+            setRoomLists(newList)
         }
         getLists();
- 
-  
     },[]);
+
+    useEffect(()=> {
+        console.log('setting lists')
+        if (selectedUnit  && roomLists[selectedUnit.name]) {
+            console.log(selectedUnit.name)
+            setSurgeons(roomLists[selectedUnit.name]);
+            setSelectedSurgeons(roomLists[selectedUnit.name])
+            setFilteredSurgeons(roomLists[selectedUnit.name])
+        }
+    }, [selectedUnit, roomLists])
 
 
     useEffect(()=> {
@@ -82,20 +91,27 @@ const Settings = () => {
     },[selectedUnit])
 
     useEffect(() => {
-        updateAllSelectedItems(rooms, setAllRoomsSelected);
+        if (rooms) {
+            updateAllSelectedItems(rooms, setAllRoomsSelected);
+        }
     },[rooms])
 
     useEffect(() => {
-        updateAllSelectedItems(surgeons, setAllSurgeonsSelected);
+        if (surgeons) {
+            updateAllSelectedItems(surgeons, setAllSurgeonsSelected);
+        }
 
     },[surgeons])
 
     useEffect(()=>{
-        console.log('udating selected')
-        console.log(surgeons)
-        const selected = surgeons.filter((surgeon)=> surgeon.selected === true)
-        console.log('udating selected', selected)
-        setSelectedSurgeons(selected)
+        if (surgeons) {
+            console.log('udating selected')
+            console.log(surgeons)
+            const selected = surgeons.filter((surgeon)=> surgeon.selected === true)
+            console.log('udating selected', selected)
+            setSelectedSurgeons(selected)
+        }
+
     },[surgeons])
 
 
@@ -124,7 +140,7 @@ const Settings = () => {
     }
 
     const onItemChanged = (id:string, items:item[], setItems:(items:item[])=>void) => {
-        const itemIndex = items.findIndex((item) => item.id.toString() == id);
+        const itemIndex = items.findIndex((item) => item.id.toString() === id);
         if (itemIndex !== -1) {
             items[itemIndex].selected=  !items[itemIndex].selected
         }

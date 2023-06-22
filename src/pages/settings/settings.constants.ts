@@ -3,7 +3,7 @@ import { PrimeTimeMenuItem } from "./settings";
 export enum TNNASUNIT  {
     BHJRI = 'BH JRI',
     STMSTOR = 'STM ST OR',
-    STOR = 'ST OR' 
+    STOR = 'MT OR' 
 }
 
 export type Unit = {
@@ -43,13 +43,13 @@ export enum PRIME_TIME_END {
 
 export const JRIroomList = [
     {id:0, name: 'BH JRI 02', selected: true},
-    {id:1, name:'BH JRI 03', selected: false},
+    {id:1, name:'BH JRI 03', selected: true},
     {id:3, name:'BH JRI 04', selected: true},
     {id:4, name:'BH JRI 05', selected: true},
     {id:5, name:'BH JRI 06', selected: true},
     {id:6, name:'BH JRI 07', selected: true},
     {id:7, name: 'BH JRI 08', selected: true},
-    {id:8, name:'BH JRI 09', selected: false}
+    {id:8, name:'BH JRI 09', selected: true}
 ]
 
 export const STMSTORroomList = [
