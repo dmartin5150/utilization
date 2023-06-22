@@ -40,7 +40,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width:20rem;
+        width:20.1rem;
 
         .checkbox-all {
             font-size: large;
@@ -69,6 +69,8 @@
             border: 1px solid black;
             border-right:none;
             width:20rem;
+            overflow-y:auto;
+            height:43rem;
 
             & .empty {
                 font-size:medium;
@@ -87,7 +89,8 @@
         & .search-selected-items {
             margin-top: 0;
             border: 1px solid black;
-
+            overflow-y:auto;
+            height:43rem;
             & .empty {
                 font-size:medium;
                 padding-left:0.5rem;
