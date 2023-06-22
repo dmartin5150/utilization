@@ -75,7 +75,7 @@ const SearchList: React.FC<SearchListProps> = ({title,className, checkboxList, s
                 </div>
                 <div className='search-item-lists'>
                     <ul className={classnames("items")}>
-                    {(itemList.length == 0) ? <li className="empty">{emptySearchMessage ? emptySearchMessage : "No Item Found"}</li> : 
+                    {(itemList.length === 0) ? <li className="empty">{emptySearchMessage ? emptySearchMessage : "No Item Found"}</li> : 
                         itemList.map((item) => {
                             return <li key={item.id}>
                                 <SearchListCheckboxItem 
@@ -85,7 +85,7 @@ const SearchList: React.FC<SearchListProps> = ({title,className, checkboxList, s
                     })}
                     </ul>
                     <ul className={classnames("search-selected-items")}>
-                    {(selectedList.itemList.length != 0) &&
+                    {(selectedList.itemList.length === 0) ? <li className="empty">{emptySearchMessage ? emptySearchMessage : "No Item Found"}</li> :
                         selectedList.itemList.map((item) => {
                             return <li key={item.id}>
                                 <SearchSelectedItem 

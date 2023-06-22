@@ -74,7 +74,7 @@
 
             & .empty {
                 font-size:medium;
-                padding-left:0.5rem;
+                padding:0 0.5rem;
             }
 
             &.small {
@@ -93,8 +93,9 @@
             height:43rem;
             & .empty {
                 font-size:medium;
-                padding-left:0.5rem;
+                padding:0 1rem;
             }
+
 
             &.small {
                 grid-template-columns: 1fr;
