@@ -37,7 +37,17 @@ const SelectUnit:React.FC<SelectUnitProps> = ({title, unitSelector, unitListSele
             <div className='select-unit'>
                 <div className='units'>
                     <h2>{title}</h2>
-                    <Select value={value} onChange={handleUnitChange}  options={options} />
+                    <Select 
+                        value={value} 
+                        onChange={handleUnitChange}  
+                        options={options} 
+                        styles={{
+                            control: (baseStyles, state) => ({
+                              ...baseStyles,
+                              fontSize: '15px',
+                            }),
+                          }}
+                        />
                 </div>
                 <div className='unit-list-selector'>
                     <ListSelector 

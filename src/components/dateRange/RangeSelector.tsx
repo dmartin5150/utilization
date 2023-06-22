@@ -18,7 +18,7 @@ interface DateRangeProps {
 const RangeSelectors: React.FC<DateRangeProps> = ({title, startDate, stopDate, onSelectDate1, onSelectDate2}) => {
 
     const [rangeStart, setRangeStart] = useState<Date>(startDate);
-    const [range1End, setRangeEnd] = useState<Date>(new Date(stopDate));
+    const [rangeEnd, setRangeEnd] = useState<Date>(new Date(stopDate));
 
 
     const handleSelect1 = (date:Date) => {
@@ -43,9 +43,9 @@ const RangeSelectors: React.FC<DateRangeProps> = ({title, startDate, stopDate, o
                 />
                 </div>
                 <div className='range-selector'>
-                    <label>Start Date</label>
+                    <label>End Date</label>
                     <DatePicker
-                    selected={rangeStart} 
+                    selected={rangeEnd} 
                     onChange={handleSelect2} 
                 />
                 </div>
