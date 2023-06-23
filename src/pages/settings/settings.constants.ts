@@ -35,13 +35,24 @@ export const unitList: Unit[] = [
     {id:2, name:TNNASUNIT.STMSTOR, label:TNNASUNIT.STMSTOR, value:TNNASUNIT.STMSTOR}
 ]
 
+export type UnitLists = {
+    [key: string]: Unit;
+}
+
+export const unitLists:UnitLists = {
+    'BH JRI' : unitList[0],
+    'MT OR': unitList[1],
+    'STM ST OR': unitList[2]
+}
+
 export const primeTimeStartOptions: PrimeTimeMenuItem[] = [
     {id:0, label: PRIME_TIME_START['6:30 AM'], value:PRIME_TIME_START['6:30 AM'],},
     {id:1, label: PRIME_TIME_START['7:00 AM'], value:PRIME_TIME_START['7:00 AM']},
     {id:2, label: PRIME_TIME_START['7:30 AM'], value:PRIME_TIME_START['7:30 AM']},
     {id:3, label: PRIME_TIME_START['8:00 AM'], value:PRIME_TIME_START['8:00 AM']},
     {id:4, label: PRIME_TIME_START['8:30 AM'], value:PRIME_TIME_START['8:30 AM']},
-    {id:5, label: PRIME_TIME_START['9:00 AM'], value:PRIME_TIME_START['9:00 AM']}
+    {id:5, label: PRIME_TIME_START['9:00 AM'], value:PRIME_TIME_START['9:00 AM']},
+    {id:6, label: PRIME_TIME_START['9:30 AM'], value:PRIME_TIME_START['9:30 AM']}
 ]
 
 export const primeTimeEndOptions: PrimeTimeMenuItem[] =  [
@@ -51,4 +62,5 @@ export const primeTimeEndOptions: PrimeTimeMenuItem[] =  [
     {id:3, label: PRIME_TIME_END['4:30 PM'], value:PRIME_TIME_END['4:30 PM']},
     {id:4, label: PRIME_TIME_END['5:00 PM'], value:PRIME_TIME_END['5:00 PM']},
     {id:5, label: PRIME_TIME_END['5:30 PM'], value:PRIME_TIME_END['5:30 PM']},
+    {id:6, label: PRIME_TIME_END['6:00 PM'], value:PRIME_TIME_END['6:00 PM']},
 ]

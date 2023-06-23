@@ -1,13 +1,16 @@
 import React, {useState} from "react";
 import './dropdown.scss';
+import { DropdownIndicatorProps } from "react-select";
+
+
 
 
 export type  DropDownBox = {
     title: string;
-    selected: string;
+    selected:string;
     menuItems: string[];
     disabled: boolean;
-    onSelectItem?: (item:string)=>void;
+    onSelectItem?: (item: string)=>void;
 }
 
 
@@ -33,7 +36,7 @@ const useOutsideClick = (callback: ()=>  void) => {
 
 
 
-const Dropdown: React.FC<DropDownBox> = ({title, selected, menuItems,disabled, onSelectItem }) => {
+const Dropdown: React.FC<DropDownBox> = ({title, selected, menuItems,disabled, onSelectItem}) => {
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -41,10 +44,11 @@ const Dropdown: React.FC<DropDownBox> = ({title, selected, menuItems,disabled, o
     }
     
     const handleSelectItem = (event: React.MouseEvent<HTMLButtonElement>) => {
-        // console.log('Name:', (event.target as HTMLButtonElement).name)
+        const selectedButton = (event.target as HTMLButtonElement)
+        // console.log('Name:', (event.target as HTMLButtonElement))
         const name = (event.target as HTMLButtonElement).name
         if (onSelectItem) {
-          onSelectItem(name)
+            onSelectItem(name)
         }
         setOpen(false);
     }
@@ -59,7 +63,7 @@ const Dropdown: React.FC<DropDownBox> = ({title, selected, menuItems,disabled, o
         <div className='trigger'>
             <div className='trigger-unit'>
                 <label>{title}</label>
-                <button onClick={handleOpen} disabled={disabled}>{selected} </button>
+                <button onClick={handleOpen} data-selected={selected} disabled={disabled}>{selected} </button>
             </div>
         </div>
         {open ? (

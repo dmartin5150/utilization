@@ -22,3 +22,8 @@ export const selectPrimeTime = createSelector(
     [selectFacilityReducer],
     (facilitySlice) => facilitySlice.primeTime
 )
+
+export const selectDateRange = createSelector(
+    [selectFacilityReducer],
+    (facilitySlice) => facilitySlice.dateRange
+)

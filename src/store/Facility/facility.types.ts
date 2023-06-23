@@ -2,7 +2,8 @@ export enum FACILITY_TYPES {
     SELECT_UNIT = '/facility/SELECT_UNIT',
     SELECT_DATE = '/facilty/SELECT_DATE',
     SELECT_ROOM = '/facility/SELECT_ROOM',
-    SET_PRIME_TIME = '/facility/SET_PRIME_TIME'
+    SET_PRIME_TIME = '/facility/SET_PRIME_TIME',
+    SET_DATE_RANGE = '/facility/SET_DATE_RANGE'
 }
 
 
@@ -37,6 +38,11 @@ export enum PRIME_TIME_END {
 export type PrimeTime = {
     start: PRIME_TIME_START,
     end: PRIME_TIME_END
+}
+
+export type DateRange = {
+    start:Date;
+    end: Date;
 }
 
 export const JRIroomList = [

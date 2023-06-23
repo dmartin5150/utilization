@@ -17,10 +17,12 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { fetchSurgeonListsAsync } from '../../store/ORData/actions/surgeonLists.actions';
 import { useSelector } from 'react-redux';
 import { selectCalendarData, selectSurgeonLists } from '../../store/ORData/ordata.selector';
-import { setPrimeTime } from '../../store/Facility/facilty.actions';
+import { setPrimeTime, setDateRange, setUnit } from '../../store/Facility/facilty.actions';
 import { PrimeTime } from '../../store/Facility/facility.types';
-import { selectPrimeTime } from '../../store/Facility/facility.selector';
+import { selectPrimeTime, selectDateRange,selectUnit } from '../../store/Facility/facility.selector';
 
+import { TNNASUNIT } from '../../store/Facility/facility.types';
+import { unitLists } from './settings.constants';
 
 export type PrimeTimeMenuItem = {
     id: number;
@@ -28,31 +30,53 @@ export type PrimeTimeMenuItem = {
     label:PRIME_TIME_START | PRIME_TIME_END;
 }
 
+type PrimeTimeMenuItems = {
+    [key:string] : PrimeTimeMenuItem
+}
+
+
+const primeTimeMenuStartItems = {
+    '6:30 AM': primeTimeStartOptions[0],
+    '7:00 AM': primeTimeStartOptions[1],
+    '7:30 AM': primeTimeStartOptions[2],
+    '8:00 AM': primeTimeStartOptions[3],
+    '8:30 AM': primeTimeStartOptions[4],
+    '9:00 AM': primeTimeStartOptions[5],
+    '9:30 AM': primeTimeStartOptions[6],
+}
+
+const primeTimeMentEndItems = {
+    '3:00 PM': primeTimeEndOptions[0],
+    '3:30 PM': primeTimeEndOptions[1],
+    '4:00 PM': primeTimeEndOptions[2],
+    '4:30 PM': primeTimeEndOptions[3],
+    '5:00 PM': primeTimeEndOptions[4],
+    '5:30 PM': primeTimeEndOptions[5],
+    '6:00 PM': primeTimeEndOptions[6],
+}
+
 
 const Settings = () => {
  
-    const [startTime, setStartTime] = useState<SingleValue<PrimeTimeMenuItem>>(primeTimeStartOptions[0])
-    const [endTime, setEndTime] = useState<SingleValue<PrimeTimeMenuItem>>(primeTimeEndOptions[0])
     const [rooms, setRooms] = useState<UnitRoomList[]>([])
     const [allRoomsSelected, setAllRoomsSelected]= useState(true);
     const [surgeons, setSurgeons] = useState<item[]>([]);
     const [allSurgeonsSelected, setAllSurgeonsSelected] = useState(true);
     const [filteredSurgeons, setFilteredSurgeons] = useState<item[]>([])
     const [selectedSurgeons, setSelectedSurgeons] = useState<item[]>([])
-    const [selectedUnit, setSelectedUnit] = useState<SingleValue<Unit>>(unitList[0])
-    const [startDate, setStartDate] = useState<Date>(new Date('6/1/2023'));
-    const [stopDate, setStopDate] = useState<Date>(new Date('6/30/2023'));
+    // const [selectedUnit, setSelectedUnit] = useState<SingleValue<Unit>>(unitList[0])
     
 
 
     const dispatch = useAppDispatch();
     const roomLists = useSelector(selectSurgeonLists);
     const primeTime = useSelector(selectPrimeTime);
+    const dateRange = useSelector(selectDateRange);
+    const selectedUnit = useSelector(selectUnit)
     
 
     const updatePrimeTimeStart = (option:SingleValue<PrimeTimeMenuItem>) => {
         if (option) {
-            setStartTime(option);
             dispatch(setPrimeTime({...primeTime, start: option.value as PRIME_TIME_START}))
         }
       
@@ -60,7 +84,6 @@ const Settings = () => {
 
     const updatePrimeTimeEnd = (option: SingleValue<PrimeTimeMenuItem>) => {
         if (option) {
-            setEndTime(option);
             dispatch(setPrimeTime({...primeTime, end: option.value as PRIME_TIME_END}))
         }
     }
@@ -68,14 +91,14 @@ const Settings = () => {
 
     const primeTimeStartSelector: SingleSelector<PrimeTimeMenuItem> = {
         title: 'Prime Time Start',
-        selectedOption: startTime,
+        selectedOption: primeTimeMenuStartItems[primeTime.start],
         optionList: primeTimeStartOptions,
         onChange: updatePrimeTimeStart,
     }
 
     const primeTimeEndSelector: SingleSelector<PrimeTimeMenuItem> = {
         title: 'Prime Time End',
-        selectedOption: endTime,
+        selectedOption: primeTimeMentEndItems[primeTime.end],
         optionList:primeTimeEndOptions,
         onChange: updatePrimeTimeEnd
     }
@@ -100,17 +123,17 @@ const Settings = () => {
 
     useEffect(()=> {
         console.log('setting lists')
-        if (selectedUnit  && roomLists[selectedUnit.name]) {
-            setSurgeons(roomLists[selectedUnit.name]);
-            setSelectedSurgeons(roomLists[selectedUnit.name])
-            setFilteredSurgeons(roomLists[selectedUnit.name])
+        if (selectedUnit  && roomLists[selectedUnit]) {
+            setSurgeons(roomLists[selectedUnit]);
+            setSelectedSurgeons(roomLists[selectedUnit])
+            setFilteredSurgeons(roomLists[selectedUnit])
         }
     }, [selectedUnit, roomLists])
 
 
     useEffect(()=> {
         if (selectedUnit) {
-            setRooms(TNNASRoomList[selectedUnit.name])
+            setRooms(TNNASRoomList[selectedUnit])
         }
     },[selectedUnit])
 
@@ -190,16 +213,21 @@ const Settings = () => {
     }
 
     const handleUnitChange = (option: SingleValue<Unit>) => {
-        console.log(option)
-        setSelectedUnit(option)
+        const unitName = (option as Unit).name.toString();
+        // setSelectedUnit(option)
+        dispatch(setUnit(unitName))
     }
 
     const onStartDateChange = (date:Date) => {
-        console.log(date)
+        dispatch(setDateRange({...dateRange, start:date}))
+    }
+
+    const onEndDateChange = (date:Date) => {
+        dispatch(setDateRange({...dateRange, end:date}))
     }
 
     const unitSelector:UnitSelector = {
-        value:selectedUnit,
+        value:unitLists[selectedUnit],
         handleUnitChange:handleUnitChange,
         options: unitList
      }
@@ -239,10 +267,10 @@ const Settings = () => {
                 <div className='date-range'>
                     <RangeSelectors 
                         title='Date Range' 
-                        startDate={startDate} 
-                        stopDate={stopDate} 
+                        startDate={dateRange.start} 
+                        stopDate={dateRange.end} 
                         onSelectDate1={onStartDateChange}
-                        onSelectDate2={setStopDate} />
+                        onSelectDate2={onEndDateChange} />
                 </div>
                 <div className='prime-time'>
                     <DualSelectors<PrimeTimeMenuItem, PrimeTimeMenuItem> 

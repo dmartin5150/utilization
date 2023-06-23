@@ -17,6 +17,9 @@ import { GridNames } from "../../components/team-card/details-grid";
 import { DetailsHeader } from "../../components/team-card/details-card-header";
 
 
+import { TNNASUNIT } from "../../store/Facility/facility.types";
+
+
 const Utilization = () => {
   const [month, setMonth] = useState('June')
   
