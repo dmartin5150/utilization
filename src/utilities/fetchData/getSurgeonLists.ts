@@ -1,17 +1,12 @@
 
+import { UnitRoomLists } from "../../pages/settings/settings.constants";
 const getSurgeonLists = async () => {
-    try {
-      const response = await fetch("http://localhost:5001/surgeon");
-      if (response) {
-        // console.log(response)
-        const data = await response.json();
-        // console.log(data)
-        return data
-      }
-    } catch (e) {
-      console.log("Error: ", e);
-      return []
+    const response = await fetch("http://localhost:5001/surgeon");
+    if (response) {
+      const data: UnitRoomLists = await response.json();
+      return data
     }
+    return {}
   };
 
   export default getSurgeonLists;

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './settings.scss'
-import { item } from '../../components/ListSelector/ListItem';
+import { item } from '../../store/ORData/ordata.types';
 import {SingleValue} from "react-select";
 import DualSelectors from '../../components/dualSelectors/DualSelectors';
 import { SingleSelector } from '../../components/dualSelectors/DualSelectors';
@@ -9,10 +9,17 @@ import { UnitSelector, UnitListSelector } from '../../components/selectUnits/Sel
 import SelectUnit from '../../components/selectUnits/SelectUnit';
 import SearchList from '../../components/SearchList/SearchList';
 import { SearchListItems } from '../../components/SearchList/SearchList';
-import { PRIME_TIME_END, PRIME_TIME_START, Unit, TNNASRoomList, surgeonList, unitList,UnitRoomList, UnitRoomLists,
-        primeTimeStartOptions,primeTimeEndOptions, TNNASUNIT } from './settings.constants';
+import { PRIME_TIME_START,PRIME_TIME_END } from '../../store/Facility/facility.types';
+import { Unit, TNNASRoomList, unitList,UnitRoomList, UnitRoomLists,
+        primeTimeStartOptions,primeTimeEndOptions} from './settings.constants';
 import getSurgeonLists from '../../utilities/fetchData/getSurgeonLists';
-
+import { useAppDispatch } from '../../hooks/hooks';
+import { fetchSurgeonListsAsync } from '../../store/ORData/actions/surgeonLists.actions';
+import { useSelector } from 'react-redux';
+import { selectCalendarData, selectSurgeonLists } from '../../store/ORData/ordata.selector';
+import { setPrimeTime } from '../../store/Facility/facilty.actions';
+import { PrimeTime } from '../../store/Facility/facility.types';
+import { selectPrimeTime } from '../../store/Facility/facility.selector';
 
 
 export type PrimeTimeMenuItem = {
@@ -27,7 +34,6 @@ const Settings = () => {
     const [startTime, setStartTime] = useState<SingleValue<PrimeTimeMenuItem>>(primeTimeStartOptions[0])
     const [endTime, setEndTime] = useState<SingleValue<PrimeTimeMenuItem>>(primeTimeEndOptions[0])
     const [rooms, setRooms] = useState<UnitRoomList[]>([])
-    const [roomLists, setRoomLists] = useState<UnitRoomLists>({})
     const [allRoomsSelected, setAllRoomsSelected]= useState(true);
     const [surgeons, setSurgeons] = useState<item[]>([]);
     const [allSurgeonsSelected, setAllSurgeonsSelected] = useState(true);
@@ -36,20 +42,42 @@ const Settings = () => {
     const [selectedUnit, setSelectedUnit] = useState<SingleValue<Unit>>(unitList[0])
     const [startDate, setStartDate] = useState<Date>(new Date('6/1/2023'));
     const [stopDate, setStopDate] = useState<Date>(new Date('6/30/2023'));
+    
+
+
+    const dispatch = useAppDispatch();
+    const roomLists = useSelector(selectSurgeonLists);
+    const primeTime = useSelector(selectPrimeTime);
+    
+
+    const updatePrimeTimeStart = (option:SingleValue<PrimeTimeMenuItem>) => {
+        if (option) {
+            setStartTime(option);
+            dispatch(setPrimeTime({...primeTime, start: option.value as PRIME_TIME_START}))
+        }
+      
+    }
+
+    const updatePrimeTimeEnd = (option: SingleValue<PrimeTimeMenuItem>) => {
+        if (option) {
+            setEndTime(option);
+            dispatch(setPrimeTime({...primeTime, end: option.value as PRIME_TIME_END}))
+        }
+    }
 
 
     const primeTimeStartSelector: SingleSelector<PrimeTimeMenuItem> = {
         title: 'Prime Time Start',
         selectedOption: startTime,
         optionList: primeTimeStartOptions,
-        onChange: setStartTime,
+        onChange: updatePrimeTimeStart,
     }
 
     const primeTimeEndSelector: SingleSelector<PrimeTimeMenuItem> = {
         title: 'Prime Time End',
         selectedOption: endTime,
         optionList:primeTimeEndOptions,
-        onChange: setEndTime
+        onChange: updatePrimeTimeEnd
     }
    
     const updateAllSelectedItems = (items:item[], setItem: (itemStatus: boolean)=>void) => {
@@ -65,18 +93,14 @@ const Settings = () => {
 
 
     useEffect(()=> {
-        const getLists = async() => {
-            const newList = await getSurgeonLists();      
-            console.log('list', newList)
-            setRoomLists(newList)
-        }
-        getLists();
+        dispatch(fetchSurgeonListsAsync())
     },[]);
+
+
 
     useEffect(()=> {
         console.log('setting lists')
         if (selectedUnit  && roomLists[selectedUnit.name]) {
-            console.log(selectedUnit.name)
             setSurgeons(roomLists[selectedUnit.name]);
             setSelectedSurgeons(roomLists[selectedUnit.name])
             setFilteredSurgeons(roomLists[selectedUnit.name])
@@ -105,14 +129,12 @@ const Settings = () => {
 
     useEffect(()=>{
         if (surgeons) {
-            console.log('udating selected')
-            console.log(surgeons)
             const selected = surgeons.filter((surgeon)=> surgeon.selected === true)
-            console.log('udating selected', selected)
             setSelectedSurgeons(selected)
         }
 
     },[surgeons])
+
 
 
     const setAllItems = (items:item[],setItems:(items:item[])=>void,itemSelected:boolean ) => {
@@ -223,7 +245,10 @@ const Settings = () => {
                         onSelectDate2={setStopDate} />
                 </div>
                 <div className='prime-time'>
-                    <DualSelectors<PrimeTimeMenuItem, PrimeTimeMenuItem> title='Prime Time' selector1={primeTimeStartSelector} selector2={primeTimeEndSelector}/>
+                    <DualSelectors<PrimeTimeMenuItem, PrimeTimeMenuItem> 
+                        title='Prime Time' 
+                        selector1={primeTimeStartSelector} 
+                        selector2={primeTimeEndSelector}/>
                 </div>
             </div>
             <div className='sel-unit'>

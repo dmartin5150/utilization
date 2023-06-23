@@ -1,5 +1,6 @@
 import React from "react";
 import './ListItem.scss'
+import { item } from "../../store/ORData/ordata.types";
 
 export enum ITEM_DISPLAY_TYPE {
     checkbox = "checkbox",
@@ -7,11 +8,7 @@ export enum ITEM_DISPLAY_TYPE {
 }
 
 
-export type item = {
-        id: number;
-        name: string;
-        selected: boolean;
-}
+
 
 interface ListItemProps {
     item:item;

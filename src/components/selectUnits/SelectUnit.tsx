@@ -2,7 +2,8 @@ import React from "react";
 import Select,{SingleValue} from "react-select";
 import { Unit } from "../../pages/settings/settings.constants";
 import ListSelector from "../ListSelector/ListSelector";
-import { ITEM_DISPLAY_TYPE, item } from "../ListSelector/ListItem";
+import { ITEM_DISPLAY_TYPE } from "../ListSelector/ListItem";
+import { item } from "../../store/ORData/ordata.types";
 import Card from "../card/card";
 import './SelectUnit.scss';
 

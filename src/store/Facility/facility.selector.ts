@@ -17,3 +17,8 @@ export const selectRoom = createSelector(
     [selectFacilityReducer],
     (facilitySlice) => facilitySlice.room
 )
+
+export const selectPrimeTime = createSelector(
+    [selectFacilityReducer],
+    (facilitySlice) => facilitySlice.primeTime
+)

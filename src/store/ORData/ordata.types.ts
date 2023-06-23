@@ -5,5 +5,13 @@ export enum  ORDATA_TYPES {
     FETCH_CALENDAR_DATA_SUCCESS  ='ordata/FETCH_CALENDAR_DATA_SUCCESS',
     FETCH_GRID_DATA_SUCCESS  ='ordata/FETCH_GRID_DATA_SUCCESS',
     FETCH_DETAILS_SUCCESS = 'ordata/FETCH_DETAILS_SUCCESS',
+    FETCH_SURGEON_LISTS_SUCCESS = 'ordata/FETCH_SURGEON_LISTS_SUCCESS',
     CLOSE_POPUP = 'ordata/CLOSE_POPUP'
 } 
+
+
+export type item = {
+    id: number;
+    name: string;
+    selected: boolean;
+}

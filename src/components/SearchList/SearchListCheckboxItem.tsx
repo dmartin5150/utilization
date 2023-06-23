@@ -1,7 +1,7 @@
 import React from "react";
 import './SearchListCheckboxItem.scss'
 
-import { item } from "../ListSelector/ListItem";
+import { item } from "../../store/ORData/ordata.types";
 
 
 

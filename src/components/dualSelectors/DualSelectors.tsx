@@ -4,6 +4,8 @@ import Card from "../card/card";
 import "./DualSelectors.scss";
 
 
+
+
 export type Option = {
     label: string;
     value: string;
@@ -26,7 +28,10 @@ interface DualSelectorProps<T extends Option, U extends Option> {
 function DualSelectors <T extends Option, U extends Option >({title, selector1, selector2}: React.PropsWithChildren<DualSelectorProps<T, U>>) {
 
     const handleSelector1 = (option: SingleValue<T> )  => {
-        selector1.onChange(option)
+        if (option) {
+            selector1.onChange(option)
+            console.log(option.value)
+        }
     }
 
     const handleSelector2 = (option: SingleValue<U>) => {

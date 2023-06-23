@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import classnames from "classnames";
 import SearchListCheckboxItem from "./SearchListCheckboxItem";
 import SearchSelectedItem from "./SearchSelectedItem";
-import { item } from "../ListSelector/ListItem";
+import { item } from "../../store/ORData/ordata.types";
 import Card from "../card/card";
 import "./SearchList.scss";
 

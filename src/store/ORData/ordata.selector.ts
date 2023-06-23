@@ -18,6 +18,13 @@ export const selectDetailData = createSelector(
     (ORDataSlice) => ORDataSlice.detailsData
 );
 
+
+export const selectSurgeonLists = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.surgeonLists
+)
+
+
 export const selectPopUpIsOpen = createSelector(
     [selectORDataReducer],
     (ORDataSlice) => ORDataSlice.popOpen

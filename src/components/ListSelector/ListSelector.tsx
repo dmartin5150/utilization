@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import "./ListSelector.scss"
 import classnames from "classnames";
-import { item } from "./ListItem";
+import { item } from "../../store/ORData/ordata.types";
 import ListItem from "./ListItem";
 
 
