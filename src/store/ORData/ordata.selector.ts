@@ -39,3 +39,9 @@ export const selectActiveRoomLists = createSelector(
     [selectORDataReducer],
     (ORDataSlice)=> ORDataSlice.activeRoomList
 )
+
+
+export const selectActiveSurgeons = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.activeSurgeonList
+)

@@ -15,11 +15,13 @@ import { Unit, TNNASRoomLists, unitList,UnitRoomList, UnitRoomLists,
 import { useAppDispatch } from '../../hooks/hooks';
 import { fetchSurgeonListsAsync } from '../../store/ORData/actions/surgeonLists.actions';
 import { useSelector } from 'react-redux';
-import { selectSurgeonLists, selectUnitRoomLists, selectActiveRoomLists } from '../../store/ORData/ordata.selector';
+import { selectSurgeonLists, selectUnitRoomLists, selectActiveRoomLists, selectActiveSurgeons } from '../../store/ORData/ordata.selector';
 import { setPrimeTime, setDateRange, setUnit } from '../../store/Facility/facilty.actions';
 import { PrimeTime } from '../../store/Facility/facility.types';
 import { selectPrimeTime, selectDateRange,selectUnit } from '../../store/Facility/facility.selector';
 import { fetchRoomListsSuccess,setRoomListsSuccess, setActiverRoomListSuccess} from '../../store/ORData/actions/roomsListActions';
+import { setActiveSurgeonList, setSurgeonLists } from '../../store/ORData/actions/surgeonLists.actions';
+
 
 
 import { unitLists } from './settings.constants';
@@ -59,7 +61,6 @@ const primeTimeMentEndItems = {
 const Settings = () => {
  
     const [surgeons, setSurgeons] = useState<item[]>([]);
-    // const [rooms, setRooms] = useState<UnitRoomList[]>([])
     const [allRoomsSelected, setAllRoomsSelected]= useState(true);
     const [allSurgeonsSelected, setAllSurgeonsSelected] = useState(true);
     const [filteredSurgeons, setFilteredSurgeons] = useState<item[]>([])
@@ -68,12 +69,14 @@ const Settings = () => {
 
 
     const dispatch = useAppDispatch();
+    const activeSurgeons = useSelector(selectActiveSurgeons);
     const surgeonLists = useSelector(selectSurgeonLists);
     const primeTime = useSelector(selectPrimeTime);
     const dateRange = useSelector(selectDateRange);
     const selectedUnit = useSelector(selectUnit);
     const unitRoomLists = useSelector(selectUnitRoomLists);
     const rooms = useSelector(selectActiveRoomLists);
+ 
     
 
     const updatePrimeTimeStart = (option:SingleValue<PrimeTimeMenuItem>) => {
@@ -119,16 +122,29 @@ const Settings = () => {
     useEffect(()=> {
         dispatch(fetchSurgeonListsAsync())
         dispatch(fetchRoomListsSuccess(TNNASRoomLists))
-        dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']))
+        dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']));
     },[]);
 
+    useEffect(()=> {
+        if (surgeonLists) {
+            dispatch(setActiveSurgeonList(surgeonLists['BH JRI']));
+        }
+    }, [surgeonLists])
 
+    useEffect (() => {
+        if (selectedUnit && activeSurgeons && surgeonLists && surgeonLists[selectedUnit]) {
+            surgeonLists[selectedUnit] = activeSurgeons;
+            dispatch(setSurgeonLists(surgeonLists));
+        }
+    },[activeSurgeons])
 
     useEffect(()=> {
         console.log('setting lists')
         if (selectedUnit  && surgeonLists[selectedUnit]) {
             setSurgeons(surgeonLists[selectedUnit]);
             setSelectedSurgeons(surgeonLists[selectedUnit])
+            console.log('setting surgeons', selectedUnit, surgeonLists[selectedUnit])
+            dispatch(setActiveSurgeonList(surgeonLists[selectedUnit]));
             setFilteredSurgeons(surgeonLists[selectedUnit])
         }
     }, [selectedUnit, surgeonLists])
@@ -141,7 +157,7 @@ const Settings = () => {
             unitRoomLists[selectedUnit] = rooms;
             dispatch(setRoomListsSuccess(unitRoomLists))
         }
-    },[rooms, unitRoomLists])
+    },[rooms])
 
 
     useEffect(()=> {
@@ -158,19 +174,20 @@ const Settings = () => {
     },[rooms])
 
     useEffect(() => {
-        if (surgeons) {
-            updateAllSelectedItems(surgeons, setAllSurgeonsSelected);
+        if (activeSurgeons) {
+            updateAllSelectedItems(activeSurgeons, setAllSurgeonsSelected);
         }
 
-    },[surgeons])
+    },[activeSurgeons])
 
     useEffect(()=>{
-        if (surgeons) {
-            const selected = surgeons.filter((surgeon)=> surgeon.selected === true)
+        if (activeSurgeons) {
+            const selected = activeSurgeons.filter((activeSurgeon)=> activeSurgeon.selected === true)
             setSelectedSurgeons(selected)
+            // dispatch(setActiveSurgeonList(selected))
         }
 
-    },[surgeons])
+    },[activeSurgeons])
 
 
 
@@ -197,8 +214,19 @@ const Settings = () => {
         setAllRooms(true)
     }
 
+    const setAllSurgeons = (status:boolean) => {
+        const updatedSurgeons = activeSurgeons.map((item) => {
+            item.selected = status;
+            return item;
+        })
+        dispatch(setActiveSurgeonList(updatedSurgeons));
+        setSelectedSurgeons([...updatedSurgeons])
+    }
+
+
     const onAllSurgeonsSelected = () => {
-        setAllItems(surgeons, setSurgeons, true);
+        // setAllItems(surgeons, setSurgeons, true);
+        setAllSurgeons(true)
     }
 
     const onClearAllRooms = () => {
@@ -207,7 +235,8 @@ const Settings = () => {
     }
 
     const onClearAllSurgeons = () => {
-        setAllItems(surgeons, setSurgeons, false);
+        // setAllItems(surgeons, setSurgeons, false);
+        setAllSurgeons(false)
     }
 
     const onItemChanged = (id:string, items:item[], setItems:(items:item[])=>void) => {
@@ -231,17 +260,27 @@ const Settings = () => {
         setRoomChanged(id);
     }
 
+    const setSurgeonChanged = (id:string) => {
+        const itemIndex = activeSurgeons.findIndex((item) => item.id.toString() === id);
+        if (itemIndex !== -1) {
+            activeSurgeons[itemIndex].selected = !activeSurgeons[itemIndex].selected;
+        }
+        dispatch(setActiveSurgeonList([...activeSurgeons]))
+        setSelectedSurgeons([...activeSurgeons])
+    }
+
     const onSurgeonChanged = (id:string):void => {
         console.log('surgeon changed', id)
-        onItemChanged(id, surgeons, setSurgeons)
+        // onItemChanged(id, surgeons, setSurgeons)
+        setSurgeonChanged(id)
     }
 
     const onSurgeonSearchTextChanged = (text:string):void => {
         if (text.length === 0) {
-            setFilteredSurgeons([...surgeons])
+            setFilteredSurgeons([...activeSurgeons])
             return;
         }
-        const filteredList = surgeons.filter((surgeon)=> {
+        const filteredList = activeSurgeons.filter((surgeon)=> {
             return surgeon.name.toLowerCase().includes(text.toLowerCase());
         });
         setFilteredSurgeons([...filteredList])
