@@ -45,3 +45,13 @@ export const selectActiveSurgeons = createSelector(
     [selectORDataReducer],
     (ORDataSlice) => ORDataSlice.activeSurgeonList
 )
+
+export const selectAllRoomsSelected = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.allRoomsSelected
+)
+
+export const selectAllSurgeonsSelected = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.allSurgeonsSelected
+)
