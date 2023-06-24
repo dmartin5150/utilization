@@ -15,12 +15,12 @@ import { Unit, TNNASRoomLists, unitList,UnitRoomList, UnitRoomLists,
 import { useAppDispatch } from '../../hooks/hooks';
 import { fetchSurgeonListsAsync } from '../../store/ORData/actions/surgeonLists.actions';
 import { useSelector } from 'react-redux';
-import { selectSurgeonLists, selectUnitRoomLists, selectActiveRoomLists, selectActiveSurgeons } from '../../store/ORData/ordata.selector';
+import { selectSurgeonLists, selectUnitRoomLists, selectActiveRoomLists, selectActiveSurgeons, selectAllRoomsSelected,selectAllSurgeonsSelected } from '../../store/ORData/ordata.selector';
 import { setPrimeTime, setDateRange, setUnit } from '../../store/Facility/facilty.actions';
 import { PrimeTime } from '../../store/Facility/facility.types';
 import { selectPrimeTime, selectDateRange,selectUnit } from '../../store/Facility/facility.selector';
-import { fetchRoomListsSuccess,setRoomListsSuccess, setActiverRoomListSuccess} from '../../store/ORData/actions/roomsListActions';
-import { setActiveSurgeonList, setSurgeonLists } from '../../store/ORData/actions/surgeonLists.actions';
+import { fetchRoomListsSuccess,setRoomListsSuccess, setActiverRoomListSuccess,setAllRoomsSelected} from '../../store/ORData/actions/roomsListActions';
+import { setActiveSurgeonList, setSurgeonLists,setAllSurgeonsSelected } from '../../store/ORData/actions/surgeonLists.actions';
 
 
 
@@ -61,8 +61,8 @@ const primeTimeMentEndItems = {
 const Settings = () => {
  
     const [surgeons, setSurgeons] = useState<item[]>([]);
-    const [allRoomsSelected, setAllRoomsSelected]= useState(true);
-    const [allSurgeonsSelected, setAllSurgeonsSelected] = useState(true);
+    // const [allRoomsSelected, setAllRoomsSelected]= useState(true);
+    // const [allSurgeonsSelected, setAllSurgeonsSelected] = useState(true);
     const [filteredSurgeons, setFilteredSurgeons] = useState<item[]>([])
     const [selectedSurgeons, setSelectedSurgeons] = useState<item[]>([])
     
@@ -76,6 +76,8 @@ const Settings = () => {
     const selectedUnit = useSelector(selectUnit);
     const unitRoomLists = useSelector(selectUnitRoomLists);
     const rooms = useSelector(selectActiveRoomLists);
+    const allSurgeonsSelected = useSelector(selectAllSurgeonsSelected);
+    const allRoomsSelected = useSelector(selectAllRoomsSelected);
  
     
 
@@ -116,6 +118,16 @@ const Settings = () => {
                 setItem(false);
             }
         }
+    }
+
+    const allItemsSelected = (items:item[]) => {
+        if (items) {
+            const unselectedItem = items.findIndex((item) => item.selected === false);
+            if (unselectedItem === -1)
+                return true
+            return false;
+        }
+        return false;
     }
 
 
@@ -170,14 +182,17 @@ const Settings = () => {
     useEffect(() => {
         if (rooms) {
             updateAllSelectedItems(rooms, setAllRoomsSelected);
+            const selected = allItemsSelected(rooms);
+            dispatch(setAllRoomsSelected(selected));
         }
     },[rooms])
 
     useEffect(() => {
         if (activeSurgeons) {
             updateAllSelectedItems(activeSurgeons, setAllSurgeonsSelected);
+            const allSelected = allItemsSelected(activeSurgeons)
+            dispatch(setAllSurgeonsSelected(allSelected))
         }
-
     },[activeSurgeons])
 
     useEffect(()=>{
