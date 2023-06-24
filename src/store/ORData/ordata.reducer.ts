@@ -8,12 +8,15 @@ import { fetchSurgeonListsSuccess} from "./actions/surgeonLists.actions";
 import { fetchDetailsSuccess, closePopUp } from "./actions/details.actions";
 import { fetchDataStart, fetchDataFailed} from "./actions/ordata.actions";
 import { item } from "./ordata.types";
-import { UnitRoomLists } from "../../pages/settings/settings.constants";
+import { UnitRoomLists,UnitRoomList } from "../../pages/settings/settings.constants";
+import { fetchRoomListsSuccess,setRoomListsSuccess, setActiverRoomListSuccess } from "./actions/roomsListActions";
 
 export type ORDataState = {
     calendarData: CalendarData[];
     gridData: SummaryGridData[];
     detailsData: DetailsData[];
+    unitRoomLists: UnitRoomLists;
+    activeRoomList: UnitRoomList[];
     surgeonLists: UnitRoomLists;
     isLoading:boolean;
     popOpen: boolean;
@@ -25,6 +28,8 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
     calendarData: [],
     gridData: [],
     detailsData: [],
+    unitRoomLists: {}, 
+    activeRoomList: [],
     surgeonLists:{},
     isLoading:false,
     popOpen: false,
@@ -51,6 +56,15 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     if (fetchSurgeonListsSuccess.match(action)) {
         return {...state, surgeonLists:action.payload, isLoading:false}
     }
+    if (fetchRoomListsSuccess.match(action)) {
+        return {...state, unitRoomLists:action.payload}
+    }
+    if (setRoomListsSuccess.match(action)){
+        return {...state, unitRoomLists:action.payload}
+    }       
+    if (setActiverRoomListSuccess.match(action)) {
+        return {...state, activeRoomList: action.payload}
+    }                       
     if (closePopUp.match(action)) {
         return {...state, popOpen: false}
     }

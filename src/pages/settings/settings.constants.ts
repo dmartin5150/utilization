@@ -22,7 +22,7 @@ export interface UnitRoomLists {
     [key: string]: UnitRoomList[]
 }
 
-export const TNNASRoomList:UnitRoomLists = {
+export const TNNASRoomLists:UnitRoomLists = {
     [TNNASUNIT.BHJRI]: JRIroomList,
     [TNNASUNIT.STMSTOR]:STMSTORroomList,
     [TNNASUNIT.STOR]:MTORroomList

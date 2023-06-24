@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import './settings.scss'
 import { item } from '../../store/ORData/ordata.types';
 import {SingleValue} from "react-select";
@@ -10,18 +10,18 @@ import SelectUnit from '../../components/selectUnits/SelectUnit';
 import SearchList from '../../components/SearchList/SearchList';
 import { SearchListItems } from '../../components/SearchList/SearchList';
 import { PRIME_TIME_START,PRIME_TIME_END } from '../../store/Facility/facility.types';
-import { Unit, TNNASRoomList, unitList,UnitRoomList, UnitRoomLists,
+import { Unit, TNNASRoomLists, unitList,UnitRoomList, UnitRoomLists,
         primeTimeStartOptions,primeTimeEndOptions} from './settings.constants';
-import getSurgeonLists from '../../utilities/fetchData/getSurgeonLists';
 import { useAppDispatch } from '../../hooks/hooks';
 import { fetchSurgeonListsAsync } from '../../store/ORData/actions/surgeonLists.actions';
 import { useSelector } from 'react-redux';
-import { selectCalendarData, selectSurgeonLists } from '../../store/ORData/ordata.selector';
+import { selectSurgeonLists, selectUnitRoomLists, selectActiveRoomLists } from '../../store/ORData/ordata.selector';
 import { setPrimeTime, setDateRange, setUnit } from '../../store/Facility/facilty.actions';
 import { PrimeTime } from '../../store/Facility/facility.types';
 import { selectPrimeTime, selectDateRange,selectUnit } from '../../store/Facility/facility.selector';
+import { fetchRoomListsSuccess,setRoomListsSuccess, setActiverRoomListSuccess} from '../../store/ORData/actions/roomsListActions';
 
-import { TNNASUNIT } from '../../store/Facility/facility.types';
+
 import { unitLists } from './settings.constants';
 
 export type PrimeTimeMenuItem = {
@@ -58,21 +58,22 @@ const primeTimeMentEndItems = {
 
 const Settings = () => {
  
-    const [rooms, setRooms] = useState<UnitRoomList[]>([])
-    const [allRoomsSelected, setAllRoomsSelected]= useState(true);
     const [surgeons, setSurgeons] = useState<item[]>([]);
+    // const [rooms, setRooms] = useState<UnitRoomList[]>([])
+    const [allRoomsSelected, setAllRoomsSelected]= useState(true);
     const [allSurgeonsSelected, setAllSurgeonsSelected] = useState(true);
     const [filteredSurgeons, setFilteredSurgeons] = useState<item[]>([])
     const [selectedSurgeons, setSelectedSurgeons] = useState<item[]>([])
-    // const [selectedUnit, setSelectedUnit] = useState<SingleValue<Unit>>(unitList[0])
     
 
 
     const dispatch = useAppDispatch();
-    const roomLists = useSelector(selectSurgeonLists);
+    const surgeonLists = useSelector(selectSurgeonLists);
     const primeTime = useSelector(selectPrimeTime);
     const dateRange = useSelector(selectDateRange);
-    const selectedUnit = useSelector(selectUnit)
+    const selectedUnit = useSelector(selectUnit);
+    const unitRoomLists = useSelector(selectUnitRoomLists);
+    const rooms = useSelector(selectActiveRoomLists);
     
 
     const updatePrimeTimeStart = (option:SingleValue<PrimeTimeMenuItem>) => {
@@ -117,25 +118,38 @@ const Settings = () => {
 
     useEffect(()=> {
         dispatch(fetchSurgeonListsAsync())
+        dispatch(fetchRoomListsSuccess(TNNASRoomLists))
+        dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']))
     },[]);
 
 
 
     useEffect(()=> {
         console.log('setting lists')
-        if (selectedUnit  && roomLists[selectedUnit]) {
-            setSurgeons(roomLists[selectedUnit]);
-            setSelectedSurgeons(roomLists[selectedUnit])
-            setFilteredSurgeons(roomLists[selectedUnit])
+        if (selectedUnit  && surgeonLists[selectedUnit]) {
+            setSurgeons(surgeonLists[selectedUnit]);
+            setSelectedSurgeons(surgeonLists[selectedUnit])
+            setFilteredSurgeons(surgeonLists[selectedUnit])
         }
-    }, [selectedUnit, roomLists])
+    }, [selectedUnit, surgeonLists])
 
 
     useEffect(()=> {
-        if (selectedUnit) {
-            setRooms(TNNASRoomList[selectedUnit])
+        if (selectedUnit && unitRoomLists[selectedUnit]) {
+            console.log('updating callback', rooms)
+            console.log('unit rooms', unitRoomLists['BH JRI'])
+            unitRoomLists[selectedUnit] = rooms;
+            dispatch(setRoomListsSuccess(unitRoomLists))
         }
-    },[selectedUnit])
+    },[rooms, unitRoomLists])
+
+
+    useEffect(()=> {
+        if (unitRoomLists && selectedUnit && unitRoomLists[selectedUnit]) {
+            // setRooms(unitRoomLists[selectedUnit])
+            dispatch(setActiverRoomListSuccess(unitRoomLists[selectedUnit]))
+        }
+    },[selectedUnit,unitRoomLists])
 
     useEffect(() => {
         if (rooms) {
@@ -168,8 +182,19 @@ const Settings = () => {
         setItems([...updatedItems]);
     }
 
+
+    const setAllRooms = (status:boolean) => {
+        const updatedRooms = rooms.map((item) => {
+            item.selected = status;
+            return item;
+        })
+        dispatch(setActiverRoomListSuccess(updatedRooms))
+    }
+
+
     const onAllRoomsSelected = () => {
-        setAllItems(rooms, setRooms,true);
+        // setAllItems(rooms, setRooms,true);
+        setAllRooms(true)
     }
 
     const onAllSurgeonsSelected = () => {
@@ -177,7 +202,8 @@ const Settings = () => {
     }
 
     const onClearAllRooms = () => {
-        setAllItems(rooms, setRooms, false);
+        // setAllItems(rooms, setRooms, false);
+        setAllRooms(false)
     }
 
     const onClearAllSurgeons = () => {
@@ -192,8 +218,17 @@ const Settings = () => {
         setItems([...items]);
     }
 
+    const setRoomChanged = (id:string) => {
+        const itemIndex = rooms.findIndex((item)=> item.id.toString() === id);
+        if (itemIndex !== -1) {
+            rooms[itemIndex].selected = !rooms[itemIndex].selected;
+        }
+        dispatch(setActiverRoomListSuccess([...rooms]));
+    }
+
     const onRoomChanged = (id:string):void => {
-        onItemChanged(id, rooms, setRooms)
+        // onItemChanged(id, rooms, setRooms)
+        setRoomChanged(id);
     }
 
     const onSurgeonChanged = (id:string):void => {

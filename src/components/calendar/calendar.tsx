@@ -5,6 +5,11 @@ import Pagination from "../pagination/pagination";
 import Dropdown from "../dropdown/DropDown";
 import DaysOfWeek from "./daysOfWeek";
 import { DropDownBox } from "../dropdown/DropDown";
+import { useAppDispatch } from "../../hooks/hooks";
+import { useSelector } from "react-redux";
+import { selectCalendarData } from "../../store/ORData/ordata.selector";
+import { fetchCalendarDataAsync } from "../../store/ORData/actions/calendar.actions";
+import { selectUnit } from "../../store/Facility/facility.selector";
 
 export interface CalendarData {
   date: string;
@@ -38,8 +43,14 @@ const Calendar: React.FC<CalendarProps> = ({
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentCalendarData, setCurrentCalendarData] = useState<CalendarData[]>([]);
 
+  const calendar = useSelector(selectCalendarData);
+  const unit = useSelector(selectUnit);
+  const dispatch = useAppDispatch();
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+
+
+
 
   useEffect(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;

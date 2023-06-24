@@ -29,3 +29,13 @@ export const selectPopUpIsOpen = createSelector(
     [selectORDataReducer],
     (ORDataSlice) => ORDataSlice.popOpen
 )
+
+export const selectUnitRoomLists = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.unitRoomLists
+)
+
+export const selectActiveRoomLists = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice)=> ORDataSlice.activeRoomList
+)
