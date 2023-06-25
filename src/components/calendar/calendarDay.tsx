@@ -31,6 +31,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({id, calendarDay, hideElement, 
     >
       <h3 className="title">{calendarDay.date}</h3>
       <h1 className="display">{calendarDay.display}</h1>
+      <h2 className='sub-heading'>PT: 5 hours</h2>
     </div>
 
   );
