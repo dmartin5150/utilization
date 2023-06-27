@@ -21,8 +21,8 @@ export type FacilityDataState = {
 }
 
 const initialPrimeTime:PrimeTime = {
-    start: PRIME_TIME_START["7:00 AM"],
-    end: PRIME_TIME_END['3:30 PM']
+    start: PRIME_TIME_START["7:00"],
+    end: PRIME_TIME_END['15:30']
 }
 
 const initialDateRange:DateRange = {

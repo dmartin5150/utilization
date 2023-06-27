@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Routes, Route } from "react-router-dom";
 import Navigation from './routes/navigation/navigation.component';
 import Utilization from "./pages/utilization/utilization";
@@ -8,9 +8,13 @@ import Surgeons from './pages/surgeons/surgeons';
 import Rooms from './pages/Rooms/Rooms';
 
 
+
 import "./App.scss";
 
 function App() {
+
+
+
   return (
   <Routes>
     <Route path="/" element={<Navigation />}>

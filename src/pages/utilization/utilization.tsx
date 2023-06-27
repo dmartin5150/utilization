@@ -15,6 +15,8 @@ import { FacilityRoom } from "../../store/Facility/facitlity.reducer";
 import { DropDownBox } from "../../components/dropdown/DropDown";
 import { GridNames } from "../../components/team-card/details-grid";
 import { DetailsHeader } from "../../components/team-card/details-card-header";
+import getPTHours from "../../utilities/fetchData/getPTHours";
+import { selectPrimeTime } from "../../store/Facility/facility.selector";
 
 
 import { TNNASUNIT } from "../../store/Facility/facility.types";
@@ -36,10 +38,24 @@ const Utilization = () => {
   const selectedDate = useSelector(selectDate)
   const unit = useSelector(selectUnit)
   const room = useSelector(selectRoom)
+  const primeTime = useSelector(selectPrimeTime);
+
+
+
+
 
   useEffect(() => {
     dispatch(fetchCalendarDataAsync(unit, selectedDate));
   }, [unit]);
+
+
+  useEffect(() => {
+    const getPT = async () => {
+      await getPTHours(primeTime)
+    }
+    getPT();
+  },[primeTime])
+
 
   useEffect(() => {
     dispatch(fetchGridDataAsync(unit, selectedDate))

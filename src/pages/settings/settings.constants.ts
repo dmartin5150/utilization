@@ -46,21 +46,21 @@ export const unitLists:UnitLists = {
 }
 
 export const primeTimeStartOptions: PrimeTimeMenuItem[] = [
-    {id:0, label: PRIME_TIME_START['6:30 AM'], value:PRIME_TIME_START['6:30 AM'],},
-    {id:1, label: PRIME_TIME_START['7:00 AM'], value:PRIME_TIME_START['7:00 AM']},
-    {id:2, label: PRIME_TIME_START['7:30 AM'], value:PRIME_TIME_START['7:30 AM']},
-    {id:3, label: PRIME_TIME_START['8:00 AM'], value:PRIME_TIME_START['8:00 AM']},
-    {id:4, label: PRIME_TIME_START['8:30 AM'], value:PRIME_TIME_START['8:30 AM']},
-    {id:5, label: PRIME_TIME_START['9:00 AM'], value:PRIME_TIME_START['9:00 AM']},
-    {id:6, label: PRIME_TIME_START['9:30 AM'], value:PRIME_TIME_START['9:30 AM']}
+    {id:0, label: '6:30 AM', value:PRIME_TIME_START['6:30'],},
+    {id:1, label: '7:00 AM', value:PRIME_TIME_START['7:00']},
+    {id:2, label: '7:30 AM', value:PRIME_TIME_START['7:30']},
+    {id:3, label: '8:00 AM', value:PRIME_TIME_START['8:00']},
+    {id:4, label: '8:30 AM', value:PRIME_TIME_START['8:30']},
+    {id:5, label: '9:00 AM', value:PRIME_TIME_START['9:00']},
+    {id:6, label: '9:30 AM', value:PRIME_TIME_START['9:30']}
 ]
 
 export const primeTimeEndOptions: PrimeTimeMenuItem[] =  [
-    {id:0, label: PRIME_TIME_END['3:00 PM'], value:PRIME_TIME_END['3:00 PM']},
-    {id:1, label: PRIME_TIME_END['3:30 PM'], value:PRIME_TIME_END['3:30 PM']},
-    {id:2, label: PRIME_TIME_END['4:00 PM'], value:PRIME_TIME_END['4:00 PM']},
-    {id:3, label: PRIME_TIME_END['4:30 PM'], value:PRIME_TIME_END['4:30 PM']},
-    {id:4, label: PRIME_TIME_END['5:00 PM'], value:PRIME_TIME_END['5:00 PM']},
-    {id:5, label: PRIME_TIME_END['5:30 PM'], value:PRIME_TIME_END['5:30 PM']},
-    {id:6, label: PRIME_TIME_END['6:00 PM'], value:PRIME_TIME_END['6:00 PM']},
+    {id:0, label: '3:00 PM', value:PRIME_TIME_END['15:00']},
+    {id:1, label: '3:30 PM', value:PRIME_TIME_END['15:30']},
+    {id:2, label: '4:00 PM', value:PRIME_TIME_END['16:00']},
+    {id:3, label: '4:30 PM', value:PRIME_TIME_END['16:30']},
+    {id:4, label: '5:00 PM', value:PRIME_TIME_END['17:00']},
+    {id:5, label: '5:30 PM', value:PRIME_TIME_END['17:30']},
+    {id:6, label: '6:00 PM', value:PRIME_TIME_END['18:00']},
 ]

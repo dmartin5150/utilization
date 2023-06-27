@@ -29,7 +29,7 @@ import { unitLists } from './settings.constants';
 export type PrimeTimeMenuItem = {
     id: number;
     value:PRIME_TIME_START | PRIME_TIME_END;
-    label:PRIME_TIME_START | PRIME_TIME_END;
+    label:string;
 }
 
 type PrimeTimeMenuItems = {
@@ -38,23 +38,23 @@ type PrimeTimeMenuItems = {
 
 
 const primeTimeMenuStartItems = {
-    '6:30 AM': primeTimeStartOptions[0],
-    '7:00 AM': primeTimeStartOptions[1],
-    '7:30 AM': primeTimeStartOptions[2],
-    '8:00 AM': primeTimeStartOptions[3],
-    '8:30 AM': primeTimeStartOptions[4],
-    '9:00 AM': primeTimeStartOptions[5],
-    '9:30 AM': primeTimeStartOptions[6],
+    '6:30': primeTimeStartOptions[0],
+    '7:00': primeTimeStartOptions[1],
+    '7:30': primeTimeStartOptions[2],
+    '8:00': primeTimeStartOptions[3],
+    '8:30': primeTimeStartOptions[4],
+    '9:00': primeTimeStartOptions[5],
+    '9:30': primeTimeStartOptions[6],
 }
 
 const primeTimeMentEndItems = {
-    '3:00 PM': primeTimeEndOptions[0],
-    '3:30 PM': primeTimeEndOptions[1],
-    '4:00 PM': primeTimeEndOptions[2],
-    '4:30 PM': primeTimeEndOptions[3],
-    '5:00 PM': primeTimeEndOptions[4],
-    '5:30 PM': primeTimeEndOptions[5],
-    '6:00 PM': primeTimeEndOptions[6],
+    '15:00': primeTimeEndOptions[0],
+    '15:30': primeTimeEndOptions[1],
+    '16:00': primeTimeEndOptions[2],
+    '16:30': primeTimeEndOptions[3],
+    '17:00': primeTimeEndOptions[4],
+    '17:30': primeTimeEndOptions[5],
+    '18:00': primeTimeEndOptions[6],
 }
 
 
@@ -83,6 +83,7 @@ const Settings = () => {
 
     const updatePrimeTimeStart = (option:SingleValue<PrimeTimeMenuItem>) => {
         if (option) {
+            console.log('start', option )
             dispatch(setPrimeTime({...primeTime, start: option.value as PRIME_TIME_START}))
         }
       
