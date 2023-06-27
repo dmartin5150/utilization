@@ -1,5 +1,6 @@
 import { RootState } from "../store"
 import { createSelector } from "reselect";
+import { Calendar, Grid, Details} from "./ordata.types";
 
 const selectORDataReducer = (state:RootState) => state.ORData;
 
@@ -54,4 +55,39 @@ export const selectAllRoomsSelected = createSelector(
 export const selectAllSurgeonsSelected = createSelector(
     [selectORDataReducer],
     (ORDataSlice) => ORDataSlice.allSurgeonsSelected
+)
+
+export const selectPTHours = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.ptHours
+)
+
+
+export const selectSurgeryInfo = createSelector(
+    [selectPTHours], 
+    (PTHours) =>  {
+        return PTHours.surgeryInfo
+    }
+)
+
+export const selectCalendar = createSelector(
+    [selectSurgeryInfo],
+    (SurgeryInfo):Calendar[] => SurgeryInfo.map((info) => {
+                return info.calendar
+            })
+)
+
+export const selectGrid = createSelector(
+    [selectSurgeryInfo],
+    (SurgeryInfo):Grid[] => SurgeryInfo.map((info) => {
+                return info.grid
+            })
+)
+
+
+export const selectDetails = createSelector(
+    [selectSurgeryInfo],
+    (SurgeryInfo):Details[] => SurgeryInfo.map((info) => {
+                return info.details
+            })
 )

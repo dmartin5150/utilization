@@ -12,7 +12,8 @@ export enum  ORDATA_TYPES {
     SET_ROOM_LISTS = 'ordata/SET_ROOM_LISTS',
     SET_SURGEON_LISTS = 'ordata/SET_SURGEON_LISTS',
     SET_ALL_ROOMS_SELECTED = 'ordata/SET_ALL_ROOMS_SELECTED',
-    SET_ALL_SURGEONS_SELECTED = 'orData/SET_ALL_SURGEONS_SELECTED', 
+    SET_ALL_SURGEONS_SELECTED = 'orData/SET_ALL_SURGEONS_SELECTED',
+    FETCH_PT_HOURS_SUCCESS = 'orData/FETCH_PT_HOURS_SUCCESS', 
     CLOSE_POPUP = 'ordata/CLOSE_POPUP'
 } 
 
@@ -21,4 +22,43 @@ export type item = {
     id: number;
     name: string;
     selected: boolean;
+}
+
+export type Calendar = {
+    unit:string;
+    NPI: string;
+    procedureDate: string;
+    prime_time_minutes:string;
+    non_prime_time_minutes: string;
+    utilization?: string;
+}
+
+export type Details = {
+    fullName: string;
+    local_start_time: string;
+    local_end_time: string;
+    procedureName: string;
+    duration: string;
+    block?: string[]
+}
+
+export type Grid = {
+    unit: string;
+    room: string;
+    procedureDate: string;
+    prime_time_minutes: string;
+    non_prime_time_minutes: string;
+    num_procedures?: number
+}
+
+
+export type SurgeryInfo = {
+    id: number;
+    calendar: Calendar;
+    grid: Grid;
+    details:Details;
+}
+
+export type PT_Hours = {
+    surgeryInfo: SurgeryInfo[];
 }

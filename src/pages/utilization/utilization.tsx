@@ -49,12 +49,7 @@ const Utilization = () => {
   }, [unit]);
 
 
-  useEffect(() => {
-    const getPT = async () => {
-      await getPTHours(primeTime)
-    }
-    getPT();
-  },[primeTime])
+
 
 
   useEffect(() => {
