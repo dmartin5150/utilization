@@ -8,12 +8,13 @@ import { fetchSurgeonListsSuccess} from "./actions/surgeonLists.actions";
 import { fetchDetailsSuccess, closePopUp } from "./actions/details.actions";
 import { fetchDataStart, fetchDataFailed} from "./actions/ordata.actions";
 import { item } from "./ordata.types";
-import { UnitRoomLists,UnitRoomList } from "../../pages/settings/settings.constants";
+import { UnitRoomLists,UnitRoomListItem } from "../../pages/settings/settings.constants";
 import { fetchRoomListsSuccess,setRoomListsSuccess, setActiverRoomListSuccess, 
     setAllRoomsSelected } from "./actions/roomsListActions";
 import { setSurgeonLists, setActiveSurgeonList,setAllSurgeonsSelected } from "./actions/surgeonLists.actions";
 import {  PT_Hours, SurgeryInfo } from "./ordata.types";
 import { fetchPTHoursSuccess } from "./actions/pthours.action";
+import { JRIroomList } from "../Facility/facility.types";
 
 
 export type ORDataState = {
@@ -21,10 +22,10 @@ export type ORDataState = {
     gridData: SummaryGridData[];
     detailsData: DetailsData[];
     unitRoomLists: UnitRoomLists;
-    activeRoomList: UnitRoomList[];
+    activeRoomList: UnitRoomListItem[];
     allRoomsSelected: boolean;
     surgeonLists: UnitRoomLists;
-    activeSurgeonList: UnitRoomList[], 
+    activeSurgeonList: UnitRoomListItem[], 
     allSurgeonsSelected: boolean;
     isLoading:boolean;
     popOpen: boolean;
@@ -42,7 +43,7 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
     gridData: [],
     detailsData: [],
     unitRoomLists: {}, 
-    activeRoomList: [],
+    activeRoomList: JRIroomList,
     allRoomsSelected:true,
     surgeonLists:{},
     activeSurgeonList:[],

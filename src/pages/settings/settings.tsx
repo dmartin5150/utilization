@@ -10,7 +10,7 @@ import SelectUnit from '../../components/selectUnits/SelectUnit';
 import SearchList from '../../components/SearchList/SearchList';
 import { SearchListItems } from '../../components/SearchList/SearchList';
 import { PRIME_TIME_START,PRIME_TIME_END } from '../../store/Facility/facility.types';
-import { Unit, TNNASRoomLists, unitList,UnitRoomList, UnitRoomLists,
+import { Unit, TNNASRoomLists, unitList,UnitRoomListItem, UnitRoomLists,
         primeTimeStartOptions,primeTimeEndOptions} from './settings.constants';
 import { useAppDispatch } from '../../hooks/hooks';
 import { fetchSurgeonListsAsync } from '../../store/ORData/actions/surgeonLists.actions';

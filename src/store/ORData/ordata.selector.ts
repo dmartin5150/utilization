@@ -81,13 +81,15 @@ export const selectCalendar = createSelector(
 
 
 export type PTHours = {
-    date: string;
+    curDate: string;
     ptHours: string[];
+    nonptHours: string[];
 }
 
 export type PTTotalHours = {
-    date: string;
-    ptHours:number;
+    curDate: string;
+    totalptHours:string;
+    totalnonptHours:string;
 }
 
 const calculatePTHours = (calendarData:Calendar[]):PTHours[] => {
@@ -95,24 +97,38 @@ const calculatePTHours = (calendarData:Calendar[]):PTHours[] => {
     const ptHoursTotal: any = []
     uniqueDates.forEach((curDate) => {
         const curData = calendarData.filter(((item) => item.procedureDate === curDate))
-        const ptHoursDay = curData.map((info) => info.prime_time_minutes)
-        const curObj = {date: curDate, ptHours:ptHoursDay}
+        const ptHours = curData.map((info) => info.prime_time_minutes)
+        const nonptHours = curData.map((info)=> info.non_prime_time_minutes)
+        const curObj = {curDate, ptHours, nonptHours}
         ptHoursTotal.push(curObj)
     })
     return ptHoursTotal;
 }
 
 
+const minutestohours = (time:number):string  => {
+var num = time;
+var hours = (time / 60);
+var rhours = Math.floor(hours);
+var minutes = (hours - rhours) * 60;
+var rminutes = Math.round(minutes);
+return rhours + " H: " + rminutes + " M";
+}
+
 const calculatPTTotalHours = (ptHours:PTHours[]):PTTotalHours[] => {
-    const uniqueDates = [...new Set(ptHours.map(item => item.date))];
+    const uniqueDates = [...new Set(ptHours.map(item => item.curDate))];
     const ptHoursTotal: any = []
     uniqueDates.forEach((curDate) => {
-        const curData = ptHours.filter(((item) => item.date === curDate))
+        const curData = ptHours.filter(((item) => item.curDate === curDate))
         const ptHoursDay = curData[0].ptHours.map((ptHour)=> parseInt(ptHour));
-        const totalHours = ptHoursDay.reduce((acc, totalHours) => 
+        const nonptHoursDay = curData[0].nonptHours.map((nonptHour) => parseInt(nonptHour))
+        const totalptHours = minutestohours(ptHoursDay.reduce((acc, totalHours) => 
             acc + totalHours
-        ,0)
-        const curObj:PTTotalHours = {date: curDate, ptHours:totalHours}
+        ,0))
+        const totalnonptHours = minutestohours(nonptHoursDay.reduce((acc, totalHours) => 
+            acc + totalHours
+        ,0))
+        const curObj:PTTotalHours = {curDate, totalptHours,totalnonptHours}
         ptHoursTotal.push(curObj)
     })
     return ptHoursTotal;

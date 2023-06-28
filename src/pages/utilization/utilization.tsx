@@ -17,7 +17,9 @@ import { GridNames } from "../../components/team-card/details-grid";
 import { DetailsHeader } from "../../components/team-card/details-card-header";
 import getPTHours from "../../utilities/fetchData/getPTHours";
 import { selectPrimeTime } from "../../store/Facility/facility.selector";
-
+import { fetchSurgeonListsAsync } from "../../store/ORData/actions/surgeonLists.actions";
+import { fetchRoomListsSuccess,setActiverRoomListSuccess } from "../../store/ORData/actions/roomsListActions";
+import { TNNASRoomLists } from "../settings/settings.constants";
 
 import { TNNASUNIT } from "../../store/Facility/facility.types";
 
@@ -41,7 +43,11 @@ const Utilization = () => {
   const primeTime = useSelector(selectPrimeTime);
 
 
-
+  useEffect(()=> {
+    dispatch(fetchSurgeonListsAsync())
+    dispatch(fetchRoomListsSuccess(TNNASRoomLists))
+    dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']));
+},[]);
 
 
   useEffect(() => {

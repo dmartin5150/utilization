@@ -12,14 +12,14 @@ export type Unit = {
 }
 
 
-export type UnitRoomList = {
+export type UnitRoomListItem = {
     id: number;
     name: string;
     selected: boolean;
 }
 
 export interface UnitRoomLists {
-    [key: string]: UnitRoomList[]
+    [key: string]: UnitRoomListItem[]
 }
 
 export const TNNASRoomLists:UnitRoomLists = {

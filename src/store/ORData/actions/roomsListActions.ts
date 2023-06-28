@@ -1,6 +1,6 @@
 import { createAction, ActionWithPayload, Action, withMatcher } from "../../../utilities/reducer/reducerutils"
 
-import { UnitRoomLists, UnitRoomList } from "../../../pages/settings/settings.constants"
+import { UnitRoomLists, UnitRoomListItem } from "../../../pages/settings/settings.constants"
 import { ORDATA_TYPES } from "../ordata.types"
 
 
@@ -10,7 +10,7 @@ export type FetchRoomListsSuccess =
 
 export type SetRoomListsSuccess = ActionWithPayload<ORDATA_TYPES.SET_ROOM_LISTS,UnitRoomLists >
 
-export type SetActiveRoomListSuccess = ActionWithPayload<ORDATA_TYPES.SET_ACTIVE_ROOM_LIST,UnitRoomList[]>
+export type SetActiveRoomListSuccess = ActionWithPayload<ORDATA_TYPES.SET_ACTIVE_ROOM_LIST,UnitRoomListItem[]>
 
 export type SetAllRoomsSelected = ActionWithPayload<ORDATA_TYPES.SET_ALL_ROOMS_SELECTED, boolean>
 
@@ -27,6 +27,6 @@ export const setRoomListsSuccess = withMatcher((roomLists:UnitRoomLists):SetRoom
     return createAction(ORDATA_TYPES.SET_ROOM_LISTS,roomLists)
 });
 
-export const setActiverRoomListSuccess = withMatcher((roomList:UnitRoomList[]):SetActiveRoomListSuccess => {
+export const setActiverRoomListSuccess = withMatcher((roomList:UnitRoomListItem[]):SetActiveRoomListSuccess => {
     return createAction(ORDATA_TYPES.SET_ACTIVE_ROOM_LIST,roomList);
 });

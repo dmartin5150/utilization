@@ -1,3 +1,5 @@
+import { UnitRoomListItem } from "../../pages/settings/settings.constants";
+
 export enum FACILITY_TYPES {
     SELECT_UNIT = '/facility/SELECT_UNIT',
     SELECT_DATE = '/facilty/SELECT_DATE',
@@ -45,7 +47,9 @@ export type DateRange = {
     end: Date;
 }
 
-export const JRIroomList = [
+
+
+export const JRIroomList:UnitRoomListItem[] = [
     {id:0, name: 'BH JRI 02', selected: true},
     {id:1, name:'BH JRI 03', selected: true},
     {id:3, name:'BH JRI 04', selected: true},
@@ -56,7 +60,7 @@ export const JRIroomList = [
     {id:8, name:'BH JRI 09', selected: true}
 ]
 
-export const STMSTORroomList = [
+export const STMSTORroomList:UnitRoomListItem[] = [
     {id:0, name: 'STM ST OR 01', selected: true},
     {id:1, name: 'STM ST OR 02', selected: true},
     {id:2, name: 'STM ST OR 03', selected: true},
@@ -77,7 +81,7 @@ export const STMSTORroomList = [
     {id:17, name: 'STM ST OR Hybrid', selected: true},
 ]
 
-export const MTORroomList = [
+export const MTORroomList:UnitRoomListItem[] = [
     {id:0, name: 'MT Cysto', selected: true},
     {id:1, name: 'MT OR 01', selected: true},
     {id:3, name: 'MT OR 02', selected: true},
