@@ -85,42 +85,52 @@ export type PTHours = {
     ptHours: string[];
 }
 
+export type PTTotalHours = {
+    date: string;
+    ptHours:number;
+}
+
+const calculatePTHours = (calendarData:Calendar[]):PTHours[] => {
+    const uniqueDates = [...new Set(calendarData.map(item => item.procedureDate))];
+    const ptHoursTotal: any = []
+    uniqueDates.forEach((curDate) => {
+        const curData = calendarData.filter(((item) => item.procedureDate === curDate))
+        const ptHoursDay = curData.map((info) => info.prime_time_minutes)
+        const curObj = {date: curDate, ptHours:ptHoursDay}
+        ptHoursTotal.push(curObj)
+    })
+    return ptHoursTotal;
+}
+
+
+const calculatPTTotalHours = (ptHours:PTHours[]):PTTotalHours[] => {
+    const uniqueDates = [...new Set(ptHours.map(item => item.date))];
+    const ptHoursTotal: any = []
+    uniqueDates.forEach((curDate) => {
+        const curData = ptHours.filter(((item) => item.date === curDate))
+        const ptHoursDay = curData[0].ptHours.map((ptHour)=> parseInt(ptHour));
+        const totalHours = ptHoursDay.reduce((acc, totalHours) => 
+            acc + totalHours
+        ,0)
+        const curObj:PTTotalHours = {date: curDate, ptHours:totalHours}
+        ptHoursTotal.push(curObj)
+    })
+    return ptHoursTotal;
+}
+
+
 
 export const selectCalendarPTHoursAll = createSelector(
     [selectCalendar],
-    (CalendarInfo):PTHours[] => {
-        const uniqueDates = [...new Set(CalendarInfo.map(item => item.procedureDate))];
-        const ptHoursTotal: any = []
-        uniqueDates.forEach((curDate) => {
-            const curData = CalendarInfo.filter(((item) => item.procedureDate === curDate))
-            const ptHoursDay = curData.map((info) => info.prime_time_minutes)
-            const curObj = {date: curDate, ptHours:ptHoursDay}
-            ptHoursTotal.push(curObj)
-        })
-        return ptHoursTotal;
-    })
+    (calendarData):PTHours[] => calculatePTHours(calendarData))
 
-    export const selectCalendarPTHoursTotals = createSelector(
-        [selectCalendarPTHoursAll],
-        (ptHours) => {
-            const uniqueDates = [...new Set(ptHours.map(item => item.date))];
-            const ptHoursTotal: any = []
-            uniqueDates.forEach((curDate) => {
-                const curData = ptHours.filter(((item) => item.date === curDate))
-                const ptHoursDay = curData[0].ptHours.map((ptHour)=> parseInt(ptHour));
-                const totalHours = ptHoursDay.reduce((acc, totalHours) => 
-                    acc + totalHours
-                ,0)
-                const curObj = {date: curDate, ptHours:totalHours}
-                ptHoursTotal.push(curObj)
-            })
-            return ptHoursTotal;
-        })
+export const selectCalendarPTHoursTotals = createSelector(
+    [selectCalendarPTHoursAll],
+    (ptHours):PTTotalHours[] => calculatPTTotalHours(ptHours) )
 
 
 
-
-        
+    
 export const selectGrid = createSelector(
     [selectSurgeryInfo],
     (SurgeryInfo):Grid[] => SurgeryInfo.map((info) => {
