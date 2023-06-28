@@ -2,6 +2,7 @@ import { RootState } from "../store"
 import { createSelector } from "reselect";
 import { Calendar, Grid, Details} from "./ordata.types";
 
+
 const selectORDataReducer = (state:RootState) => state.ORData;
 
 export const selectCalendarData = createSelector(
@@ -75,6 +76,17 @@ export const selectCalendar = createSelector(
     (SurgeryInfo):Calendar[] => SurgeryInfo.map((info) => {
                 return info.calendar
             })
+)
+
+export const selectCalendarPTHoursAll = createSelector(
+    [selectCalendar],
+    (CalendarInfo) =>  CalendarInfo.reduce((prev:{[key:string]: string[]}, info) => {
+        prev[info.procedureDate] ? 
+            prev[info.procedureDate].push(info.prime_time_minutes) :
+            prev[info.procedureDate] = [info.prime_time_minutes]
+        return prev;
+    }, {})
+
 )
 
 export const selectGrid = createSelector(

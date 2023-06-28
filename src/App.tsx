@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { fetchPTHourSuccessAsync} from './store/ORData/actions/pthours.action';
 import { selectPrimeTime,selectUnit } from './store/Facility/facility.selector';
 import { useAppDispatch } from './hooks/hooks';
-import { selectCalendar, selectSurgeryInfo, selectPTHours } from './store/ORData/ordata.selector';
+import { selectCalendar, selectSurgeryInfo, selectPTHours, selectCalendarPTHoursAll } from './store/ORData/ordata.selector';
 
 
 
@@ -23,6 +23,7 @@ function App() {
   const calendar = useSelector(selectCalendar)
   const surgeryInfo = useSelector(selectSurgeryInfo)
   const ptHours = useSelector(selectPTHours)
+  const calendarPTHours = useSelector(selectCalendarPTHoursAll)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -33,7 +34,8 @@ function App() {
 
 
   useEffect(() => {
-      console.log('calendar', calendar)
+      console.log( 'calendar', calendar)
+      console.log('calendar PTHours', calendarPTHours)
 
   },[ptHours])
 
