@@ -1,6 +1,7 @@
 import { RootState } from "../store"
 import { createSelector } from "reselect";
 import { Calendar, Grid, Details} from "./ordata.types";
+import { scryRenderedDOMComponentsWithClass } from "react-dom/test-utils";
 
 
 const selectORDataReducer = (state:RootState) => state.ORData;
@@ -78,17 +79,48 @@ export const selectCalendar = createSelector(
             })
 )
 
+
+export type PTHours = {
+    date: string;
+    ptHours: string[];
+}
+
+
 export const selectCalendarPTHoursAll = createSelector(
     [selectCalendar],
-    (CalendarInfo) =>  CalendarInfo.reduce((prev:{[key:string]: string[]}, info) => {
-        prev[info.procedureDate] ? 
-            prev[info.procedureDate].push(info.prime_time_minutes) :
-            prev[info.procedureDate] = [info.prime_time_minutes]
-        return prev;
-    }, {})
+    (CalendarInfo):PTHours[] => {
+        const uniqueDates = [...new Set(CalendarInfo.map(item => item.procedureDate))];
+        const ptHoursTotal: any = []
+        uniqueDates.forEach((curDate) => {
+            const curData = CalendarInfo.filter(((item) => item.procedureDate === curDate))
+            const ptHoursDay = curData.map((info) => info.prime_time_minutes)
+            const curObj = {date: curDate, ptHours:ptHoursDay}
+            ptHoursTotal.push(curObj)
+        })
+        return ptHoursTotal;
+    })
 
-)
+    export const selectCalendarPTHoursTotals = createSelector(
+        [selectCalendarPTHoursAll],
+        (ptHours) => {
+            const uniqueDates = [...new Set(ptHours.map(item => item.date))];
+            const ptHoursTotal: any = []
+            uniqueDates.forEach((curDate) => {
+                const curData = ptHours.filter(((item) => item.date === curDate))
+                const ptHoursDay = curData[0].ptHours.map((ptHour)=> parseInt(ptHour));
+                const totalHours = ptHoursDay.reduce((acc, totalHours) => 
+                    acc + totalHours
+                ,0)
+                const curObj = {date: curDate, ptHours:totalHours}
+                ptHoursTotal.push(curObj)
+            })
+            return ptHoursTotal;
+        })
 
+
+
+
+        
 export const selectGrid = createSelector(
     [selectSurgeryInfo],
     (SurgeryInfo):Grid[] => SurgeryInfo.map((info) => {
