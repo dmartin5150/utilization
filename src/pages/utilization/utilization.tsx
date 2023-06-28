@@ -20,8 +20,11 @@ import { selectPrimeTime } from "../../store/Facility/facility.selector";
 import { fetchSurgeonListsAsync } from "../../store/ORData/actions/surgeonLists.actions";
 import { fetchRoomListsSuccess,setActiverRoomListSuccess } from "../../store/ORData/actions/roomsListActions";
 import { TNNASRoomLists } from "../settings/settings.constants";
-
+import { selectSurgeonLists } from "../../store/ORData/ordata.selector";
 import { TNNASUNIT } from "../../store/Facility/facility.types";
+import { setActiveSurgeonList } from "../../store/ORData/actions/surgeonLists.actions";
+import { selectPTminutesperroom } from "../../store/Facility/facility.selector";
+
 
 
 const Utilization = () => {
@@ -41,7 +44,7 @@ const Utilization = () => {
   const unit = useSelector(selectUnit)
   const room = useSelector(selectRoom)
   const primeTime = useSelector(selectPrimeTime);
-
+  const surgeonLists = useSelector(selectSurgeonLists);
 
   useEffect(()=> {
     dispatch(fetchSurgeonListsAsync())
@@ -49,6 +52,11 @@ const Utilization = () => {
     dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']));
 },[]);
 
+useEffect(()=> {
+  if (surgeonLists) {
+      dispatch(setActiveSurgeonList(surgeonLists['BH JRI']));
+  }
+}, [surgeonLists])
 
   useEffect(() => {
     dispatch(fetchCalendarDataAsync(unit, selectedDate));

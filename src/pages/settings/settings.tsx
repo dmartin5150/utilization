@@ -132,11 +132,11 @@ const Settings = () => {
     }
 
 
-    useEffect(()=> {
-        dispatch(fetchSurgeonListsAsync())
-        dispatch(fetchRoomListsSuccess(TNNASRoomLists))
-        dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']));
-    },[]);
+    // useEffect(()=> {
+    //     dispatch(fetchSurgeonListsAsync())
+    //     dispatch(fetchRoomListsSuccess(TNNASRoomLists))
+    //     dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']));
+    // },[]);
 
     useEffect(()=> {
         if (surgeonLists) {

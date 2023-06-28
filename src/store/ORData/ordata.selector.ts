@@ -1,7 +1,7 @@
 import { RootState } from "../store"
 import { createSelector } from "reselect";
 import { Calendar, Grid, Details} from "./ordata.types";
-import { scryRenderedDOMComponentsWithClass } from "react-dom/test-utils";
+import { selectPTminutesperroom } from "../Facility/facility.selector";
 
 
 const selectORDataReducer = (state:RootState) => state.ORData;
@@ -115,7 +115,7 @@ var rminutes = Math.round(minutes);
 return rhours + " H: " + rminutes + " M";
 }
 
-const calculatPTTotalHours = (ptHours:PTHours[]):PTTotalHours[] => {
+const calculatPTTotalHours = (ptHours:PTHours[], minutes:number):PTTotalHours[] => {
     const uniqueDates = [...new Set(ptHours.map(item => item.curDate))];
     const ptHoursTotal: any = []
     uniqueDates.forEach((curDate) => {
@@ -129,8 +129,10 @@ const calculatPTTotalHours = (ptHours:PTHours[]):PTTotalHours[] => {
             acc + totalHours
         ,0))
         const curObj:PTTotalHours = {curDate, totalptHours,totalnonptHours}
+
         ptHoursTotal.push(curObj)
     })
+    console.log('pt minutes ', minutes)
     return ptHoursTotal;
 }
 
@@ -141,8 +143,8 @@ export const selectCalendarPTHoursAll = createSelector(
     (calendarData):PTHours[] => calculatePTHours(calendarData))
 
 export const selectCalendarPTHoursTotals = createSelector(
-    [selectCalendarPTHoursAll],
-    (ptHours):PTTotalHours[] => calculatPTTotalHours(ptHours) )
+    [selectCalendarPTHoursAll, selectPTminutesperroom],
+    (ptHours,minutes):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes) )
 
 
 

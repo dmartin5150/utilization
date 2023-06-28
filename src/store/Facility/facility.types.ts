@@ -38,8 +38,8 @@ export enum PRIME_TIME_END {
 
 
 export type PrimeTime = {
-    start: PRIME_TIME_START,
-    end: PRIME_TIME_END
+    start: PRIME_TIME_START;
+    end: PRIME_TIME_END;
 }
 
 export type DateRange = {
