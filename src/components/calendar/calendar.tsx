@@ -49,6 +49,18 @@ const Calendar: React.FC<CalendarProps> = ({
 
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
+  useEffect(()=> {
+    if (calendarData.length > 0) {
+      const date = new Date(calendarData[0].date);
+      const padding = date.getDay();
+      let index = -1;
+      for (let step = 0; step < padding; step++) {
+        const blankDay:CalendarData= {date:index.toString(), display:'Blank'}
+        calendarData.unshift(blankDay)
+        index -= 1;
+      }
+  }
+  },[calendarData])
 
 
 

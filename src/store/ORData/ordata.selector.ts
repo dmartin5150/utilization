@@ -2,7 +2,7 @@ import { RootState } from "../store"
 import { createSelector } from "reselect";
 import { Calendar, Grid, Details} from "./ordata.types";
 import { selectPTminutesperroom } from "../Facility/facility.selector";
-
+import { UnitRoomListItem } from "../../pages/settings/settings.constants";
 
 const selectORDataReducer = (state:RootState) => state.ORData;
 
@@ -90,6 +90,7 @@ export type PTTotalHours = {
     curDate: string;
     totalptHours:string;
     totalnonptHours:string;
+    utilization: string;
 }
 
 const calculatePTHours = (calendarData:Calendar[]):PTHours[] => {
@@ -115,24 +116,41 @@ var rminutes = Math.round(minutes);
 return rhours + " H: " + rminutes + " M";
 }
 
-const calculatPTTotalHours = (ptHours:PTHours[], minutes:number):PTTotalHours[] => {
+
+
+function compare( a:PTTotalHours, b:PTTotalHours ):number {
+    if ( a.curDate < b.curDate ){
+      return -1;
+    }
+    if ( a.curDate > b.curDate ){
+      return 1;
+    }
+    return 0;
+  }
+
+
+const calculatPTTotalHours = (ptHours:PTHours[], ptMinutesPerRoom:number,rooms:UnitRoomListItem[]):PTTotalHours[] => {
     const uniqueDates = [...new Set(ptHours.map(item => item.curDate))];
     const ptHoursTotal: any = []
+    const num_rooms = rooms.length;
+    const totalPrimeTimeMinutes = num_rooms*ptMinutesPerRoom;
     uniqueDates.forEach((curDate) => {
         const curData = ptHours.filter(((item) => item.curDate === curDate))
         const ptHoursDay = curData[0].ptHours.map((ptHour)=> parseInt(ptHour));
         const nonptHoursDay = curData[0].nonptHours.map((nonptHour) => parseInt(nonptHour))
-        const totalptHours = minutestohours(ptHoursDay.reduce((acc, totalHours) => 
+        const totalptMinutesUsed = ptHoursDay.reduce((acc, totalHours) => 
             acc + totalHours
-        ,0))
+        ,0)
+        const totalptHours = minutestohours(totalptMinutesUsed )
+        const utilization = Math.round(totalptMinutesUsed/totalPrimeTimeMinutes*100).toString() + '%'
         const totalnonptHours = minutestohours(nonptHoursDay.reduce((acc, totalHours) => 
             acc + totalHours
         ,0))
-        const curObj:PTTotalHours = {curDate, totalptHours,totalnonptHours}
+        const curObj:PTTotalHours = {curDate, totalptHours,totalnonptHours, utilization}
 
         ptHoursTotal.push(curObj)
     })
-    console.log('pt minutes ', minutes)
+    ptHoursTotal.sort(compare)
     return ptHoursTotal;
 }
 
@@ -143,8 +161,8 @@ export const selectCalendarPTHoursAll = createSelector(
     (calendarData):PTHours[] => calculatePTHours(calendarData))
 
 export const selectCalendarPTHoursTotals = createSelector(
-    [selectCalendarPTHoursAll, selectPTminutesperroom],
-    (ptHours,minutes):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes) )
+    [selectCalendarPTHoursAll, selectPTminutesperroom,selectActiveRoomLists],
+    (ptHours,minutes,rooms):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes,rooms) )
 
 
 

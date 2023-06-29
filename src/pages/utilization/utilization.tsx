@@ -30,7 +30,7 @@ import { selectPTminutesperroom } from "../../store/Facility/facility.selector";
 const Utilization = () => {
   const [month, setMonth] = useState('June')
   
-  const hiddenIDs = ["0","1","2","3","4"]
+  const hiddenIDs = ["-1","-2","-3","-4","-5"]
   const UnitMenuItems = ['BH JRI','STM ST OR', 'MT OR']
   const MonthMenuItems = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
                           'August', 'September', 'October', 'November', 'December']
