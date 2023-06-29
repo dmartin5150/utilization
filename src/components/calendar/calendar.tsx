@@ -51,8 +51,9 @@ const Calendar: React.FC<CalendarProps> = ({
 
   useEffect(()=> {
     if (calendarData.length > 0) {
-      const date = new Date(calendarData[0].date);
-      const padding = date.getDay();
+      const date = new Date(calendarData[0].date + '0:00:00 AM UTC');
+      const padding = date.getDay()-1;
+      console.log('offset', padding, calendarData[0], date)
       let index = -1;
       for (let step = 0; step < padding; step++) {
         const blankDay:CalendarData= {date:index.toString(), display:'Blank'}
