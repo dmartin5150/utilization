@@ -1,0 +1,19 @@
+.single-selector {
+    h2 {
+        position:absolute;
+        top: -1.3rem;
+        left: 5rem;
+        background-color: white;
+        font-style:italic;
+    }
+
+    & .selector {
+        padding-top:1rem;
+        width: 25rem;
+
+        label {
+            font-size: 15px;
+        }
+
+    }
+}

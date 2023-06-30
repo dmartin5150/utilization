@@ -24,8 +24,11 @@ import { selectSurgeonLists } from "../../store/ORData/ordata.selector";
 import { TNNASUNIT } from "../../store/Facility/facility.types";
 import { setActiveSurgeonList } from "../../store/ORData/actions/surgeonLists.actions";
 import { selectPTminutesperroom } from "../../store/Facility/facility.selector";
-
-
+import { CalendarMenuItem } from "./utilization.constants";
+import SelectorList from "../../components/SelectorList/SelectorList";
+import { SingleSelector } from "../../components/SelectorList/SelectorList";
+import { calendarSurgeonOptions, calendarRoomOptions } from "./utilization.constants";
+import Select,{SingleValue} from "react-select";
 
 const Utilization = () => {
   const [month, setMonth] = useState('June')
@@ -45,6 +48,9 @@ const Utilization = () => {
   const room = useSelector(selectRoom)
   const primeTime = useSelector(selectPrimeTime);
   const surgeonLists = useSelector(selectSurgeonLists);
+
+
+
 
   useEffect(()=> {
     dispatch(fetchSurgeonListsAsync())
@@ -109,6 +115,30 @@ useEffect(()=> {
   const detailsHeader:DetailsHeader = {'col1':room.name,'col2':selectedDate, 'col3':`Utilization ${room.utilization}`, 'col4': ''}
   const detailsColHeader:GridNames = {'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Duration'}
 
+
+const updateCalendarSurgeons = (option: SingleValue<CalendarMenuItem>) => {
+  console.log(option)
+}
+
+const calendarSurgeonSelector: SingleSelector<CalendarMenuItem> = {
+  title: 'Surgeons',
+  selectedOption: calendarSurgeonOptions[0],
+  optionList:calendarSurgeonOptions,
+  onChange:updateCalendarSurgeons 
+}
+
+const updateCalendarRooms = (option: SingleValue<CalendarMenuItem>) => {
+  console.log(option)
+}
+
+const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
+  title: 'Rooms',
+  selectedOption: calendarRoomOptions[0],
+  optionList: calendarRoomOptions,
+  onChange:updateCalendarRooms
+}
+
+
   return (
       <section className="utilization">
         <DetailsCard 
@@ -125,8 +155,10 @@ useEffect(()=> {
             title={unit}
             calendarData={calendarData}
             selectedDate={selectedDate}
-            dropDownLeft={calendarDropDownLeft}
-            dropDownRight= {calendarDropDownRight}
+            list1={calendarSurgeonSelector}
+            list2={calendarRoomSelector}
+            // dropDownLeft={calendarDropDownLeft}
+            // dropDownRight= {calendarDropDownRight}
             onDateChange={setSelectedDate}
             hiddenID={hiddenIDs}
             pageSize={30}

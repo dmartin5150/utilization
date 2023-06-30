@@ -22,13 +22,14 @@
             // box-shadow: 2px 4px 8px rgba($color-black, 0.2);
             border-top-left-radius: 3px;
             border-top-right-radius: 3px;
+            padding: 0 3rem;
 
         }
 
         .header-title {
             display: flex;
             flex-direction: row;
-            justify-content: space-around;
+            justify-content: flex-start;
             background-color: #1b4297;
             padding-bottom: 2rem;
         

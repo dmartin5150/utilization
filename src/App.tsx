@@ -11,8 +11,8 @@ import { fetchPTHourSuccessAsync} from './store/ORData/actions/pthours.action';
 import { selectPrimeTime,selectUnit } from './store/Facility/facility.selector';
 import { useAppDispatch } from './hooks/hooks';
 import { selectCalendar, selectSurgeryInfo, selectPTHours, selectCalendarPTHoursAll,selectCalendarPTHoursTotals } from './store/ORData/ordata.selector';
-
-
+import { selectActiveRoomLists } from './store/ORData/ordata.selector';
+import { fetchSurgeonListsAsync } from './store/ORData/actions/surgeonLists.actions';
 
 import "./App.scss";
 
@@ -25,7 +25,14 @@ function App() {
   const ptHours = useSelector(selectPTHours)
   const calendarPTHours = useSelector(selectCalendarPTHoursAll)
   const totalPTHours = useSelector(selectCalendarPTHoursTotals)
+  const rooms = useSelector(selectActiveRoomLists)
   const dispatch = useAppDispatch()
+
+
+  useEffect(()=> {
+    dispatch(fetchSurgeonListsAsync())
+  })
+
 
   useEffect(() => {
     if (unit && primeTime) {
@@ -34,12 +41,14 @@ function App() {
   },[primeTime, unit])
 
 
-  useEffect(() => {
-      console.log( 'calendar', calendar)
-      console.log('calendar PTHours', calendarPTHours)
-      console.log('total hours', totalPTHours)
+  // useEffect(() => {
+  //    if (rooms && ptHours) {
+  //       console.log( 'calendar', calendar)
+  //       console.log('calendar PTHours', calendarPTHours)
+  //       console.log('total hours', totalPTHours)
+  //    }
 
-  },[ptHours])
+  // },[ptHours,rooms])
 
 
   return (

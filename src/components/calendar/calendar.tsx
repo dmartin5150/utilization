@@ -10,6 +10,8 @@ import { useSelector } from "react-redux";
 import { selectCalendarData } from "../../store/ORData/ordata.selector";
 import { fetchCalendarDataAsync } from "../../store/ORData/actions/calendar.actions";
 import { selectUnit } from "../../store/Facility/facility.selector";
+import SelectorList from "../SelectorList/SelectorList";
+import { Option, SingleSelector } from "../SelectorList/SelectorList";
 
 export interface CalendarData {
   date: string;
@@ -18,28 +20,21 @@ export interface CalendarData {
 
 
 
-interface CalendarProps {
+interface CalendarProps<T extends Option> {
   title: string,
   selectedDate: string;
   calendarData: CalendarData[];
   hiddenID: string[];
-  dropDownLeft:DropDownBox;
-  dropDownRight: DropDownBox;
+  list1: SingleSelector<T>;
+  list2: SingleSelector<T>
   onDateChange: (date: string)=>void;
   pageSize: number
 }
 
 
-const Calendar: React.FC<CalendarProps> = ({
-  title,
-  selectedDate,
-  onDateChange,
-  calendarData,
-  hiddenID,
-  dropDownLeft,
-  dropDownRight,
-  pageSize,
-}) => {
+function Calendar<T extends Option>({
+  title,selectedDate,onDateChange,calendarData,hiddenID,list1,list2, pageSize
+}: React.PropsWithChildren<CalendarProps<T>>)  {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentCalendarData, setCurrentCalendarData] = useState<CalendarData[]>([]);
 
@@ -78,23 +73,20 @@ const Calendar: React.FC<CalendarProps> = ({
           <h2 className="heading">{title}</h2>
         </div>
         <div className="calendar-dropdown">
-          <Dropdown 
-            title={dropDownLeft.title} 
-            selected={dropDownLeft.selected} 
-            menuItems = {dropDownLeft.menuItems}
-            disabled={dropDownLeft.disabled}
-            onSelectItem={dropDownLeft.onSelectItem}
-            />
-
+          <SelectorList 
+          title={list1.title}
+          selectedOption={list1.selectedOption} 
+          optionList = {list1.optionList}
+          onChange = {list1.onChange}
+          />
         </div>
         <div className="calendar-dropdown">
-          <Dropdown 
-            title={dropDownRight.title} 
-            selected={dropDownRight.selected} 
-            menuItems = {dropDownRight.menuItems}
-            disabled={dropDownRight.disabled}
-            onSelectItem={dropDownRight.onSelectItem}
-            />
+          <SelectorList 
+          title={list2.title}
+          selectedOption={list2.selectedOption} 
+          optionList = {list2.optionList}
+          onChange = {list2.onChange}
+          />
         </div>
       </div>
       <ul className='daysofweek'>

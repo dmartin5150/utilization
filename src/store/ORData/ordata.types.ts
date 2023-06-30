@@ -27,6 +27,7 @@ export type item = {
 export type Calendar = {
     unit:string;
     NPI: string;
+    room: string;
     procedureDate: string;
     prime_time_minutes:string;
     non_prime_time_minutes: string;

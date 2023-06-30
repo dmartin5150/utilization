@@ -3,7 +3,7 @@ import './settings.scss'
 import { item } from '../../store/ORData/ordata.types';
 import {SingleValue} from "react-select";
 import DualSelectors from '../../components/dualSelectors/DualSelectors';
-import { SingleSelector } from '../../components/dualSelectors/DualSelectors';
+import { SingleSelector } from '../../components/SelectorList/SelectorList';
 import RangeSelectors from '../../components/dateRange/RangeSelector';
 import { UnitSelector, UnitListSelector } from '../../components/selectUnits/SelectUnit';
 import SelectUnit from '../../components/selectUnits/SelectUnit';
@@ -275,6 +275,8 @@ const Settings = () => {
         // onItemChanged(id, rooms, setRooms)
         setRoomChanged(id);
     }
+
+
 
     const setSurgeonChanged = (id:string) => {
         const itemIndex = activeSurgeons.findIndex((item) => item.id.toString() === id);

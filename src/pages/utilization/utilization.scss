@@ -8,4 +8,22 @@
     margin-top:1rem;
     max-width: 50rem;
     border:5px;
+
+
+    & .patient__calendar {
+        color:white;
+
+        & .selector {
+
+            label {
+                color:white;
+            }
+
+            color:grey;
+            max-width:12rem;
+            margin: 0 2rem;
+        }
+
+
+    }
 }
