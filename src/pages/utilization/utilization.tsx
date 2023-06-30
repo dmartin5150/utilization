@@ -4,7 +4,7 @@ import Calendar from "../../components/calendar/calendar";
 import DetailsCard from "../../components/team-card/details-card";
 import "./utilization.scss";
 import { useSelector } from "react-redux";
-import { selectCalendarData, selectDetailData, selectGridData, selectPopUpIsOpen } from "../../store/ORData/ordata.selector";
+import { selectCalendarData, selectCalendarRoomOption, selectDetailData, selectGridData, selectPopUpIsOpen } from "../../store/ORData/ordata.selector";
 import { selectDate,selectUnit,selectRoom  } from "../../store/Facility/facility.selector";
 import { fetchCalendarDataAsync } from "../../store/ORData/actions/calendar.actions";
 import { fetchGridDataAsync } from "../../store/ORData/actions/grid.actions";
@@ -33,6 +33,7 @@ import { setCalendarSurgeonOption, setCalendarRoomOption} from "../../store/ORDa
 import { selectCalendarSurgeonOption } from "../../store/ORData/ordata.selector";
 import { calendarSurgeonMenus, calendarRoomMenus} from "./utilization.constants";
 import { selectAllRoomsSelected,selectAllSurgeonsSelected } from "../../store/ORData/ordata.selector";
+import { selectCalendar } from "../../store/ORData/ordata.selector";
 
 
 const Utilization = () => {
@@ -49,6 +50,7 @@ const Utilization = () => {
 
   const dispatch = useAppDispatch();
   const calendarData = useSelector(selectCalendarData);
+  const calendar = useSelector(selectCalendar)
   const gridData = useSelector(selectGridData);
   const detailsData = useSelector(selectDetailData);
   const popupOpen = useSelector(selectPopUpIsOpen);
@@ -58,12 +60,22 @@ const Utilization = () => {
   const primeTime = useSelector(selectPrimeTime);
   const surgeonLists = useSelector(selectSurgeonLists);
   const calendarSurgeonOption = useSelector(selectCalendarSurgeonOption);
+  const calendarRoomOption = useSelector(selectCalendarRoomOption)
   const allRoomsSelected = useSelector(selectAllRoomsSelected);
   const allSurgeonsSelected = useSelector(selectAllSurgeonsSelected);
 
 
 
+  useEffect(() => {
 
+
+     if (calendarRoomOption && calendarSurgeonOption) {
+        console.log( 'calendar',  calendar)
+        // console.log('calendar PTHours', calendarPTHours)
+        // console.log('total hours', totalPTHours)
+     }
+
+  },[calendarRoomOption,calendarSurgeonOption])
 
 
   useEffect(() => {
@@ -157,8 +169,8 @@ useEffect(()=> {
     const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
       title: 'Rooms',
       isDisabled:true,
-      selectedOption: calendarRoomMenus['None'][0],
-      optionList: calendarRoomMenus['None'],
+      selectedOption: calendarRoomMenus['Selected'][0],
+      optionList: calendarRoomMenus['Selected'],
       onChange:updateCalendarRooms
     }
     setRoomMenu(calendarRoomSelector);

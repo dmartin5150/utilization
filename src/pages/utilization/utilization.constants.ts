@@ -46,6 +46,11 @@ export const calendarRoomOptionsAll: CalendarMenuItem[] = [
 ]
 
 
+export const calendarRoomOptionsSelect: CalendarMenuItem[] = [
+    {id:0, label: 'All', value: CalendarMenuOptions.All,},
+    {id:2, label: 'Selected', value:CalendarMenuOptions.Mixed},
+]
+
 export const calendarRoomOptionsMixed: CalendarMenuItem[] = [
     {id:0, label: 'All', value: CalendarMenuOptions.All,},
     {id:2, label: 'Surgeon', value:CalendarMenuOptions.Mixed},
@@ -58,5 +63,6 @@ export const calendarRoomOptionsNone: CalendarMenuItem[] = [
 export const calendarRoomMenus: CalendarMenus = {
     'All': calendarRoomOptionsAll,
     'Mixed': calendarRoomOptionsMixed,
-    'None': calendarRoomOptionsNone
+    'None': calendarRoomOptionsNone,
+    'Selected': calendarRoomOptionsSelect
 }

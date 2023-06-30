@@ -2,8 +2,7 @@ import { RootState } from "../store"
 import { createSelector } from "reselect";
 import { Calendar, Grid, Details} from "./ordata.types";
 import { selectPTminutesperroom } from "../Facility/facility.selector";
-import { UnitRoomListItem } from "../../pages/settings/settings.constants";
-import { SurgeonList,SurgeonLists } from "./ordata.types";
+
 
 
 const selectORDataReducer = (state:RootState) => state.ORData;
@@ -17,6 +16,8 @@ export const selectGridData = createSelector(
     [selectORDataReducer],
     (ORDataSlice) => ORDataSlice.gridData
 )
+
+
 
 export const selectDetailData = createSelector(
     [selectORDataReducer],
@@ -221,10 +222,16 @@ const calculatPTTotalHours = (
     mixed:boolean):PTTotalHours[] => {
     const uniqueDates = [...new Set(ptHours.map(item => item.curDate))];
     const ptHoursTotal: any = []
-    const num_rooms = rooms.length;
-    const totalPrimeTimeMinutes = num_rooms*ptMinutesPerRoom;
+    let num_rooms;
+
     uniqueDates.forEach((curDate) => {
         let curData = ptHours.filter(((item) => item.curDate === curDate))
+        if (mixed) {
+            num_rooms = curData[0].rooms.length
+        } else {
+            num_rooms = rooms.length;
+        }
+        const totalPrimeTimeMinutes = num_rooms*ptMinutesPerRoom;
         const ptHoursDay = curData[0].ptHours.map((ptHour)=> parseInt(ptHour));
         const nonptHoursDay = curData[0].nonptHours.map((nonptHour) => parseInt(nonptHour))
         const totalptMinutesUsed = ptHoursDay.reduce((acc, totalHours) => 
