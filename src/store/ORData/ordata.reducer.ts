@@ -2,7 +2,7 @@ import { CalendarData } from "../../components/calendar/calendar";
 import { SummaryGridData } from "../../components/summary-grid/summary-grid";
 import { DetailsData } from "../../components/team-card/details-card";
 import { AnyAction } from "redux";
-import { fetchCalendarSuccess} from "./actions/calendar.actions";
+import { fetchCalendarSuccess, setCalendarSurgeonOption, setCalendarRoomOption} from "./actions/calendar.actions";
 import { fetchGridSuccess} from "./actions/grid.actions";
 import { fetchSurgeonListsSuccess} from "./actions/surgeonLists.actions";
 import { fetchDetailsSuccess, closePopUp } from "./actions/details.actions";
@@ -15,6 +15,7 @@ import { setSurgeonLists, setActiveSurgeonList,setAllSurgeonsSelected } from "./
 import {  PT_Hours, SurgeryInfo } from "./ordata.types";
 import { fetchPTHoursSuccess } from "./actions/pthours.action";
 import { JRIroomList } from "../Facility/facility.types";
+import { CalendarMenuOptions } from "../../pages/utilization/utilization.constants";
 
 
 export type ORDataState = {
@@ -27,9 +28,12 @@ export type ORDataState = {
     surgeonLists: UnitRoomLists;
     activeSurgeonList: UnitRoomListItem[], 
     allSurgeonsSelected: boolean;
+    calendarSurgeonOption: CalendarMenuOptions, 
+    calendarRoomOption: CalendarMenuOptions, 
     isLoading:boolean;
     popOpen: boolean;
     ptHours: PT_Hours;
+
     error: null | Error
 }
 
@@ -48,6 +52,8 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
     surgeonLists:{},
     activeSurgeonList:[],
     allSurgeonsSelected:true,
+    calendarSurgeonOption: CalendarMenuOptions.All, 
+    calendarRoomOption: CalendarMenuOptions.All,
     isLoading:false,
     popOpen: false,
     ptHours:PTHOURS_INITIAL_STATE,
@@ -101,6 +107,12 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     }
     if (fetchPTHoursSuccess.match(action)) {
         return {...state, ptHours: action.payload}
+    }
+    if (setCalendarSurgeonOption.match(action)) {
+        return {...state, calendarSurgeonOption: action.payload}
+    }
+    if (setCalendarRoomOption.match(action)) {
+        return {...state, calendarRoomOption: action.payload}
     }
     return state;
 }

@@ -27,8 +27,12 @@ import { selectPTminutesperroom } from "../../store/Facility/facility.selector";
 import { CalendarMenuItem } from "./utilization.constants";
 import SelectorList from "../../components/SelectorList/SelectorList";
 import { SingleSelector } from "../../components/SelectorList/SelectorList";
-import { calendarSurgeonOptions, calendarRoomOptions } from "./utilization.constants";
+import { calendarSurgeonOptions, calendarRoomOptions, CalendarMenuOptions } from "./utilization.constants";
 import Select,{SingleValue} from "react-select";
+import { setCalendarSurgeonOption, setCalendarRoomOption} from "../../store/ORData/actions/calendar.actions";
+import { selectCalendarSurgeonOption } from "../../store/ORData/ordata.selector";
+
+
 
 const Utilization = () => {
   const [month, setMonth] = useState('June')
@@ -48,6 +52,7 @@ const Utilization = () => {
   const room = useSelector(selectRoom)
   const primeTime = useSelector(selectPrimeTime);
   const surgeonLists = useSelector(selectSurgeonLists);
+  const calendarSurgeonOption = useSelector(selectCalendarSurgeonOption)
 
 
 
@@ -117,7 +122,10 @@ useEffect(()=> {
 
 
 const updateCalendarSurgeons = (option: SingleValue<CalendarMenuItem>) => {
-  console.log(option)
+  if (option) {
+    dispatch(setCalendarSurgeonOption(option.value as CalendarMenuOptions))
+  }
+  
 }
 
 const calendarSurgeonSelector: SingleSelector<CalendarMenuItem> = {
@@ -128,7 +136,9 @@ const calendarSurgeonSelector: SingleSelector<CalendarMenuItem> = {
 }
 
 const updateCalendarRooms = (option: SingleValue<CalendarMenuItem>) => {
-  console.log(option)
+  if (option) {
+    dispatch(setCalendarRoomOption(option.value as CalendarMenuOptions))
+  }
 }
 
 const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {

@@ -27,6 +27,16 @@ export const selectSurgeonLists = createSelector(
     (ORDataSlice) => ORDataSlice.surgeonLists
 )
 
+export const selectCalendarSurgeonOption = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice)=> ORDataSlice.calendarSurgeonOption
+)
+
+export const selectCalendarRoomOption = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice)=> ORDataSlice.calendarRoomOption
+)
+
 
 export const selectPopUpIsOpen = createSelector(
     [selectORDataReducer],
