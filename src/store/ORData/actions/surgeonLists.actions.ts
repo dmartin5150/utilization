@@ -6,10 +6,10 @@ import { fetchDataStart, fetchDataFailed } from "./ordata.actions";
 import { UnitRoomLists, UnitRoomListItem } from "../../../pages/settings/settings.constants";
 import getSurgeonLists from "../../../utilities/fetchData/getSurgeonLists";
 import { selectAllRoomsSelected, selectAllSurgeonsSelected } from "../ordata.selector";
-
-export type FetchSurgeonListsSuccess = ActionWithPayload<ORDATA_TYPES.FETCH_SURGEON_LISTS_SUCCESS, UnitRoomLists>
-export type SetSurgeonLists = ActionWithPayload<ORDATA_TYPES.SET_SURGEON_LISTS, UnitRoomLists>
-export type SetActiveSurgeonList = ActionWithPayload<ORDATA_TYPES.SET_ACTIVE_SURGEON_LIST, UnitRoomListItem[]>
+import { SurgeonList, SurgeonLists } from "../ordata.types";
+export type FetchSurgeonListsSuccess = ActionWithPayload<ORDATA_TYPES.FETCH_SURGEON_LISTS_SUCCESS, SurgeonLists>
+export type SetSurgeonLists = ActionWithPayload<ORDATA_TYPES.SET_SURGEON_LISTS, SurgeonLists>
+export type SetActiveSurgeonList = ActionWithPayload<ORDATA_TYPES.SET_ACTIVE_SURGEON_LIST, SurgeonList[]>
 export type SetAllSurgeonsSelected = ActionWithPayload<ORDATA_TYPES.SET_ALL_SURGEONS_SELECTED, boolean>;
 
 
@@ -19,17 +19,17 @@ export const setAllSurgeonsSelected = withMatcher((selected:boolean):SetAllSurge
 })
 
 
-export const setSurgeonLists = withMatcher((roomLists:UnitRoomLists):SetSurgeonLists => {
+export const setSurgeonLists = withMatcher((roomLists:SurgeonLists):SetSurgeonLists => {
     return createAction(ORDATA_TYPES.SET_SURGEON_LISTS, roomLists)
 });
 
 
-export const setActiveSurgeonList = withMatcher((roomList:UnitRoomListItem[]):SetActiveSurgeonList => {
+export const setActiveSurgeonList = withMatcher((roomList:SurgeonList[]):SetActiveSurgeonList => {
     return createAction(ORDATA_TYPES.SET_ACTIVE_SURGEON_LIST, roomList)
 });
 
 
-export const fetchSurgeonListsSuccess = withMatcher((data:UnitRoomLists):FetchSurgeonListsSuccess => {
+export const fetchSurgeonListsSuccess = withMatcher((data:SurgeonLists):FetchSurgeonListsSuccess => {
     return createAction(ORDATA_TYPES.FETCH_SURGEON_LISTS_SUCCESS, data)
 });
 

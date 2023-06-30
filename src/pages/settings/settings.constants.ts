@@ -12,7 +12,7 @@ export type Unit = {
 }
 
 
-export type UnitRoomListItem = {
+export interface UnitRoomListItem {
     id: number;
     name: string;
     selected: boolean;

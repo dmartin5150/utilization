@@ -64,28 +64,11 @@ const Utilization = () => {
 
 
 
-// useEffect(()=> {
-//     dispatch(fetchSurgeonListsAsync())
-//     dispatch(fetchRoomListsSuccess(TNNASRoomLists))
-//     dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']));
-// },[]);
 
-
-
-
-
-// useEffect(()=> {
-//   if (surgeonLists) {
-//       dispatch(setActiveSurgeonList(surgeonLists['BH JRI']));
-//   }
-// }, [surgeonLists])
 
   useEffect(() => {
     dispatch(fetchCalendarDataAsync(unit, selectedDate));
   }, [unit]);
-
-
-
 
 
   useEffect(() => {

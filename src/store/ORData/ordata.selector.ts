@@ -3,6 +3,8 @@ import { createSelector } from "reselect";
 import { Calendar, Grid, Details} from "./ordata.types";
 import { selectPTminutesperroom } from "../Facility/facility.selector";
 import { UnitRoomListItem } from "../../pages/settings/settings.constants";
+import { SurgeonList,SurgeonLists } from "./ordata.types";
+
 
 const selectORDataReducer = (state:RootState) => state.ORData;
 
@@ -69,13 +71,13 @@ export const selectActiveSurgeons = createSelector(
     (ORDataSlice) => ORDataSlice.activeSurgeonList
 )
 
-// export const selectActiveSurgeonNPIs = createSelector(
-//     [selectActiveSurgeons],
-//     (ActiveSurgeonList):string[] => {
-//         const selectedList = ActiveSurgeonList.filter((surgeon)=> surgeon.selected);
-//         return selectedList.map((surgeon) => surgeon.nPIs)
-//     }
-// )
+export const selectActiveSurgeonNPIs = createSelector(
+    [selectActiveSurgeons],
+    (ActiveSurgeonList):string[] => {
+        const selectedList = ActiveSurgeonList.filter((surgeon)=> surgeon.selected);
+        return selectedList.map((surgeon) => surgeon.npi)
+    }
+)
 
 export const selectAllRoomsSelected = createSelector(
     [selectORDataReducer],

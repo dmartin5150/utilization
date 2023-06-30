@@ -1,4 +1,5 @@
 
+
 export enum  ORDATA_TYPES {
     FETCH_DATA_START  = 'ordata/FETCH_CALENDAR_DATA_START',
     FETCH_DATA_FAILED  ='ordata/FETCH_CALENDAR_DATA_FAILED',
@@ -64,4 +65,15 @@ export type SurgeryInfo = {
 
 export type PT_Hours = {
     surgeryInfo: SurgeryInfo[];
+}
+
+export type SurgeonList = {
+    id: number;
+    name: string;
+    npi: string;
+    selected: boolean;
+}
+
+export type SurgeonLists = {
+    [key:string]: SurgeonList[];
 }

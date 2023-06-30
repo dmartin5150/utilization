@@ -19,7 +19,7 @@ import { setPrimeTime, setDateRange, setUnit } from '../../store/Facility/facilt
 import { selectPrimeTime, selectDateRange,selectUnit } from '../../store/Facility/facility.selector';
 import { fetchRoomListsSuccess,setRoomListsSuccess, setActiverRoomListSuccess,setAllRoomsSelected} from '../../store/ORData/actions/roomsListActions';
 import { setActiveSurgeonList, setSurgeonLists,setAllSurgeonsSelected } from '../../store/ORData/actions/surgeonLists.actions';
-
+import { SurgeonList,SurgeonLists } from '../../store/ORData/ordata.types';
 
 
 import { unitLists } from './settings.constants';

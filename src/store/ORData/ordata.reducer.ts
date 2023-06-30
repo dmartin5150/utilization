@@ -16,6 +16,7 @@ import {  PT_Hours, SurgeryInfo } from "./ordata.types";
 import { fetchPTHoursSuccess } from "./actions/pthours.action";
 import { JRIroomList } from "../Facility/facility.types";
 import { CalendarMenuOptions } from "../../pages/utilization/utilization.constants";
+import { SurgeonList,SurgeonLists } from "./ordata.types";
 
 
 
@@ -27,8 +28,8 @@ export type ORDataState = {
     unitRoomLists: UnitRoomLists;
     activeRoomList: UnitRoomListItem[];
     allRoomsSelected: boolean;
-    surgeonLists: UnitRoomLists;
-    activeSurgeonList: UnitRoomListItem[], 
+    surgeonLists: SurgeonLists;
+    activeSurgeonList: SurgeonList[], 
     allSurgeonsSelected: boolean;
     calendarSurgeonOption: CalendarMenuOptions, 
     calendarRoomOption: CalendarMenuOptions, 
