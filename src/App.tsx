@@ -29,10 +29,9 @@ function App() {
   const dispatch = useAppDispatch()
 
 
-  useEffect(()=> {
-    dispatch(fetchSurgeonListsAsync())
-  })
-
+    useEffect(()=> {
+        dispatch(fetchSurgeonListsAsync())
+    },[]);
 
   useEffect(() => {
     if (unit && primeTime) {

@@ -11,13 +11,14 @@ export type Option = {
 
 export type SingleSelector<T extends Option> = {
     title?: string
+    isDisabled?:boolean
     selectedOption: SingleValue<T>;
     optionList: T[];
     onChange: (option: SingleValue<T>)=>void;
 }
 
 
-function SelectorList <T extends Option >({title, selectedOption, optionList,onChange}: React.PropsWithChildren<SingleSelector<T>>) {
+function SelectorList <T extends Option >({title,isDisabled, selectedOption, optionList,onChange}: React.PropsWithChildren<SingleSelector<T>>) {
 
     const [selectedValue, setSelectedValue]=useState<SingleValue<T>>(selectedOption)
 
@@ -35,6 +36,7 @@ function SelectorList <T extends Option >({title, selectedOption, optionList,onC
             <div className='selector'>
                 <label>{title}</label>
                 <Select 
+                    isDisabled={isDisabled}
                     value={selectedValue} 
                     options={optionList} 
                     onChange={handleSelector} 

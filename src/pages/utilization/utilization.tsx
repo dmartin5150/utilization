@@ -27,15 +27,20 @@ import { selectPTminutesperroom } from "../../store/Facility/facility.selector";
 import { CalendarMenuItem } from "./utilization.constants";
 import SelectorList from "../../components/SelectorList/SelectorList";
 import { SingleSelector } from "../../components/SelectorList/SelectorList";
-import { calendarSurgeonOptions, calendarRoomOptions, CalendarMenuOptions } from "./utilization.constants";
+import {  CalendarMenuOptions } from "./utilization.constants";
 import Select,{SingleValue} from "react-select";
 import { setCalendarSurgeonOption, setCalendarRoomOption} from "../../store/ORData/actions/calendar.actions";
 import { selectCalendarSurgeonOption } from "../../store/ORData/ordata.selector";
-
+import { calendarSurgeonMenus, calendarRoomMenus} from "./utilization.constants";
+import { selectAllRoomsSelected,selectAllSurgeonsSelected } from "../../store/ORData/ordata.selector";
 
 
 const Utilization = () => {
   const [month, setMonth] = useState('June')
+  const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
+  const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
+
+
   
   const hiddenIDs = ["-1","-2","-3","-4","-5"]
   const UnitMenuItems = ['BH JRI','STM ST OR', 'MT OR']
@@ -44,24 +49,30 @@ const Utilization = () => {
 
   const dispatch = useAppDispatch();
   const calendarData = useSelector(selectCalendarData);
-  const gridData = useSelector(selectGridData)
-  const detailsData = useSelector(selectDetailData)
+  const gridData = useSelector(selectGridData);
+  const detailsData = useSelector(selectDetailData);
   const popupOpen = useSelector(selectPopUpIsOpen);
-  const selectedDate = useSelector(selectDate)
-  const unit = useSelector(selectUnit)
-  const room = useSelector(selectRoom)
+  const selectedDate = useSelector(selectDate);
+  const unit = useSelector(selectUnit);
+  const room = useSelector(selectRoom);
   const primeTime = useSelector(selectPrimeTime);
   const surgeonLists = useSelector(selectSurgeonLists);
-  const calendarSurgeonOption = useSelector(selectCalendarSurgeonOption)
+  const calendarSurgeonOption = useSelector(selectCalendarSurgeonOption);
+  const allRoomsSelected = useSelector(selectAllRoomsSelected);
+  const allSurgeonsSelected = useSelector(selectAllSurgeonsSelected);
 
 
 
 
-  useEffect(()=> {
-    dispatch(fetchSurgeonListsAsync())
-    dispatch(fetchRoomListsSuccess(TNNASRoomLists))
-    dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']));
-},[]);
+// useEffect(()=> {
+//     dispatch(fetchSurgeonListsAsync())
+//     dispatch(fetchRoomListsSuccess(TNNASRoomLists))
+//     dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']));
+// },[]);
+
+
+
+
 
 useEffect(()=> {
   if (surgeonLists) {
@@ -128,12 +139,29 @@ const updateCalendarSurgeons = (option: SingleValue<CalendarMenuItem>) => {
   
 }
 
-const calendarSurgeonSelector: SingleSelector<CalendarMenuItem> = {
-  title: 'Surgeons',
-  selectedOption: calendarSurgeonOptions[0],
-  optionList:calendarSurgeonOptions,
-  onChange:updateCalendarSurgeons 
-}
+
+useEffect(()=> {
+  if (allSurgeonsSelected) {
+    const calendarSurgeonSelector: SingleSelector<CalendarMenuItem> = {
+      title: 'Surgeons',
+      selectedOption: calendarSurgeonMenus['None'][0],
+      optionList:calendarSurgeonMenus['None'],
+      onChange:updateCalendarSurgeons 
+    }
+    setSurgeonMenu(calendarSurgeonSelector)
+  } else {
+    const calendarSurgeonSelector: SingleSelector<CalendarMenuItem> = {
+      title: 'Surgeons',
+      selectedOption: calendarSurgeonMenus['All'][1],
+      optionList:calendarSurgeonMenus['All'],
+      onChange:updateCalendarSurgeons 
+    }
+    setSurgeonMenu(calendarSurgeonSelector)
+  }
+},[allSurgeonsSelected])
+
+
+
 
 const updateCalendarRooms = (option: SingleValue<CalendarMenuItem>) => {
   if (option) {
@@ -141,12 +169,40 @@ const updateCalendarRooms = (option: SingleValue<CalendarMenuItem>) => {
   }
 }
 
-const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
-  title: 'Rooms',
-  selectedOption: calendarRoomOptions[0],
-  optionList: calendarRoomOptions,
-  onChange:updateCalendarRooms
-}
+useEffect(()=> {
+  if (allSurgeonsSelected) {
+    const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
+      title: 'Rooms',
+      isDisabled:true,
+      selectedOption: calendarRoomMenus['None'][0],
+      optionList: calendarRoomMenus['None'],
+      onChange:updateCalendarRooms
+    }
+    setRoomMenu(calendarRoomSelector);
+  } else if (!allSurgeonsSelected && allRoomsSelected){
+    const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
+      title: 'Rooms',
+      isDisabled: false,
+      selectedOption: calendarRoomMenus['Mixed'][0],
+      optionList: calendarRoomMenus['Mixed'],
+      onChange:updateCalendarRooms
+    }
+    setRoomMenu(calendarRoomSelector);
+  } else {
+    const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
+      title: 'Rooms',
+      isDisabled: false,
+      selectedOption: calendarRoomMenus['All'][1],
+      optionList: calendarRoomMenus['All'],
+      onChange:updateCalendarRooms
+    }
+    setRoomMenu(calendarRoomSelector);
+  }
+},[allSurgeonsSelected, allRoomsSelected])
+ 
+
+
+
 
 
   return (
@@ -161,18 +217,18 @@ const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
           highlightItems={['Open Time']}
           pageSize={6} />
         <div className="patient__calendar">
-          <Calendar
+          {surgeonMenu && roomMenu && <Calendar
             title={unit}
             calendarData={calendarData}
             selectedDate={selectedDate}
-            list1={calendarSurgeonSelector}
-            list2={calendarRoomSelector}
+            list1={surgeonMenu}
+            list2={roomMenu}
             // dropDownLeft={calendarDropDownLeft}
             // dropDownRight= {calendarDropDownRight}
             onDateChange={setSelectedDate}
             hiddenID={hiddenIDs}
             pageSize={30}
-          />
+          />}
         </div>
         <div className="patient__info">
           <SummaryGrid

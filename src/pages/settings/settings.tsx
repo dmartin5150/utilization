@@ -143,6 +143,7 @@ const Settings = () => {
             dispatch(setActiveSurgeonList(surgeonLists['BH JRI']));
         }
     }, [surgeonLists])
+ 
 
     useEffect (() => {
         if (selectedUnit && activeSurgeons && surgeonLists && surgeonLists[selectedUnit]) {
@@ -161,6 +162,7 @@ const Settings = () => {
             setFilteredSurgeons(surgeonLists[selectedUnit])
         }
     }, [selectedUnit, surgeonLists])
+
 
 
     useEffect(()=> {
