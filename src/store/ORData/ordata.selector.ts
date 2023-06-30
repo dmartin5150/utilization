@@ -143,12 +143,40 @@ const getPTHoursFilteredbyRoom = (rooms:string[], calendarData:Calendar[]) => {
 
 }
 
-const calculatePTHours = (calendarData:Calendar[], roomList:string[]):PTHours[] => {
+const getPTHoursFilterdbyNPI = (npis:string[], calendarData:Calendar[])  =>{
+    const filteredCalendar:Calendar[] = []
+    for (const npi of npis) {
+        for (const calendar of calendarData) {
+            if (calendar.NPI === npi) {
+                // console.log('pushing data')
+                filteredCalendar.push(calendar)
+                continue
+            }
+        }
+    }
+    // console.log('filtered data', filteredCalendar)
+    return filteredCalendar;
+}
+
+
+
+const calculatePTHours = (
+    calendarData:Calendar[], 
+    roomList:string[],
+    npiList:string[],
+    filterRooms: boolean,
+    filterNPI: boolean
+    ):PTHours[] => {
     const uniqueDates = [...new Set(calendarData.map(item => item.procedureDate))];
     const ptHoursTotal: any = []
     uniqueDates.forEach((curDate) => {
         let curData = calendarData.filter(((item) => item.procedureDate === curDate))
-        curData = getPTHoursFilteredbyRoom(roomList, curData)
+        if (filterRooms) {
+            curData = getPTHoursFilteredbyRoom(roomList, curData)
+        }
+        if (filterNPI) {
+            curData = getPTHoursFilterdbyNPI(npiList, curData)
+        }
         const ptHours = curData.map((info) => info.prime_time_minutes)
         const nonptHours = curData.map((info)=> info.non_prime_time_minutes)
         const npis = [...new Set(curData.map((info) => info.NPI))]
@@ -186,15 +214,17 @@ function compare( a:PTTotalHours, b:PTTotalHours ):number {
 
 
 
-const calculatPTTotalHours = (ptHours:PTHours[], ptMinutesPerRoom:number,rooms:string[]):PTTotalHours[] => {
+const calculatPTTotalHours = (
+    ptHours:PTHours[], 
+    ptMinutesPerRoom:number,
+    rooms:string[],
+    mixed:boolean):PTTotalHours[] => {
     const uniqueDates = [...new Set(ptHours.map(item => item.curDate))];
     const ptHoursTotal: any = []
     const num_rooms = rooms.length;
     const totalPrimeTimeMinutes = num_rooms*ptMinutesPerRoom;
     uniqueDates.forEach((curDate) => {
         let curData = ptHours.filter(((item) => item.curDate === curDate))
-        // console.log('curData', curData[0])
-        // let test = getPTHoursFilteredbyRoom(rooms, curData[0])
         const ptHoursDay = curData[0].ptHours.map((ptHour)=> parseInt(ptHour));
         const nonptHoursDay = curData[0].nonptHours.map((nonptHour) => parseInt(nonptHour))
         const totalptMinutesUsed = ptHoursDay.reduce((acc, totalHours) => 
@@ -214,18 +244,43 @@ const calculatPTTotalHours = (ptHours:PTHours[], ptMinutesPerRoom:number,rooms:s
 }
 
 
-
 export const selectCalendarPTHoursAll = createSelector(
-    [selectCalendar,selectActiveRoomNames],
-    (calendarData,rooms):PTHours[] => calculatePTHours(calendarData,rooms))
+    [selectCalendar,selectActiveRoomNames,selectActiveSurgeonNPIs],
+    (calendarData,rooms,npis):PTHours[] => calculatePTHours(calendarData,rooms,npis,false,false))
 
-export const selectCalendarPTHoursTotals = createSelector(
+export const selectCalendarPTHoursFilterRooms = createSelector(
+    [selectCalendar,selectActiveRoomNames,selectActiveSurgeonNPIs],
+    (calendarData,rooms,npis):PTHours[] => calculatePTHours(calendarData,rooms,npis,true,false))
+
+export const selectCalendarPTHourFilterSurgeons = createSelector(
+    [selectCalendar,selectActiveRoomNames,selectActiveSurgeonNPIs],
+    (calendarData,rooms,npis):PTHours[] => calculatePTHours(calendarData,rooms,npis,false, true))
+
+export const selectCalendarPTHourFilterBoth = createSelector(
+    [selectCalendar,selectActiveRoomNames,selectActiveSurgeonNPIs],
+    (calendarData,rooms,npis):PTHours[] => calculatePTHours(calendarData,rooms,npis,true, true))
+
+
+export const selectPTHoursTotalsAll = createSelector(
     [selectCalendarPTHoursAll, selectPTminutesperroom,selectActiveRoomNames],
-    (ptHours,minutes,rooms):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes,rooms) )
+    (ptHours,minutes,rooms):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes,rooms,false))
+
+ 
+export const selectPTHoursTotalsAllSurgeonsSelected = createSelector(
+    [selectCalendarPTHoursFilterRooms, selectPTminutesperroom,selectActiveRoomNames],
+    (ptHours,minutes,rooms):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes,rooms,false))
+
+export const selectPTHoursTotalsAllRoomssSelected = createSelector(
+    [selectCalendarPTHourFilterSurgeons, selectPTminutesperroom,selectActiveRoomNames],
+    (ptHours,minutes,rooms):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes,rooms,false))
+
+export const selectPTHoursTotalsMixed = createSelector(
+    [selectCalendarPTHourFilterSurgeons, selectPTminutesperroom,selectActiveRoomNames],
+    (ptHours,minutes,rooms):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes,rooms,true))
 
 
 
-    
+
 export const selectGrid = createSelector(
     [selectSurgeryInfo],
     (SurgeryInfo):Grid[] => SurgeryInfo.map((info) => {
@@ -237,6 +292,6 @@ export const selectGrid = createSelector(
 export const selectDetails = createSelector(
     [selectSurgeryInfo],
     (SurgeryInfo):Details[] => SurgeryInfo.map((info) => {
-                return info.details
-            })
+        return info.details
+    })
 )
