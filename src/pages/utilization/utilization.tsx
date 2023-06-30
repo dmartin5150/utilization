@@ -74,11 +74,11 @@ const Utilization = () => {
 
 
 
-useEffect(()=> {
-  if (surgeonLists) {
-      dispatch(setActiveSurgeonList(surgeonLists['BH JRI']));
-  }
-}, [surgeonLists])
+// useEffect(()=> {
+//   if (surgeonLists) {
+//       dispatch(setActiveSurgeonList(surgeonLists['BH JRI']));
+//   }
+// }, [surgeonLists])
 
   useEffect(() => {
     dispatch(fetchCalendarDataAsync(unit, selectedDate));

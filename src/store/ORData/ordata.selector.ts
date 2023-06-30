@@ -62,10 +62,20 @@ export const selectActiveRoomNames = createSelector(
 )
 
 
+
+
 export const selectActiveSurgeons = createSelector(
     [selectORDataReducer],
     (ORDataSlice) => ORDataSlice.activeSurgeonList
 )
+
+// export const selectActiveSurgeonNPIs = createSelector(
+//     [selectActiveSurgeons],
+//     (ActiveSurgeonList):string[] => {
+//         const selectedList = ActiveSurgeonList.filter((surgeon)=> surgeon.selected);
+//         return selectedList.map((surgeon) => surgeon.nPIs)
+//     }
+// )
 
 export const selectAllRoomsSelected = createSelector(
     [selectORDataReducer],

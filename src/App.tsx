@@ -13,6 +13,8 @@ import { useAppDispatch } from './hooks/hooks';
 import { selectCalendar, selectSurgeryInfo, selectPTHours, selectCalendarPTHoursAll,selectCalendarPTHoursTotals } from './store/ORData/ordata.selector';
 import { selectActiveRoomLists } from './store/ORData/ordata.selector';
 import { fetchSurgeonListsAsync } from './store/ORData/actions/surgeonLists.actions';
+import { fetchRoomListsSuccess, setActiverRoomListSuccess} from './store/ORData/actions/roomsListActions';
+import { TNNASRoomLists } from './pages/settings/settings.constants';
 
 import "./App.scss";
 
@@ -31,6 +33,8 @@ function App() {
 
     useEffect(()=> {
         dispatch(fetchSurgeonListsAsync())
+        dispatch(fetchRoomListsSuccess(TNNASRoomLists))
+        dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']));
     },[]);
 
   useEffect(() => {

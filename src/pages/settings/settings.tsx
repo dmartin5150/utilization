@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import './settings.scss'
 import { item } from '../../store/ORData/ordata.types';
 import {SingleValue} from "react-select";
@@ -13,11 +13,9 @@ import { PRIME_TIME_START,PRIME_TIME_END } from '../../store/Facility/facility.t
 import { Unit, TNNASRoomLists, unitList,UnitRoomListItem, UnitRoomLists,
         primeTimeStartOptions,primeTimeEndOptions} from './settings.constants';
 import { useAppDispatch } from '../../hooks/hooks';
-import { fetchSurgeonListsAsync } from '../../store/ORData/actions/surgeonLists.actions';
 import { useSelector } from 'react-redux';
 import { selectSurgeonLists, selectUnitRoomLists, selectActiveRoomLists, selectActiveSurgeons, selectAllRoomsSelected,selectAllSurgeonsSelected } from '../../store/ORData/ordata.selector';
 import { setPrimeTime, setDateRange, setUnit } from '../../store/Facility/facilty.actions';
-import { PrimeTime } from '../../store/Facility/facility.types';
 import { selectPrimeTime, selectDateRange,selectUnit } from '../../store/Facility/facility.selector';
 import { fetchRoomListsSuccess,setRoomListsSuccess, setActiverRoomListSuccess,setAllRoomsSelected} from '../../store/ORData/actions/roomsListActions';
 import { setActiveSurgeonList, setSurgeonLists,setAllSurgeonsSelected } from '../../store/ORData/actions/surgeonLists.actions';
@@ -60,7 +58,7 @@ const primeTimeMentEndItems = {
 
 const Settings = () => {
  
-    const [surgeons, setSurgeons] = useState<item[]>([]);
+
     // const [allRoomsSelected, setAllRoomsSelected]= useState(true);
     // const [allSurgeonsSelected, setAllSurgeonsSelected] = useState(true);
     const [filteredSurgeons, setFilteredSurgeons] = useState<item[]>([])
@@ -132,30 +130,9 @@ const Settings = () => {
     }
 
 
-    // useEffect(()=> {
-    //     dispatch(fetchSurgeonListsAsync())
-    //     dispatch(fetchRoomListsSuccess(TNNASRoomLists))
-    //     dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']));
-    // },[]);
-
-    useEffect(()=> {
-        if (surgeonLists) {
-            dispatch(setActiveSurgeonList(surgeonLists['BH JRI']));
-        }
-    }, [surgeonLists])
- 
-
-    useEffect (() => {
-        if (selectedUnit && activeSurgeons && surgeonLists && surgeonLists[selectedUnit]) {
-            surgeonLists[selectedUnit] = activeSurgeons;
-            dispatch(setSurgeonLists(surgeonLists));
-        }
-    },[activeSurgeons])
-
     useEffect(()=> {
         console.log('setting lists')
         if (selectedUnit  && surgeonLists[selectedUnit]) {
-            setSurgeons(surgeonLists[selectedUnit]);
             setSelectedSurgeons(surgeonLists[selectedUnit])
             console.log('setting surgeons', selectedUnit, surgeonLists[selectedUnit])
             dispatch(setActiveSurgeonList(surgeonLists[selectedUnit]));
@@ -164,15 +141,12 @@ const Settings = () => {
     }, [selectedUnit, surgeonLists])
 
 
-
     useEffect(()=> {
+        console.log('in room update selected unit', selectedUnit, unitRoomLists[selectedUnit])
         if (selectedUnit && unitRoomLists[selectedUnit]) {
-            console.log('updating callback', rooms)
-            console.log('unit rooms', unitRoomLists['BH JRI'])
-            unitRoomLists[selectedUnit] = rooms;
-            dispatch(setRoomListsSuccess(unitRoomLists))
+            setActiverRoomListSuccess(unitRoomLists[selectedUnit])
         }
-    },[rooms])
+    },[selectedUnit])
 
 
     useEffect(()=> {
@@ -243,27 +217,17 @@ const Settings = () => {
 
 
     const onAllSurgeonsSelected = () => {
-        // setAllItems(surgeons, setSurgeons, true);
         setAllSurgeons(true)
     }
 
     const onClearAllRooms = () => {
-        // setAllItems(rooms, setRooms, false);
         setAllRooms(false)
     }
 
     const onClearAllSurgeons = () => {
-        // setAllItems(surgeons, setSurgeons, false);
         setAllSurgeons(false)
     }
 
-    const onItemChanged = (id:string, items:item[], setItems:(items:item[])=>void) => {
-        const itemIndex = items.findIndex((item) => item.id.toString() === id);
-        if (itemIndex !== -1) {
-            items[itemIndex].selected=  !items[itemIndex].selected
-        }
-        setItems([...items]);
-    }
 
     const setRoomChanged = (id:string) => {
         const itemIndex = rooms.findIndex((item)=> item.id.toString() === id);
@@ -274,7 +238,6 @@ const Settings = () => {
     }
 
     const onRoomChanged = (id:string):void => {
-        // onItemChanged(id, rooms, setRooms)
         setRoomChanged(id);
     }
 
