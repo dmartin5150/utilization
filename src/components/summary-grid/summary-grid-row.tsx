@@ -28,7 +28,16 @@ const SummaryGridRow: React.FC<SummaryGridRowProps> = ({id, name,property, butto
     <Fragment>
     <div className="summary-grid-row">
       <p className="header-tertiary no-left-border">{name}</p>
-      <p className="header-tertiary">{property}</p>
+      <div className="header-all-properties">
+        <div className="header-properties">
+          <p><span>Utilization:</span> {property}</p>
+          <p><span>Procedures:</span> 3</p>
+        </div>
+        <div className="header-properties">
+          <p>PT: 3H 20M</p>
+          <p>nPT: 3H 20M</p>
+        </div>
+      </div>
       <button onClick={updateItemHandler} className="item-btn" id={id} name={name}>{buttonText}</button>
     </div>
     </Fragment>

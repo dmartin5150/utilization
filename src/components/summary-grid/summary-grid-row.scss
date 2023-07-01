@@ -2,16 +2,47 @@
 
 .summary-grid-row{
     display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 0.5fr 1fr 0.5fr;
     text-align: center;
+    grid-template-rows:auto;
+    height: 6rem;
 
     .no-left-border{
+        border-top:1px solid $color-black;
         border-left:none;
     }
 
     & p {
-        border: 1px solid $color-black;
+        // border-left: 1px solid $color-black;
+        padding-left: 1rem;;
+        & span {
+            font-weight: bold;
+        }
     }
+
+
+    & .header-all-properties {
+        display: flex;
+        flex-direction: row;
+        color:black;
+        justify-content:space-between;
+        font-size: 15px;
+        // border-top: 1px solid $color-black;
+        border-left:1px solid $color-black;
+        & .header-properties {
+            display:flex;
+            flex-direction: column;
+            width: 16rem;
+            height: 2rem;
+            text-align: left;
+            border-top:1px solid $color-black;
+            // justify-content:center;
+        }
+    }
+
+
+
+    
 
     & p{
         border-right:none;
