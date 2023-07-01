@@ -43,8 +43,10 @@ import { selectActiveSurgeons } from "../../store/ORData/selectors/ordata.select
 import {selectActiveRoomLists} from "../../store/ORData/selectors/ordata.selector";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { setCalendarData } from "../../store/ORData/actions/calendar.actions";
-import { selectGridDataAll } from "../../store/ORData/selectors/ordata.gridselectors";
+import { selectGridDataAll,selectGridDataFilteredBoth,selectGridDataFilteredRooms,selectGridDataFilteredNPIs } from "../../store/ORData/selectors/ordata.gridselectors";
 import { selectGrid } from "../../store/ORData/selectors/ordata.selector";
+
+
 
 
 
@@ -90,6 +92,9 @@ const Utilization = () => {
   const PTTotalAllMixed = useSelector(selectPTHoursTotalsAllMixed);
   const activeRoomList = useSelector(selectActiveRoomLists)
   const allGridData = useSelector(selectGridDataAll);
+  const gridFilteredRooms = useSelector(selectGridDataFilteredRooms);
+  const gridFilteredNPIs = useSelector(selectGridDataFilteredNPIs);
+  const gridFilteredBoth = useSelector(selectGridDataFilteredBoth)
 
 
 

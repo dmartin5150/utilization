@@ -1,11 +1,11 @@
 import { createSelector } from "reselect";
 import { selectDate } from "../../Facility/facility.selector";
 import { selectGrid} from "./ordata.selector";
-import { selectAllRoomNames } from "./ordata.selector";
 import { Grid } from "../ordata.types";
 import { minutestohours } from "../ordata.utilities";
 import { selectPTminutesperroom } from "../../Facility/facility.selector";
-
+import { selectAllRoomNames, selectActiveRoomNames,selectAllSurgeonNPIs, selectActiveSurgeonNPIs } from "./ordata.selector";
+import { getPTHoursFilterdbyNPI } from "./ordata.ptselectors";
 
 export type GridPTHours = {
     date: string;
@@ -19,6 +19,7 @@ const getEmptyRoom = (date:string, room:string) => {
     return {
         date: date, 
         room: room, 
+        npi: '0',
         ptHours: 'PT: 0H 0M',
         nonptHours:'nPT: 0H 0M',
         utilization:'0%'
@@ -37,9 +38,18 @@ const createNoUtiliztionGridData = (date:string, rooms:string[]) => {
 }
 
 
-const calculateRoomUtilization = (grid:Grid[],date:string, rooms:string[],availablePTMinutes:number) =>{
+const calculateRoomUtilization = (
+    grid:Grid[],
+    date:string,
+    npis:string[], 
+    rooms:string[],
+    availablePTMinutes:number,
+    filterNPI: boolean) =>{
     const gridDataForDate: GridPTHours[] = [];
-    const gridFilteredbyDate = grid.filter((gridData) => gridData.procedureDate === date)
+    let gridFilteredbyDate = grid.filter((gridData) => gridData.procedureDate === date);
+    if (filterNPI) {
+        gridFilteredbyDate = getPTHoursFilterdbyNPI<Grid>(npis, grid);
+    }
     if (gridFilteredbyDate.length === 0 || availablePTMinutes === 0) {
         return  createNoUtiliztionGridData(date, rooms);
     } else {
@@ -53,7 +63,6 @@ const calculateRoomUtilization = (grid:Grid[],date:string, rooms:string[],availa
             const nonptMinutes = gridFilteredbyRoom.map((gridData) => parseInt(gridData.non_prime_time_minutes))
             const totalptMinutes = ptMinutes.reduce ((acc, totalMinutes) => acc + totalMinutes, 0);
             const totalnonptMinutes = nonptMinutes.reduce((acc, totalMinutes) => acc + totalMinutes, 0);
-
             const utilization = Math.round((totalptMinutes/availablePTMinutes)*100);
             const gridPTHours:GridPTHours = {
                 date:date,
@@ -70,8 +79,22 @@ const calculateRoomUtilization = (grid:Grid[],date:string, rooms:string[],availa
 }
 
 
-
 export const selectGridDataAll = createSelector(
-    [selectGrid, selectDate,selectAllRoomNames, selectPTminutesperroom],
-    (ORGridData, selectedDate,rooms,minutes):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate, rooms,minutes)
+    [selectGrid, selectDate,selectAllSurgeonNPIs,selectAllRoomNames, selectPTminutesperroom],
+    (ORGridData, selectedDate,npis,rooms,minutes):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate,npis,rooms,minutes,false)
+)
+
+export const selectGridDataFilteredRooms = createSelector(
+    [selectGrid, selectDate,selectAllSurgeonNPIs,selectActiveRoomNames, selectPTminutesperroom],
+    (ORGridData, selectedDate,npis,rooms,minutes):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate,npis,rooms,minutes,false)
+)
+
+export const selectGridDataFilteredNPIs = createSelector(
+    [selectGrid, selectDate,selectActiveSurgeonNPIs,selectAllRoomNames, selectPTminutesperroom],
+    (ORGridData, selectedDate,npis,rooms,minutes):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate,npis,rooms,minutes,true)
+)
+
+export const selectGridDataFilteredBoth = createSelector(
+    [selectGrid, selectDate,selectActiveSurgeonNPIs,selectActiveRoomNames, selectPTminutesperroom],
+    (ORGridData, selectedDate,npis,rooms,minutes):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate,npis,rooms,minutes,true)
 )

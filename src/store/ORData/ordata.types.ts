@@ -49,6 +49,7 @@ export type Details = {
 
 export type Grid = {
     unit: string;
+    NPI:string;
     room: string;
     procedureDate: string;
     prime_time_minutes: string;

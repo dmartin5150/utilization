@@ -20,38 +20,65 @@ export type PTTotalHours = {
     utilization: string;
 }
 
+export type hasRoom = {
+    room: string;
+} 
 
-const getPTHoursFilteredbyRoom = (rooms:string[], calendarData:Calendar[]) => {
 
-    const filteredCalendar:Calendar[] = []
+function getPTHoursFilteredbyRoom<T extends hasRoom> (rooms:string[], dataList:T[]) {
+
+    const filteredData:T[] = []
     for (const room of rooms) {
-        for (const calendar of calendarData) {
-            if (calendar.room === room) {
+        for (const data of dataList) {
+            if (data.room === room) {
                 // console.log('pushing data')
-                filteredCalendar.push(calendar)
+                filteredData.push(data)
                 continue
             }
         }
     }
     // console.log('filtered data', filteredCalendar)
-    return filteredCalendar;
-
+    return filteredData;
 }
 
-const getPTHoursFilterdbyNPI = (npis:string[], calendarData:Calendar[])  =>{
-    const filteredCalendar:Calendar[] = []
+type hasNPI = {
+    NPI: string;
+}
+
+
+
+export function getPTHoursFilterdbyNPI<T extends hasNPI> (npis:string[], calendarData:T[]) {
+    const filteredData:T[] = []
     for (const npi of npis) {
         for (const calendar of calendarData) {
             if (calendar.NPI === npi) {
                 // console.log('pushing data')
-                filteredCalendar.push(calendar)
+                filteredData.push(calendar)
                 continue
             }
         }
     }
     // console.log('filtered data', filteredCalendar)
-    return filteredCalendar;
+    return filteredData;
 }
+
+
+
+
+// const getPTHoursFilterdbyNPI = (npis:string[], calendarData:Calendar[])  =>{
+//     const filteredCalendar:Calendar[] = []
+//     for (const npi of npis) {
+//         for (const calendar of calendarData) {
+//             if (calendar.NPI === npi) {
+//                 // console.log('pushing data')
+//                 filteredCalendar.push(calendar)
+//                 continue
+//             }
+//         }
+//     }
+//     // console.log('filtered data', filteredCalendar)
+//     return filteredCalendar;
+// }
 
 
 
@@ -71,7 +98,7 @@ const calculatePTHours = (
             curData = getPTHoursFilteredbyRoom(roomList, curData)
         }
         if (filterNPI) {
-            curData = getPTHoursFilterdbyNPI(npiList, curData)
+            curData = getPTHoursFilterdbyNPI<Calendar>(npiList, curData)
         }
         const ptHours = curData.map((info) => info.prime_time_minutes)
         const nonptHours = curData.map((info)=> info.non_prime_time_minutes)
