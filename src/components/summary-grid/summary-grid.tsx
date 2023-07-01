@@ -5,6 +5,7 @@ import SummaryGridHeader from "./summary-grid-header";
 import { SummaryRowHeaderProps } from "./summary-row-header";
 import SummaryGridRow from "./summary-grid-row";
 import SummaryRowHeader from "./summary-row-header";
+import { SummaryGridRowData} from "./summary-grid-row";
 
 
 export interface SummaryGridData {
@@ -15,12 +16,12 @@ export interface SummaryGridData {
 
 
 interface SummaryGridProps {
-  data: SummaryGridData[];
+  data: SummaryGridRowData[];
   title: string;
   firstColumnName: string;
   secondColumnName: string;
   buttonText: string;
-  onSelectItem: (data: SummaryGridData)=>void;
+  onSelectItem: (data: SummaryGridRowData)=>void;
   pageSize: number;
 }
 
@@ -28,7 +29,7 @@ interface SummaryGridProps {
 const SummaryGrid: React.FC<SummaryGridProps> = ({data,title, firstColumnName,secondColumnName,buttonText, onSelectItem, pageSize=11}) => {
 
       const [currentPage, setCurrentPage] = useState(1);
-      const [currentData, setCurrentData]= useState<SummaryGridData[]>([]);
+      const [currentData, setCurrentData]= useState<SummaryGridRowData[]>([]);
 
       useEffect(() => {
         const firstPageIndex = (currentPage - 1) * pageSize;
@@ -48,7 +49,7 @@ const SummaryGrid: React.FC<SummaryGridProps> = ({data,title, firstColumnName,se
               <SummaryRowHeader firstColumnName={firstColumnName} secondColumnName={secondColumnName}/>
               <div className="summary-grid-data">
                 {currentData.map((item) => {
-                  return(<SummaryGridRow key={item.id} id={item.id} name={item.name}  property={item.property} buttonText={buttonText} onSelectItem={onSelectItem} />)
+                  return(<SummaryGridRow key={item.id} row={item} buttonText={buttonText} onSelectItem={onSelectItem} />)
                 })}
               </div>
             </div>

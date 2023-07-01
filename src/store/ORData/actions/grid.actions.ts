@@ -4,15 +4,18 @@ import { createAction, ActionWithPayload, Action, withMatcher } from "../../../u
 import { AppDispatch } from "../../store"
 import getGridData from "../../../utilities/fetchData/getGridData";
 import { fetchDataStart, fetchDataFailed } from "./ordata.actions";
+import { SummaryGridRowData } from "../../../components/summary-grid/summary-grid-row";
+
+export type FetchGridSuccess = ActionWithPayload<ORDATA_TYPES.FETCH_GRID_DATA_SUCCESS, SummaryGridRowData[]>
+export type SetGridData = ActionWithPayload<ORDATA_TYPES.SET_GRID_DATA, SummaryGridRowData[]>
 
 
-export type FetchGridSuccess = ActionWithPayload<ORDATA_TYPES.FETCH_GRID_DATA_SUCCESS, SummaryGridData[]>
 
+export const setGridData = withMatcher((data:SummaryGridRowData[]):SetGridData => {
+    return createAction(ORDATA_TYPES.SET_GRID_DATA, data);
+})
 
-
-
-
-export const fetchGridSuccess = withMatcher((data:SummaryGridData[]):FetchGridSuccess => {
+export const fetchGridSuccess = withMatcher((data:SummaryGridRowData[]):FetchGridSuccess => {
     return createAction(ORDATA_TYPES.FETCH_GRID_DATA_SUCCESS, data)
 });
 

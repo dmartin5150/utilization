@@ -18,13 +18,14 @@ import { fetchPTHoursSuccess } from "./actions/pthours.action";
 import { JRIroomList } from "../Facility/facility.types";
 import { CalendarMenuOptions } from "../../pages/utilization/utilization.constants";
 import { SurgeonList,SurgeonLists } from "./ordata.types";
-
+import { SummaryGridRowData } from "../../components/summary-grid/summary-grid-row";
+import { setGridData } from "./actions/grid.actions";
 
 
 
 export type ORDataState = {
     calendarData: CalendarDayData[];
-    gridData: SummaryGridData[];
+    gridData: SummaryGridRowData[];
     detailsData: DetailsData[];
     unitRoomLists: UnitRoomLists;
     activeRoomList: UnitRoomListItem[];
@@ -120,6 +121,9 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     }
     if (setCalendarData.match(action)) {
         return {...state, calendarData: action.payload}
+    }
+    if (setGridData.match(action)) {
+        return {...state, gridData:action.payload}
     }
     return state;
 }
