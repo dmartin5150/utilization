@@ -10,6 +10,7 @@ type CalendarMenuItems = {
     [key:string] : CalendarMenuItem
 }
 
+
 export enum CalendarMenuOptions {
     All = '1',
     Selected = '2',
@@ -48,7 +49,7 @@ export const calendarRoomOptionsAll: CalendarMenuItem[] = [
 
 export const calendarRoomOptionsSelect: CalendarMenuItem[] = [
     {id:0, label: 'All', value: CalendarMenuOptions.All,},
-    {id:2, label: 'Selected', value:CalendarMenuOptions.Mixed},
+    {id:2, label: 'Selected', value:CalendarMenuOptions.Selected},
 ]
 
 export const calendarRoomOptionsMixed: CalendarMenuItem[] = [

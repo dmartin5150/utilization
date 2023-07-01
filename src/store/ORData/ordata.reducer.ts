@@ -1,4 +1,5 @@
-import { CalendarData } from "../../components/calendar/calendar";
+import { CalendarDayData } from "../../components/calendar/calendarDay";
+import { setCalendarData } from "./actions/calendar.actions";
 import { SummaryGridData } from "../../components/summary-grid/summary-grid";
 import { DetailsData } from "../../components/team-card/details-card";
 import { AnyAction } from "redux";
@@ -22,7 +23,7 @@ import { SurgeonList,SurgeonLists } from "./ordata.types";
 
 
 export type ORDataState = {
-    calendarData: CalendarData[];
+    calendarData: CalendarDayData[];
     gridData: SummaryGridData[];
     detailsData: DetailsData[];
     unitRoomLists: UnitRoomLists;
@@ -116,6 +117,9 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     }
     if (setCalendarRoomOption.match(action)) {
         return {...state, calendarRoomOption: action.payload}
+    }
+    if (setCalendarData.match(action)) {
+        return {...state, calendarData: action.payload}
     }
     return state;
 }

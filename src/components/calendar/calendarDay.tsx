@@ -1,22 +1,29 @@
-import { useState, useEffect } from "react";
 import React from 'react';
 import "./calendarDay.scss";
 import classnames from 'classnames';
-import { CalendarData} from "./calendar";
+
+
+export type  CalendarDayData = {
+  date: string;
+  display:string;
+  subHeading1?:string;
+  subHeading2?:string;
+}
 
 interface CalendarDayProps {
   id: string;
-  calendarDay: CalendarData;
-  selectedDay:string;
   hideElement: boolean;
-  onDateChange: (id: string)=>void;
+  calendarDay: CalendarDayData;
+  selectedDay:string;
+  onDateChange:(id:string)=>void;
 }
 
 
-const CalendarDay: React.FC<CalendarDayProps> = ({id, calendarDay, hideElement, selectedDay,onDateChange}) => {
+const CalendarDay: React.FC<CalendarDayProps> = ({id, calendarDay, onDateChange, selectedDay, hideElement}) => {
 
   const onDateChangeHandler = (event: React.MouseEvent<HTMLDivElement> ) => {
     onDateChange((event.target as HTMLDivElement).id);
+
   };
 
 
@@ -31,8 +38,8 @@ const CalendarDay: React.FC<CalendarDayProps> = ({id, calendarDay, hideElement, 
     >
       <h3 className="title">{calendarDay.date}</h3>
       <h1 className="display">{calendarDay.display}</h1>
-      <h2 className='sub-heading'>PT: 30 H: 52 M</h2>
-      <h2 className='sub-heading'>nPT: 2 H: 52 M</h2>
+      {calendarDay.subHeading1 ? <h2 className='sub-heading'>{calendarDay.subHeading1}</h2>: null}
+      {calendarDay.subHeading2 ?<h2 className='sub-heading'>{calendarDay.subHeading2}</h2>: null}
     </div>
 
   );

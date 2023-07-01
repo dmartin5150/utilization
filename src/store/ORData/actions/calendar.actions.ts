@@ -1,4 +1,4 @@
-import { CalendarData } from "../../../components/calendar/calendar"
+import { CalendarDayData } from "../../../components/calendar/calendarDay"
 import { ORDATA_TYPES } from "../ordata.types"
 import { createAction, ActionWithPayload, withMatcher } from "../../../utilities/reducer/reducerutils"
 import getCalendarData from "../../../utilities/fetchData/getCalendarData"
@@ -9,14 +9,18 @@ import { CalendarMenuOptions } from "../../../pages/utilization/utilization.cons
 
 
 
-export type FetchCalendarSuccess = ActionWithPayload<ORDATA_TYPES.FETCH_CALENDAR_DATA_SUCCESS, CalendarData[]>
+export type FetchCalendarSuccess = ActionWithPayload<ORDATA_TYPES.FETCH_CALENDAR_DATA_SUCCESS, CalendarDayData[]>
 export type SetCalendarSurgeonOption = ActionWithPayload<ORDATA_TYPES.SET_CALENDAR_SURGEON_OPTION, CalendarMenuOptions>
 export type SetCalendarRoomOption = ActionWithPayload<ORDATA_TYPES.SET_CALENDAR_ROOM_OPTION, CalendarMenuOptions>
+export type SetCalendarData = ActionWithPayload<ORDATA_TYPES.SET_CALENDAR_DATA,CalendarDayData[]>
 
-
-export const fetchCalendarSuccess= withMatcher((calendarArray:CalendarData[]): FetchCalendarSuccess => {
+export const fetchCalendarSuccess= withMatcher((calendarArray:CalendarDayData[]): FetchCalendarSuccess => {
     return createAction(ORDATA_TYPES.FETCH_CALENDAR_DATA_SUCCESS, calendarArray)
 });
+
+export const setCalendarData = withMatcher((calendarData:CalendarDayData[]):SetCalendarData => {
+    return createAction(ORDATA_TYPES.SET_CALENDAR_DATA, calendarData)
+} ) 
 
 export const setCalendarSurgeonOption = withMatcher((selection:CalendarMenuOptions):SetCalendarSurgeonOption => {
     return createAction(ORDATA_TYPES.SET_CALENDAR_SURGEON_OPTION,selection)

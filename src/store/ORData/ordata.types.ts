@@ -4,6 +4,7 @@ export enum  ORDATA_TYPES {
     FETCH_DATA_START  = 'ordata/FETCH_CALENDAR_DATA_START',
     FETCH_DATA_FAILED  ='ordata/FETCH_CALENDAR_DATA_FAILED',
     FETCH_CALENDAR_DATA_SUCCESS  ='ordata/FETCH_CALENDAR_DATA_SUCCESS',
+    SET_CALENDAR_DATA = 'ordata/SET_CALENDAR_DATA',
     FETCH_GRID_DATA_SUCCESS  ='ordata/FETCH_GRID_DATA_SUCCESS',
     FETCH_DETAILS_SUCCESS = 'ordata/FETCH_DETAILS_SUCCESS',
     FETCH_SURGEON_LISTS_SUCCESS = 'ordata/FETCH_SURGEON_LISTS_SUCCESS',
@@ -70,7 +71,7 @@ export type PT_Hours = {
 export type SurgeonList = {
     id: number;
     name: string;
-    npi: string;
+    NPI: string;
     selected: boolean;
 }
 

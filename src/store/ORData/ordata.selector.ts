@@ -56,6 +56,11 @@ export const selectActiveRoomLists = createSelector(
     (ORDataSlice)=> ORDataSlice.activeRoomList
 )
 
+export const selectAllRoomNames = createSelector(
+    [selectActiveRoomLists],
+    (ORRoomList):string[] =>  ORRoomList.map((room) => room.name)
+)
+
 export const selectActiveRoomNames = createSelector(
     [selectActiveRoomLists],
     (ORRoomList):string[] => { 
@@ -66,17 +71,23 @@ export const selectActiveRoomNames = createSelector(
 
 
 
-
 export const selectActiveSurgeons = createSelector(
     [selectORDataReducer],
     (ORDataSlice) => ORDataSlice.activeSurgeonList
 )
 
+
+export const selectAllSurgeonNPIs = createSelector(
+    [selectActiveSurgeons],
+    (ActiveSurgeonList):string[] => ActiveSurgeonList.map((surgeon) => surgeon.NPI)
+)
+
+
 export const selectActiveSurgeonNPIs = createSelector(
     [selectActiveSurgeons],
     (ActiveSurgeonList):string[] => {
         const selectedList = ActiveSurgeonList.filter((surgeon)=> surgeon.selected);
-        return selectedList.map((surgeon) => surgeon.npi)
+        return selectedList.map((surgeon) => surgeon.NPI)
     }
 )
 
@@ -168,6 +179,7 @@ const calculatePTHours = (
     filterRooms: boolean,
     filterNPI: boolean
     ):PTHours[] => {
+    console.log('npis',npiList)
     const uniqueDates = [...new Set(calendarData.map(item => item.procedureDate))];
     const ptHoursTotal: any = []
     uniqueDates.forEach((curDate) => {
@@ -238,7 +250,10 @@ const calculatPTTotalHours = (
             acc + totalHours
         ,0)
         const totalptHours = minutestohours(totalptMinutesUsed )
-        const utilization = Math.round(totalptMinutesUsed/totalPrimeTimeMinutes*100).toString() + '%'
+        let utilization = '0%';
+        if (totalPrimeTimeMinutes > 0) {
+            utilization = Math.round(totalptMinutesUsed/totalPrimeTimeMinutes*100).toString() + '%'
+        } 
         const totalnonptHours = minutestohours(nonptHoursDay.reduce((acc, totalHours) => 
             acc + totalHours
         ,0))
@@ -252,15 +267,15 @@ const calculatPTTotalHours = (
 
 
 export const selectCalendarPTHoursAll = createSelector(
-    [selectCalendar,selectActiveRoomNames,selectActiveSurgeonNPIs],
+    [selectCalendar,selectAllRoomNames,selectAllSurgeonNPIs],
     (calendarData,rooms,npis):PTHours[] => calculatePTHours(calendarData,rooms,npis,false,false))
 
 export const selectCalendarPTHoursFilterRooms = createSelector(
-    [selectCalendar,selectActiveRoomNames,selectActiveSurgeonNPIs],
+    [selectCalendar,selectActiveRoomNames,selectAllSurgeonNPIs],
     (calendarData,rooms,npis):PTHours[] => calculatePTHours(calendarData,rooms,npis,true,false))
 
 export const selectCalendarPTHourFilterSurgeons = createSelector(
-    [selectCalendar,selectActiveRoomNames,selectActiveSurgeonNPIs],
+    [selectCalendar,selectAllRoomNames,selectActiveSurgeonNPIs],
     (calendarData,rooms,npis):PTHours[] => calculatePTHours(calendarData,rooms,npis,false, true))
 
 export const selectCalendarPTHourFilterBoth = createSelector(
@@ -269,7 +284,7 @@ export const selectCalendarPTHourFilterBoth = createSelector(
 
 
 export const selectPTHoursTotalsAll = createSelector(
-    [selectCalendarPTHoursAll, selectPTminutesperroom,selectActiveRoomNames],
+    [selectCalendarPTHoursAll, selectPTminutesperroom,selectAllRoomNames],
     (ptHours,minutes,rooms):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes,rooms,false))
 
  
@@ -278,11 +293,20 @@ export const selectPTHoursTotalsAllSurgeonsSelected = createSelector(
     (ptHours,minutes,rooms):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes,rooms,false))
 
 export const selectPTHoursTotalsAllRoomssSelected = createSelector(
-    [selectCalendarPTHourFilterSurgeons, selectPTminutesperroom,selectActiveRoomNames],
+    [selectCalendarPTHourFilterSurgeons, selectPTminutesperroom,selectAllRoomNames],
     (ptHours,minutes,rooms):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes,rooms,false))
 
+export const selectPTHoursTotalsBoth = createSelector(
+    [selectCalendarPTHourFilterBoth , selectPTminutesperroom,selectActiveRoomNames],
+    (ptHours,minutes,rooms):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes,rooms,false))
+
+
+export const selectPTHoursTotalsAllMixed = createSelector(
+    [ selectCalendarPTHoursAll , selectPTminutesperroom,selectActiveRoomNames],
+    (ptHours,minutes,rooms):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes,rooms,true))
+
 export const selectPTHoursTotalsMixed = createSelector(
-    [selectCalendarPTHourFilterSurgeons, selectPTminutesperroom,selectActiveRoomNames],
+    [ selectCalendarPTHourFilterSurgeons , selectPTminutesperroom,selectActiveRoomNames],
     (ptHours,minutes,rooms):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes,rooms,true))
 
 

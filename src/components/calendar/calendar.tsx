@@ -13,30 +13,27 @@ import { selectUnit } from "../../store/Facility/facility.selector";
 import SelectorList from "../SelectorList/SelectorList";
 import { Option, SingleSelector } from "../SelectorList/SelectorList";
 
-export interface CalendarData {
-  date: string;
-  display: string;
-}
+import { CalendarDayData } from "./calendarDay";
 
 
 
 interface CalendarProps<T extends Option> {
   title: string,
   selectedDate: string;
-  calendarData: CalendarData[];
+  calendarData:CalendarDayData[];
   hiddenID: string[];
   list1: SingleSelector<T>;
   list2: SingleSelector<T>
-  onDateChange: (date: string)=>void;
+  onDateChange:(id:string)=>void;
   pageSize: number
 }
 
 
 function Calendar<T extends Option>({
-  title,selectedDate,onDateChange,calendarData,hiddenID,list1,list2, pageSize
+  title,selectedDate,calendarData,hiddenID,list1,list2, onDateChange, pageSize
 }: React.PropsWithChildren<CalendarProps<T>>)  {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [currentCalendarData, setCurrentCalendarData] = useState<CalendarData[]>([]);
+  const [currentCalendarData, setCurrentCalendarData] = useState<CalendarDayData[]>([]);
 
   const calendar = useSelector(selectCalendarData);
   const unit = useSelector(selectUnit);
@@ -51,7 +48,7 @@ function Calendar<T extends Option>({
       console.log('offset', padding, calendarData[0], date)
       let index = -1;
       for (let step = 0; step < padding; step++) {
-        const blankDay:CalendarData= {date:index.toString(), display:'Blank'}
+        const blankDay:CalendarDayData= {date:index.toString(), display:'Blank'}
         calendarData.unshift(blankDay)
         index -= 1;
       }

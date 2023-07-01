@@ -1,4 +1,4 @@
-import { CalendarData } from "../../components/calendar/calendar";
+import { CalendarDayData } from "../../components/calendar/calendarDay";
 
 const getCalendarData = async (unit:string, date: string)=> {
       const response = await fetch("http://localhost:5001/calendar", {
@@ -10,7 +10,7 @@ const getCalendarData = async (unit:string, date: string)=> {
 
       });
       if (response) {
-        const data: CalendarData[] = await response.json();
+        const data: CalendarDayData[] = await response.json();
         return data
       }
       return []
