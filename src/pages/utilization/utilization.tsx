@@ -43,6 +43,10 @@ import { selectActiveSurgeons } from "../../store/ORData/selectors/ordata.select
 import {selectActiveRoomLists} from "../../store/ORData/selectors/ordata.selector";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { setCalendarData } from "../../store/ORData/actions/calendar.actions";
+import { selectGridDataAll } from "../../store/ORData/selectors/ordata.gridselectors";
+import { selectGrid } from "../../store/ORData/selectors/ordata.selector";
+
+
 
 const Utilization = () => {
   const [month, setMonth] = useState('June')
@@ -61,6 +65,7 @@ const Utilization = () => {
   const calendarData = useSelector(selectCalendarData);
   const calendar = useSelector(selectCalendar)
   const gridData = useSelector(selectGridData);
+  const grid = useSelector(selectGrid)
   const detailsData = useSelector(selectDetailData);
   const popupOpen = useSelector(selectPopUpIsOpen);
   const selectedDate = useSelector(selectDate);
@@ -84,6 +89,7 @@ const Utilization = () => {
   const PTTotalBoth = useSelector(selectPTHoursTotalsBoth);
   const PTTotalAllMixed = useSelector(selectPTHoursTotalsAllMixed);
   const activeRoomList = useSelector(selectActiveRoomLists)
+  const allGridData = useSelector(selectGridDataAll);
 
 
 
@@ -96,17 +102,19 @@ const Utilization = () => {
   },[activeSurgeonList, surgeonLists])
 
 
-
+useEffect(()=> {
+  console.log('all grid data', allGridData);
+},[selectedDate])
 
 
   useEffect(() => {
     console.log('triggered')
     if (activeSurgeonList && activeSurgeonList.length > 0 && surgeonLists['BH JRI'] && surgeonLists['BH JRI'].length >0) {
       if (calendarSurgeonOption == CalendarMenuOptions.All && calendarRoomOption == CalendarMenuOptions.All) {
-        console.log('in all menu option')
-        console.log( 'calendar',  calendar);
-        console.log('calendar PTHOurs', allPTHours)
-        console.log('total hours', PTTotalAll)
+        // console.log('in all menu option')
+        // console.log( 'calendar',  calendar);
+        // console.log('calendar PTHOurs', allPTHours)
+        // console.log('total hours', PTTotalAll)
         const calendarData:CalendarDayData[] = PTTotalAll.map((ptTotal) => {
           return { 
             date: ptTotal.curDate,
@@ -118,9 +126,9 @@ const Utilization = () => {
         dispatch(setCalendarData(calendarData));
      }
      if (calendarSurgeonOption == CalendarMenuOptions.All && calendarRoomOption == CalendarMenuOptions.Selected) {
-        console.log( 'calendar',  calendar);
-        console.log('calendar PTHOurs', PTHoursFilterRoom)
-        console.log('total hours', PTTotalALlSurgeonSelected)
+        // console.log( 'calendar',  calendar);
+        // console.log('calendar PTHOurs', PTHoursFilterRoom)
+        // console.log('total hours', PTTotalALlSurgeonSelected)
         const calendarData:CalendarDayData[] = PTTotalALlSurgeonSelected.map((ptTotal) => {
           return { 
             date: ptTotal.curDate,
@@ -132,9 +140,9 @@ const Utilization = () => {
         dispatch(setCalendarData(calendarData));
      }
      if (calendarSurgeonOption == CalendarMenuOptions.All && calendarRoomOption == CalendarMenuOptions.Mixed) {
-      console.log( 'calendar',  calendar);
-      console.log('calendar PTHOurs', PTHoursFilterRoom)
-      console.log('total hours', PTTotalAllMixed)
+      // console.log( 'calendar',  calendar);
+      // console.log('calendar PTHOurs', PTHoursFilterRoom)
+      // console.log('total hours', PTTotalAllMixed)
       const calendarData:CalendarDayData[] = PTTotalAllMixed.map((ptTotal) => {
         return { 
           date: ptTotal.curDate,
@@ -146,9 +154,9 @@ const Utilization = () => {
       dispatch(setCalendarData(calendarData));
    }
      if (calendarSurgeonOption == CalendarMenuOptions.Selected && calendarRoomOption == CalendarMenuOptions.All) {
-      console.log( 'calendar',  calendar);
-      console.log('calendar PTHOurs', PTHoursFilterSurgeon);
-      console.log('total hours', PTTotalAllRoomsSelected)
+      // console.log( 'calendar',  calendar);
+      // console.log('calendar PTHOurs', PTHoursFilterSurgeon);
+      // console.log('total hours', PTTotalAllRoomsSelected)
       const calendarData:CalendarDayData[] = PTTotalAllRoomsSelected.map((ptTotal) => {
         return { 
           date: ptTotal.curDate,
@@ -160,9 +168,9 @@ const Utilization = () => {
       dispatch(setCalendarData(calendarData));
     }
     if (calendarSurgeonOption == CalendarMenuOptions.Selected && calendarRoomOption == CalendarMenuOptions.Selected) {
-      console.log( 'calendar',  calendar);
-      console.log('calendar PTHOurs', PTHoursFilterBoth);
-      console.log('total hours', PTTotalBoth)
+      // console.log( 'calendar',  calendar);
+      // console.log('calendar PTHOurs', PTHoursFilterBoth);
+      // console.log('total hours', PTTotalBoth)
       const calendarData:CalendarDayData[] = PTTotalBoth.map((ptTotal) => {
         return { 
           date: ptTotal.curDate,
@@ -174,9 +182,9 @@ const Utilization = () => {
       dispatch(setCalendarData(calendarData));
     }
     if (calendarSurgeonOption == CalendarMenuOptions.Selected && calendarRoomOption == CalendarMenuOptions.Mixed) {
-      console.log( 'calendar',  calendar);
-      console.log('calendar PTHOurs', PTHoursFilterBoth);
-      console.log('total hours', PTTotalMixed)
+      // console.log( 'calendar',  calendar);
+      // console.log('calendar PTHOurs', PTHoursFilterBoth);
+      // console.log('total hours', PTTotalMixed)
       const calendarData:CalendarDayData[] = PTTotalMixed.map((ptTotal) => {
         return { 
           date: ptTotal.curDate,
@@ -188,13 +196,10 @@ const Utilization = () => {
       dispatch(setCalendarData(calendarData));
     }
     }
-
   },[calendarRoomOption,calendarSurgeonOption,activeSurgeonList, activeRoomList,allPTHours])
 
 
-  // useEffect(() => {
-  //   dispatch(fetchCalendarDataAsync(unit, selectedDate));
-  // }, [unit]);
+
 
 
   useEffect(() => {

@@ -1,7 +1,6 @@
 import { RootState } from "../../store"
 import { createSelector } from "reselect";
-import { Calendar, Grid, Details} from "../ordata.types";
-import { selectPTminutesperroom } from "../../Facility/facility.selector";
+import { Calendar, Grid, Details} from "../ordata.types";;
 
 
 
@@ -16,7 +15,6 @@ export const selectGridData = createSelector(
     [selectORDataReducer],
     (ORDataSlice) => ORDataSlice.gridData
 )
-
 
 
 export const selectDetailData = createSelector(
@@ -123,10 +121,6 @@ export const selectCalendar = createSelector(
 
 
 
-
-
-
-
 export const selectGrid = createSelector(
     [selectSurgeryInfo],
     (SurgeryInfo):Grid[] => SurgeryInfo.map((info) => {
@@ -141,3 +135,4 @@ export const selectDetails = createSelector(
         return info.details
     })
 )
+

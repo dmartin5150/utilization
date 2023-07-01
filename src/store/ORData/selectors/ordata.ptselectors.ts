@@ -3,7 +3,7 @@ import { Calendar} from "../ordata.types";
 import { selectPTminutesperroom } from "../../Facility/facility.selector";
 import { selectCalendar,selectAllRoomNames, selectAllSurgeonNPIs, selectActiveRoomNames,
 selectActiveSurgeonNPIs } from "./ordata.selector";
-
+import { minutestohours } from "../ordata.utilities";
 
 export type PTHours = {
     curDate: string;
@@ -62,7 +62,7 @@ const calculatePTHours = (
     filterRooms: boolean,
     filterNPI: boolean
     ):PTHours[] => {
-    console.log('npis',npiList)
+    // console.log('npis',npiList)
     const uniqueDates = [...new Set(calendarData.map(item => item.procedureDate))];
     const ptHoursTotal: any = []
     uniqueDates.forEach((curDate) => {
@@ -84,14 +84,7 @@ const calculatePTHours = (
 }
 
 
-const minutestohours = (time:number):string  => {
-var num = time;
-var hours = (time / 60);
-var rhours = Math.floor(hours);
-var minutes = (hours - rhours) * 60;
-var rminutes = Math.round(minutes);
-return rhours + " H: " + rminutes + " M";
-}
+
 
 
 
