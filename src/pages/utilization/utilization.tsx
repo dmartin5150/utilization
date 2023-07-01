@@ -299,9 +299,9 @@ useEffect(()=> {
   
   const setDetailData = (data:SummaryGridRowData) => {
     const room: FacilityRoom = {"name":data.id, "utilization":data.utilization}
-    if (room.utilization !== '0%') {
+    if (data.procedures !== '0') {
       dispatch(setRoom(room))
-      dispatch(fetchDetailDataAsync(unit, selectedDate,room))
+      dispatch(fetchDetailDataAsync(unit, selectedDate,room, primeTime))
     }
   }
 
