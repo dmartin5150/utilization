@@ -13,6 +13,7 @@ export type GridPTHours = {
     ptHours:string;
     nonptHours:string;
     utilization:string;
+    numProcedures: string;
 }
 
 const getEmptyRoom = (date:string, room:string) => {
@@ -22,7 +23,8 @@ const getEmptyRoom = (date:string, room:string) => {
         npi: '0',
         ptHours: 'PT: 0H 0M',
         nonptHours:'nPT: 0H 0M',
-        utilization:'0%'
+        utilization:'0%',
+        numProcedures:'0'
     } as GridPTHours
 }
 
@@ -48,7 +50,7 @@ const calculateRoomUtilization = (
     const gridDataForDate: GridPTHours[] = [];
     let gridFilteredbyDate = grid.filter((gridData) => gridData.procedureDate === date);
     if (filterNPI) {
-        gridFilteredbyDate = getPTHoursFilterdbyNPI<Grid>(npis, grid);
+        gridFilteredbyDate = getPTHoursFilterdbyNPI<Grid>(npis, gridFilteredbyDate);
     }
     if (gridFilteredbyDate.length === 0 || availablePTMinutes === 0) {
         return  createNoUtiliztionGridData(date, rooms);
@@ -59,6 +61,7 @@ const calculateRoomUtilization = (
                 gridDataForDate.push(getEmptyRoom(date, room));
                 continue
             } 
+            const numProcedures = gridFilteredbyRoom.length;
             const ptMinutes = gridFilteredbyRoom.map((gridData) => parseInt(gridData.prime_time_minutes))
             const nonptMinutes = gridFilteredbyRoom.map((gridData) => parseInt(gridData.non_prime_time_minutes))
             const totalptMinutes = ptMinutes.reduce ((acc, totalMinutes) => acc + totalMinutes, 0);
@@ -69,7 +72,8 @@ const calculateRoomUtilization = (
                 room: room, 
                 ptHours:'PT: ' + minutestohours(totalptMinutes),
                 nonptHours: 'nPT: ' + minutestohours(totalnonptMinutes),
-                utilization: utilization.toString() + '%'
+                utilization: utilization.toString() + '%',
+                numProcedures: numProcedures.toString() 
             }
             gridDataForDate.push(gridPTHours);
         }

@@ -108,8 +108,27 @@ const Utilization = () => {
 
 
 useEffect(()=> {
-  console.log('all grid data', allGridData);
-},[selectedDate])
+  if (activeSurgeonList && activeSurgeonList.length > 0 && surgeonLists['BH JRI'] && surgeonLists['BH JRI'].length >0) {
+    if (calendarSurgeonOption == CalendarMenuOptions.All && calendarRoomOption == CalendarMenuOptions.All) {
+      console.log('all grid data', allGridData);
+    }
+    if (calendarSurgeonOption == CalendarMenuOptions.All && calendarRoomOption == CalendarMenuOptions.Selected) {
+      console.log('all grid data', gridFilteredRooms);
+    }
+    if (calendarSurgeonOption == CalendarMenuOptions.All && calendarRoomOption == CalendarMenuOptions.Mixed) {
+      console.log('all grid data', gridFilteredRooms);
+    }
+    if (calendarSurgeonOption == CalendarMenuOptions.Selected && calendarRoomOption == CalendarMenuOptions.All) {
+      console.log('all grid data', gridFilteredNPIs);
+    }
+    if (calendarSurgeonOption == CalendarMenuOptions.Selected && calendarRoomOption == CalendarMenuOptions.Selected) { 
+      console.log('all grid data', gridFilteredBoth);
+    }
+    if (calendarSurgeonOption == CalendarMenuOptions.Selected && calendarRoomOption == CalendarMenuOptions.Mixed) { 
+      console.log('all grid data', gridFilteredBoth);
+    }
+  }
+},[selectedDate,calendarRoomOption,calendarSurgeonOption,activeSurgeonList, activeRoomList,allPTHours])
 
 
   useEffect(() => {
