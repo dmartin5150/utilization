@@ -293,9 +293,9 @@ useEffect(()=> {
 
 
 
-  useEffect(() => {
-    dispatch(fetchGridDataAsync(unit, selectedDate))
-  }, [unit, selectedDate]);
+  // useEffect(() => {
+  //   dispatch(fetchGridDataAsync(unit, selectedDate))
+  // }, [unit, selectedDate]);
   
   const setDetailData = (data:SummaryGridRowData) => {
     const room: FacilityRoom = {"name":data.id, "utilization":data.utilization}
