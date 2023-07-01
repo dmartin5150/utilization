@@ -125,12 +125,12 @@ const calculatPTTotalHours = (
         const totalptMinutesUsed = ptHoursDay.reduce((acc, totalHours) => 
             acc + totalHours
         ,0)
-        const totalptHours = minutestohours(totalptMinutesUsed )
+        const totalptHours = 'PT: ' + minutestohours(totalptMinutesUsed )
         let utilization = '0%';
         if (totalPrimeTimeMinutes > 0) {
             utilization = Math.round(totalptMinutesUsed/totalPrimeTimeMinutes*100).toString() + '%'
         } 
-        const totalnonptHours = minutestohours(nonptHoursDay.reduce((acc, totalHours) => 
+        const totalnonptHours = 'nPT: ' + minutestohours(nonptHoursDay.reduce((acc, totalHours) => 
             acc + totalHours
         ,0))
         const curObj:PTTotalHours = {curDate, totalptHours,totalnonptHours, utilization}
