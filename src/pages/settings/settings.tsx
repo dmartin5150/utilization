@@ -14,7 +14,7 @@ import { Unit, TNNASRoomLists, unitList,UnitRoomListItem, UnitRoomLists,
         primeTimeStartOptions,primeTimeEndOptions} from './settings.constants';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useSelector } from 'react-redux';
-import { selectSurgeonLists, selectUnitRoomLists, selectActiveRoomLists, selectActiveSurgeons, selectAllRoomsSelected,selectAllSurgeonsSelected } from '../../store/ORData/ordata.selector';
+import { selectSurgeonLists, selectUnitRoomLists, selectActiveRoomLists, selectActiveSurgeons, selectAllRoomsSelected,selectAllSurgeonsSelected } from '../../store/ORData/selectors/ordata.selector';
 import { setPrimeTime, setDateRange, setUnit } from '../../store/Facility/facilty.actions';
 import { selectPrimeTime, selectDateRange,selectUnit } from '../../store/Facility/facility.selector';
 import { fetchRoomListsSuccess,setRoomListsSuccess, setActiverRoomListSuccess,setAllRoomsSelected} from '../../store/ORData/actions/roomsListActions';

@@ -7,7 +7,7 @@ import DaysOfWeek from "./daysOfWeek";
 import { DropDownBox } from "../dropdown/DropDown";
 import { useAppDispatch } from "../../hooks/hooks";
 import { useSelector } from "react-redux";
-import { selectCalendarData } from "../../store/ORData/ordata.selector";
+import { selectCalendarData } from "../../store/ORData/selectors/ordata.selector";
 import { fetchCalendarDataAsync } from "../../store/ORData/actions/calendar.actions";
 import { selectUnit } from "../../store/Facility/facility.selector";
 import SelectorList from "../SelectorList/SelectorList";

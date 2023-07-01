@@ -5,7 +5,7 @@ import { AppDispatch } from "../../store";
 import { fetchDataStart, fetchDataFailed } from "./ordata.actions";
 import { UnitRoomLists, UnitRoomListItem } from "../../../pages/settings/settings.constants";
 import getSurgeonLists from "../../../utilities/fetchData/getSurgeonLists";
-import { selectAllRoomsSelected, selectAllSurgeonsSelected } from "../ordata.selector";
+import { selectAllRoomsSelected, selectAllSurgeonsSelected } from "../selectors/ordata.selector";
 import { SurgeonList, SurgeonLists } from "../ordata.types";
 export type FetchSurgeonListsSuccess = ActionWithPayload<ORDATA_TYPES.FETCH_SURGEON_LISTS_SUCCESS, SurgeonLists>
 export type SetSurgeonLists = ActionWithPayload<ORDATA_TYPES.SET_SURGEON_LISTS, SurgeonLists>
