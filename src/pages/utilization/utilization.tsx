@@ -46,6 +46,7 @@ import { setCalendarData } from "../../store/ORData/actions/calendar.actions";
 import { selectGridDataAll,selectGridDataFilteredBoth,selectGridDataFilteredRooms,selectGridDataFilteredNPIs } from "../../store/ORData/selectors/ordata.gridselectors";
 import { selectGrid } from "../../store/ORData/selectors/ordata.selector";
 import { SummaryGridRowData } from "../../components/summary-grid/summary-grid-row";
+import { selectActiveSurgeonNPIs } from "../../store/ORData/selectors/ordata.selector";
 
 
 
@@ -55,6 +56,7 @@ const Utilization = () => {
   const [month, setMonth] = useState('June')
   const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
   const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
+  const [activeNPIs, setActiveNPIs] = useState<string[]>([])
 
 
 
@@ -96,6 +98,7 @@ const Utilization = () => {
   const gridFilteredRooms = useSelector(selectGridDataFilteredRooms);
   const gridFilteredNPIs = useSelector(selectGridDataFilteredNPIs);
   const gridFilteredBoth = useSelector(selectGridDataFilteredBoth)
+  const selectedNPIs = useSelector(selectActiveSurgeonNPIs)
 
 
 
@@ -106,6 +109,21 @@ const Utilization = () => {
       dispatch(setActiveSurgeonList(surgeonLists['BH JRI']))
      }
   },[activeSurgeonList, surgeonLists])
+
+// Active NPIs are to highlight selected surgeons on details card
+// If all surgeons selected, do not highlight any surgeon which is 
+// why it is set to empty
+  useEffect(()=> {
+    if(allSurgeonsSelected) {
+      setActiveNPIs([])
+    } else {
+      const npis = selectedNPIs.map((npi)=> npi.toString())
+      setActiveNPIs(npis)
+    }
+    console.log('selectedNPIs', selectedNPIs)
+  },[activeSurgeonList])
+
+
 
 
 useEffect(()=> {
@@ -293,9 +311,7 @@ useEffect(()=> {
 
 
 
-  // useEffect(() => {
-  //   dispatch(fetchGridDataAsync(unit, selectedDate))
-  // }, [unit, selectedDate]);
+
   
   const setDetailData = (data:SummaryGridRowData) => {
     const room: FacilityRoom = {"name":data.id, "utilization":data.utilization}
@@ -414,17 +430,17 @@ useEffect(()=> {
 
 
 
-
   return (
       <section className="utilization">
         <DetailsCard 
           title={"OR Utilization"} 
           header={detailsHeader}
           columns={detailsColHeader}
+          highLightItemsGreen={activeNPIs}
           data ={detailsData}
           onClosePopup={closeDetailsCard} 
           classIsOpen={`${popupOpen ? "open" : "close"}`}
-          highlightItems={['Open Time']}
+          highLightItemsRed={['Open Time']}
           pageSize={6} />
         <div className="patient__calendar">
           {surgeonMenu && roomMenu && <Calendar

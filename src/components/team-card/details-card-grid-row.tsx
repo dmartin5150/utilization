@@ -5,13 +5,14 @@ import { DetailsData } from "./details-card";
 
 interface DetailsDataProps {
   data: DetailsData;
-  highLight: boolean;
+  highLightRed: boolean;
+  highLightGreen: boolean;
 }
 
-const DetailsCardGridRow: React.FC<DetailsDataProps> = ({data, highLight}) => {
+const DetailsCardGridRow: React.FC<DetailsDataProps> = ({data, highLightGreen, highLightRed}) => {
   return (
     <div className={classnames("team-card-grid__row", 
-      {highlight:highLight })}>
+      {highLightRed:highLightRed }, {highLightGreen:highLightGreen})}>
       <div className="team-card-grid__row--item">{data.col1}</div>
       <div className="team-card-grid__row--item">{data.col2}</div>
       <div className="team-card-grid__row--item">{data.col3}</div>
