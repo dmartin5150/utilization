@@ -85,9 +85,9 @@ export type SurgeonLists = {
 
 export type BlockData = {
     name:string;
-    start_time:string;
-    end_time:string;
-    release_date:string
+    startTime:string;
+    endTime:string;
+    releaseDate:string
 }
 
 

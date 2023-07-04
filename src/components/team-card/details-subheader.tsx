@@ -4,9 +4,9 @@ import './details-subheader.scss';
 
 export interface DetailsSubHeaderData {
     name:string;
-    start_time:string;
-    end_time:string;
-    release_date:string;
+    startTime:string;
+    endTime:string;
+    releaseDate:string;
 }
 
 
@@ -23,7 +23,7 @@ const DetailsSubHeader: React.FC<DetailSubHeaderProps>  = ({data}) => {
             {data.map((item, index) => {
                 return (
                     <div className='subheader' key={index} >
-                    <p>{item.name}</p><p>{item.start_time}</p><p>{item.end_time}</p><p>{item.release_date}</p>
+                    <p>{item.name}</p><p>{item.startTime}</p><p>{item.endTime}</p><p>{item.releaseDate}</p>
                     </div> 
                 )
             })}

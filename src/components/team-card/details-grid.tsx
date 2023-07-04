@@ -37,7 +37,7 @@ const DetailsCardGrid: React.FC<DetailsCardGridProps> = ({ headers,data,highLigh
       </header>
       {data.map((item, idx) => {
         const highLightRed = highLightItemsRed.includes(item.col1.toString())
-        const curID = item.id.toString();
+        const curID = parseInt(item.id).toString();
         const highLightGreen = highLightItemsGreen.includes(curID)
         console.log('item id ', curID)
         console.log('npis ', highLightItemsGreen)
