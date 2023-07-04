@@ -47,6 +47,7 @@ import { selectGridDataAll,selectGridDataFilteredBoth,selectGridDataFilteredRoom
 import { selectGrid } from "../../store/ORData/selectors/ordata.selector";
 import { SummaryGridRowData } from "../../components/summary-grid/summary-grid-row";
 import { selectActiveSurgeonNPIs } from "../../store/ORData/selectors/ordata.selector";
+import { selectDetailBlockData } from "../../store/ORData/selectors/ordata.selector";
 
 
 
@@ -99,6 +100,7 @@ const Utilization = () => {
   const gridFilteredNPIs = useSelector(selectGridDataFilteredNPIs);
   const gridFilteredBoth = useSelector(selectGridDataFilteredBoth)
   const selectedNPIs = useSelector(selectActiveSurgeonNPIs)
+  const blockData = useSelector(selectDetailBlockData)
 
 
 
@@ -315,6 +317,7 @@ useEffect(()=> {
 
 
 
+ 
 
 
 
@@ -443,11 +446,11 @@ useEffect(()=> {
           header={detailsHeader}
           columns={detailsColHeader}
           highLightItemsGreen={activeNPIs}
-          subHeaderData={[]}
           data ={detailsData}
           onClosePopup={closeDetailsCard} 
           classIsOpen={`${popupOpen ? "open" : "close"}`}
           highLightItemsRed={['Open Time']}
+          subHeaderData={blockData}
           pageSize={6} />
         <div className="patient__calendar">
           {surgeonMenu && roomMenu && <Calendar

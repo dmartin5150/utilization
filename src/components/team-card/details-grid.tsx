@@ -2,7 +2,8 @@ import React from "react";
 import "./details-card-grid.scss";
 import DetailsCardGridRow from "./details-card-grid-row";
 import { DetailsData } from "./details-card";
-
+import DetailsSubHeader from "./details-subheader";
+import { DetailsSubHeaderData } from "./details-subheader";
 
 
 export interface GridNames {
@@ -18,12 +19,14 @@ interface DetailsCardGridProps {
   data: DetailsData[];
   highLightItemsRed: string[];
   highLightItemsGreen: string[];
+  subHeaderData: DetailsSubHeaderData[]
 }
 
 
-const DetailsCardGrid: React.FC<DetailsCardGridProps> = ({ headers,data,highLightItemsGreen, highLightItemsRed }) => {
+const DetailsCardGrid: React.FC<DetailsCardGridProps> = ({ headers,data,highLightItemsGreen, highLightItemsRed,subHeaderData }) => {
   return (
     <div className="team-card-grid">
+      <DetailsSubHeader data={subHeaderData} />
       <header className="team-card-grid__header">
         <div className="team-card-grid__header--item">{headers.col1}</div>
         <div className="team-card-grid__header--item">{headers.col2}</div>

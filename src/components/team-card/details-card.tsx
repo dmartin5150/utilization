@@ -7,6 +7,8 @@ import classnames from 'classnames';
 import { DetailsHeader } from "./details-card-header";
 import { GridNames } from "./details-grid";
 import Popup from "../popup/popup-component";
+import { DetailsSubHeaderData } from "./details-subheader";
+
 
 
 export interface DetailsData {
@@ -32,7 +34,7 @@ interface DetailsCardProps {
   title: string;
   header: DetailsHeader;
   columns: GridNames;
-  subHeaderData:SubHeaderData[]
+  subHeaderData:DetailsSubHeaderData[];
   data: DetailsData[];
   classIsOpen: string;
   highLightItemsRed: string[];
@@ -70,7 +72,12 @@ const DetailsCard: React.FC<DetailsCardProps> = ({title, columns,highLightItemsG
           <span className="teamcard__heading--main">{title}</span>
         </h2>
         <DetailsCardHead header={header} />
-        <DetailsCardGrid headers={columns} data={currentDetailData} highLightItemsGreen={highLightItemsGreen} highLightItemsRed={highLightItemsRed}/>
+        <DetailsCardGrid 
+          headers={columns} 
+          data={currentDetailData} 
+          highLightItemsGreen={highLightItemsGreen} 
+          highLightItemsRed={highLightItemsRed}
+          subHeaderData={subHeaderData}/>
         <Pagination
           currentPage={currentPage}
           totalCount={data.length}
