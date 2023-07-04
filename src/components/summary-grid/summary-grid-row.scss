@@ -15,8 +15,14 @@
     & p {
         // border-left: 1px solid $color-black;
         padding-left: 1rem;;
+
+
+
         & span {
             font-weight: bold;
+        }
+        &.highLightBlue {
+            color:blue;
         }
     }
 

@@ -2,6 +2,7 @@ import "../../sass/base/_typography.scss";
 import "./summary-grid-row.scss";
 import React, {Fragment} from "react";
 import { SummaryGridData } from "./summary-grid";
+import classnames from 'classnames';
 
 
 export type SummaryGridRowData = {
@@ -31,11 +32,15 @@ const SummaryGridRow: React.FC<SummaryGridRowProps> = ({row, buttonText, onSelec
    row.id = (event.target as HTMLButtonElement).id
     onSelectItem(row);
   }
-  
+
+
+
+
   return (
     <Fragment>
     <div className="summary-grid-row">
-      <p className="header-tertiary no-left-border">{row.room}</p>
+      <p className={classnames("header-tertiary no-left-border",
+      {highLightBlue:parseInt(row.block_status)})}>{row.room}</p>
       <div className="header-all-properties">
         <div className="header-properties">
           <p><span>Utilization: </span> {row.utilization}</p>
