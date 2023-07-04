@@ -1,4 +1,4 @@
-
+import { DetailsData } from "../../components/team-card/details-card";
 
 export enum  ORDATA_TYPES {
     FETCH_DATA_START  = 'ordata/FETCH_CALENDAR_DATA_START',
@@ -81,4 +81,17 @@ export type SurgeonList = {
 
 export type SurgeonLists = {
     [key:string]: SurgeonList[];
+}
+
+export type BlockData = {
+    name:string;
+    start_time:string;
+    end_time:string;
+    release_date:string
+}
+
+
+export type DetailsWithBlock = {
+    room:DetailsData[],
+    block: BlockData[]
 }

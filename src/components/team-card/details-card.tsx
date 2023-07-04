@@ -18,11 +18,21 @@ export interface DetailsData {
   col5: string;
 }
 
+export interface SubHeaderData {
+  col1:string,
+  col2:string,
+  col3:string,
+  col4:string;
+}
+
+
+
 
 interface DetailsCardProps {
   title: string;
   header: DetailsHeader;
   columns: GridNames;
+  subHeaderData:SubHeaderData[]
   data: DetailsData[];
   classIsOpen: string;
   highLightItemsRed: string[];
@@ -33,7 +43,7 @@ interface DetailsCardProps {
 
 
 
-const DetailsCard: React.FC<DetailsCardProps> = ({title, columns,highLightItemsGreen, data, header, classIsOpen,highLightItemsRed, onClosePopup,pageSize = 4}) => {
+const DetailsCard: React.FC<DetailsCardProps> = ({title, columns,highLightItemsGreen,subHeaderData,  data, header, classIsOpen,highLightItemsRed, onClosePopup,pageSize = 4}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentDetailData, setCurrentDetailData] = useState<DetailsData[]>([]);
 

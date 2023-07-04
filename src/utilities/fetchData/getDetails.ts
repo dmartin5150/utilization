@@ -1,4 +1,4 @@
-import { DetailsData } from "../../components/team-card/details-card";
+import { DetailsWithBlock } from "../../store/ORData/ordata.types";
 import { PrimeTime } from "../../store/Facility/facility.types";
 
 const getDetails = async (unit:string, date: string, room:string, primeTime:PrimeTime) => {
@@ -11,9 +11,9 @@ const getDetails = async (unit:string, date: string, room:string, primeTime:Prim
 
       });
       if (response) {
-        const data: DetailsData[] = await response.json();
+        const data: DetailsWithBlock = await response.json();
         return data
       }
-      return []
+      return {room:[], block:[]}
   };
   export default getDetails;

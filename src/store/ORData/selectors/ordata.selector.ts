@@ -19,8 +19,14 @@ export const selectGridData = createSelector(
 
 export const selectDetailData = createSelector(
     [selectORDataReducer],
-    (ORDataSlice) => ORDataSlice.detailsData
+    (ORDataSlice) => ORDataSlice.detailsData.room
+
 );
+
+export const selectDetailBlockData = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.detailsData.block
+)
 
 
 export const selectSurgeonLists = createSelector(

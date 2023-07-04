@@ -3,15 +3,15 @@ import getDetails from "../../../utilities/fetchData/getDetails"
 import { AppDispatch } from "../../store"
 import { fetchDataStart , fetchDataFailed } from "./ordata.actions"
 import { ORDATA_TYPES } from "../ordata.types"
-import { DetailsData } from "../../../components/team-card/details-card"
 import { FacilityRoom } from "../../Facility/facitlity.reducer"
 import { PrimeTime } from "../../Facility/facility.types"
+import { DetailsWithBlock } from "../ordata.types"
 
 
-export type FetchDetailsSuccess = ActionWithPayload<ORDATA_TYPES.FETCH_DETAILS_SUCCESS, DetailsData[]>
+export type FetchDetailsSuccess = ActionWithPayload<ORDATA_TYPES.FETCH_DETAILS_SUCCESS, DetailsWithBlock>
 export type ClosePopUp = Action<ORDATA_TYPES.CLOSE_POPUP>
 
-export const fetchDetailsSuccess = withMatcher((data:DetailsData[]):FetchDetailsSuccess =>{
+export const fetchDetailsSuccess = withMatcher((data:DetailsWithBlock):FetchDetailsSuccess =>{
     return createAction(ORDATA_TYPES.FETCH_DETAILS_SUCCESS, data)
 });
 

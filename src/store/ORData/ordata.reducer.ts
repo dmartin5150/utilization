@@ -20,13 +20,13 @@ import { CalendarMenuOptions } from "../../pages/utilization/utilization.constan
 import { SurgeonList,SurgeonLists } from "./ordata.types";
 import { SummaryGridRowData } from "../../components/summary-grid/summary-grid-row";
 import { setGridData } from "./actions/grid.actions";
-
+import { DetailsWithBlock } from "./ordata.types";
 
 
 export type ORDataState = {
     calendarData: CalendarDayData[];
     gridData: SummaryGridRowData[];
-    detailsData: DetailsData[];
+    detailsData: DetailsWithBlock;
     unitRoomLists: UnitRoomLists;
     activeRoomList: UnitRoomListItem[];
     allRoomsSelected: boolean;
@@ -47,10 +47,15 @@ const PTHOURS_INITIAL_STATE: PT_Hours = {
     surgeryInfo: []
 }
 
+const DETAILS_INITIAL_STATE:DetailsWithBlock = {
+    room:[],
+    block:[]
+}
+
 const OR_DATA_INITIAL_STATE: ORDataState = {
     calendarData: [],
     gridData: [],
-    detailsData: [],
+    detailsData: DETAILS_INITIAL_STATE,
     unitRoomLists: {}, 
     activeRoomList: JRIroomList,
     allRoomsSelected:true,

@@ -443,6 +443,7 @@ useEffect(()=> {
           header={detailsHeader}
           columns={detailsColHeader}
           highLightItemsGreen={activeNPIs}
+          subHeaderData={[]}
           data ={detailsData}
           onClosePopup={closeDetailsCard} 
           classIsOpen={`${popupOpen ? "open" : "close"}`}
