@@ -11,6 +11,7 @@ export type SummaryGridRowData = {
   procedures:string;
   ptHours:string;
   nptHours:string;
+  block_status:string;
 }
 
 

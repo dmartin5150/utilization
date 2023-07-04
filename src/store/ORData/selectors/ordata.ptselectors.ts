@@ -138,7 +138,6 @@ const calculatPTTotalHours = (
     const uniqueDates = [...new Set(ptHours.map(item => item.curDate))];
     const ptHoursTotal: any = []
     let num_rooms;
-
     uniqueDates.forEach((curDate) => {
         let curData = ptHours.filter(((item) => item.curDate === curDate))
         if (mixed) {
@@ -160,6 +159,7 @@ const calculatPTTotalHours = (
         const totalnonptHours = 'nPT: ' + minutestohours(nonptHoursDay.reduce((acc, totalHours) => 
             acc + totalHours
         ,0))
+
         const curObj:PTTotalHours = {curDate, totalptHours,totalnonptHours, utilization}
 
         ptHoursTotal.push(curObj)

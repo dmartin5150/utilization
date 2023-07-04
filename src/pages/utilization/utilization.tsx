@@ -137,7 +137,8 @@ useEffect(()=> {
           utilization:grid.utilization,
           procedures: grid.numProcedures,
           ptHours: grid.ptHours,
-          nptHours: grid.nonptHours
+          nptHours: grid.nonptHours,
+          block_status:grid.block_status
         })
       }) 
       dispatch(setGridData(newGridData))
@@ -151,7 +152,8 @@ useEffect(()=> {
           utilization:grid.utilization,
           procedures: grid.numProcedures,
           ptHours: grid.ptHours,
-          nptHours: grid.nonptHours
+          nptHours: grid.nonptHours,
+          block_status:grid.block_status
         })
       }) 
       dispatch(setGridData(newGridData))
@@ -165,7 +167,8 @@ useEffect(()=> {
           utilization:grid.utilization,
           procedures: grid.numProcedures,
           ptHours: grid.ptHours,
-          nptHours: grid.nonptHours
+          nptHours: grid.nonptHours,
+          block_status:grid.block_status
         })
       }) 
       dispatch(setGridData(newGridData))
@@ -179,7 +182,8 @@ useEffect(()=> {
           utilization:grid.utilization,
           procedures: grid.numProcedures,
           ptHours: grid.ptHours,
-          nptHours: grid.nonptHours
+          nptHours: grid.nonptHours,
+          block_status:grid.block_status
         })
       }) 
       dispatch(setGridData(newGridData))
@@ -193,7 +197,8 @@ useEffect(()=> {
           utilization:grid.utilization,
           procedures: grid.numProcedures,
           ptHours: grid.ptHours,
-          nptHours: grid.nonptHours
+          nptHours: grid.nonptHours,
+          block_status:grid.block_status
         })
       }) 
       dispatch(setGridData(newGridData))
@@ -207,7 +212,8 @@ useEffect(()=> {
           utilization:grid.utilization,
           procedures: grid.numProcedures,
           ptHours: grid.ptHours,
-          nptHours: grid.nonptHours
+          nptHours: grid.nonptHours,
+          block_status:grid.block_status
         })
       }) 
       dispatch(setGridData(newGridData))
@@ -220,10 +226,10 @@ useEffect(()=> {
     console.log('triggered')
     if (activeSurgeonList && activeSurgeonList.length > 0 && surgeonLists['BH JRI'] && surgeonLists['BH JRI'].length >0) {
       if (calendarSurgeonOption == CalendarMenuOptions.All && calendarRoomOption == CalendarMenuOptions.All) {
-        // console.log('in all menu option')
-        // console.log( 'calendar',  calendar);
-        // console.log('calendar PTHOurs', allPTHours)
-        // console.log('total hours', PTTotalAll)
+        console.log('in all menu option')
+        console.log( 'calendar',  calendar);
+        console.log('calendar PTHOurs', allPTHours)
+        console.log('total hours', PTTotalAll)
         const newCalendarData:CalendarDayData[] = PTTotalAll.map((ptTotal) => {
           return { 
             date: ptTotal.curDate,

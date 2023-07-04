@@ -56,6 +56,8 @@ export type Grid = {
     prime_time_minutes: string;
     non_prime_time_minutes: string;
     num_procedures?: number
+    block_status:number
+
 }
 
 
