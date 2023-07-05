@@ -1,16 +1,15 @@
 import React, {useState, useEffect} from "react";
 import StatSummary from "../../components/statSummary/statsummary";
 import "./surgeons.scss"
-import { SingleSelector } from "../../components/SelectorList/SelectorList";
-import { SurgeonList } from "../../store/ORData/ordata.types";
-import Select,{SingleValue} from "react-select";
+import {SingleValue} from "react-select";
 import { useAppDispatch } from "../../hooks/hooks";
 import { useSelector } from "react-redux";
 import { SurgeonMenuItem } from "../../store/Stats/stats.types";
 import { selectStatSurgeon } from "../../store/Stats/stats.selector";
 import { selectActiveSurgeons } from "../../store/ORData/selectors/ordata.selector";
 import SelectorList from "../../components/SelectorList/SelectorList";
-
+import { selectStatSummary } from "../../store/Stats/stats.selector";
+import { fetchStatSummarySuccessAsync } from "../../store/Stats/stats.actions";
 
 const Surgeons = () => {
     const [surgeonList, setSurgeonList] = useState<SurgeonMenuItem[]>([])
@@ -19,6 +18,7 @@ const Surgeons = () => {
     const dispatch = useAppDispatch()
     const selectedSurgeon = useSelector(selectStatSurgeon);
     const activeSurgeons = useSelector(selectActiveSurgeons)
+    const statSummary = useSelector(selectStatSummary)
 
 
     useEffect(() => {
@@ -33,13 +33,10 @@ const Surgeons = () => {
     },[activeSurgeons])
 
     const handleSurgeonChanged = (option:SingleValue<SurgeonMenuItem>) => {
-        const surgeon = (option as SurgeonMenuItem).value.toString();
-        console.log(surgeon)
-        // setSelectedUnit(option)
-        // dispatch(setUnit(unitName))
+        const npi = (option as SurgeonMenuItem).value.toString();
+        dispatch(fetchStatSummarySuccessAsync(npi))
+
     }
-
-
 
 
     return (
@@ -52,7 +49,7 @@ const Surgeons = () => {
                     onChange={handleSurgeonChanged}
                     />
             </div>
-            <StatSummary />
+            <StatSummary  statSummary={statSummary} />
         </div>)
 }
 

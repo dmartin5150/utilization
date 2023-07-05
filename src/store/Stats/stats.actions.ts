@@ -2,6 +2,8 @@ import { STATS_TYPES } from "./stats.types";
 import { createAction,ActionWithPayload,Action,  withMatcher } from "../../utilities/reducer/reducerutils";
 import { AppDispatch } from "../store";
 import { StatSummary } from "./stats.types";
+import getStatSummary from "../../utilities/fetchData/getStatSummary";
+
 
 
 export type FetchStatsStart =  Action<STATS_TYPES.FETCH_STATS_START>
@@ -21,6 +23,16 @@ export const fetchStatsFailed = withMatcher((error:Error): FetchStatsFailed => {
 } )
 
 
-
+export const fetchStatSummarySuccessAsync = (npi:string) => {
+    return async (dispatch: AppDispatch) => {
+        dispatch(fetchStatsStart);
+        try {
+            const stats = await getStatSummary(npi);
+            dispatch(fetchStatsSuccess(stats))
+        }catch (error) {
+            dispatch(fetchStatsFailed(error as Error))
+        }
+    }
+}
 
 

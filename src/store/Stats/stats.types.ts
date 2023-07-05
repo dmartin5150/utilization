@@ -22,9 +22,7 @@ export type SurgeonList = {
     npi: string | null;
 }
 
-export type SecondaryCards = {
-    cards: StatCardData[];
-}
+
 
 export type SurgeonMenuItem = {
     id: string;
@@ -34,8 +32,8 @@ export type SurgeonMenuItem = {
 
 export type StatSummary = {
     surgeon: SurgeonMenuItem;
-    mainCard: StatCardData;
-    secondaryCards:SecondaryCards;
+    mainCard: StatDataSet;
+    secondaryCards:StatDataSet[];
 }
 
 

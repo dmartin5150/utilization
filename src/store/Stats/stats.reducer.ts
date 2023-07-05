@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 import { fetchStatsStart,fetchStatsSuccess,fetchStatsFailed } from "./stats.actions";
-import { StatSummary, SecondaryCards, StatCardData, StatDataSet, SurgeonMenuItem } from "./stats.types";
+import { StatSummary, StatCardData, StatDataSet, SurgeonMenuItem } from "./stats.types";
 
 
 export type ORStatState = {
@@ -9,31 +9,26 @@ export type ORStatState = {
     error: null | Error
 }
 
-const SECONDARY_CARDS_INITIAL_STATE: SecondaryCards = {
-    cards: []
-}
 
-const STAT_DATA_SET_INITIAL_SET: StatDataSet = {
+
+export const STAT_DATA_SET_INITIAL_SET: StatDataSet = {
     day: null,
     procedure: null,
     hour: null
 }
 
-const MAIN_CARD_INITIAL_STATE: StatCardData = {
-    title: null,
-    data: STAT_DATA_SET_INITIAL_SET
-}
 
-const SURGEON_MENU_ITEM_INITIAL_STATE: SurgeonMenuItem = {
+
+export const SURGEON_MENU_ITEM_INITIAL_STATE: SurgeonMenuItem = {
     id: '0',
     label:'',
     value:'0'
 }
 
-const STAT_SUMMARY_INITIAL_STATE:StatSummary = {
+export const STAT_SUMMARY_INITIAL_STATE:StatSummary = {
     surgeon: SURGEON_MENU_ITEM_INITIAL_STATE,
-    mainCard: MAIN_CARD_INITIAL_STATE,
-    secondaryCards: SECONDARY_CARDS_INITIAL_STATE
+    mainCard: STAT_DATA_SET_INITIAL_SET,
+    secondaryCards: []
 }
 
 
