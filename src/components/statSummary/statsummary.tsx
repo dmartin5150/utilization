@@ -1,12 +1,12 @@
 import React from 'react';
 import StatCard from '../stat-card/stat-card';
 import './statsummary.scss'
-import { StatSummary } from '../../store/Stats/stats.types';
+import { StatSummaryResults } from '../../store/Stats/stats.types';
 
 
 
 export type StatSummaryProps = {
-    statSummary: StatSummary
+    statSummary: StatSummaryResults
 }
 
 

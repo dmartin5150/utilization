@@ -9,19 +9,27 @@ import { selectStatSurgeon } from "../../store/Stats/stats.selector";
 import { selectActiveSurgeons } from "../../store/ORData/selectors/ordata.selector";
 import SelectorList from "../../components/SelectorList/SelectorList";
 import { selectStatSummary } from "../../store/Stats/stats.selector";
-import { fetchStatSummarySuccessAsync } from "../../store/Stats/stats.actions";
+import { fetchStatSummarySuccessAsync, setStatSummary } from "../../store/Stats/stats.actions";
 import StatSummaryPage from "../../components/statSummary/statsummary";
 import { selectUnit } from "../../store/Facility/facility.selector";
+import { StatSummaryResults } from "../../store/Stats/stats.types";
+import { selectCurrentStatSummary } from "../../store/Stats/stats.selector";
+import { SetStatSummary } from "../../store/Stats/stats.actions";
+
 
 const Surgeons = () => {
     const [surgeonList, setSurgeonList] = useState<SurgeonMenuItem[]>([])
+    const [currentStats, setCurrentStats] = useState<StatSummaryResults>()
 
 
     const dispatch = useAppDispatch()
     const selectedSurgeon = useSelector(selectStatSurgeon);
     const activeSurgeons = useSelector(selectActiveSurgeons)
-    const statSummary = useSelector(selectStatSummary)
+    const statSummaryResults = useSelector(selectStatSummary)
+    const currentSummary = useSelector(selectCurrentStatSummary)
     const unit = useSelector(selectUnit)
+
+
 
 
 
@@ -39,7 +47,9 @@ const Surgeons = () => {
     const handleSurgeonChanged = (option:SingleValue<SurgeonMenuItem>) => {
         const npi = (option as SurgeonMenuItem).value.toString();
         const name = (option as SurgeonMenuItem).label
+        console.log('triggered')
         dispatch(fetchStatSummarySuccessAsync(npi, unit, name))
+        dispatch(setStatSummary(statSummaryResults))
 
     }
 
@@ -53,7 +63,7 @@ const Surgeons = () => {
                     onChange={handleSurgeonChanged}
                     />
             </div>
-            <StatSummaryPage  statSummary={statSummary} />
+            <StatSummaryPage  statSummary={statSummaryResults} />
         </div>)
 }
 

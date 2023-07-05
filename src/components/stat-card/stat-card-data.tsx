@@ -2,6 +2,8 @@ import React, {Fragment} from 'react';
 import { StatDataSet } from '../../store/Stats/stats.types';
 import './stat-card.scss'
 
+
+
 export type StatCardDataProps = {
     card: StatDataSet
 }

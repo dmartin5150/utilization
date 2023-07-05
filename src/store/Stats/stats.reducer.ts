@@ -1,10 +1,11 @@
 import { AnyAction } from "redux";
-import { fetchStatsStart,fetchStatsSuccess,fetchStatsFailed } from "./stats.actions";
-import { StatSummary, StatCardData, StatDataSet, SurgeonMenuItem } from "./stats.types";
+import { fetchStatsStart,fetchStatsSuccess,fetchStatsFailed, setStatSummary } from "./stats.actions";
+import { StatSummaryResults, StatCardResults, StatDataSet, SurgeonMenuItem,  } from "./stats.types";
 
 
 export type ORStatState = {
-    statSummary: StatSummary;
+    statSummary: StatSummaryResults;
+    curStatSummary: StatSummaryResults;
     isLoading: boolean;
     error: null | Error
 }
@@ -25,15 +26,21 @@ export const SURGEON_MENU_ITEM_INITIAL_STATE: SurgeonMenuItem = {
     value:'0'
 }
 
-export const STAT_SUMMARY_INITIAL_STATE:StatSummary = {
+export const STAT_CARD_INITIAL_STATE:StatCardResults = {
+    title:'',
+    data:[]
+}
+
+export const STAT_SUMMARY_INITIAL_STATE:StatSummaryResults = {
     surgeon: SURGEON_MENU_ITEM_INITIAL_STATE,
-    mainCard: [],
+    mainCard: STAT_CARD_INITIAL_STATE,
     secondaryCards:[]
 }
 
 
 export const OR_STAT_INITIAL_STATE:ORStatState  = {
     statSummary: STAT_SUMMARY_INITIAL_STATE,
+    curStatSummary: STAT_SUMMARY_INITIAL_STATE,
     isLoading:false,
     error:null
 }
@@ -48,6 +55,9 @@ export const ORStatReducer = (state=OR_STAT_INITIAL_STATE, action: AnyAction):OR
     }
     if (fetchStatsFailed.match(action)) {
         return {...state, error: action.payload}
+    }
+    if (setStatSummary.match(action)) {
+        return {...state, curStatSummary: action.payload}
     }
     return state;
 }

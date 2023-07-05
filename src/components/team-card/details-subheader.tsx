@@ -23,7 +23,7 @@ const DetailsSubHeader: React.FC<DetailSubHeaderProps>  = ({data}) => {
             {data.map((item, index) => {
                 return (
                     <div className='subheader' key={index} >
-                    <p>{item.name}</p><p>{item.startTime}</p><p>{item.endTime}</p><p>{item.releaseDate}</p>
+                    <p>{item.name}</p><p>{item.startTime}</p><p>{item.endTime}</p><p>Release Date: {item.releaseDate}</p>
                     </div> 
                 )
             })}

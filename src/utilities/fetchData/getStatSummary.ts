@@ -1,5 +1,5 @@
-import {StatSummary} from '../../store/Stats/stats.types';
-import {SURGEON_MENU_ITEM_INITIAL_STATE,STAT_DATA_SET_INITIAL_SET} from "../../store/Stats/stats.reducer";
+import {StatSummaryResults} from '../../store/Stats/stats.types';
+import {SURGEON_MENU_ITEM_INITIAL_STATE,STAT_CARD_INITIAL_STATE} from "../../store/Stats/stats.reducer";
 
 
 
@@ -12,12 +12,12 @@ const getStatSummary = async (NPI:string, unit:string, name:string) => {
     body:JSON.stringify({'NPI': NPI, 'unit': unit, 'name':name})
   });
   if (response) {
-    const data: StatSummary = await response.json();
+    const data: StatSummaryResults = await response.json();
     return data
   }
   return {
     surgeon: SURGEON_MENU_ITEM_INITIAL_STATE,
-    mainCard: [],
+    mainCard: STAT_CARD_INITIAL_STATE,
     secondaryCards: []
     }
 }

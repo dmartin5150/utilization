@@ -2,6 +2,7 @@ export enum STATS_TYPES  {
     FETCH_STATS_START  = 'stats/FETCH_STATS_DATA_START',
     FETCH_STATA_FAILED  ='stats/FETCH_STATS_DATA_FAILED',
     FETCH_STATS_DATA_SUCCESS  ='stats/FETCH_STATS_DATA_SUCCESS',
+    SET_SUMMARY_RESULTS = 'stats/SET_SUMMARY_RESULTS'
 }
 
 export type StatDataSet = {
@@ -11,9 +12,9 @@ export type StatDataSet = {
 }
 
 
-export type StatCardData = {
+export type StatCardResults = {
     title: string | null;
-    data: StatDataSet;
+    data: StatDataSet[];
 }
 
 export type SurgeonList = {
@@ -30,10 +31,12 @@ export type SurgeonMenuItem = {
     label:string;
 }
 
-export type StatSummary = {
+
+
+export type StatSummaryResults = {
     surgeon: SurgeonMenuItem;
-    mainCard: StatDataSet[];
-    secondaryCards:StatDataSet[][];
+    mainCard: StatCardResults;
+    secondaryCards:StatCardResults[];
 }
 
 
