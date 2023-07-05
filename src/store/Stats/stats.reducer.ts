@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 import { fetchStatsStart,fetchStatsSuccess,fetchStatsFailed } from "./stats.actions";
-import { StatSummary, SecondaryCards, StatCardData, StatDataSet } from "./stats.types";
+import { StatSummary, SecondaryCards, StatCardData, StatDataSet, SurgeonMenuItem } from "./stats.types";
 
 
 export type ORStatState = {
@@ -24,8 +24,14 @@ const MAIN_CARD_INITIAL_STATE: StatCardData = {
     data: STAT_DATA_SET_INITIAL_SET
 }
 
+const SURGEON_MENU_ITEM_INITIAL_STATE: SurgeonMenuItem = {
+    id: '0',
+    label:'',
+    value:'0'
+}
+
 const STAT_SUMMARY_INITIAL_STATE:StatSummary = {
-    surgeonName: null,
+    surgeon: SURGEON_MENU_ITEM_INITIAL_STATE,
     mainCard: MAIN_CARD_INITIAL_STATE,
     secondaryCards: SECONDARY_CARDS_INITIAL_STATE
 }

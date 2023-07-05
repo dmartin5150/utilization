@@ -26,8 +26,17 @@ export type SecondaryCards = {
     cards: StatCardData[];
 }
 
+export type SurgeonMenuItem = {
+    id: string;
+    value:string;
+    label:string;
+}
+
 export type StatSummary = {
-    surgeonName: string | null;
+    surgeon: SurgeonMenuItem;
     mainCard: StatCardData;
     secondaryCards:SecondaryCards;
 }
+
+
+

@@ -7,9 +7,9 @@ export const selectStatSummary = createSelector(
     [selectStatReducer],
     (ORStatsSlice) => ORStatsSlice.statSummary
 )
-export const selectStatSurgeonName = createSelector(
+export const selectStatSurgeon = createSelector(
     [selectStatSummary],
-    (ORStatsSlice) => ORStatsSlice.surgeonName
+    (ORStatsSlice) => ORStatsSlice.surgeon
 )
 
 export const selectStatMainCard = createSelector(
