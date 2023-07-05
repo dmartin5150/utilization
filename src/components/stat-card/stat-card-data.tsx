@@ -8,11 +8,12 @@ export type StatCardDataProps = {
 
 const StatCardData: React.FC<StatCardDataProps> = ({card}) => {
     return (
-            <Fragment>
+            <div className='statscard-bundle'>
                 <h3 className='statcare-daily--header'>{card.day}</h3>
-                <p>Procs: {card.procedure}</p>
-                <p>Hours: {card.hour}</p>
-            </Fragment>
+                <p><span>Procs:</span> {card.procedure}</p>
+                <p><span>Time: </span></p>
+                <p>{card.hour}</p>
+            </div>
     )
 }
 

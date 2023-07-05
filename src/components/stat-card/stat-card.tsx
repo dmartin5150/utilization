@@ -11,11 +11,14 @@ export type StatCardProps = {
 const StatCard: React.FC<StatCardProps> = ({data}) => {
      return (
         <Card>
-            <div className='statcards-daily'>
-                <div className='starcard-daily'>
-                {data.map((card,idx) => {
-                    return <StatCardData key={idx} card={card} />
-                })}
+            <div className='statcard'>
+                <h2 className='statcard-header'>July</h2>
+                <div className='statcards-daily'>
+                    <div className='starcard-daily'>
+                    {data.map((card,idx) => {
+                        return <StatCardData key={idx} card={card} />
+                    })}
+                    </div>
                 </div>
             </div>
         </Card>
