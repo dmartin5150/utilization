@@ -10,6 +10,8 @@ import { selectActiveSurgeons } from "../../store/ORData/selectors/ordata.select
 import SelectorList from "../../components/SelectorList/SelectorList";
 import { selectStatSummary } from "../../store/Stats/stats.selector";
 import { fetchStatSummarySuccessAsync } from "../../store/Stats/stats.actions";
+import StatSummaryPage from "../../components/statSummary/statsummary";
+import { selectUnit } from "../../store/Facility/facility.selector";
 
 const Surgeons = () => {
     const [surgeonList, setSurgeonList] = useState<SurgeonMenuItem[]>([])
@@ -19,6 +21,8 @@ const Surgeons = () => {
     const selectedSurgeon = useSelector(selectStatSurgeon);
     const activeSurgeons = useSelector(selectActiveSurgeons)
     const statSummary = useSelector(selectStatSummary)
+    const unit = useSelector(selectUnit)
+
 
 
     useEffect(() => {
@@ -30,14 +34,14 @@ const Surgeons = () => {
                 })
                 setSurgeonList(curList)
             }
-    },[activeSurgeons])
+    },[activeSurgeons,unit])
 
     const handleSurgeonChanged = (option:SingleValue<SurgeonMenuItem>) => {
         const npi = (option as SurgeonMenuItem).value.toString();
-        dispatch(fetchStatSummarySuccessAsync(npi))
+        const name = (option as SurgeonMenuItem).label
+        dispatch(fetchStatSummarySuccessAsync(npi, unit, name))
 
     }
-
 
     return (
         <div className="surgeons">or
@@ -49,7 +53,7 @@ const Surgeons = () => {
                     onChange={handleSurgeonChanged}
                     />
             </div>
-            <StatSummary  statSummary={statSummary} />
+            <StatSummaryPage  statSummary={statSummary} />
         </div>)
 }
 

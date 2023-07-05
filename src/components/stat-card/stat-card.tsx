@@ -1,21 +1,24 @@
 import React from "react";
 import './stat-card.scss';
-import Card from "../card/card";
 import { StatDataSet } from "../../store/Stats/stats.types";
+import StatCardData from "./stat-card-data";
+import Card from "../card/card";
 
 export type StatCardProps = {
-    data: StatDataSet;
+    data: StatDataSet[]
 }
 
 const StatCard: React.FC<StatCardProps> = ({data}) => {
-    return (
+     return (
+        <Card>
             <div className='statcards-daily'>
                 <div className='starcard-daily'>
-                    <h3 className='statcare-daily--header'>{data.day}</h3>
-                    <p>Procs: {data.procedure}</p>
-                    <p>Hours: {data.hour}</p>
+                {data.map((card,idx) => {
+                    return <StatCardData key={idx} card={card} />
+                })}
                 </div>
             </div>
-        )
-}
+        </Card>
+     )
+}   
 export default StatCard

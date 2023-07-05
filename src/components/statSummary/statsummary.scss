@@ -21,6 +21,24 @@
         display:flex;
         justify-content: center;
         
+        & .statcards-daily {
+            display:flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+    
+            & .starcard-daily {
+                & .statcare-daily--header {
+                    text-align: center;
+                    
+                }
+    
+                padding: 1rem;
+                display:flex;
+                flex-direction:column;
+                justify-content: space-between;
+            }
+        }
 
     }
     & .statsummary-statcard {
@@ -34,4 +52,18 @@
         // flex-direction: row;
         // justify-content: space-around;
     }
+    .statcard {
+        color: black;
+        width: 100%;
+        font-size:13px;
+        margin:1rem;
+    
+         & .statcard-header {
+            font-size: large;
+            font-weight: bold;
+            margin: 0 auto;
+            text-align: center;
+        }
+    }
+
 }

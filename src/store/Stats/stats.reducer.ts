@@ -27,8 +27,8 @@ export const SURGEON_MENU_ITEM_INITIAL_STATE: SurgeonMenuItem = {
 
 export const STAT_SUMMARY_INITIAL_STATE:StatSummary = {
     surgeon: SURGEON_MENU_ITEM_INITIAL_STATE,
-    mainCard: STAT_DATA_SET_INITIAL_SET,
-    secondaryCards: []
+    mainCard: [],
+    secondaryCards:[]
 }
 
 

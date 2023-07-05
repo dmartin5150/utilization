@@ -23,11 +23,11 @@ export const fetchStatsFailed = withMatcher((error:Error): FetchStatsFailed => {
 } )
 
 
-export const fetchStatSummarySuccessAsync = (npi:string) => {
+export const fetchStatSummarySuccessAsync = (npi:string, unit:string, name:string) => {
     return async (dispatch: AppDispatch) => {
         dispatch(fetchStatsStart);
         try {
-            const stats = await getStatSummary(npi);
+            const stats = await getStatSummary(npi,unit, name);
             dispatch(fetchStatsSuccess(stats))
         }catch (error) {
             dispatch(fetchStatsFailed(error as Error))

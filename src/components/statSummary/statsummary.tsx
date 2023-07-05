@@ -11,7 +11,7 @@ export type StatSummaryProps = {
 
 
 
-const StatSummary: React.FC<StatSummaryProps> = ({statSummary}) => {
+const StatSummaryPage: React.FC<StatSummaryProps> = ({statSummary}) => {
     const {surgeon, mainCard, secondaryCards} = statSummary;
 
     return (
@@ -27,5 +27,5 @@ const StatSummary: React.FC<StatSummaryProps> = ({statSummary}) => {
             </div>
         </div>)
 }
-export default StatSummary;
+export default StatSummaryPage;
 

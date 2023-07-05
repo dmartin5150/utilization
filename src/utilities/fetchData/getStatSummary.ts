@@ -3,13 +3,13 @@ import {SURGEON_MENU_ITEM_INITIAL_STATE,STAT_DATA_SET_INITIAL_SET} from "../../s
 
 
 
-const getStatSummary = async (NPI:string) => {
+const getStatSummary = async (NPI:string, unit:string, name:string) => {
   const response = await fetch("http://localhost:5001/stats", {
     method:'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body:JSON.stringify({'NPI': NPI})
+    body:JSON.stringify({'NPI': NPI, 'unit': unit, 'name':name})
   });
   if (response) {
     const data: StatSummary = await response.json();
@@ -17,7 +17,7 @@ const getStatSummary = async (NPI:string) => {
   }
   return {
     surgeon: SURGEON_MENU_ITEM_INITIAL_STATE,
-    mainCard: STAT_DATA_SET_INITIAL_SET,
+    mainCard: [],
     secondaryCards: []
     }
 }

@@ -32,8 +32,8 @@ export type SurgeonMenuItem = {
 
 export type StatSummary = {
     surgeon: SurgeonMenuItem;
-    mainCard: StatDataSet;
-    secondaryCards:StatDataSet[];
+    mainCard: StatDataSet[];
+    secondaryCards:StatDataSet[][];
 }
 
 
