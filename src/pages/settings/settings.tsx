@@ -15,7 +15,7 @@ import { Unit, TNNASRoomLists, unitList,UnitRoomListItem, UnitRoomLists,
 import { useAppDispatch } from '../../hooks/hooks';
 import { useSelector } from 'react-redux';
 import { selectSurgeonLists, selectUnitRoomLists, selectActiveRoomLists, selectActiveSurgeons, selectAllRoomsSelected,selectAllSurgeonsSelected } from '../../store/ORData/selectors/ordata.selector';
-import { setPrimeTime, setDateRange, setUnit } from '../../store/Facility/facilty.actions';
+import { setPrimeTime, setDateRange, setUnit, setRoom } from '../../store/Facility/facilty.actions';
 import { selectPrimeTime, selectDateRange,selectUnit } from '../../store/Facility/facility.selector';
 import { fetchRoomListsSuccess,setRoomListsSuccess, setActiverRoomListSuccess,setAllRoomsSelected} from '../../store/ORData/actions/roomsListActions';
 import { setActiveSurgeonList, setSurgeonLists,setAllSurgeonsSelected } from '../../store/ORData/actions/surgeonLists.actions';
@@ -332,10 +332,8 @@ const Settings = () => {
         onSearchTextChanged:onSurgeonSearchTextChanged
     }
 
-    const selectGroup = (group:string[]) => {
+    const selectSurgeonGroup = (group:string[]) => {
         let newSurgeonList = activeSurgeons.map((surgeon)=> {
-            console.log(group)
-            console.log(surgeon.NPI.toString())
             if (group.includes(surgeon.NPI.toString())) {
                 surgeon.selected = true;
             } else {
@@ -343,14 +341,46 @@ const Settings = () => {
             }
             return surgeon
         });
-        dispatch(setActiveSurgeonList(newSurgeonList));
-
+        if (newSurgeonList.length > 0) {
+            dispatch(setActiveSurgeonList(newSurgeonList));
+        }
     }
+
+
+
+
+    const selectRoomGroup = (group:string[]) => {
+        let newRoomList = rooms.map((room) => {
+
+            if (group.includes(room['name'].toString())) {
+                room.selected = true;
+            } else {
+                room.selected = false;
+            }
+            return room;
+        })
+        if (newRoomList.length > 0) {
+            console.log(newRoomList)
+            dispatch(setActiverRoomListSuccess(newRoomList))
+        }
+    
+    }
+
+    
+
+
+
+    const setGroupUnit = (unit:string) => {
+        dispatch(setUnit(unit));
+    }
+
 
 
     const onSelectGroupItem = (id:string) => {
         console.log('group id:', id)
-        selectGroup(surgeonGroups[parseInt(id)])
+        setGroupUnit(surgeonGroups[parseInt(id)].unit)
+        selectSurgeonGroup(surgeonGroups[parseInt(id)].surgeons)
+        selectRoomGroup(surgeonGroups[parseInt(id)].rooms)
     }
 
 

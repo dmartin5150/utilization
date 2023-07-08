@@ -67,8 +67,22 @@ export const primeTimeEndOptions: PrimeTimeMenuItem[] =  [
     {id:6, label: '6:00 PM', value:PRIME_TIME_END['18:00']},
 ]
 
+export type SurgeonGroup = {
+    unit: string;
+    surgeons: string[];
+    rooms: string[]
+}
 
 
-export const neuroSurgeonGroup = ['1346406956', '1710184130']
+export const neuroSurgeonGroup:SurgeonGroup = {
+    unit: 'STM ST OR',
+    surgeons: ['1356445712','1619978822','1558565036','1346359460','1164865671',
+                '1235109463','1427028695','1134562051','1700856994','1578610457',
+                '1770634412','1841540457','1285894394', '1669445813','1245222397',
+                '1528038676','1124065420','1205923323','1245405661','1801114079',
+                '1982751772','1720358971','1972861680','1265479844','1346569589'],
+    rooms: ['STM ST OR 01', 'STM ST OR 02', 'STM ST OR 03', 'STM ST OR 04', 'STM ST OR 05']
+
+}
 
 export const surgeonGroups = [neuroSurgeonGroup]
