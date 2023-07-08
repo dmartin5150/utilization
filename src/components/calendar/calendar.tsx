@@ -109,7 +109,7 @@ function Calendar<T extends Option>({
           );
         })}
       </ul>
-      <ul className="layout">
+      <ul className="layout totals">
         {calendarTotals.map((calendarDay, idx) => {
           const hideElement:boolean = hiddenID.includes(calendarDay.date.toString());
           return (
