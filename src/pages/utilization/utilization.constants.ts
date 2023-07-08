@@ -70,7 +70,7 @@ export const calendarRoomMenus: CalendarMenus = {
 
 
 
-export const calendarTotalData: CalendarDayData[] = [
+export const calendarTotalData: CalendarDayData[]= [
     {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M'},
     {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M'},
     {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M'},

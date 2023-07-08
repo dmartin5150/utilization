@@ -37,6 +37,7 @@ export type Calendar = {
     prime_time_minutes:string;
     non_prime_time_minutes: string;
     utilization?: string;
+    dayOfWeek:string;
 }
 
 export type Details = {
