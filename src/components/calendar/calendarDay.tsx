@@ -8,6 +8,10 @@ export type  CalendarDayData = {
   display:string;
   subHeading1?:string;
   subHeading2?:string;
+  ptMinutes:number,
+  nonptMinutes:number,
+  totalptMinutes:number,
+  dayOfWeek:number
 }
 
 interface CalendarDayProps {

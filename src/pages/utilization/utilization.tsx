@@ -107,7 +107,7 @@ const Utilization = () => {
 
   useEffect(()=> {
     console.log('active surgeonList', surgeonLists)
-     if (surgeonLists && surgeonLists['BH JRI'] && surgeonLists['BH JRI'].length >0 && activeSurgeonList && activeSurgeonList.length == 0 ) {
+     if (surgeonLists && surgeonLists['BH JRI'] && surgeonLists['BH JRI'].length >0 && activeSurgeonList && activeSurgeonList.length === 0 ) {
       console.log('dispatching list')
       dispatch(setActiveSurgeonList(surgeonLists['BH JRI']))
      }
@@ -131,7 +131,7 @@ const Utilization = () => {
 
 useEffect(()=> {
   if (activeSurgeonList && activeSurgeonList.length > 0 && surgeonLists['BH JRI'] && surgeonLists['BH JRI'].length >0) {
-    if (calendarSurgeonOption == CalendarMenuOptions.All && calendarRoomOption == CalendarMenuOptions.All) {
+    if (calendarSurgeonOption === CalendarMenuOptions.All && calendarRoomOption === CalendarMenuOptions.All) {
       console.log('all grid data', allGridData);
       const newGridData:SummaryGridRowData[] = allGridData.map((grid) => {
         return ({
@@ -146,7 +146,7 @@ useEffect(()=> {
       }) 
       dispatch(setGridData(newGridData))
     }
-    if (calendarSurgeonOption == CalendarMenuOptions.All && calendarRoomOption == CalendarMenuOptions.Selected) {
+    if (calendarSurgeonOption === CalendarMenuOptions.All && calendarRoomOption === CalendarMenuOptions.Selected) {
       console.log('all grid data', gridFilteredRooms);
       const newGridData:SummaryGridRowData[] = gridFilteredRooms.map((grid) => {
         return ({
@@ -161,7 +161,7 @@ useEffect(()=> {
       }) 
       dispatch(setGridData(newGridData))
     }
-    if (calendarSurgeonOption == CalendarMenuOptions.All && calendarRoomOption == CalendarMenuOptions.Mixed) {
+    if (calendarSurgeonOption === CalendarMenuOptions.All && calendarRoomOption === CalendarMenuOptions.Mixed) {
       console.log('all grid data', gridFilteredRooms);
       const newGridData:SummaryGridRowData[] = gridFilteredRooms.map((grid) => {
         return ({
@@ -176,7 +176,7 @@ useEffect(()=> {
       }) 
       dispatch(setGridData(newGridData))
     }
-    if (calendarSurgeonOption == CalendarMenuOptions.Selected && calendarRoomOption == CalendarMenuOptions.All) {
+    if (calendarSurgeonOption === CalendarMenuOptions.Selected && calendarRoomOption === CalendarMenuOptions.All) {
       console.log('all grid data', gridFilteredNPIs);
       const newGridData:SummaryGridRowData[] = gridFilteredNPIs.map((grid) => {
         return ({
@@ -191,7 +191,7 @@ useEffect(()=> {
       }) 
       dispatch(setGridData(newGridData))
     }
-    if (calendarSurgeonOption == CalendarMenuOptions.Selected && calendarRoomOption == CalendarMenuOptions.Selected) { 
+    if (calendarSurgeonOption === CalendarMenuOptions.Selected && calendarRoomOption === CalendarMenuOptions.Selected) { 
       console.log('all grid data', gridFilteredBoth);
       const newGridData:SummaryGridRowData[] = gridFilteredBoth.map((grid) => {
         return ({
@@ -206,7 +206,7 @@ useEffect(()=> {
       }) 
       dispatch(setGridData(newGridData))
     }
-    if (calendarSurgeonOption == CalendarMenuOptions.Selected && calendarRoomOption == CalendarMenuOptions.Mixed) { 
+    if (calendarSurgeonOption === CalendarMenuOptions.Selected && calendarRoomOption === CalendarMenuOptions.Mixed) { 
       console.log('all grid data', gridFilteredBoth);
       const newGridData:SummaryGridRowData[] = gridFilteredBoth.map((grid) => {
         return ({
@@ -228,7 +228,7 @@ useEffect(()=> {
   useEffect(() => {
     console.log('triggered')
     if (activeSurgeonList && activeSurgeonList.length > 0 && surgeonLists['BH JRI'] && surgeonLists['BH JRI'].length >0) {
-      if (calendarSurgeonOption == CalendarMenuOptions.All && calendarRoomOption == CalendarMenuOptions.All) {
+      if (calendarSurgeonOption === CalendarMenuOptions.All && calendarRoomOption === CalendarMenuOptions.All) {
         console.log('in all menu option')
         console.log( 'calendar',  calendar);
         console.log('calendar PTHOurs', allPTHours)
@@ -238,12 +238,16 @@ useEffect(()=> {
             date: ptTotal.curDate,
             display:ptTotal.utilization,
             subHeading1: ptTotal.totalptHours,
-            subHeading2: ptTotal.totalnonptHours
+            subHeading2: ptTotal.totalnonptHours,
+            ptMinutes: ptTotal.ptMinutes,
+            nonptMinutes: ptTotal.nonptMinutes,
+            totalptMinutes: ptTotal.totalptMinutes,
+            dayOfWeek: ptTotal.dayOfWeek
           }
         })
         dispatch(setCalendarData(newCalendarData));
      }
-     if (calendarSurgeonOption == CalendarMenuOptions.All && calendarRoomOption == CalendarMenuOptions.Selected) {
+     if (calendarSurgeonOption === CalendarMenuOptions.All && calendarRoomOption === CalendarMenuOptions.Selected) {
         // console.log( 'calendar',  calendar);
         // console.log('calendar PTHOurs', PTHoursFilterRoom)
         // console.log('total hours', PTTotalALlSurgeonSelected)
@@ -252,12 +256,16 @@ useEffect(()=> {
             date: ptTotal.curDate,
             display:ptTotal.utilization,
             subHeading1: ptTotal.totalptHours,
-            subHeading2: ptTotal.totalnonptHours
+            subHeading2: ptTotal.totalnonptHours,
+            ptMinutes: ptTotal.ptMinutes,
+            nonptMinutes: ptTotal.nonptMinutes,
+            totalptMinutes: ptTotal.totalptMinutes,
+            dayOfWeek: ptTotal.dayOfWeek
           }
         })
         dispatch(setCalendarData(newCalendarData));
      }
-     if (calendarSurgeonOption == CalendarMenuOptions.All && calendarRoomOption == CalendarMenuOptions.Mixed) {
+     if (calendarSurgeonOption === CalendarMenuOptions.All && calendarRoomOption === CalendarMenuOptions.Mixed) {
       // console.log( 'calendar',  calendar);
       // console.log('calendar PTHOurs', PTHoursFilterRoom)
       // console.log('total hours', PTTotalAllMixed)
@@ -266,12 +274,16 @@ useEffect(()=> {
           date: ptTotal.curDate,
           display:ptTotal.utilization,
           subHeading1: ptTotal.totalptHours,
-          subHeading2: ptTotal.totalnonptHours
+          subHeading2: ptTotal.totalnonptHours,
+          ptMinutes: ptTotal.ptMinutes,
+          nonptMinutes: ptTotal.nonptMinutes,
+          totalptMinutes: ptTotal.totalptMinutes,
+          dayOfWeek: ptTotal.dayOfWeek
         }
       })
       dispatch(setCalendarData(newCalendarData));
    }
-     if (calendarSurgeonOption == CalendarMenuOptions.Selected && calendarRoomOption == CalendarMenuOptions.All) {
+     if (calendarSurgeonOption === CalendarMenuOptions.Selected && calendarRoomOption === CalendarMenuOptions.All) {
       // console.log( 'calendar',  calendar);
       // console.log('calendar PTHOurs', PTHoursFilterSurgeon);
       // console.log('total hours', PTTotalAllRoomsSelected)
@@ -280,12 +292,16 @@ useEffect(()=> {
           date: ptTotal.curDate,
           display:ptTotal.utilization,
           subHeading1: ptTotal.totalptHours,
-          subHeading2: ptTotal.totalnonptHours
+          subHeading2: ptTotal.totalnonptHours,
+          ptMinutes: ptTotal.ptMinutes,
+          nonptMinutes: ptTotal.nonptMinutes,
+          totalptMinutes: ptTotal.totalptMinutes,
+          dayOfWeek: ptTotal.dayOfWeek
         }
       })
       dispatch(setCalendarData(newCalendarData));
     }
-    if (calendarSurgeonOption == CalendarMenuOptions.Selected && calendarRoomOption == CalendarMenuOptions.Selected) {
+    if (calendarSurgeonOption === CalendarMenuOptions.Selected && calendarRoomOption === CalendarMenuOptions.Selected) {
       // console.log( 'calendar',  calendar);
       // console.log('calendar PTHOurs', PTHoursFilterBoth);
       // console.log('total hours', PTTotalBoth)
@@ -294,12 +310,16 @@ useEffect(()=> {
           date: ptTotal.curDate,
           display:ptTotal.utilization,
           subHeading1: ptTotal.totalptHours,
-          subHeading2: ptTotal.totalnonptHours
+          subHeading2: ptTotal.totalnonptHours,
+          ptMinutes: ptTotal.ptMinutes,
+          nonptMinutes: ptTotal.nonptMinutes,
+          totalptMinutes: ptTotal.totalptMinutes,
+          dayOfWeek: ptTotal.dayOfWeek
         }
       })
       dispatch(setCalendarData(newCalendarData));
     }
-    if (calendarSurgeonOption == CalendarMenuOptions.Selected && calendarRoomOption == CalendarMenuOptions.Mixed) {
+    if (calendarSurgeonOption === CalendarMenuOptions.Selected && calendarRoomOption === CalendarMenuOptions.Mixed) {
       // console.log( 'calendar',  calendar);
       // console.log('calendar PTHOurs', PTHoursFilterBoth);
       // console.log('total hours', PTTotalMixed)
@@ -308,7 +328,11 @@ useEffect(()=> {
           date: ptTotal.curDate,
           display:ptTotal.utilization,
           subHeading1: ptTotal.totalptHours,
-          subHeading2: ptTotal.totalnonptHours
+          subHeading2: ptTotal.totalnonptHours,
+          ptMinutes: ptTotal.ptMinutes,
+          nonptMinutes: ptTotal.nonptMinutes,
+          totalptMinutes: ptTotal.totalptMinutes,
+          dayOfWeek: ptTotal.dayOfWeek
         }
       })
       dispatch(setCalendarData(newCalendarData));

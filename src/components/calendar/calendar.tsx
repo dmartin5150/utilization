@@ -44,12 +44,12 @@ function Calendar<T extends Option>({
 
   useEffect(()=> {
     if (calendarData.length > 0) {
-      const date = new Date(calendarData[0].date + '0:00:00 AM UTC');
+      const date = new Date(calendarData[0].date + 'T00:00:00');
       const padding = date.getDay()-1;
       console.log('offset', padding, calendarData[0], date)
       let index = -1;
       for (let step = 0; step < padding; step++) {
-        const blankDay:CalendarDayData= {date:index.toString(), display:'Blank'}
+        const blankDay:CalendarDayData= {date:index.toString(), display:'Blank',dayOfWeek:-1, ptMinutes:0, nonptMinutes:0, totalptMinutes:0}
         calendarData.unshift(blankDay)
         index -= 1;
       }

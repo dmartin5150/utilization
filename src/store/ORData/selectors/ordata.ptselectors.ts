@@ -18,6 +18,10 @@ export type PTTotalHours = {
     totalptHours:string;
     totalnonptHours:string;
     utilization: string;
+    dayOfWeek: number;
+    ptMinutes:number;
+    nonptMinutes:number;
+    totalptMinutes:number;
 }
 
 export type hasRoom = {
@@ -93,6 +97,7 @@ const calculatePTHours = (
     const uniqueDates = [...new Set(calendarData.map(item => item.procedureDate))];
     const ptHoursTotal: any = []
     uniqueDates.forEach((curDate) => {
+        
         let curData = calendarData.filter(((item) => item.procedureDate === curDate))
         if (filterRooms) {
             curData = getPTHoursFilteredbyRoom(roomList, curData)
@@ -102,6 +107,9 @@ const calculatePTHours = (
         }
         const ptHours = curData.map((info) => info.prime_time_minutes)
         const nonptHours = curData.map((info)=> info.non_prime_time_minutes)
+        // const ptMinutes = curData.map((info)=> parseInt(info.prime_time_minutes))
+        // const nonptMinutes = curData.map((info) => parseInt(info.non_prime_time_minutes))
+        // const dayOfWeek = curData.map((info) =>  new Date(curDate).getDay())
         const npis = [...new Set(curData.map((info) => info.NPI))]
         const rooms = [...new Set(curData.map((info) => info.room))]
         const curObj = {curDate,npis,rooms, ptHours, nonptHours}
@@ -145,22 +153,32 @@ const calculatPTTotalHours = (
         } else {
             num_rooms = rooms.length;
         }
-        const totalPrimeTimeMinutes = num_rooms*ptMinutesPerRoom;
+        const totalptMinutes = num_rooms*ptMinutesPerRoom;
         const ptHoursDay = curData[0].ptHours.map((ptHour)=> parseInt(ptHour));
         const nonptHoursDay = curData[0].nonptHours.map((nonptHour) => parseInt(nonptHour))
-        const totalptMinutesUsed = ptHoursDay.reduce((acc, totalHours) => 
+        const ptMinutes = ptHoursDay.reduce((acc, totalHours) => 
             acc + totalHours
         ,0)
-        const totalptHours = 'PT: ' + minutestohours(totalptMinutesUsed )
+        const totalptHours = 'PT: ' + minutestohours(ptMinutes )
         let utilization = '0%';
-        if (totalPrimeTimeMinutes > 0) {
-            utilization = Math.round(totalptMinutesUsed/totalPrimeTimeMinutes*100).toString() + '%'
+        if (totalptMinutes > 0) {
+            utilization = Math.round(ptMinutes/totalptMinutes*100).toString() + '%'
         } 
-        const totalnonptHours = 'nPT: ' + minutestohours(nonptHoursDay.reduce((acc, totalHours) => 
-            acc + totalHours
-        ,0))
+        const nonptMinutes = nonptHoursDay.reduce((acc, totalHours) => 
+                            acc + totalHours,0);
+        const totalnonptHours = 'nPT: '  +  minutestohours(nonptMinutes);  
+        console.log('curDate', curDate,'converted', new Date(curDate + 'T00:00:00')) 
+        const dayOfWeek = new Date(curDate + 'T00:00:00').getDay();      
 
-        const curObj:PTTotalHours = {curDate, totalptHours,totalnonptHours, utilization}
+        const curObj:PTTotalHours = {
+            curDate, 
+            totalptHours,
+            totalnonptHours, 
+            utilization,
+            ptMinutes, 
+            nonptMinutes,
+            totalptMinutes,
+            dayOfWeek}
 
         ptHoursTotal.push(curObj)
     })

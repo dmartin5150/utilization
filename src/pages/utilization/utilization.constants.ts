@@ -71,9 +71,9 @@ export const calendarRoomMenus: CalendarMenus = {
 
 
 export const calendarTotalData: CalendarDayData[]= [
-    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M'},
-    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M'},
-    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M'},
-    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M'},
-    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M'},
+    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M',ptMinutes:0, nonptMinutes:0,totalptMinutes:0,dayOfWeek:1},
+    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M',ptMinutes:0, nonptMinutes:0,totalptMinutes:0,dayOfWeek:2},
+    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M',ptMinutes:0, nonptMinutes:0,totalptMinutes:0,dayOfWeek:3},
+    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M',ptMinutes:0, nonptMinutes:0,totalptMinutes:0,dayOfWeek:4},
+    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M',ptMinutes:0, nonptMinutes:0,totalptMinutes:0,dayOfWeek:5},
 ]
