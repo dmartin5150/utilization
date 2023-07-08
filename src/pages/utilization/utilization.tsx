@@ -48,6 +48,7 @@ import { selectGrid } from "../../store/ORData/selectors/ordata.selector";
 import { SummaryGridRowData } from "../../components/summary-grid/summary-grid-row";
 import { selectActiveSurgeonNPIs } from "../../store/ORData/selectors/ordata.selector";
 import { selectDetailBlockData } from "../../store/ORData/selectors/ordata.selector";
+import { calendarTotalData } from "./utilization.constants";
 
 
 
@@ -456,6 +457,7 @@ useEffect(()=> {
           {surgeonMenu && roomMenu && <Calendar
             title={unit}
             calendarData={calendarData}
+            calendarTotals={calendarTotalData}
             selectedDate={selectedDate}
             list1={surgeonMenu}
             list2={roomMenu}

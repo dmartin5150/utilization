@@ -16,7 +16,7 @@
     transition: all 0.3s;
     border-radius:3px;
 
-    &.selected {
+    &.selected.highLightSelected{
         color: #1e69d2;
         pointer-events: none;
     }

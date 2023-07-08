@@ -21,6 +21,7 @@ interface CalendarProps<T extends Option> {
   title: string,
   selectedDate: string;
   calendarData:CalendarDayData[];
+  calendarTotals:CalendarDayData[];
   hiddenID: string[];
   list1: SingleSelector<T>;
   list2: SingleSelector<T>
@@ -30,7 +31,7 @@ interface CalendarProps<T extends Option> {
 
 
 function Calendar<T extends Option>({
-  title,selectedDate,calendarData,hiddenID,list1,list2, onDateChange, pageSize
+  title,selectedDate,calendarData, calendarTotals, hiddenID,list1,list2, onDateChange, pageSize
 }: React.PropsWithChildren<CalendarProps<T>>)  {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentCalendarData, setCurrentCalendarData] = useState<CalendarDayData[]>([]);
@@ -101,7 +102,25 @@ function Calendar<T extends Option>({
                 calendarDay={calendarDay}
                 selectedDay={selectedDate}
                 hideElement={hideElement}
+                highLightSelected={true}
                 onDateChange={onDateChange}
+              ></CalendarDay>
+            </li>
+          );
+        })}
+      </ul>
+      <ul className="layout">
+        {calendarTotals.map((calendarDay, idx) => {
+          const hideElement:boolean = hiddenID.includes(calendarDay.date.toString());
+          return (
+            <li key={idx}>
+              <CalendarDay
+                id={idx.toString()}
+                calendarDay={calendarDay}
+                selectedDay={idx.toString()}
+                highLightSelected={false}
+                hideElement={false}
+                onDateChange={()=>{}}
               ></CalendarDay>
             </li>
           );

@@ -1,4 +1,4 @@
-
+import { CalendarDayData } from "../../components/calendar/calendarDay";
 
 export type CalendarMenuItem = {
     id: number;
@@ -67,3 +67,13 @@ export const calendarRoomMenus: CalendarMenus = {
     'None': calendarRoomOptionsNone,
     'Selected': calendarRoomOptionsSelect
 }
+
+
+
+export const calendarTotalData: CalendarDayData[] = [
+    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M'},
+    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M'},
+    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M'},
+    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M'},
+    {date:'Total', display: '50%', subHeading1: 'PT: 30H 15M', subHeading2:'nPT: 30H 15M'},
+]

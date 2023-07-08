@@ -15,11 +15,12 @@ interface CalendarDayProps {
   hideElement: boolean;
   calendarDay: CalendarDayData;
   selectedDay:string;
+  highLightSelected:boolean;
   onDateChange:(id:string)=>void;
 }
 
 
-const CalendarDay: React.FC<CalendarDayProps> = ({id, calendarDay, onDateChange, selectedDay, hideElement}) => {
+const CalendarDay: React.FC<CalendarDayProps> = ({id, calendarDay, onDateChange, selectedDay,highLightSelected, hideElement}) => {
 
   const onDateChangeHandler = (event: React.MouseEvent<HTMLDivElement> ) => {
     onDateChange((event.target as HTMLDivElement).id);
@@ -31,7 +32,8 @@ const CalendarDay: React.FC<CalendarDayProps> = ({id, calendarDay, onDateChange,
     <div
       className={classnames("calendar-day",
        {selected: id === selectedDay},
-       {hidden: hideElement}
+       {hidden: hideElement},
+       {highLightSelected}
       )}
       id={id}
       onClick={onDateChangeHandler}
