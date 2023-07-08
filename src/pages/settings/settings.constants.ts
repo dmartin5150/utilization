@@ -66,3 +66,9 @@ export const primeTimeEndOptions: PrimeTimeMenuItem[] =  [
     {id:5, label: '5:30 PM', value:PRIME_TIME_END['17:30']},
     {id:6, label: '6:00 PM', value:PRIME_TIME_END['18:00']},
 ]
+
+
+
+export const neuroSurgeonGroup = ['1346406956', '1710184130']
+
+export const surgeonGroups = [neuroSurgeonGroup]

@@ -1,0 +1,14 @@
+.group-container {
+    border: 1px solid black;
+    position:relative;
+
+
+   & h2 {
+        position:absolute;
+        top: -1.3rem;
+        left: 5rem;
+        background-color: white;
+        font-style:italic;
+    }
+
+} 

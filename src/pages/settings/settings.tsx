@@ -20,6 +20,9 @@ import { selectPrimeTime, selectDateRange,selectUnit } from '../../store/Facilit
 import { fetchRoomListsSuccess,setRoomListsSuccess, setActiverRoomListSuccess,setAllRoomsSelected} from '../../store/ORData/actions/roomsListActions';
 import { setActiveSurgeonList, setSurgeonLists,setAllSurgeonsSelected } from '../../store/ORData/actions/surgeonLists.actions';
 import { SurgeonList,SurgeonLists } from '../../store/ORData/ordata.types';
+import { Group } from '../../components/groupsContainer/groupItem';
+import GroupContainer from '../../components/groupsContainer/groupsContainer';
+import { surgeonGroups } from './settings.constants';
 
 
 import { unitLists } from './settings.constants';
@@ -33,6 +36,18 @@ export type PrimeTimeMenuItem = {
 type PrimeTimeMenuItems = {
     [key:string] : PrimeTimeMenuItem
 }
+
+
+const neuroGroup:Group = {
+    id:'0',
+    name: 'Neuro'
+}
+
+const providerGroups:Group[] = [
+    neuroGroup
+]
+
+
 
 
 const primeTimeMenuStartItems = {
@@ -317,6 +332,27 @@ const Settings = () => {
         onSearchTextChanged:onSurgeonSearchTextChanged
     }
 
+    const selectGroup = (group:string[]) => {
+        let newSurgeonList = activeSurgeons.map((surgeon)=> {
+            console.log(group)
+            console.log(surgeon.NPI.toString())
+            if (group.includes(surgeon.NPI.toString())) {
+                surgeon.selected = true;
+            } else {
+                surgeon.selected = false;
+            }
+            return surgeon
+        });
+        dispatch(setActiveSurgeonList(newSurgeonList));
+
+    }
+
+
+    const onSelectGroupItem = (id:string) => {
+        console.log('group id:', id)
+        selectGroup(surgeonGroups[parseInt(id)])
+    }
+
 
     return(<div className='settings'>
         <div className='set-all'>
@@ -335,6 +371,14 @@ const Settings = () => {
                         selector1={primeTimeStartSelector} 
                         selector2={primeTimeEndSelector}/>
                 </div>
+                <div className='physician-group'>
+                    <GroupContainer 
+                        title={'Provider Groups'} 
+                        groups={providerGroups} 
+                        onSelectItem={onSelectGroupItem}
+                        />
+                </div>
+
             </div>
             <div className='sel-unit'>
                 <SelectUnit title='Select Unit' unitSelector={unitSelector} unitListSelector={unitListSelector} />

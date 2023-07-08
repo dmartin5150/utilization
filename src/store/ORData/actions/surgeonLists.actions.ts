@@ -26,8 +26,8 @@ export const setSurgeonLists = withMatcher((roomLists:SurgeonLists):SetSurgeonLi
 
 
 
-export const setActiveSurgeonList = withMatcher((roomList:SurgeonList[]):SetActiveSurgeonList => {
-    return createAction(ORDATA_TYPES.SET_ACTIVE_SURGEON_LIST, roomList)
+export const setActiveSurgeonList = withMatcher((surgeonList:SurgeonList[]):SetActiveSurgeonList => {
+    return createAction(ORDATA_TYPES.SET_ACTIVE_SURGEON_LIST, surgeonList)
 });
 
 
