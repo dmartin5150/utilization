@@ -21,10 +21,13 @@ import { SurgeonList,SurgeonLists } from "./ordata.types";
 import { SummaryGridRowData } from "../../components/summary-grid/summary-grid-row";
 import { setGridData } from "./actions/grid.actions";
 import { DetailsWithBlock } from "./ordata.types";
+import { setCalendarTotals } from "./actions/calendar.actions";
+
 
 
 export type ORDataState = {
     calendarData: CalendarDayData[];
+    calendarTotals: CalendarDayData[];
     gridData: SummaryGridRowData[];
     detailsData: DetailsWithBlock;
     unitRoomLists: UnitRoomLists;
@@ -54,6 +57,7 @@ const DETAILS_INITIAL_STATE:DetailsWithBlock = {
 
 const OR_DATA_INITIAL_STATE: ORDataState = {
     calendarData: [],
+    calendarTotals: [],
     gridData: [],
     detailsData: DETAILS_INITIAL_STATE,
     unitRoomLists: {}, 
@@ -129,6 +133,9 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     }
     if (setGridData.match(action)) {
         return {...state, gridData:action.payload}
+    }
+    if (setCalendarTotals.match(action)) {
+        return {...state, calendarTotals: action.payload}
     }
     return state;
 }

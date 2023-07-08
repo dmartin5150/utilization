@@ -9,10 +9,15 @@ import { CalendarMenuOptions } from "../../../pages/utilization/utilization.cons
 
 
 
+
 export type FetchCalendarSuccess = ActionWithPayload<ORDATA_TYPES.FETCH_CALENDAR_DATA_SUCCESS, CalendarDayData[]>
 export type SetCalendarSurgeonOption = ActionWithPayload<ORDATA_TYPES.SET_CALENDAR_SURGEON_OPTION, CalendarMenuOptions>
 export type SetCalendarRoomOption = ActionWithPayload<ORDATA_TYPES.SET_CALENDAR_ROOM_OPTION, CalendarMenuOptions>
 export type SetCalendarData = ActionWithPayload<ORDATA_TYPES.SET_CALENDAR_DATA,CalendarDayData[]>
+export type SetCalendarTotals = ActionWithPayload<ORDATA_TYPES.SET_CALENDAR_TOTALS, CalendarDayData[]>
+
+
+
 
 export const fetchCalendarSuccess= withMatcher((calendarArray:CalendarDayData[]): FetchCalendarSuccess => {
     return createAction(ORDATA_TYPES.FETCH_CALENDAR_DATA_SUCCESS, calendarArray)
@@ -29,6 +34,10 @@ export const setCalendarSurgeonOption = withMatcher((selection:CalendarMenuOptio
 export const setCalendarRoomOption = withMatcher((selection:CalendarMenuOptions):SetCalendarRoomOption => {
     return createAction(ORDATA_TYPES.SET_CALENDAR_ROOM_OPTION,selection)
 });
+
+export const setCalendarTotals = withMatcher((totals:CalendarDayData[]):SetCalendarTotals => {
+    return createAction(ORDATA_TYPES.SET_CALENDAR_TOTALS, totals)
+})
 
 
 export const fetchCalendarDataAsync = (unit:string, date:string) => {

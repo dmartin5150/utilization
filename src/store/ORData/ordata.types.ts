@@ -1,10 +1,12 @@
 import { DetailsData } from "../../components/team-card/details-card";
+import { CalendarDayData } from "../../components/calendar/calendarDay";
 
 export enum  ORDATA_TYPES {
     FETCH_DATA_START  = 'ordata/FETCH_CALENDAR_DATA_START',
     FETCH_DATA_FAILED  ='ordata/FETCH_CALENDAR_DATA_FAILED',
     FETCH_CALENDAR_DATA_SUCCESS  ='ordata/FETCH_CALENDAR_DATA_SUCCESS',
     SET_CALENDAR_DATA = 'ordata/SET_CALENDAR_DATA',
+    SET_CALENDAR_TOTALS = 'ordata/SET_CALENDAR_TOTALS', 
     FETCH_GRID_DATA_SUCCESS  ='ordata/FETCH_GRID_DATA_SUCCESS',
     SET_GRID_DATA ='ordata/SET_GRID_DATA', 
     FETCH_DETAILS_SUCCESS = 'ordata/FETCH_DETAILS_SUCCESS',
@@ -23,6 +25,21 @@ export enum  ORDATA_TYPES {
 } 
 
 
+
+
+export enum WEEKDAYS  {
+    MONDAY = 1,
+    TUESDAY = 2,
+    WEDNESDAY = 3,
+    THURSDAY = 4,
+    FRIDAY= 5
+}
+
+export const weekDays:WEEKDAYS[] = [
+    WEEKDAYS.MONDAY, WEEKDAYS.TUESDAY,WEEKDAYS.WEDNESDAY,WEEKDAYS.THURSDAY,WEEKDAYS.FRIDAY]
+
+
+
 export type item = {
     id: number;
     name: string;
@@ -39,6 +56,11 @@ export type Calendar = {
     utilization?: string;
     dayOfWeek:string;
 }
+
+
+
+
+
 
 export type Details = {
     fullName: string;

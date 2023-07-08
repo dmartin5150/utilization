@@ -2,8 +2,10 @@ import { createSelector } from "reselect";
 import { Calendar} from "../ordata.types";
 import { selectPTminutesperroom } from "../../Facility/facility.selector";
 import { selectCalendar,selectAllRoomNames, selectAllSurgeonNPIs, selectActiveRoomNames,
-selectActiveSurgeonNPIs } from "./ordata.selector";
+selectActiveSurgeonNPIs, selectCalendarData } from "./ordata.selector";
 import { minutestohours } from "../ordata.utilities";
+import { CalendarDayData } from "../../../components/calendar/calendarDay";
+import { weekDays } from "../ordata.types";
 
 export type PTHours = {
     curDate: string;
@@ -185,6 +187,39 @@ const calculatPTTotalHours = (
     ptHoursTotal.sort(compare)
     return ptHoursTotal;
 }
+const getArrayTotals = (numbers:number[]) =>{
+    return numbers.reduce((acc, total) => total + acc, 0)
+}
+
+
+const calculateCalendarTotals = (calendarData:CalendarDayData[]) => {
+    const calendarTotals:CalendarDayData[] = []
+    weekDays.forEach((day) => {
+        const currentData = calendarData.filter((date)=> date.dayOfWeek === day)
+        const dailyptMinutes = currentData.map((date) => date.ptMinutes)
+        const dailynonptMinutes = currentData.map((date) => date.nonptMinutes)
+        const dailytotalptMinutes = currentData.map((date) => date.totalptMinutes)
+        const ptMinutes = getArrayTotals(dailyptMinutes)
+        const nonptMinutes = getArrayTotals(dailynonptMinutes)
+        const totalptMinutes = getArrayTotals(dailytotalptMinutes)
+        let utilization = '0%'
+        if (totalptMinutes > 0) {
+            utilization = Math.round(ptMinutes/totalptMinutes*100).toString() + '%'
+        } 
+        const dailyTotal:CalendarDayData = {
+            date: 'Total', 
+            display: utilization, 
+            subHeading1:'PT: ' +  minutestohours(ptMinutes),
+            subHeading2: 'nPT: ' + minutestohours(nonptMinutes),
+            ptMinutes, 
+            nonptMinutes,
+            totalptMinutes,
+            dayOfWeek:day,
+        } 
+        calendarTotals.push(dailyTotal)
+    })
+    return calendarTotals;
+}
 
 
 export const selectCalendarPTHoursAll = createSelector(
@@ -229,3 +264,9 @@ export const selectPTHoursTotalsAllMixed = createSelector(
 export const selectPTHoursTotalsMixed = createSelector(
     [ selectCalendarPTHourFilterSurgeons , selectPTminutesperroom,selectActiveRoomNames],
     (ptHours,minutes,rooms):PTTotalHours[] => calculatPTTotalHours(ptHours, minutes,rooms,true))
+
+
+export const selectCalendarTotals = createSelector(
+    [selectCalendarData],
+    (calendarData):CalendarDayData[] =>  calculateCalendarTotals(calendarData)
+)

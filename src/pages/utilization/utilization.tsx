@@ -49,6 +49,8 @@ import { SummaryGridRowData } from "../../components/summary-grid/summary-grid-r
 import { selectActiveSurgeonNPIs } from "../../store/ORData/selectors/ordata.selector";
 import { selectDetailBlockData } from "../../store/ORData/selectors/ordata.selector";
 import { calendarTotalData } from "./utilization.constants";
+import { setCalendarTotals } from "../../store/ORData/actions/calendar.actions";
+import { selectCalendarTotals } from "../../store/ORData/selectors/ordata.ptselectors";
 
 
 
@@ -102,6 +104,7 @@ const Utilization = () => {
   const gridFilteredBoth = useSelector(selectGridDataFilteredBoth)
   const selectedNPIs = useSelector(selectActiveSurgeonNPIs)
   const blockData = useSelector(selectDetailBlockData)
+  const calendarTotals = useSelector(selectCalendarTotals)
 
 
 
@@ -112,6 +115,15 @@ const Utilization = () => {
       dispatch(setActiveSurgeonList(surgeonLists['BH JRI']))
      }
   },[activeSurgeonList, surgeonLists])
+
+
+
+useEffect(() => {
+  if (calendarData && calendarData.length > 0) {
+    dispatch(setCalendarTotals(calendarTotals))
+  }
+}, [calendarData])
+
 
 // Active NPIs are to highlight selected surgeons on details card
 // If all surgeons selected, do not highlight any surgeon which is 
@@ -481,7 +493,7 @@ useEffect(()=> {
           {surgeonMenu && roomMenu && <Calendar
             title={unit}
             calendarData={calendarData}
-            calendarTotals={calendarTotalData}
+            calendarTotals={calendarTotals}
             selectedDate={selectedDate}
             list1={surgeonMenu}
             list2={roomMenu}
