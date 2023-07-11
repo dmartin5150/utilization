@@ -7,7 +7,7 @@ import { getBlockStats } from "../utilities";
 import { selectBlockGrid } from "./grid.selector";
 
 
-const selectBlockReducer = (state:RootState) => state.Block;
+export const selectBlockReducer = (state:RootState) => state.Block;
 
 export const selectBlockLists = createSelector(
     [selectBlockReducer],
@@ -29,10 +29,6 @@ export function compare<T extends hasDate>( a:T, b:T ):number {
     }
     return 0;
   }
-
-
-
-
 
 
 

@@ -1,9 +1,11 @@
 
 
 export enum BLOCK_TYPES  {
-    FETCH_BLOCK_START  = 'stats/FETCH_BLOCK_DATA_START',
-    FETCH_BLOCK_FAILED  ='stats/FETCH_BLOCK_DATA_FAILED',
-    FETCH_BLOCK_SUCCESS  ='stats/FETCH_BLOCK_SUCCESS',
+    FETCH_BLOCK_START  = 'block/FETCH_BLOCK_DATA_START',
+    FETCH_BLOCK_FAILED  ='block/FETCH_BLOCK_DATA_FAILED',
+    FETCH_BLOCK_SUCCESS  ='block/FETCH_BLOCK_SUCCESS',
+    SET_SELECTED_BLOCK_DATE = 'block/SET_SELECTED_BLOCK_DATE',
+    SET_SELECTED_BLOCK_ROOM = 'block/SET_SELECTED_BLOCK_ROOM'
 }
 
 
@@ -30,7 +32,8 @@ export type BlockProcedure = {
     procedureName:string;
     local_start_time:string;
     local_end_time:string;
-    NPI:string
+    NPI:string;
+    type:string;
 }
 
 
@@ -41,7 +44,10 @@ export type BlockDetails = {
     unit:string;
     blockDate:string;
     type:string
-    blockType: BlockProcedure[];
+    procs: BlockProcedure[];
+    start_time:string,
+    end_time:string,
+    releaseDate:string
 
 }
 
@@ -57,3 +63,16 @@ export type BlockStats = {
     totalMinutes: number,
     utilization: string, 
  } 
+
+ export type DetailsSubHeader = {
+    name:string;
+    startTime:string;
+    endTime:string;
+    releaseDate:string;
+ }
+
+
+ export type DetailsSummary = {
+    subHeader:DetailsSubHeader;
+    procs: BlockProcedure[];
+ }
