@@ -81,7 +81,7 @@ export const neuroSurgeonGroup:SurgeonGroup = {
                 '1770634412','1841540457','1285894394', '1669445813','1245222397',
                 '1528038676','1124065420','1205923323','1245405661','1801114079',
                 '1982751772','1720358971','1972861680','1265479844','1346569589'],
-    rooms: ['STM ST OR 01', 'STM ST OR 02', 'STM ST OR 03', 'STM ST OR 04', 'STM ST OR 05']
+    rooms: ['STM ST OR 01', 'STM ST OR 02', 'STM ST OR 03', 'STM ST OR 04', 'STM ST OR 05','STM ST OR 08','STM ST OR 09']
 
 }
 

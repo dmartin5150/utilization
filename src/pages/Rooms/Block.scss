@@ -1,6 +1,6 @@
 @import '../../sass/abstracts/variables';
 
-.utilization {
+.blocks{
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -10,7 +10,7 @@
     border:5px;
 
 
-    & .patient__calendar {
+    & .block__calendar {
         color:white;
 
         & .selector {

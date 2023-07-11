@@ -25,8 +25,8 @@ const Navigation = () => {
           <NavLink  to="/surgeon" className="nav__link">
             Surgeon
           </NavLink>
-          <NavLink  to="/room" className="nav__link">
-            Room
+          <NavLink  to="/block" className="nav__link">
+            Block
           </NavLink>
           <NavLink  to="/settings" className="nav__link">
             Settings

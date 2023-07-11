@@ -6,6 +6,7 @@ selectActiveSurgeonNPIs, selectCalendarData } from "./ordata.selector";
 import { minutestohours } from "../ordata.utilities";
 import { CalendarDayData } from "../../../components/calendar/calendarDay";
 import { weekDays } from "../ordata.types";
+import { compare } from "../ordata.utilities";
 
 export type PTHours = {
     curDate: string;
@@ -125,15 +126,7 @@ const calculatePTHours = (
 
 
 
-function compare( a:PTTotalHours, b:PTTotalHours ):number {
-    if ( a.curDate < b.curDate ){
-      return -1;
-    }
-    if ( a.curDate > b.curDate ){
-      return 1;
-    }
-    return 0;
-  }
+
 
 
 

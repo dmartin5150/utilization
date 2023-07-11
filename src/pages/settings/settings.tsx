@@ -40,7 +40,7 @@ type PrimeTimeMenuItems = {
 
 const neuroGroup:Group = {
     id:'0',
-    name: 'Neuro'
+    name: 'Spine'
 }
 
 const providerGroups:Group[] = [
