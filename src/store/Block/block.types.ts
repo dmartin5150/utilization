@@ -1,4 +1,4 @@
-import { StringDecoder } from "string_decoder"
+
 
 export enum BLOCK_TYPES  {
     FETCH_BLOCK_START  = 'stats/FETCH_BLOCK_DATA_START',
@@ -49,3 +49,11 @@ export type BlockLists = {
     grid: BlockData[];
     details:BlockDetails[];
 }
+
+
+export type BlockStats = {
+    btMinutes: number,
+    nbtMinutes: number,
+    totalMinutes: number,
+    utilization: string, 
+ } 

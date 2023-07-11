@@ -14,7 +14,7 @@ export type BlockState = {
 
 const BLOCK_INITIAL_STATE: BlockState = {
     lists:{
-        grid:[],
+        grid: [],
         details: []
     },
     isLoading:false,
@@ -28,12 +28,11 @@ export const BlockReducer = (state=BLOCK_INITIAL_STATE, action: AnyAction):Block
         return {...state, isLoading:true}
     }
     if (fetchBlockSuccess.match(action)) {
-        return {...state, ...state.lists, lists: action.payload,  isLoading:false}
+        return {...state, ...state.lists, lists : action.payload,  isLoading:false}
     }
     if (fetchBlockFailed.match(action)) {
         return {...state, error: action.payload, isLoading:false}
     }
-
     return state;
 }
 

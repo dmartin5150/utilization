@@ -39,9 +39,9 @@ const DetailsCardGrid: React.FC<DetailsCardGridProps> = ({ headers,data,highLigh
         const highLightRed = highLightItemsRed.includes(item.col1.toString())
         const curID = parseInt(item.id).toString();
         const highLightGreen = highLightItemsGreen.includes(curID)
-        console.log('item id ', curID)
-        console.log('npis ', highLightItemsGreen)
-        console.log('result ', highLightItemsGreen.includes(item.id.toString()))
+        // console.log('item id ', curID)
+        // console.log('npis ', highLightItemsGreen)
+        // console.log('result ', highLightItemsGreen.includes(item.id.toString()))
         return (<DetailsCardGridRow key={idx} data={item} highLightGreen={highLightGreen} highLightRed={highLightRed}  />)
       })}
       </div>
