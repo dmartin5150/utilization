@@ -73,6 +73,16 @@ export type BlockStats = {
 
 
  export type DetailsSummary = {
+    utilization:string, 
     subHeader:DetailsSubHeader;
     procs: BlockProcedure[];
  }
+
+
+ export type DayUtilization = {
+    id:string,
+    date: string,
+    type:string,
+    room:string,
+    utilization:string
+}

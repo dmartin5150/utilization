@@ -5,6 +5,7 @@ import { CalendarDayData } from "../../../components/calendar/calendarDay";
 import { timeConvert } from "../utilities";
 import { getBlockStats } from "../utilities";
 import { selectBlockGrid } from "./grid.selector";
+import { DayUtilization } from "../block.types";
 
 
 export const selectBlockReducer = (state:RootState) => state.Block;
@@ -32,13 +33,13 @@ export function compare<T extends hasDate>( a:T, b:T ):number {
 
 
 
-const getBlockCalendarData = (blockData:BlockData[]) => {
+const getBlockCalendarData = (blockData:BlockData[],type:string) => {
     const blockCalendar:CalendarDayData[] =[];
     let blockDates = blockData.map((block)=> block.blockDate);
     blockDates = [...new Set(blockDates)]
     blockDates.forEach((date) => {
         const weekday = new Date(date + 'T00:00:00').getDay()
-        const blockDay = blockData.filter((day) => day.blockDate == date);
+        const blockDay = blockData.filter((day) => (day.blockDate == date) && (day.type == type));
         const blockStats = getBlockStats(blockDay);
         const newBlockDay:CalendarDayData = {
             date,
@@ -57,9 +58,32 @@ const getBlockCalendarData = (blockData:BlockData[]) => {
 } 
 
 
-export const selectBlockforCalendar = createSelector(
+export const selectAllBlockforCalendar = createSelector(
     [selectBlockGrid],
-    (ORBlockSlice):CalendarDayData[] =>  getBlockCalendarData(ORBlockSlice)
+    (ORBlockSlice):CalendarDayData[] =>  getBlockCalendarData(ORBlockSlice,'ALL')
+)
+
+export const selectInBlockforCalendar = createSelector(
+    [selectBlockGrid],
+    (ORBlockSlice):CalendarDayData[] =>  getBlockCalendarData(ORBlockSlice,'IN')
+)
+export const selectOutBlockforCalendar = createSelector(
+    [selectBlockGrid],
+    (ORBlockSlice):CalendarDayData[] =>  getBlockCalendarData(ORBlockSlice,'OUT')
+)
+
+
+const getBlockDayUtilization = (blockData:BlockData[]):DayUtilization[] => {
+    return blockData.map((data) => {
+        return {'id':data.id,'date':data.blockDate, 'type':data.type, 'room':data.room, 'utilization':data.utilization}
+    })
+}
+
+
+
+export const selectBlockDayUtilizations = createSelector(
+    [selectBlockGrid],
+    (ORBlockSlice):DayUtilization[] => getBlockDayUtilization(ORBlockSlice)
 )
 
 

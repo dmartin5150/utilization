@@ -3,7 +3,9 @@ import { createSelector } from "reselect";
 import { selectBlockLists } from "./calendar.selector";
 import { BlockDetails, DetailsSubHeader } from "../block.types";
 import { selectBlockReducer } from "./calendar.selector";
-import { DetailsSummary,BlockProcedure } from "../block.types";
+import { DetailsSummary } from "../block.types";
+import { selectBlockDayUtilizations } from "./calendar.selector";
+import { DayUtilization } from "../block.types";
 
 
 
@@ -31,23 +33,29 @@ const getBlockSubHeader = (blockWithId:BlockDetails):DetailsSubHeader => {
 }
 
 
-const getBlockDetailsDay = (details:BlockDetails[], blockDate:string,room:string, selectAll:boolean, blockType:string) => {
+const getBlockDetailsDay = (details:BlockDetails[], blockDate:string,room:string,dayUtilization:DayUtilization[], selectAll:boolean, blockType:string) => {
     const summary: DetailsSummary[] = [];
      const blockDay = details.filter((detail) => (detail.blockDate == blockDate) &&
                     detail.room == room)
+    const utilizationDay = dayUtilization.filter((day)=> (day.date == blockDate) && (day.room == room))
 
     let blockIDs = blockDay.map((block)=> block.blockId)
     blockIDs = [...new Set(blockIDs)]
     blockIDs.forEach((blockId) => {
         const blocksWithId = blockDay.filter((block) => block.blockId == blockId)
         blocksWithId.forEach((blockWithId) => {
+            const utilizationData = utilizationDay.filter((day) => (day.id == blockId) && (day.type ==blockType))
+            let utilization = '0%'
+            if (utilizationData.length > 0) {
+                utilization = utilizationData[0].utilization + '%'
+            }
             const subHeader = getBlockSubHeader(blockWithId)
             if (selectAll) {
                 const procs = blockWithId.procs
-                summary.push({subHeader,procs})
+                summary.push({utilization, subHeader,procs})
             } else {
                 const procs = blockWithId.procs.filter((proc)=> proc.type == blockType)
-                summary.push({subHeader,procs})
+                summary.push({utilization, subHeader,procs})
             }
         })
     })
@@ -55,18 +63,18 @@ const getBlockDetailsDay = (details:BlockDetails[], blockDate:string,room:string
 }
 
 export const selectAllBlockDetailsDay = createSelector(
-    [selectBlockDetails,selectBlockDate, selectBlockRoom],
-    (ORBlockSlice, blockDate,room):DetailsSummary[] => getBlockDetailsDay(ORBlockSlice, blockDate, room, true, 'ALL')
+    [selectBlockDetails,selectBlockDate, selectBlockRoom,selectBlockDayUtilizations],
+    (ORBlockSlice, blockDate,room,dayUtilization):DetailsSummary[] => getBlockDetailsDay(ORBlockSlice, blockDate, room,dayUtilization, true, 'ALL')
 )
 
 export const selectInBlockDetailsDay = createSelector(
-    [selectBlockDetails,selectBlockDate, selectBlockRoom],
-    (ORBlockSlice, blockDate,room):DetailsSummary[] => getBlockDetailsDay(ORBlockSlice, blockDate, room, false,'IN')
+    [selectBlockDetails,selectBlockDate, selectBlockRoom,selectBlockDayUtilizations],
+    (ORBlockSlice, blockDate,room,dayUtilization):DetailsSummary[] => getBlockDetailsDay(ORBlockSlice, blockDate, room,dayUtilization, false,'IN')
 )
 
 export const selectOutBlockDetailsDay = createSelector(
-    [selectBlockDetails,selectBlockDate, selectBlockRoom],
-    (ORBlockSlice, blockDate,room):DetailsSummary[] => getBlockDetailsDay(ORBlockSlice, blockDate, room, false, 'OUT')
+    [selectBlockDetails,selectBlockDate, selectBlockRoom,selectBlockDayUtilizations],
+    (ORBlockSlice, blockDate,room,dayUtilization):DetailsSummary[] => getBlockDetailsDay(ORBlockSlice, blockDate, room,dayUtilization, false, 'OUT')
 )
 
 
