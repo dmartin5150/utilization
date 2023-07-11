@@ -4,14 +4,12 @@ import { SummaryGridRowData } from "../../../components/summary-grid/summary-gri
 import { getBlockStats} from "../utilities";
 import { timeConvert } from "../utilities";
 import { selectBlockLists } from "./calendar.selector";
+import { selectBlockGrid } from "./calendar.selector";
 
 
 
 
-export const selectBlockGrid = createSelector(
-    [selectBlockLists],
-    (ORBlockSlice) => ORBlockSlice.grid
-)
+
 
 const getGridData = (blockroom: string, data:BlockData[]):SummaryGridRowData => {
     const blockStats = getBlockStats(data)

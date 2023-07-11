@@ -4,7 +4,6 @@ import { BlockData } from "../block.types";
 import { CalendarDayData } from "../../../components/calendar/calendarDay";
 import { timeConvert } from "../utilities";
 import { getBlockStats } from "../utilities";
-import { selectBlockGrid } from "./grid.selector";
 import { DayUtilization } from "../block.types";
 
 
@@ -13,6 +12,11 @@ export const selectBlockReducer = (state:RootState) => state.Block;
 export const selectBlockLists = createSelector(
     [selectBlockReducer],
     (ORBlockSlice) => ORBlockSlice.lists
+)
+
+export const selectBlockGrid = createSelector(
+    [selectBlockLists],
+    (ORBlockSlice) => ORBlockSlice.grid
 )
 
 
@@ -35,11 +39,11 @@ export function compare<T extends hasDate>( a:T, b:T ):number {
 
 const getBlockCalendarData = (blockData:BlockData[],type:string) => {
     const blockCalendar:CalendarDayData[] =[];
-    let blockDates = blockData.map((block)=> block.blockDate);
+    let blockDates = blockData.map((item)=>item.blockDate);
     blockDates = [...new Set(blockDates)]
     blockDates.forEach((date) => {
         const weekday = new Date(date + 'T00:00:00').getDay()
-        const blockDay = blockData.filter((day) => (day.blockDate == date) && (day.type == type));
+        const blockDay = blockData.filter((day) => (day.blockDate === date) && (day.type === type));
         const blockStats = getBlockStats(blockDay);
         const newBlockDay:CalendarDayData = {
             date,

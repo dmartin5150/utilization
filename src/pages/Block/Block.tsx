@@ -11,6 +11,9 @@ import { selectDate } from "../../store/Facility/facility.selector";
 import { SingleSelector } from "../../components/SelectorList/SelectorList";
 import { CalendarMenuItem } from "../utilization/utilization.constants";
 import { BlockList } from "net";
+import { selectActiveSurgeonNPIs } from "../../store/ORData/selectors/ordata.selector";
+import { selectBlockGrid } from "../../store/Block/selectors/calendar.selector";
+import { selectAllBlockforCalendar } from "../../store/Block/selectors/calendar.selector";
 
 
 const Block = () => {
@@ -20,11 +23,23 @@ const Block = () => {
     const dispatch = useAppDispatch();
     const unit = useSelector(selectUnit);
     const selectedDate = useSelector(selectDate);
+    const npis = useSelector(selectActiveSurgeonNPIs)
+    const blockGridData = useSelector(selectBlockGrid)
+    const allBlockCalendar = useSelector(selectAllBlockforCalendar)
 
 
     useEffect(()=> {
         dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
     },[])
+
+
+    useEffect(() => {
+        if (blockGridData && blockGridData.length > 0 ){
+            console.log('all block calendar', allBlockCalendar)
+        }
+    },[blockGridData])
+
+
 
     return (
         <section className="blocks">

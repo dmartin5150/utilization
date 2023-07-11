@@ -6,7 +6,7 @@ import Utilization from "./pages/utilization/utilization";
 import Settings from './pages/settings/settings';
 import Surgeons from './pages/surgeons/surgeons';
 // import Rooms from './pages/Rooms/Block';
-import Block from './pages/Rooms/Block';
+import Block from './pages/Block/Block';
 import { useSelector } from 'react-redux';
 import { fetchPTHourSuccessAsync} from './store/ORData/actions/pthours.action';
 import { selectPrimeTime,selectUnit } from './store/Facility/facility.selector';

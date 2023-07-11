@@ -35,6 +35,9 @@ export const BlockReducer = (state=BLOCK_INITIAL_STATE, action: AnyAction):Block
     if (fetchBlockSuccess.match(action)) {
         return {...state, lists: {...state.lists,['grid']: action.payload.grid,['details']:action.payload.details },  isLoading:false}
     }
+    // if (fetchBlockSuccess.match(action)) {
+    //     return {...state, ...state.lists, lists:action.payload,  isLoading:false}
+    // }
     if (fetchBlockFailed.match(action)) {
         return {...state, error: action.payload, isLoading:false}
     }
