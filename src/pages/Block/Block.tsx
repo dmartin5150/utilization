@@ -79,6 +79,8 @@ const Block = () => {
       }
 
 
+
+
     useEffect(()=> {
         if (allSurgeonsSelected) {
         const calendarSurgeonSelector: SingleSelector<CalendarMenuItem> = {
@@ -226,7 +228,7 @@ const Block = () => {
     const setDetailData = (data:SummaryGridRowData) => {
         const room: FacilityRoom = {"name":data.id, "utilization":data.utilization}
         if (data.procedures !== '0') {
-          dispatch(setSelectedBlockRoom(blockRoom))
+          dispatch(setSelectedBlockRoom(room.name))
           dispatch(setBlockPopUpOpen(true))
         }
       }
