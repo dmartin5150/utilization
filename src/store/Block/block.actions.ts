@@ -3,6 +3,7 @@ import { AppDispatch } from "../store";
 import { BLOCK_TYPES } from "./block.types";
 import { BlockLists } from "./block.types";
 import getBlockData from "../../utilities/fetchData/getBlockData";
+import { CalendarDayData } from "../../components/calendar/calendarDay";
 
 
 export type FetchBlockStart =  Action<BLOCK_TYPES.FETCH_BLOCK_START>
@@ -11,7 +12,8 @@ export type FetchBlockFailed = ActionWithPayload<BLOCK_TYPES.FETCH_BLOCK_FAILED,
 export type SetSelectedBlockDate = ActionWithPayload<BLOCK_TYPES.SET_SELECTED_BLOCK_DATE,string>
 export type SetSelectedBlockRoom = ActionWithPayload<BLOCK_TYPES.SET_SELECTED_BLOCK_ROOM,string>
 export type SetBlockPopUpOpen = ActionWithPayload<BLOCK_TYPES.SET_BLOCK_POPUP_OPEN, boolean>
-
+export type SetBlockCalendarData = ActionWithPayload<BLOCK_TYPES.SET_CALENDAR_DATA, CalendarDayData[]>
+export type SetBlockCalendarTotals = ActionWithPayload<BLOCK_TYPES.SET_CALENDAR_TOTALS, CalendarDayData[]>
 
 
 export const fetchBlockStart = withMatcher(():FetchBlockStart=> {
@@ -37,6 +39,16 @@ export const setSelectedBlockRoom = withMatcher((room:string):SetSelectedBlockRo
 export const setBlockPopUpOpen = withMatcher((popUpOpen:boolean):SetBlockPopUpOpen => {
     return createAction(BLOCK_TYPES.SET_BLOCK_POPUP_OPEN, popUpOpen)
 })
+
+export const setBlockCalendarData = withMatcher((calendar:CalendarDayData[]):SetBlockCalendarData => {
+    return createAction(BLOCK_TYPES.SET_CALENDAR_DATA, calendar)
+})
+
+export const setBlockCalendarTotals = withMatcher((calendar:CalendarDayData[]):SetBlockCalendarTotals => {
+    return createAction(BLOCK_TYPES.SET_CALENDAR_TOTALS, calendar)
+})
+
+
 
 // export const setSelectedRoomStatus = withMatcher((status:string):SetSelectedRoomStatus => {
 //     return createAction(BLOCK_TYPES. )

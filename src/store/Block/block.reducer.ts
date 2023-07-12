@@ -1,10 +1,13 @@
 import { AnyAction } from "redux";
 import { BlockLists } from "./block.types";
 import { fetchBlockStart,fetchBlockFailed,fetchBlockSuccess, setSelectedBlockDate,
-        setSelectedBlockRoom, setBlockPopUpOpen } from "./block.actions";
+        setSelectedBlockRoom, setBlockPopUpOpen, setBlockCalendarData, setBlockCalendarTotals } from "./block.actions";
+import { CalendarDayData } from "../../components/calendar/calendarDay";
 
 export type BlockState = {
-    lists:BlockLists
+    lists:BlockLists,
+    calendarData: CalendarDayData[],
+    calendarTotals: CalendarDayData[],
     isLoading:boolean,
     selectedBlockDate: string, 
     selectedBlockRoom: string,
@@ -21,6 +24,8 @@ const BLOCK_INITIAL_STATE: BlockState = {
         grid: [],
         details: []
     },
+    calendarData: [],
+    calendarTotals: [],
     selectedBlockDate: '2023-07-12',
     selectedBlockRoom: 'BH JRI 08',
     popUpOpen:false, 
@@ -49,6 +54,13 @@ export const BlockReducer = (state=BLOCK_INITIAL_STATE, action: AnyAction):Block
     if (setBlockPopUpOpen.match(action)) {
         return {...state, popUpOpen:action.payload}
     }
+    if (setBlockCalendarData.match(action)) {
+        return {...state, calendarData: action.payload}
+    }
+    if (setBlockCalendarTotals.match(action)) {
+        return {...state, calendarTotals: action.payload}
+    }
+
     return state;
 }
 

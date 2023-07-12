@@ -22,6 +22,15 @@ export const selectBlockGrid = createSelector(
     (ORBlockSlice) => ORBlockSlice.grid
 )
 
+export const selectBlockCalendarData = createSelector(
+    [selectBlockReducer],
+    (ORBlockSlice) => ORBlockSlice.calendarData
+)
+
+export const selectBlockCalendarTotals = createSelector(
+    [selectBlockReducer],
+    (ORBlockSlice) => ORBlockSlice.calendarTotals
+)
 
 
 export type hasDate = {

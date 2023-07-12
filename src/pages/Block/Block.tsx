@@ -37,8 +37,12 @@ import { DetailsSubHeaderData } from "../../components/team-card/details-subhead
 import { DetailsData } from "../../components/team-card/details-card";
 import { setBlockPopUpOpen } from "../../store/Block/block.actions";
 import { selectBlockPopUpIsOpen } from "../../store/Block/selectors/details.selector";
-import { blockRoomOptions,calendaBlockRoomMenus } from "./block.constants";
+import { calendaBlockRoomMenus } from "./block.constants";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
+import { selectBlockCalendarData, selectBlockCalendarTotals } from "../../store/Block/selectors/calendar.selector";
+import { setBlockCalendarData, setBlockCalendarTotals } from "../../store/Block/block.actions";
+import { selectPTHours } from "../../store/ORData/selectors/ordata.selector";
+import { selectBlockLists } from "../../store/Block/selectors/calendar.selector";
 
 
 
@@ -47,11 +51,13 @@ const Block = () => {
     const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [blockCards, setBlockCards] = useState<BlockDetailCard[]>([]);
-    const [calendarData, setCalendarData] = useState<CalendarDayData[]>([])
+
 
 
     const dispatch = useAppDispatch();
+
     const unit = useSelector(selectUnit);
+    const blockLists = useSelector(selectBlockLists)
     const selectedDate = useSelector(selectBlockDate);
     const npis = useSelector(selectActiveSurgeonNPIs);
     const blockGridData = useSelector(selectBlockGrid);
@@ -66,16 +72,21 @@ const Block = () => {
     const outDetails = useSelector(selectOutBlockDetailsDay);
     const allSurgeonsSelected = useSelector(selectAllSurgeonsSelected);
     const allRoomsSelected = useSelector(selectAllRoomsSelected);
-    const blockRoom = useSelector(selectBlockRoom)
-    const blockPopUpIsOpen = useSelector(selectBlockPopUpIsOpen)
+    const blockRoom = useSelector(selectBlockRoom);
+    const blockPopUpIsOpen = useSelector(selectBlockPopUpIsOpen);
+    const blockCalendarData = useSelector(selectBlockCalendarData);
+    const blockCalendarTotals = useSelector(selectBlockCalendarTotals)
+    const ptHours = useSelector(selectPTHours)
 
     
 
 
     useEffect(()=> {
-        dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
-        setCalendarData(allBlockCalendar)
-    },[])
+        if (ptHours && blockLists) {
+            dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
+            dispatch(setBlockCalendarData(allBlockCalendar))
+        }
+    },[ptHours, blockLists])
 
     const updateCalendarSurgeons = (option: SingleValue<CalendarMenuItem>) => {
         if (option) {
@@ -111,26 +122,20 @@ const Block = () => {
 
     const updateCalendarRooms = (option: SingleValue<CalendarMenuItem>) => {
         if (option) {
+            console.log('update calendar', option)
             if (option.value == CalendarMenuOptions.All) {
-                setCalendarData(allBlockCalendar)
+                dispatch(setBlockCalendarData(allBlockCalendar))
             }
             if (option.value == CalendarMenuOptions.In) {
-                setCalendarData(inBlockCalendar)
+                dispatch(setBlockCalendarData(inBlockCalendar))
             }
             if (option.value == CalendarMenuOptions.Out) {
-                setCalendarData(outBlockCalendar)
+                dispatch(setBlockCalendarData(outBlockCalendar))
             }
 
         }
       }
 
-
-
-    //   useEffect(()=> {
-    //      if (roomMenu) {
-    //         dispatch(setCalendarRoomOption(roomMenu))
-    //      }
-    //   }, roomMenu)
       
       useEffect(()=> {
         if (allSurgeonsSelected && allRoomsSelected) {
@@ -206,13 +211,13 @@ const Block = () => {
 
     useEffect(() => {
         if (blockGridData && blockGridData.length > 0 ){
-            // console.log('all block calendar', allBlockCalendar)
+            console.log('all block calendar', allBlockCalendar)
             // console.log('in block calendar', inBlockCalendar)
             // console.log('out block calendar', outBlockCalendar)
             // console.log('all grid', allBlockGrid);
             // console.log('in block grid', inBlockGrid);
             // console.log('out block grid', outBlockGrid)
-            console.log('all details', allDetails )
+            // console.log('all details', allDetails )
             // console.log('in details', inDetails);
             // console.log('out details', outDetails)
         }
@@ -243,7 +248,7 @@ const Block = () => {
             {surgeonMenu && roomMenu && <Calendar
                 title='TNNAS BLOCK UTILIZATION DATA'
                 subTitle={unit}
-                calendarData={calendarData}
+                calendarData={blockCalendarData}
                 calendarTotals={[]}
                 selectedDate={selectedDate}
                 list1={surgeonMenu}
