@@ -11,8 +11,6 @@ import { BlockDetailHeader } from "../block.types";
 
 
 
-
-
 export const selectBlockDetails = createSelector(
     [selectBlockLists],
     (ORBlockSlice) => ORBlockSlice.details
@@ -21,6 +19,11 @@ export const selectBlockDetails = createSelector(
 export const selectBlockDate = createSelector(
     [selectBlockReducer],
     (ORBlockSlice) => ORBlockSlice.selectedBlockDate
+)
+
+export const selectBlockPopUpIsOpen = createSelector(
+    [selectBlockReducer],
+    (ORBlockSlice) => ORBlockSlice.popUpOpen
 )
 
 export const selectBlockRoom = createSelector(

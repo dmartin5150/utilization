@@ -35,6 +35,10 @@ import BlockDetailCards, { BlockDetailCard } from "../../components/blockdetails
 import { DetailsSummary, BlockDetailHeader, DetailsSubHeader,BlockProcedure } from "../../store/Block/block.types";
 import { DetailsSubHeaderData } from "../../components/team-card/details-subheader";
 import { DetailsData } from "../../components/team-card/details-card";
+import { setBlockPopUpOpen } from "../../store/Block/block.actions";
+import { selectBlockPopUpIsOpen } from "../../store/Block/selectors/details.selector";
+
+
 
 const Block = () => {
     const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
@@ -59,6 +63,7 @@ const Block = () => {
     const allSurgeonsSelected = useSelector(selectAllSurgeonsSelected);
     const allRoomsSelected = useSelector(selectAllRoomsSelected);
     const blockRoom = useSelector(selectBlockRoom)
+    const blockPopUpIsOpen = useSelector(selectBlockPopUpIsOpen)
 
     
 
@@ -141,10 +146,9 @@ const Block = () => {
 
 
       const onClosePopup = () => {
-        console.log('closing pop up')
+        dispatch(setBlockPopUpOpen(false))
       }
 
-    // const detailsHeader:DetailsHeader = {'col1':room.name,'col2':selectedDate, 'col3':`Utilization ${room.utilization}`, 'col4': ''}
     const detailsColHeader:GridNames = {'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Room'}
 
     const getDetailCardHeader = (data:BlockDetailHeader):DetailsHeader => {
@@ -183,7 +187,7 @@ const Block = () => {
                     highLightItemsGreen:[],
                     data:procs,
                     onClosePopup: onClosePopup,
-                    popUpOpen: true,
+                    popUpOpen: blockPopUpIsOpen,
                     classIsOpen: 'open',
                     highLightItemsRed: [],
                     subHeaderData:subHeader,
@@ -191,7 +195,7 @@ const Block = () => {
                   }
             })
             setBlockCards(blockCards)
-        }},[selectedDate, allDetails]);
+        }},[selectedDate, allDetails,blockPopUpIsOpen]);
 
 
 
@@ -223,7 +227,7 @@ const Block = () => {
         const room: FacilityRoom = {"name":data.id, "utilization":data.utilization}
         if (data.procedures !== '0') {
           dispatch(setSelectedBlockRoom(blockRoom))
-        //   dispatch(fetchDetailDataAsync(unit, selectedDate,room, primeTime))
+          dispatch(setBlockPopUpOpen(true))
         }
       }
 
@@ -260,7 +264,7 @@ const Block = () => {
             <SummaryGrid
                 data={allBlockGrid}
                 title={`${unit} Room Data: ${selectedDate}`}
-                onSelectItem={(data)=>{}}
+                onSelectItem={setDetailData}
                 firstColumnName={'Room'}
                 secondColumnName={'Utilization'}
                 buttonText={'Details'}

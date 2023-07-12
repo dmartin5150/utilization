@@ -10,6 +10,7 @@ export type FetchBlockSuccess = ActionWithPayload<BLOCK_TYPES.FETCH_BLOCK_SUCCES
 export type FetchBlockFailed = ActionWithPayload<BLOCK_TYPES.FETCH_BLOCK_FAILED, Error>
 export type SetSelectedBlockDate = ActionWithPayload<BLOCK_TYPES.SET_SELECTED_BLOCK_DATE,string>
 export type SetSelectedBlockRoom = ActionWithPayload<BLOCK_TYPES.SET_SELECTED_BLOCK_ROOM,string>
+export type SetBlockPopUpOpen = ActionWithPayload<BLOCK_TYPES.SET_BLOCK_POPUP_OPEN, boolean>
 
 
 export const fetchBlockStart = withMatcher(():FetchBlockStart=> {
@@ -31,6 +32,11 @@ export const setSelectedBlockDate = withMatcher((date:string):SetSelectedBlockDa
 export const setSelectedBlockRoom = withMatcher((room:string):SetSelectedBlockRoom => {
     return createAction(BLOCK_TYPES.SET_SELECTED_BLOCK_ROOM, room)
 })
+
+export const setBlockPopUpOpen = withMatcher((popUpOpen:boolean):SetBlockPopUpOpen => {
+    return createAction(BLOCK_TYPES.SET_BLOCK_POPUP_OPEN, popUpOpen)
+})
+
 
 export const fetchBlockDataAsync = (unit:string, selectAll:boolean, startDate:string,selectedProviders:string[]) => {
     return async (dispatch: AppDispatch) => {
