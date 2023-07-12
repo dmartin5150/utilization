@@ -20,8 +20,8 @@ const BLOCK_INITIAL_STATE: BlockState = {
         grid: [],
         details: []
     },
-    selectedBlockDate: '2023-07-03',
-    selectedBlockRoom: 'BH JRI 09',
+    selectedBlockDate: '2023-07-12',
+    selectedBlockRoom: 'BH JRI 08',
     isLoading:false,
     error:null
 }

@@ -34,6 +34,7 @@ export type BlockProcedure = {
     local_end_time:string;
     NPI:string;
     type:string;
+    room: string;
 }
 
 
@@ -71,9 +72,16 @@ export type BlockStats = {
     releaseDate:string;
  }
 
+export type BlockDetailHeader = {
+    room:string;
+    utilization:string;
+    blockDate: string;
+
+}
+
 
  export type DetailsSummary = {
-    utilization:string, 
+    header:BlockDetailHeader, 
     subHeader:DetailsSubHeader;
     procs: BlockProcedure[];
  }

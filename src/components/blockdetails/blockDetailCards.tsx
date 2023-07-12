@@ -32,8 +32,8 @@ const BlockDetailCards: React.FC<BlockDetailCardsProps> = ({blockCards}) => {
     
     return (
         <div className='blockdetailcards'>
-            {blockCards.map((blockCard) => {
-            return  <DetailsCard 
+            {blockCards.map((blockCard, idx) => {
+            return  <DetailsCard key={idx}
                     title={blockCard.title} 
                     header={blockCard.header}
                     columns={blockCard.columns}

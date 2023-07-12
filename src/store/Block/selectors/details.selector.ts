@@ -6,6 +6,7 @@ import { selectBlockReducer } from "./calendar.selector";
 import { DetailsSummary } from "../block.types";
 import { selectBlockDayUtilizations } from "./calendar.selector";
 import { DayUtilization } from "../block.types";
+import { BlockDetailHeader } from "../block.types";
 
 
 
@@ -51,13 +52,14 @@ const getBlockDetailsDay = (details:BlockDetails[], blockDate:string,room:string
             if (utilizationData.length > 0) {
                 utilization = utilizationData[0].utilization + '%'
             }
+            const header:BlockDetailHeader = {room, utilization,blockDate }
             const subHeader = getBlockSubHeader(blockWithId)
             if (selectAll) {
                 const procs = blockWithId.procs
-                summary.push({utilization, subHeader,procs})
+                summary.push({header, subHeader,procs})
             } else {
                 const procs = blockWithId.procs.filter((proc)=> proc.type === blockType)
-                summary.push({utilization, subHeader,procs})
+                summary.push({header, subHeader,procs})
             }
         })
     })

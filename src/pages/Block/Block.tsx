@@ -31,11 +31,15 @@ import { setSelectedBlockRoom } from "../../store/Block/block.actions";
 import { selectBlockRoom } from "../../store/Block/selectors/details.selector";
 import { DetailsHeader } from "../../components/team-card/details-card-header";
 import { GridNames } from "../../components/team-card/details-grid";
-import { BlockDetailCard } from "../../components/blockdetails/blockDetailCards";
+import BlockDetailCards, { BlockDetailCard } from "../../components/blockdetails/blockDetailCards";
+import { DetailsSummary, BlockDetailHeader, DetailsSubHeader,BlockProcedure } from "../../store/Block/block.types";
+import { DetailsSubHeaderData } from "../../components/team-card/details-subheader";
+import { DetailsData } from "../../components/team-card/details-card";
 
 const Block = () => {
     const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
+    const [blockCards, setBlockCards] = useState<BlockDetailCard[]>([]);
 
 
     const dispatch = useAppDispatch();
@@ -140,21 +144,54 @@ const Block = () => {
         console.log('closing pop up')
       }
 
-    //   useEffect (() => {
-    //     const blockDetailCard:BlockDetailCard = {
-    //         title: 'Block Data',
-    //         header: , // 4 col strings
-    //         columns: , // 5 col strings
-    //         highLightItemsGreen:[],
-    //         data:[],
-    //         onClosePopup: onClosePopup,
-    //         popUpOpen: true,
-    //         classIsOpen: 'open',
-    //         highLightItemsRed: [],
-    //         subHeaderData: [],
-    //         pageSize: 6
-    //       }
-    //   },[selectedDate, allDetails])
+    // const detailsHeader:DetailsHeader = {'col1':room.name,'col2':selectedDate, 'col3':`Utilization ${room.utilization}`, 'col4': ''}
+    const detailsColHeader:GridNames = {'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Room'}
+
+    const getDetailCardHeader = (data:BlockDetailHeader):DetailsHeader => {
+        return {'col1': data.room, 'col2': data.utilization, 'col3': data.blockDate, 'col4':''}
+    }
+
+    const getDetailCardSubHeader = (data:DetailsSubHeader):DetailsSubHeaderData[] => {
+        return [{'name':data.name, 'startTime': data.startTime, 'endTime': data.endTime, 'releaseDate': data.releaseDate}]
+    }
+
+    const getDetailsProcsArray = (data:BlockProcedure[]):DetailsData[] => {
+        return data.map((procedure, idx) => {
+            return ({
+                'id': idx.toString(),
+                'col1': procedure.fullName, 
+                'col2': procedure.procedureName, 
+                'col3':procedure.local_start_time,
+                'col4': procedure.local_end_time,
+                'col5': procedure.room
+            })
+        })
+    }
+
+
+      useEffect (() => {
+        if (selectedDate && allDetails) {
+            const blockCards:BlockDetailCard[] = allDetails.map((detail) => {
+                const header = getDetailCardHeader(detail.header);
+                const subHeader = getDetailCardSubHeader(detail.subHeader);
+                const procs = getDetailsProcsArray(detail.procs);
+                let blockDetailCard:BlockDetailCard;
+                return blockDetailCard = {
+                    title: 'Block Data',
+                    header: header, // 4 col strings
+                    columns: detailsColHeader, // 5 col strings
+                    highLightItemsGreen:[],
+                    data:procs,
+                    onClosePopup: onClosePopup,
+                    popUpOpen: true,
+                    classIsOpen: 'open',
+                    highLightItemsRed: [],
+                    subHeaderData:subHeader,
+                    pageSize: 6
+                  }
+            })
+            setBlockCards(blockCards)
+        }},[selectedDate, allDetails]);
 
 
 
@@ -178,8 +215,7 @@ const Block = () => {
         dispatch(setSelectedBlockDate(date));
     }
 
-    // const detailsHeader:DetailsHeader = {'col1':room.name,'col2':selectedDate, 'col3':`Utilization ${room.utilization}`, 'col4': ''}
-    const detailsColHeader:GridNames = {'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Duration'}
+
 
 
 
@@ -206,6 +242,7 @@ const Block = () => {
             highLightItemsRed={[]}
             subHeaderData={blockData}
             pageSize={6} /> */}
+            <BlockDetailCards blockCards={blockCards} />
             <div className="block__calendar">
             {surgeonMenu && roomMenu && <Calendar
                 title={unit}
