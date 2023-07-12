@@ -25,6 +25,12 @@ import { setCalendarSurgeonOption,setCalendarRoomOption } from "../../store/ORDa
 import { calendarRoomMenus } from "../utilization/utilization.constants";
 import { selectAllRoomsSelected } from "../../store/ORData/selectors/ordata.selector";
 import { selectBlockDate } from "../../store/Block/selectors/details.selector";
+import { SummaryGridRowData } from "../../components/summary-grid/summary-grid-row";
+import { FacilityRoom } from "../../store/Facility/facitlity.reducer";
+import { setSelectedBlockRoom } from "../../store/Block/block.actions";
+import { selectBlockRoom } from "../../store/Block/selectors/details.selector";
+import { DetailsHeader } from "../../components/team-card/details-card-header";
+import { GridNames } from "../../components/team-card/details-grid";
 
 const Block = () => {
     const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
@@ -47,6 +53,7 @@ const Block = () => {
     const outDetails = useSelector(selectOutBlockDetailsDay);
     const allSurgeonsSelected = useSelector(selectAllSurgeonsSelected);
     const allRoomsSelected = useSelector(selectAllRoomsSelected);
+    const blockRoom = useSelector(selectBlockRoom)
 
     
 
@@ -59,7 +66,6 @@ const Block = () => {
         if (option) {
           dispatch(setCalendarSurgeonOption(option.value as CalendarMenuOptions))
         }
-        
       }
 
 
@@ -152,6 +158,21 @@ const Block = () => {
         dispatch(setSelectedBlockDate(date));
     }
 
+    // const detailsHeader:DetailsHeader = {'col1':room.name,'col2':selectedDate, 'col3':`Utilization ${room.utilization}`, 'col4': ''}
+    const detailsColHeader:GridNames = {'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Duration'}
+
+
+
+    const setDetailData = (data:SummaryGridRowData) => {
+        const room: FacilityRoom = {"name":data.id, "utilization":data.utilization}
+        if (data.procedures !== '0') {
+          dispatch(setSelectedBlockRoom(blockRoom))
+        //   dispatch(fetchDetailDataAsync(unit, selectedDate,room, primeTime))
+        }
+      }
+
+
+
     return (
         <section className="blocks">
             {/* <DetailsCard 
@@ -162,7 +183,7 @@ const Block = () => {
             data ={detailsData}
             onClosePopup={closeDetailsCard} 
             classIsOpen={`${popupOpen ? "open" : "close"}`}
-            highLightItemsRed={['Open Time']}
+            highLightItemsRed={[]}
             subHeaderData={blockData}
             pageSize={6} /> */}
             <div className="block__calendar">
@@ -179,15 +200,15 @@ const Block = () => {
             />}
             </div>
             <div className="block__info">
-            {/* <SummaryGrid
-                data={gridData}
+            <SummaryGrid
+                data={allBlockGrid}
                 title={`${unit} Room Data: ${selectedDate}`}
-                onSelectItem={setDetailData}
+                onSelectItem={(data)=>{}}
                 firstColumnName={'Room'}
                 secondColumnName={'Utilization'}
                 buttonText={'Details'}
                 pageSize={18}
-            ></SummaryGrid> */}
+            ></SummaryGrid>
             </div>
         </section>
     );
