@@ -38,6 +38,7 @@ import { DetailsData } from "../../components/team-card/details-card";
 import { setBlockPopUpOpen } from "../../store/Block/block.actions";
 import { selectBlockPopUpIsOpen } from "../../store/Block/selectors/details.selector";
 import { blockRoomOptions,calendaBlockRoomMenus } from "./block.constants";
+import { CalendarDayData } from "../../components/calendar/calendarDay";
 
 
 
@@ -46,6 +47,7 @@ const Block = () => {
     const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [blockCards, setBlockCards] = useState<BlockDetailCard[]>([]);
+    const [calendarData, setCalendarData] = useState<CalendarDayData[]>([])
 
 
     const dispatch = useAppDispatch();
@@ -72,6 +74,7 @@ const Block = () => {
 
     useEffect(()=> {
         dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
+        setCalendarData(allBlockCalendar)
     },[])
 
     const updateCalendarSurgeons = (option: SingleValue<CalendarMenuItem>) => {
@@ -108,7 +111,16 @@ const Block = () => {
 
     const updateCalendarRooms = (option: SingleValue<CalendarMenuItem>) => {
         if (option) {
-        //   dispatch(setSelectedBlockRoom(option.value as CalendarMenuOptions))
+            if (option.value == CalendarMenuOptions.All) {
+                setCalendarData(allBlockCalendar)
+            }
+            if (option.value == CalendarMenuOptions.In) {
+                setCalendarData(inBlockCalendar)
+            }
+            if (option.value == CalendarMenuOptions.Out) {
+                setCalendarData(outBlockCalendar)
+            }
+
         }
       }
 
@@ -224,26 +236,14 @@ const Block = () => {
       }
 
 
-
     return (
         <section className="blocks">
-            {/* <DetailsCard 
-            title={"OR Utilization"} 
-            header={detailsHeader}
-            columns={detailsColHeader}
-            highLightItemsGreen={activeNPIs}
-            data ={detailsData}
-            onClosePopup={closeDetailsCard} 
-            classIsOpen={`${popupOpen ? "open" : "close"}`}
-            highLightItemsRed={[]}
-            subHeaderData={blockData}
-            pageSize={6} /> */}
             <BlockDetailCards blockCards={blockCards} />
             <div className="block__calendar">
             {surgeonMenu && roomMenu && <Calendar
                 title='TNNAS BLOCK UTILIZATION DATA'
                 subTitle={unit}
-                calendarData={allBlockCalendar}
+                calendarData={calendarData}
                 calendarTotals={[]}
                 selectedDate={selectedDate}
                 list1={surgeonMenu}

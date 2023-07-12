@@ -14,7 +14,9 @@ type CalendarMenuItems = {
 export enum CalendarMenuOptions {
     All = '1',
     Selected = '2',
-    Mixed = '3'
+    Mixed = '3',
+    In = '4',
+    Out = '5'
 }
 
 export type CalendarMenus = {
