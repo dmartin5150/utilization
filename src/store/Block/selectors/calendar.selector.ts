@@ -8,6 +8,7 @@ import { DayUtilization } from "../block.types";
 import { getArrayTotals } from "../../ORData/selectors/ordata.ptselectors";
 import { minutestohours } from "../../ORData/ordata.utilities";
 import { weekDays } from "../../ORData/ordata.types";
+import { calculateCalendarTotals } from "../../ORData/selectors/ordata.ptselectors";
 
 
 export const selectBlockReducer = (state:RootState) => state.Block;
@@ -75,35 +76,41 @@ const getBlockCalendarData = (blockData:BlockData[],type:string) => {
 
 
 
-const calculateCalendarTotals = (calendarData:CalendarDayData[]) => {
-    const calendarTotals:CalendarDayData[] = []
-    weekDays.forEach((day) => {
-        const currentData = calendarData.filter((date)=> date.dayOfWeek === day)
-        const dailyptMinutes = currentData.map((date) => date.ptMinutes)
-        const dailynonptMinutes = currentData.map((date) => date.nonptMinutes)
-        const dailytotalptMinutes = currentData.map((date) => date.totalptMinutes)
-        const ptMinutes = getArrayTotals(dailyptMinutes)
-        const nonptMinutes = getArrayTotals(dailynonptMinutes)
-        const totalptMinutes = getArrayTotals(dailytotalptMinutes)
-        let utilization = '0%'
-        if (totalptMinutes > 0) {
-            utilization = Math.round(ptMinutes/totalptMinutes*100).toString() + '%'
-        } 
-        const dailyTotal:CalendarDayData = {
-            date: 'Total', 
-            display: utilization, 
-            subHeading1:'PT: ' +  minutestohours(ptMinutes),
-            subHeading2: 'nPT: ' + minutestohours(nonptMinutes),
-            ptMinutes, 
-            nonptMinutes,
-            totalptMinutes,
-            dayOfWeek:day,
-        } 
-        calendarTotals.push(dailyTotal)
-    })
-    return calendarTotals;
-}
+// const calculateCalendarTotals = (calendarData:CalendarDayData[]) => {
+//     const calendarTotals:CalendarDayData[] = []
+//     weekDays.forEach((day) => {
+//         const currentData = calendarData.filter((date)=> date.dayOfWeek === day)
+//         const dailyptMinutes = currentData.map((date) => date.ptMinutes)
+//         const dailynonptMinutes = currentData.map((date) => date.nonptMinutes)
+//         const dailytotalptMinutes = currentData.map((date) => date.totalptMinutes)
+//         const ptMinutes = getArrayTotals(dailyptMinutes)
+//         const nonptMinutes = getArrayTotals(dailynonptMinutes)
+//         const totalptMinutes = getArrayTotals(dailytotalptMinutes)
+//         let utilization = '0%'
+//         if (totalptMinutes > 0) {
+//             utilization = Math.round(ptMinutes/totalptMinutes*100).toString() + '%'
+//         } 
+//         const dailyTotal:CalendarDayData = {
+//             date: 'Total', 
+//             display: utilization, 
+//             subHeading1:'PT: ' +  minutestohours(ptMinutes),
+//             subHeading2: 'nPT: ' + minutestohours(nonptMinutes),
+//             ptMinutes, 
+//             nonptMinutes,
+//             totalptMinutes,
+//             dayOfWeek:day,
+//         } 
+//         calendarTotals.push(dailyTotal)
+//     })
+//     return calendarTotals;
+// }
 
+
+
+export const selectCalculatedTotals = createSelector(
+    [selectBlockCalendarData],
+    (calendarData):CalendarDayData[] =>  calculateCalendarTotals(calendarData)
+)
 
 export const selectAllBlockforCalendar = createSelector(
     [selectBlockGrid],

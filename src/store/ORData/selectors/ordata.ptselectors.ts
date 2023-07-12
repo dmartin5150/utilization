@@ -185,7 +185,7 @@ export const getArrayTotals = (numbers:number[]) =>{
 }
 
 
-const calculateCalendarTotals = (calendarData:CalendarDayData[]) => {
+export const calculateCalendarTotals = (calendarData:CalendarDayData[]) => {
     const calendarTotals:CalendarDayData[] = []
     weekDays.forEach((day) => {
         const currentData = calendarData.filter((date)=> date.dayOfWeek === day)

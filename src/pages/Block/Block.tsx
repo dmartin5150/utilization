@@ -43,6 +43,7 @@ import { selectBlockCalendarData, selectBlockCalendarTotals } from "../../store/
 import { setBlockCalendarData, setBlockCalendarTotals } from "../../store/Block/block.actions";
 import { selectPTHours } from "../../store/ORData/selectors/ordata.selector";
 import { selectBlockLists } from "../../store/Block/selectors/calendar.selector";
+import { selectCalculatedTotals } from "../../store/Block/selectors/calendar.selector";
 
 
 
@@ -77,16 +78,39 @@ const Block = () => {
     const blockCalendarData = useSelector(selectBlockCalendarData);
     const blockCalendarTotals = useSelector(selectBlockCalendarTotals)
     const ptHours = useSelector(selectPTHours)
+    const calculatedTotals = useSelector(selectCalculatedTotals);
 
+    useEffect(()=> {
+        dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
+        if (allBlockCalendar && allBlockCalendar.length >0) {
+            console.log('setting calendar data')
+            console.log('setting calendar data')
+            dispatch(setBlockCalendarData(allBlockCalendar))
+        }
+    },[])
     
 
 
     useEffect(()=> {
-        if (ptHours && blockLists) {
+        if (allBlockCalendar && allBlockCalendar.length >0) {
+            console.log('setting calendar data')
             dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
+            console.log('setting calendar data')
             dispatch(setBlockCalendarData(allBlockCalendar))
         }
-    },[ptHours, blockLists])
+    },[allBlockCalendar])
+
+    useEffect(()=> {
+        if (blockCalendarData && blockCalendarData.length >0) {
+            dispatch(setBlockCalendarTotals(calculatedTotals))
+        }
+    },[blockCalendarData])
+
+
+
+
+
+ 
 
     const updateCalendarSurgeons = (option: SingleValue<CalendarMenuItem>) => {
         if (option) {
@@ -249,7 +273,7 @@ const Block = () => {
                 title='TNNAS BLOCK UTILIZATION DATA'
                 subTitle={unit}
                 calendarData={blockCalendarData}
-                calendarTotals={[]}
+                calendarTotals={blockCalendarTotals}
                 selectedDate={selectedDate}
                 list1={surgeonMenu}
                 list2={roomMenu}
