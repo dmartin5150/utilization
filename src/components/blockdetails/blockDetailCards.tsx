@@ -1,9 +1,11 @@
 import React from "react";
+import './blockDetailsCard.scss'
 import DetailsCard from "../../components/team-card/details-card";
 import { DetailsHeader } from "../team-card/details-card-header";
 import { GridNames } from "../team-card/details-grid";
 import { DetailsData } from "../../components/team-card/details-card";
 import { DetailsSubHeaderData } from "../team-card/details-subheader";
+
 
 
 export type BlockDetailCard = {
@@ -29,7 +31,7 @@ interface BlockDetailCardsProps  {
 const BlockDetailCards: React.FC<BlockDetailCardsProps> = ({blockCards}) => {
     
     return (
-        <div className='blockdetialcards'>
+        <div className='blockdetailcards'>
             {blockCards.map((blockCard) => {
             return  <DetailsCard 
                     title={blockCard.title} 
@@ -41,7 +43,7 @@ const BlockDetailCards: React.FC<BlockDetailCardsProps> = ({blockCards}) => {
                     classIsOpen={`${blockCard.popUpOpen ? "open" : "close"}`}
                     highLightItemsRed={blockCard.highLightItemsRed}
                     subHeaderData={blockCard.subHeaderData}
-                    pageSize={6} /> 
+                    pageSize={blockCard.pageSize} /> 
 
             })}
         </div>

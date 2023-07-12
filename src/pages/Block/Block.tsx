@@ -31,6 +31,7 @@ import { setSelectedBlockRoom } from "../../store/Block/block.actions";
 import { selectBlockRoom } from "../../store/Block/selectors/details.selector";
 import { DetailsHeader } from "../../components/team-card/details-card-header";
 import { GridNames } from "../../components/team-card/details-grid";
+import { BlockDetailCard } from "../../components/blockdetails/blockDetailCards";
 
 const Block = () => {
     const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
@@ -135,6 +136,25 @@ const Block = () => {
 
 
 
+      const onClosePopup = () => {
+        console.log('closing pop up')
+      }
+
+    //   useEffect (() => {
+    //     const blockDetailCard:BlockDetailCard = {
+    //         title: 'Block Data',
+    //         header: , // 4 col strings
+    //         columns: , // 5 col strings
+    //         highLightItemsGreen:[],
+    //         data:[],
+    //         onClosePopup: onClosePopup,
+    //         popUpOpen: true,
+    //         classIsOpen: 'open',
+    //         highLightItemsRed: [],
+    //         subHeaderData: [],
+    //         pageSize: 6
+    //       }
+    //   },[selectedDate, allDetails])
 
 
 
@@ -147,11 +167,11 @@ const Block = () => {
             // console.log('all grid', allBlockGrid);
             // console.log('in block grid', inBlockGrid);
             // console.log('out block grid', outBlockGrid)
-            // console.log('all details', allDetails )
+            console.log('all details', allDetails )
             // console.log('in details', inDetails);
             // console.log('out details', outDetails)
         }
-    },[blockGridData])
+    },[blockGridData,selectedDate])
 
 
     const setBlockDate = (date:string) => {
