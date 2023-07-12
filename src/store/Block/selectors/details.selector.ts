@@ -36,16 +36,17 @@ const getBlockSubHeader = (blockWithId:BlockDetails):DetailsSubHeader => {
 
 const getBlockDetailsDay = (details:BlockDetails[], blockDate:string,room:string,dayUtilization:DayUtilization[], selectAll:boolean, blockType:string) => {
     const summary: DetailsSummary[] = [];
-     const blockDay = details.filter((detail) => (detail.blockDate == blockDate) &&
-                    detail.room == room)
-    const utilizationDay = dayUtilization.filter((day)=> (day.date == blockDate) && (day.room == room))
+    console.log('blockDate', blockDate)
+     const blockDay = details.filter((detail) => (detail.blockDate === blockDate) &&
+                    detail.room === room)
+    const utilizationDay = dayUtilization.filter((day)=> (day.date === blockDate) && (day.room === room))
 
     let blockIDs = blockDay.map((block)=> block.blockId)
     blockIDs = [...new Set(blockIDs)]
     blockIDs.forEach((blockId) => {
-        const blocksWithId = blockDay.filter((block) => block.blockId == blockId)
+        const blocksWithId = blockDay.filter((block) => block.blockId === blockId)
         blocksWithId.forEach((blockWithId) => {
-            const utilizationData = utilizationDay.filter((day) => (day.id == blockId) && (day.type ==blockType))
+            const utilizationData = utilizationDay.filter((day) => (day.id === blockId) && (day.type === blockType))
             let utilization = '0%'
             if (utilizationData.length > 0) {
                 utilization = utilizationData[0].utilization + '%'
@@ -55,7 +56,7 @@ const getBlockDetailsDay = (details:BlockDetails[], blockDate:string,room:string
                 const procs = blockWithId.procs
                 summary.push({utilization, subHeader,procs})
             } else {
-                const procs = blockWithId.procs.filter((proc)=> proc.type == blockType)
+                const procs = blockWithId.procs.filter((proc)=> proc.type === blockType)
                 summary.push({utilization, subHeader,procs})
             }
         })

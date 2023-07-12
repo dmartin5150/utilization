@@ -15,7 +15,7 @@ export function timeConvert(n:number):string {
 
  export const getBlockStats = (blockDay:BlockData[]):BlockStats => {
     const btMinutes = blockDay.map((day)=> {
-        console.log('minutes', day.bt_minutes)
+        // console.log('minutes', day.bt_minutes)
         return parseInt(day.bt_minutes)
     });
     const nbtMinutes = blockDay.map((day)=> parseInt(day.nbt_minutes));

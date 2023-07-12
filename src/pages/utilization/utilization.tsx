@@ -407,6 +407,8 @@ const updateCalendarSurgeons = (option: SingleValue<CalendarMenuItem>) => {
 }
 
 
+
+
 useEffect(()=> {
   if (allSurgeonsSelected) {
     const calendarSurgeonSelector: SingleSelector<CalendarMenuItem> = {

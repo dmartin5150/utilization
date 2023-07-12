@@ -5,8 +5,7 @@ import { getBlockStats} from "../utilities";
 import { timeConvert } from "../utilities";
 import { selectBlockLists } from "./calendar.selector";
 import { selectBlockGrid } from "./calendar.selector";
-
-
+import { selectBlockDate } from "./details.selector";
 
 
 
@@ -26,41 +25,39 @@ const getGridData = (blockroom: string, data:BlockData[]):SummaryGridRowData => 
 }
 
 
-const getAllBlockforGrid = (blockData:BlockData[], selectAll: boolean, blockType:string):SummaryGridRowData[] => {
+const getAllBlockforGrid = (blockData:BlockData[],blockDate:string, selectAll: boolean, blockType:string):SummaryGridRowData[] => {
     const newGridDay:SummaryGridRowData[] = [];
-    let blockDates = blockData.map((block)=> block.blockDate);
     let blockRooms = blockData.map((block) => block.room)
-
-    blockDates = [...new Set(blockDates)]
     blockRooms = [...new Set(blockRooms)]
-    blockDates.forEach((blockDay) => {
         blockRooms.forEach((blockroom) => {
             if (selectAll) {
-                const dailyGrid = blockData.filter((block) => (block.blockDate == blockDay) && (block.room == blockroom))
-                newGridDay.push(getGridData(blockroom, dailyGrid)) 
+                let dailyGrid = blockData.filter((block) => (block.blockDate === blockDate) && 
+                        (block.room === blockroom) && (block.id !== 'none') && (block.type === blockType))
+                console.log('daily grid', dailyGrid)
+                newGridDay.push(getGridData(blockroom, dailyGrid))
             }else {
-                const dailyGrid = blockData.filter((block) => (block.blockDate == blockDay) && (block.room == blockroom)
-                                            && (block.type == blockType))
+                let dailyGrid = blockData.filter((block) => (block.blockDate === blockDate) && (block.room === blockroom)
+                                            && (block.type === blockType) && (block.id !== 'none'))
                 newGridDay.push(getGridData(blockroom, dailyGrid))           
             }
         })
-    })
+    
     return newGridDay
 }
 
 
 export const selectAllBlockforGrid = createSelector(
-    [selectBlockGrid],
-    (ORBlockSlice) =>  getAllBlockforGrid(ORBlockSlice, true, 'ALL')
+    [selectBlockGrid, selectBlockDate],
+    (ORBlockSlice,blockDate) =>  getAllBlockforGrid(ORBlockSlice, blockDate, true, 'ALL')
 )
 
 
 export const selectInBlockforGrid = createSelector(
-    [selectBlockGrid],
-    (ORBlockSlice) =>  getAllBlockforGrid(ORBlockSlice, false, 'IN')
+    [selectBlockGrid,selectBlockDate],
+    (ORBlockSlice, blockDate) =>  getAllBlockforGrid(ORBlockSlice, blockDate,false, 'IN')
 )
 
 export const selectOutBlockforGrid = createSelector(
-    [selectBlockGrid],
-    (ORBlockSlice) =>  getAllBlockforGrid(ORBlockSlice, false, 'OUT')
+    [selectBlockGrid,selectBlockDate],
+    (ORBlockSlice, blockDate) =>  getAllBlockforGrid(ORBlockSlice,blockDate, false, 'OUT')
 )
