@@ -13,6 +13,7 @@ export type SetSelectedBlockRoom = ActionWithPayload<BLOCK_TYPES.SET_SELECTED_BL
 export type SetBlockPopUpOpen = ActionWithPayload<BLOCK_TYPES.SET_BLOCK_POPUP_OPEN, boolean>
 
 
+
 export const fetchBlockStart = withMatcher(():FetchBlockStart=> {
     return createAction(BLOCK_TYPES.FETCH_BLOCK_START)
 })
@@ -36,6 +37,10 @@ export const setSelectedBlockRoom = withMatcher((room:string):SetSelectedBlockRo
 export const setBlockPopUpOpen = withMatcher((popUpOpen:boolean):SetBlockPopUpOpen => {
     return createAction(BLOCK_TYPES.SET_BLOCK_POPUP_OPEN, popUpOpen)
 })
+
+// export const setSelectedRoomStatus = withMatcher((status:string):SetSelectedRoomStatus => {
+//     return createAction(BLOCK_TYPES. )
+// })
 
 
 export const fetchBlockDataAsync = (unit:string, selectAll:boolean, startDate:string,selectedProviders:string[]) => {

@@ -180,7 +180,7 @@ const calculatPTTotalHours = (
     ptHoursTotal.sort(compare)
     return ptHoursTotal;
 }
-const getArrayTotals = (numbers:number[]) =>{
+export const getArrayTotals = (numbers:number[]) =>{
     return numbers.reduce((acc, total) => total + acc, 0)
 }
 

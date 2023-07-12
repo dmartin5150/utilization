@@ -493,7 +493,8 @@ useEffect(()=> {
           pageSize={6} />
         <div className="patient__calendar">
           {surgeonMenu && roomMenu && <Calendar
-            title={unit}
+            title='TNNAS UTILIZATION DATA'
+            subTitle={unit}
             calendarData={calendarData}
             calendarTotals={calendarTotals}
             selectedDate={selectedDate}

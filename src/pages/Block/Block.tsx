@@ -37,6 +37,8 @@ import { DetailsSubHeaderData } from "../../components/team-card/details-subhead
 import { DetailsData } from "../../components/team-card/details-card";
 import { setBlockPopUpOpen } from "../../store/Block/block.actions";
 import { selectBlockPopUpIsOpen } from "../../store/Block/selectors/details.selector";
+import { blockRoomOptions,calendaBlockRoomMenus } from "./block.constants";
+
 
 
 
@@ -106,42 +108,30 @@ const Block = () => {
 
     const updateCalendarRooms = (option: SingleValue<CalendarMenuItem>) => {
         if (option) {
-          dispatch(setCalendarRoomOption(option.value as CalendarMenuOptions))
+        //   dispatch(setSelectedBlockRoom(option.value as CalendarMenuOptions))
         }
       }
+
+
+
+    //   useEffect(()=> {
+    //      if (roomMenu) {
+    //         dispatch(setCalendarRoomOption(roomMenu))
+    //      }
+    //   }, roomMenu)
       
       useEffect(()=> {
-        if (allSurgeonsSelected) {
+        if (allSurgeonsSelected && allRoomsSelected) {
           const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
             title: 'Rooms',
             isDisabled:true,
-            selectedOption: calendarRoomMenus['Selected'][0],
-            optionList: calendarRoomMenus['Selected'],
+            selectedOption: calendaBlockRoomMenus['All'][0],
+            optionList: calendaBlockRoomMenus['All'],
             onChange:updateCalendarRooms
           }
           setRoomMenu(calendarRoomSelector);
           dispatch(setCalendarRoomOption(CalendarMenuOptions.All))
-        } else if (!allSurgeonsSelected && allRoomsSelected){
-          const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
-            title: 'Rooms',
-            isDisabled: false,
-            selectedOption: calendarRoomMenus['Mixed'][0],
-            optionList: calendarRoomMenus['Mixed'],
-            onChange:updateCalendarRooms
-          }
-          setRoomMenu(calendarRoomSelector);
-          dispatch(setCalendarRoomOption(CalendarMenuOptions.All))
-        } else {
-          const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
-            title: 'Rooms',
-            isDisabled: false,
-            selectedOption: calendarRoomMenus['All'][1],
-            optionList: calendarRoomMenus['All'],
-            onChange:updateCalendarRooms
-          }
-          setRoomMenu(calendarRoomSelector);
-          dispatch(setCalendarRoomOption(CalendarMenuOptions.Selected))
-        }
+        } 
       },[allSurgeonsSelected, allRoomsSelected])
 
 
@@ -251,7 +241,8 @@ const Block = () => {
             <BlockDetailCards blockCards={blockCards} />
             <div className="block__calendar">
             {surgeonMenu && roomMenu && <Calendar
-                title={unit}
+                title='TNNAS BLOCK UTILIZATION DATA'
+                subTitle={unit}
                 calendarData={allBlockCalendar}
                 calendarTotals={[]}
                 selectedDate={selectedDate}
@@ -265,7 +256,7 @@ const Block = () => {
             <div className="block__info">
             <SummaryGrid
                 data={allBlockGrid}
-                title={`${unit} Room Data: ${selectedDate}`}
+                title={`${unit} Room Block Data: ${selectedDate}`}
                 onSelectItem={setDetailData}
                 firstColumnName={'Room'}
                 secondColumnName={'Utilization'}

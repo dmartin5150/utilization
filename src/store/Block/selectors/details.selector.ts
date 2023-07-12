@@ -11,6 +11,7 @@ import { BlockDetailHeader } from "../block.types";
 
 
 
+
 export const selectBlockDetails = createSelector(
     [selectBlockLists],
     (ORBlockSlice) => ORBlockSlice.details
@@ -68,6 +69,12 @@ const getBlockDetailsDay = (details:BlockDetails[], blockDate:string,room:string
     })
     return summary
 }
+
+
+
+
+
+
 
 export const selectAllBlockDetailsDay = createSelector(
     [selectBlockDetails,selectBlockDate, selectBlockRoom,selectBlockDayUtilizations],

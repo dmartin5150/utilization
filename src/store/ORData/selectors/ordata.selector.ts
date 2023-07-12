@@ -1,10 +1,11 @@
 import { RootState } from "../../store"
 import { createSelector } from "reselect";
-import { Calendar, Grid, Details} from "../ordata.types";;
+import { Calendar, Grid, Details} from "../ordata.types";
+import { ORDataState } from "../ordata.reducer";
 
 
 
-const selectORDataReducer = (state:RootState) => state.ORData;
+const selectORDataReducer = (state:RootState):ORDataState => state.ORData;
 
 export const selectCalendarData = createSelector(
     [selectORDataReducer],

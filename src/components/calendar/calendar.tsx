@@ -19,6 +19,7 @@ import { CalendarDayData } from "./calendarDay";
 
 interface CalendarProps<T extends Option> {
   title: string,
+  subTitle: string,
   selectedDate: string;
   calendarData:CalendarDayData[];
   calendarTotals:CalendarDayData[];
@@ -31,7 +32,7 @@ interface CalendarProps<T extends Option> {
 
 
 function Calendar<T extends Option>({
-  title,selectedDate,calendarData, calendarTotals, hiddenID,list1,list2, onDateChange, pageSize
+  title,subTitle, selectedDate,calendarData, calendarTotals, hiddenID,list1,list2, onDateChange, pageSize
 }: React.PropsWithChildren<CalendarProps<T>>)  {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentCalendarData, setCurrentCalendarData] = useState<CalendarDayData[]>([]);
@@ -67,8 +68,8 @@ function Calendar<T extends Option>({
     <div className={"calendar"}>
       <div className='header-title'>
         <div className='header-text'>
-          <h2 className="heading">TNNAS UTILIZATION DATA</h2>
           <h2 className="heading">{title}</h2>
+          <h2 className="heading">{subTitle}</h2>
         </div>
         <div className="calendar-dropdown">
           <SelectorList 

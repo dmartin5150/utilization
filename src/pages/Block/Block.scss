@@ -23,7 +23,31 @@
             max-width:12rem;
             margin: 0 2rem;
         }
+        & .heading {
+            background-color:#00a896; 
+        }
+        & .header-title {
+            background-color:#00a896;
+        
+        }
+        .daysofweek {
+            background-color:#1c756c;
+        }
+
+        & .selected.highLightSelected{
+            color:#00a896; 
+        }
 
 
+        .layout {
+            background-color:#095a52;
+        }
+    }
+
+    & .block__info {
+
+        & .summary-grid .header--item {
+            background-color: #1b4297;
+        }
     }
 }

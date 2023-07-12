@@ -1,7 +1,8 @@
 import { RootState } from "../store"
 import { createSelector } from "reselect";
+import { FacilityDataState } from "./facitlity.reducer";
 
-const selectFacilityReducer = (state:RootState) => state.Facility;
+const selectFacilityReducer = (state:RootState):FacilityDataState => state.Facility;
 
 export const selectUnit = createSelector(
     [selectFacilityReducer],
