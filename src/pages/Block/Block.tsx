@@ -52,6 +52,7 @@ const Block = () => {
     const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [blockCards, setBlockCards] = useState<BlockDetailCard[]>([]);
+    const [roomSelected, setRoomSelected] = useState<CalendarMenuOptions>(CalendarMenuOptions.All)
 
 
 
@@ -81,24 +82,20 @@ const Block = () => {
     const calculatedTotals = useSelector(selectCalculatedTotals);
 
     useEffect(()=> {
-        dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
-        if (allBlockCalendar && allBlockCalendar.length >0) {
-            console.log('setting calendar data')
-            console.log('setting calendar data')
-            dispatch(setBlockCalendarData(allBlockCalendar))
-        }
+        // dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
+        dispatch(setBlockCalendarData(allBlockCalendar))
     },[])
     
 
 
-    useEffect(()=> {
-        if (allBlockCalendar && allBlockCalendar.length >0) {
-            console.log('setting calendar data')
-            dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
-            console.log('setting calendar data')
-            dispatch(setBlockCalendarData(allBlockCalendar))
-        }
-    },[allBlockCalendar])
+    // useEffect(()=> {
+    //     if (allBlockCalendar && allBlockCalendar.length >0) {
+    //         console.log('setting calendar data')
+    //         dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
+    //         console.log('setting calendar data')
+    //         dispatch(setBlockCalendarData(allBlockCalendar))
+    //     }
+    // },[allBlockCalendar])
 
     useEffect(()=> {
         if (blockCalendarData && blockCalendarData.length >0) {
@@ -141,22 +138,28 @@ const Block = () => {
         setSurgeonMenu(calendarSurgeonSelector)
         dispatch(setCalendarSurgeonOption(CalendarMenuOptions.Selected))
         }
-    },[allSurgeonsSelected])
+    },[allSurgeonsSelected, ])
+
+  useEffect (() => {
+    if (allBlockCalendar && allBlockCalendar.length > 0) {
+        if (roomSelected == CalendarMenuOptions.All) {
+            dispatch(setBlockCalendarData(allBlockCalendar))
+        }
+        if (roomSelected == CalendarMenuOptions.In) {
+            dispatch(setBlockCalendarData(inBlockCalendar))
+        }
+        if (roomSelected == CalendarMenuOptions.Out) {
+            dispatch(setBlockCalendarData(outBlockCalendar))
+        }
+    }
+  }, [allBlockCalendar,roomSelected ])
+
+
 
 
     const updateCalendarRooms = (option: SingleValue<CalendarMenuItem>) => {
         if (option) {
-            console.log('update calendar', option)
-            if (option.value == CalendarMenuOptions.All) {
-                dispatch(setBlockCalendarData(allBlockCalendar))
-            }
-            if (option.value == CalendarMenuOptions.In) {
-                dispatch(setBlockCalendarData(inBlockCalendar))
-            }
-            if (option.value == CalendarMenuOptions.Out) {
-                dispatch(setBlockCalendarData(outBlockCalendar))
-            }
-
+            setRoomSelected(option.value as CalendarMenuOptions)
         }
       }
 
