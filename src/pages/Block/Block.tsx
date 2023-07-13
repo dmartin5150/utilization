@@ -137,20 +137,27 @@ const Block = () => {
     },[allSurgeonsSelected])
 
   useEffect (() => {
-    if (allBlockCalendar && allBlockCalendar.length > 0) {
+    // if (allBlockCalendar && allBlockCalendar.length > 0) {
         if (roomSelected == CalendarMenuOptions.All) {
             dispatch(setBlockCalendarData(allBlockCalendar))
-            setCardDetails(allDetails)
+            console.log('all details', allDetails)
+            const curDetails = allDetails
+            setCardDetails(curDetails)
         }
         if (roomSelected == CalendarMenuOptions.In) {
             dispatch(setBlockCalendarData(inBlockCalendar))
-            setCardDetails(inDetails)
+            console.log('in details', inDetails)
+            const curDetails = inDetails
+            setCardDetails(curDetails)
         }
         if (roomSelected == CalendarMenuOptions.Out) {
             dispatch(setBlockCalendarData(outBlockCalendar))
-            setCardDetails(outDetails)
+            const curDetails = outDetails
+            console.log('out details', outDetails)
+            setCardDetails(curDetails)
+            
         }
-    }
+    // }
   }, [allBlockCalendar,roomSelected ])
 
 
@@ -261,7 +268,7 @@ const Block = () => {
 
     const setDetailData = (data:SummaryGridRowData) => {
         const room: FacilityRoom = {"name":data.id, "utilization":data.utilization}
-        if (data.procedures !== '0') {
+        if (data.utilization !== '0%') {
           dispatch(setSelectedBlockRoom(room.name))
           dispatch(setBlockPopUpOpen(true))
         }
