@@ -63,10 +63,13 @@ const getBlockDetailsDay = (details:BlockDetails[], blockDate:string,room:string
                 summary.push({header, subHeader,procs})
             } else {
                 const procs = blockWithId.procs.filter((proc)=> proc.type === blockType)
+                console.log('filtered procs', procs)
                 summary.push({header, subHeader,procs})
+                console.log('summary', summary)
             }
         })
     })
+    console.log('summary', summary)
     return summary
 }
 

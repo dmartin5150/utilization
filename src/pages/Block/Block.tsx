@@ -53,6 +53,7 @@ const Block = () => {
     const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [blockCards, setBlockCards] = useState<BlockDetailCard[]>([]);
     const [roomSelected, setRoomSelected] = useState<CalendarMenuOptions>(CalendarMenuOptions.All)
+    const [cardDetails, setCardDetails] = useState<DetailsSummary[]>([])
 
 
 
@@ -138,12 +139,15 @@ const Block = () => {
     if (allBlockCalendar && allBlockCalendar.length > 0) {
         if (roomSelected == CalendarMenuOptions.All) {
             dispatch(setBlockCalendarData(allBlockCalendar))
+            setCardDetails(allDetails)
         }
         if (roomSelected == CalendarMenuOptions.In) {
             dispatch(setBlockCalendarData(inBlockCalendar))
+            setCardDetails(inDetails)
         }
         if (roomSelected == CalendarMenuOptions.Out) {
             dispatch(setBlockCalendarData(outBlockCalendar))
+            setCardDetails(outDetails)
         }
     }
   }, [allBlockCalendar,roomSelected ])
@@ -204,8 +208,8 @@ const Block = () => {
 
 
       useEffect (() => {
-        if (selectedDate && allDetails) {
-            const blockCards:BlockDetailCard[] = allDetails.map((detail) => {
+        if (selectedDate && cardDetails) {
+            const blockCards:BlockDetailCard[] = cardDetails.map((detail) => {
                 const header = getDetailCardHeader(detail.header);
                 const subHeader = getDetailCardSubHeader(detail.subHeader);
                 const procs = getDetailsProcsArray(detail.procs);
@@ -225,7 +229,7 @@ const Block = () => {
                   }
             })
             setBlockCards(blockCards)
-        }},[selectedDate, allDetails,blockPopUpIsOpen]);
+        }},[selectedDate,cardDetails,blockPopUpIsOpen]);
 
 
 
