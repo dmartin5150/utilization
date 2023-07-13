@@ -44,6 +44,7 @@ const getBlockDetailsDay = (details:BlockDetails[], blockDate:string,room:string
     // console.log('blockDate', blockDate)
      const blockDay = details.filter((detail) => (detail.blockDate === blockDate) &&
                     detail.room === room)
+    console.log('blockDay', blockDay)
     const utilizationDay = dayUtilization.filter((day)=> (day.date === blockDate) && (day.room === room))
 
     let blockIDs = blockDay.map((block)=> block.blockId)
@@ -51,11 +52,12 @@ const getBlockDetailsDay = (details:BlockDetails[], blockDate:string,room:string
     blockIDs.forEach((blockId) => {
         const blocksWithId = blockDay.filter((block) => block.blockId === blockId)
         blocksWithId.forEach((blockWithId) => {
-            const utilizationData = utilizationDay.filter((day) => (day.id === blockId) && (day.type === blockType))
+            const utilizationData = utilizationDay.filter((day) => (day.id === blockId) && (day.type === blockType) && (day.room == room))
             let utilization = '0%'
             if (utilizationData.length > 0) {
                 utilization = utilizationData[0].utilization
             }
+            console.log('blocksWithId', blocksWithId)
             const header:BlockDetailHeader = {room, utilization,blockDate }
             const subHeader = getBlockSubHeader(blockWithId)
             if (selectAll) {

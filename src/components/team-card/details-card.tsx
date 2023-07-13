@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import "./details-card.scss";
 import DetailsCardHead from "./details-card-header";
 import DetailsCardGrid from "./details-grid";
@@ -36,6 +36,7 @@ interface DetailsCardProps {
   columns: GridNames;
   subHeaderData:DetailsSubHeaderData[];
   data: DetailsData[];
+  usePopUp: boolean;
   classIsOpen: string;
   highLightItemsRed: string[];
   highLightItemsGreen: string[];
@@ -45,7 +46,7 @@ interface DetailsCardProps {
 
 
 
-const DetailsCard: React.FC<DetailsCardProps> = ({title, columns,highLightItemsGreen,subHeaderData,  data, header, classIsOpen,highLightItemsRed, onClosePopup,pageSize = 4}) => {
+const DetailsCard: React.FC<DetailsCardProps> = ({title, columns,highLightItemsGreen,subHeaderData,  data,usePopUp,  header, classIsOpen,highLightItemsRed, onClosePopup,pageSize = 4}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentDetailData, setCurrentDetailData] = useState<DetailsData[]>([]);
 
@@ -63,7 +64,8 @@ const DetailsCard: React.FC<DetailsCardProps> = ({title, columns,highLightItemsG
 
 
   return (
-    <Popup className={classnames("popup", "teamcard__popup",{open:classIsOpen=== 'open'})}>
+    <div>
+    {usePopUp ? <Popup className={classnames("popup", "teamcard__popup",{open:classIsOpen=== 'open'})}>
       <div className={classnames("teamcard",{open:classIsOpen=== 'open'})}>
           <a href="#" className="teamcard__close" onClick={closePopupHandler}>
             &times;
@@ -85,7 +87,31 @@ const DetailsCard: React.FC<DetailsCardProps> = ({title, columns,highLightItemsG
           onPageChange={(page) => setCurrentPage(page)}
         />
       </div>
-    </Popup>
+    </Popup> : 
+      <div className={classnames("teamcard")}>
+          <a href="#" className="teamcard__close" onClick={closePopupHandler}>
+            &times;
+          </a>
+        <h2 className="teamcard__heading">
+          <span className="teamcard__heading--main">{title}</span>
+        </h2>
+        <DetailsCardHead header={header} />
+        <DetailsCardGrid 
+          headers={columns} 
+          data={currentDetailData} 
+          highLightItemsGreen={highLightItemsGreen} 
+          highLightItemsRed={highLightItemsRed}
+          subHeaderData={subHeaderData}/>
+        <Pagination
+          currentPage={currentPage}
+          totalCount={data.length}
+          pageSize={pageSize}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
+      </div>
+    }
+    </div>
+
   );
 };
 export default DetailsCard;

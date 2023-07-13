@@ -43,6 +43,7 @@ const BlockDetailCards: React.FC<BlockDetailCardsProps> = ({blockCards,cardsPage
                     columns={blockCard.columns}
                     highLightItemsGreen={blockCard.highLightItemsGreen}
                     data ={blockCard.data}
+                    usePopUp= {false}
                     onClosePopup={blockCard.onClosePopup} 
                     classIsOpen={`${blockCard.popUpOpen ? "open" : "close"}`}
                     highLightItemsRed={blockCard.highLightItemsRed}

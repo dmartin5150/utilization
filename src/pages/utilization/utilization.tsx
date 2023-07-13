@@ -492,6 +492,7 @@ useEffect(()=> {
           columns={detailsColHeader}
           highLightItemsGreen={activeNPIs}
           data ={detailsData}
+          usePopUp={true}
           onClosePopup={closeDetailsCard} 
           classIsOpen={`${popupOpen ? "open" : "close"}`}
           highLightItemsRed={['Open Time']}

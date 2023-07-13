@@ -190,6 +190,7 @@ const Block = () => {
 
       const onClosePopup = () => {
         dispatch(setBlockPopUpOpen(false))
+        setCardDetails([])
       }
 
     const detailsColHeader:GridNames = {'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Room'}
@@ -241,6 +242,8 @@ const Block = () => {
         }},[selectedDate,cardDetails,blockPopUpIsOpen]);
 
 
+
+     
 
 
     useEffect(() => {
