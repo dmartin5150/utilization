@@ -122,6 +122,7 @@ const Block = () => {
         }
         setSurgeonMenu(calendarSurgeonSelector)
         dispatch(setCalendarSurgeonOption(CalendarMenuOptions.All))
+        console.log('menu', calendarSurgeonSelector)
         } else {
             const calendarSurgeonSelector: SingleSelector<CalendarMenuItem> = {
                 title: 'Surgeons',
@@ -129,7 +130,7 @@ const Block = () => {
                 optionList:calendarSurgeonMenus['Selected'],
                 onChange:updateCalendarSurgeons 
             }
-            // console.log('menu', calendarSurgeonSelector)
+            console.log('menu', calendarSurgeonSelector)
             setSurgeonMenu(calendarSurgeonSelector)
             dispatch(setCalendarSurgeonOption(CalendarMenuOptions.Selected))
         }
@@ -163,17 +164,18 @@ const Block = () => {
 
       
       useEffect(()=> {
-        if (allRoomsSelected) {
-          const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
-            title: 'Rooms',
-            isDisabled:true,
-            selectedOption: calendaBlockRoomMenus['All'][0],
-            optionList: calendaBlockRoomMenus['All'],
-            onChange:updateCalendarRooms
-          }
-          setRoomMenu(calendarRoomSelector);
-          dispatch(setCalendarRoomOption(CalendarMenuOptions.All))
-        } 
+
+        const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
+        title: 'Rooms',
+        isDisabled:true,
+        selectedOption: calendaBlockRoomMenus['All'][0],
+        optionList: calendaBlockRoomMenus['All'],
+        onChange:updateCalendarRooms
+        }
+        setRoomMenu(calendarRoomSelector);
+        dispatch(setCalendarRoomOption(CalendarMenuOptions.All))
+        console.log('rooms', calendarRoomSelector)
+
       },[ allRoomsSelected])
 
 
