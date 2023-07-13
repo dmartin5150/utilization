@@ -96,7 +96,7 @@ const Settings = () => {
 
     const updatePrimeTimeStart = (option:SingleValue<PrimeTimeMenuItem>) => {
         if (option) {
-            console.log('start', option )
+            // console.log('start', option )
             dispatch(setPrimeTime({...primeTime, start: option.value as PRIME_TIME_START}))
         }
       
@@ -149,7 +149,7 @@ const Settings = () => {
         console.log('setting lists')
         if (selectedUnit  && surgeonLists[selectedUnit]) {
             setSelectedSurgeons(surgeonLists[selectedUnit])
-            console.log('setting surgeons', selectedUnit, surgeonLists[selectedUnit])
+            // console.log('setting surgeons', selectedUnit, surgeonLists[selectedUnit])
             dispatch(setActiveSurgeonList(surgeonLists[selectedUnit]));
             setFilteredSurgeons(surgeonLists[selectedUnit])
         }
@@ -157,7 +157,7 @@ const Settings = () => {
 
 
     useEffect(()=> {
-        console.log('in room update selected unit', selectedUnit, unitRoomLists[selectedUnit])
+        // console.log('in room update selected unit', selectedUnit, unitRoomLists[selectedUnit])
         if (selectedUnit && unitRoomLists[selectedUnit]) {
             setActiverRoomListSuccess(unitRoomLists[selectedUnit])
         }
@@ -268,7 +268,7 @@ const Settings = () => {
     }
 
     const onSurgeonChanged = (id:string):void => {
-        console.log('surgeon changed', id)
+        // console.log('surgeon changed', id)
         // onItemChanged(id, surgeons, setSurgeons)
         setSurgeonChanged(id)
     }
@@ -360,7 +360,7 @@ const Settings = () => {
             return room;
         })
         if (newRoomList.length > 0) {
-            console.log(newRoomList)
+            // console.log(newRoomList)
             dispatch(setActiverRoomListSuccess(newRoomList))
         }
     
@@ -377,7 +377,7 @@ const Settings = () => {
 
 
     const onSelectGroupItem = (id:string) => {
-        console.log('group id:', id)
+        // console.log('group id:', id)
         setGroupUnit(surgeonGroups[parseInt(id)].unit)
         selectSurgeonGroup(surgeonGroups[parseInt(id)].surgeons)
         selectRoomGroup(surgeonGroups[parseInt(id)].rooms)

@@ -47,7 +47,7 @@ function Calendar<T extends Option>({
     if (calendarData.length > 0) {
       const date = new Date(calendarData[0].date + 'T00:00:00');
       const padding = date.getDay()-1;
-      console.log('offset', padding, calendarData[0], date)
+      // console.log('offset', padding, calendarData[0], date)
       let index = -1;
       for (let step = 0; step < padding; step++) {
         const blankDay:CalendarDayData= {date:index.toString(), display:'Blank',dayOfWeek:-1, ptMinutes:0, nonptMinutes:0, totalptMinutes:0}

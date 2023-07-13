@@ -30,6 +30,11 @@ export const calendarSurgeonOptionsNone: CalendarMenuItem[] = [
     {id:0, label: 'All', value: CalendarMenuOptions.All},
 ]
 
+export const calendarSurgeonOptionsSelected: CalendarMenuItem[] = [
+    {id:0, label: 'Selected', value: CalendarMenuOptions.Selected},
+]
+
+
 export const calendarSurgeonOptionsAll: CalendarMenuItem[] = [
     {id:0, label: 'All', value: CalendarMenuOptions.All},
     {id:1, label: 'Selected', value: CalendarMenuOptions.Selected},
@@ -37,7 +42,8 @@ export const calendarSurgeonOptionsAll: CalendarMenuItem[] = [
 
 export const calendarSurgeonMenus:CalendarMenus = {
     'All': calendarSurgeonOptionsAll,
-    'None': calendarSurgeonOptionsNone
+    'None': calendarSurgeonOptionsNone,
+    'Selected': calendarSurgeonOptionsSelected
 }
 
 

@@ -20,9 +20,9 @@ const ListItem: React.FC<ListItemProps> = ({item, displayType, onItemChanged}) =
     const {id, name, selected} = item
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLAnchorElement>) => {
-        console.log('handle')
+        // console.log('handle')
         if (event.target as HTMLInputElement) {
-            console.log('returning check')
+            // console.log('returning check')
             const id = (event.target as HTMLInputElement).id;
             onItemChanged(id)
         }
@@ -30,7 +30,7 @@ const ListItem: React.FC<ListItemProps> = ({item, displayType, onItemChanged}) =
     }
 
     const handleListChange = (event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLAnchorElement>) => {
-        console.log('handle')
+        // console.log('handle')
         if (event.target as HTMLAnchorElement) {
             const id = (event.target as HTMLAnchorElement).id;
            onItemChanged(id)

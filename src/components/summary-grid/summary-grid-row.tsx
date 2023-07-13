@@ -9,6 +9,7 @@ export type SummaryGridRowData = {
   id: string;
   room:string;
   utilization:string;
+  procedureTitle:string;
   procedures:string;
   ptHours:string;
   nptHours:string;
@@ -44,7 +45,7 @@ const SummaryGridRow: React.FC<SummaryGridRowProps> = ({row, buttonText, onSelec
       <div className="header-all-properties">
         <div className="header-properties">
           <p><span>Utilization: </span> {row.utilization}</p>
-          <p><span>Procedures: </span>{row.procedures}</p>
+          <p><span>{row.procedureTitle}: </span>{row.procedures}</p>
         </div>
         <div className="header-properties">
           <p>{row.ptHours}</p>

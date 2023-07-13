@@ -14,7 +14,7 @@ const getProviderList = async (firstLetter: string) => {
         return data
       }
     } catch (e) {
-      console.log("Error: ", e);
+      // console.log("Error: ", e);
       return []
     }
   };

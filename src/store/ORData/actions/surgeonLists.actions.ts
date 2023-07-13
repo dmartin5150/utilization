@@ -40,7 +40,7 @@ export const fetchSurgeonListsAsync = () => {
         dispatch(fetchDataStart);
         try {
             const surgeonLists  = await getSurgeonLists();
-            console.log('surgeon Lists', surgeonLists)
+            // console.log('surgeon Lists', surgeonLists)
             dispatch(fetchSurgeonListsSuccess(surgeonLists))
         } catch (error) {
             dispatch(fetchDataFailed(error as Error))

@@ -109,9 +109,9 @@ const Utilization = () => {
 
 
   useEffect(()=> {
-    console.log('active surgeonList', surgeonLists)
+    // console.log('active surgeonList', surgeonLists)
      if (surgeonLists && surgeonLists['BH JRI'] && surgeonLists['BH JRI'].length >0 && activeSurgeonList && activeSurgeonList.length === 0 ) {
-      console.log('dispatching list')
+      // console.log('dispatching list')
       dispatch(setActiveSurgeonList(surgeonLists['BH JRI']))
      }
   },[activeSurgeonList, surgeonLists])
@@ -135,7 +135,7 @@ useEffect(() => {
       const npis = selectedNPIs.map((npi)=> npi.toString())
       setActiveNPIs(npis)
     }
-    console.log('selectedNPIs', selectedNPIs)
+    // console.log('selectedNPIs', selectedNPIs)
   },[activeSurgeonList])
 
 
@@ -144,12 +144,13 @@ useEffect(() => {
 useEffect(()=> {
   if (activeSurgeonList && activeSurgeonList.length > 0 && surgeonLists['BH JRI'] && surgeonLists['BH JRI'].length >0) {
     if (calendarSurgeonOption === CalendarMenuOptions.All && calendarRoomOption === CalendarMenuOptions.All) {
-      console.log('all grid data', allGridData);
+      // console.log('all grid data', allGridData);
       const newGridData:SummaryGridRowData[] = allGridData.map((grid) => {
         return ({
           id: grid.room,
           room: grid.room,
           utilization:grid.utilization,
+          procedureTitle:'Procedures',
           procedures: grid.numProcedures,
           ptHours: grid.ptHours,
           nptHours: grid.nonptHours,
@@ -159,12 +160,13 @@ useEffect(()=> {
       dispatch(setGridData(newGridData))
     }
     if (calendarSurgeonOption === CalendarMenuOptions.All && calendarRoomOption === CalendarMenuOptions.Selected) {
-      console.log('all grid data', gridFilteredRooms);
+      // console.log('all grid data', gridFilteredRooms);
       const newGridData:SummaryGridRowData[] = gridFilteredRooms.map((grid) => {
         return ({
           id: grid.room,
           room: grid.room,
           utilization:grid.utilization,
+          procedureTitle:'Procedures',
           procedures: grid.numProcedures,
           ptHours: grid.ptHours,
           nptHours: grid.nonptHours,
@@ -174,12 +176,13 @@ useEffect(()=> {
       dispatch(setGridData(newGridData))
     }
     if (calendarSurgeonOption === CalendarMenuOptions.All && calendarRoomOption === CalendarMenuOptions.Mixed) {
-      console.log('all grid data', gridFilteredRooms);
+      // console.log('all grid data', gridFilteredRooms);
       const newGridData:SummaryGridRowData[] = gridFilteredRooms.map((grid) => {
         return ({
           id: grid.room,
           room: grid.room,
           utilization:grid.utilization,
+          procedureTitle: 'Procedures',
           procedures: grid.numProcedures,
           ptHours: grid.ptHours,
           nptHours: grid.nonptHours,
@@ -189,12 +192,13 @@ useEffect(()=> {
       dispatch(setGridData(newGridData))
     }
     if (calendarSurgeonOption === CalendarMenuOptions.Selected && calendarRoomOption === CalendarMenuOptions.All) {
-      console.log('all grid data', gridFilteredNPIs);
+      // console.log('all grid data', gridFilteredNPIs);
       const newGridData:SummaryGridRowData[] = gridFilteredNPIs.map((grid) => {
         return ({
           id: grid.room,
           room: grid.room,
           utilization:grid.utilization,
+          procedureTitle: 'Procedures',
           procedures: grid.numProcedures,
           ptHours: grid.ptHours,
           nptHours: grid.nonptHours,
@@ -204,12 +208,13 @@ useEffect(()=> {
       dispatch(setGridData(newGridData))
     }
     if (calendarSurgeonOption === CalendarMenuOptions.Selected && calendarRoomOption === CalendarMenuOptions.Selected) { 
-      console.log('all grid data', gridFilteredBoth);
+      // console.log('all grid data', gridFilteredBoth);
       const newGridData:SummaryGridRowData[] = gridFilteredBoth.map((grid) => {
         return ({
           id: grid.room,
           room: grid.room,
           utilization:grid.utilization,
+          procedureTitle: 'Procedures',
           procedures: grid.numProcedures,
           ptHours: grid.ptHours,
           nptHours: grid.nonptHours,
@@ -219,12 +224,13 @@ useEffect(()=> {
       dispatch(setGridData(newGridData))
     }
     if (calendarSurgeonOption === CalendarMenuOptions.Selected && calendarRoomOption === CalendarMenuOptions.Mixed) { 
-      console.log('all grid data', gridFilteredBoth);
+      // console.log('all grid data', gridFilteredBoth);
       const newGridData:SummaryGridRowData[] = gridFilteredBoth.map((grid) => {
         return ({
           id: grid.room,
           room: grid.room,
           utilization:grid.utilization,
+          procedureTitle:'Procedures',
           procedures: grid.numProcedures,
           ptHours: grid.ptHours,
           nptHours: grid.nonptHours,
@@ -238,13 +244,13 @@ useEffect(()=> {
 
 
   useEffect(() => {
-    console.log('triggered')
+    // console.log('triggered')
     if (activeSurgeonList && activeSurgeonList.length > 0 && surgeonLists['BH JRI'] && surgeonLists['BH JRI'].length >0) {
       if (calendarSurgeonOption === CalendarMenuOptions.All && calendarRoomOption === CalendarMenuOptions.All) {
-        console.log('in all menu option')
-        console.log( 'calendar',  calendar);
-        console.log('calendar PTHOurs', allPTHours)
-        console.log('total hours', PTTotalAll)
+        // console.log('in all menu option')
+        // console.log( 'calendar',  calendar);
+        // console.log('calendar PTHOurs', allPTHours)
+        // console.log('total hours', PTTotalAll)
         const newCalendarData:CalendarDayData[] = PTTotalAll.map((ptTotal) => {
           return { 
             date: ptTotal.curDate,

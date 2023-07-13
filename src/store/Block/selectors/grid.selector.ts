@@ -12,13 +12,14 @@ import { selectBlockDate } from "./details.selector";
 
 const getGridData = (blockroom: string, data:BlockData[]):SummaryGridRowData => {
     const gridData = data.filter((grid)=> grid.id != 'none')
-    // console.log('filterd grid', gridData)
+    // console.log('gridData', gridData)
     const blockStats = getBlockStats(gridData)
     const dailyGridRow:SummaryGridRowData = {
         id: blockroom,
         room: blockroom,
         utilization: blockStats.utilization,
-        procedures: data.length.toString(),
+        procedureTitle:'Total',
+        procedures: timeConvert(blockStats.totalMinutes),
         ptHours: 'bt: ' + timeConvert(blockStats.btMinutes),
         nptHours: 'nbt: ' + timeConvert(blockStats.nbtMinutes),
         block_status: '0'
@@ -50,19 +51,18 @@ const getAllBlockforGrid = (blockData:BlockData[],blockDate:string, selectAll: b
             if (selectAll) {
                 let dailyGrid = blockData.filter((block) => (block.blockDate === blockDate) && 
                         (block.room === blockroom) && (block.type === blockType))
-                dailyGrid = dailyGrid.filter((grid)=> grid.id != 'none')
-                console.log('daily grid', dailyGrid)
+                // console.log('room', blockroom, 'date',  blockDate)
                 newGridDay.push(getGridData(blockroom, dailyGrid))
             }else {
                 let dailyGrid = blockData.filter((block) => (block.blockDate === blockDate) && (block.room === blockroom)
                                             && (block.type === blockType))
-                dailyGrid = dailyGrid.filter((grid)=> grid.id != 'none')
+                // console.log('room', blockroom, 'date',  blockDate)
                 newGridDay.push(getGridData(blockroom, dailyGrid))           
             }
         })
-    newGridDay = newGridDay.filter((grid) => ((grid.ptHours != 'bt: 0H: 0M') && (grid.nptHours != 'nbt: 0H: 0M')))
+    // newGridDay = newGridDay.filter((grid) => ((grid.ptHours != 'bt: 0H: 0M') && (grid.nptHours != 'nbt: 0H: 0M')))
     newGridDay = newGridDay.filter((grid) => grid.id != 'none').sort(compare)
-    console.log('new grid',newGridDay)
+    // console.log('new grid',newGridDay)
     return newGridDay
 }
 

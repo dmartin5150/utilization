@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import './blockDetailsCard.scss'
 import DetailsCard from "../../components/team-card/details-card";
 import { DetailsHeader } from "../team-card/details-card-header";
 import { GridNames } from "../team-card/details-grid";
 import { DetailsData } from "../../components/team-card/details-card";
 import { DetailsSubHeaderData } from "../team-card/details-subheader";
+import Pagination from "../pagination/pagination";
 
 
 
@@ -19,16 +20,19 @@ export type BlockDetailCard = {
     classIsOpen: string;
     highLightItemsRed: string[];
     subHeaderData: DetailsSubHeaderData[],
-    pageSize: number
+    pageSize: number,
 }
 
 
 interface BlockDetailCardsProps  {
     blockCards: BlockDetailCard[]
+    cardsPageSize: number
 }
 
 
-const BlockDetailCards: React.FC<BlockDetailCardsProps> = ({blockCards}) => {
+const BlockDetailCards: React.FC<BlockDetailCardsProps> = ({blockCards,cardsPageSize}) => {
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [currentCalendarData, setCurrentCalendarData] = useState<BlockDetailCard[]>(blockCards);
     
     return (
         <div className='blockdetailcards'>

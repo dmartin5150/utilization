@@ -82,30 +82,23 @@ const Block = () => {
     const calculatedTotals = useSelector(selectCalculatedTotals);
 
     useEffect(()=> {
-        // dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
-        dispatch(setBlockCalendarData(allBlockCalendar))
-    },[])
+        console.log('triggered')
+        console.log('unit', unit, 'npis', npis, 'selected', allSurgeonsSelected)
+        if (unit && npis) {
+            dispatch(fetchBlockDataAsync(unit,allSurgeonsSelected,'2023-7-1',npis))
+
+        }
+
+    },[unit,npis,allSurgeonsSelected]);
     
 
 
-    // useEffect(()=> {
-    //     if (allBlockCalendar && allBlockCalendar.length >0) {
-    //         console.log('setting calendar data')
-    //         dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
-    //         console.log('setting calendar data')
-    //         dispatch(setBlockCalendarData(allBlockCalendar))
-    //     }
-    // },[allBlockCalendar])
 
     useEffect(()=> {
         if (blockCalendarData && blockCalendarData.length >0) {
             dispatch(setBlockCalendarTotals(calculatedTotals))
         }
     },[blockCalendarData])
-
-
-
-
 
  
 
@@ -129,16 +122,17 @@ const Block = () => {
         setSurgeonMenu(calendarSurgeonSelector)
         dispatch(setCalendarSurgeonOption(CalendarMenuOptions.All))
         } else {
-        const calendarSurgeonSelector: SingleSelector<CalendarMenuItem> = {
-            title: 'Surgeons',
-            selectedOption: calendarSurgeonMenus['All'][1],
-            optionList:calendarSurgeonMenus['All'],
-            onChange:updateCalendarSurgeons 
+            const calendarSurgeonSelector: SingleSelector<CalendarMenuItem> = {
+                title: 'Surgeons',
+                selectedOption: calendarSurgeonMenus['Selected'][0],
+                optionList:calendarSurgeonMenus['Selected'],
+                onChange:updateCalendarSurgeons 
+            }
+            // console.log('menu', calendarSurgeonSelector)
+            setSurgeonMenu(calendarSurgeonSelector)
+            dispatch(setCalendarSurgeonOption(CalendarMenuOptions.Selected))
         }
-        setSurgeonMenu(calendarSurgeonSelector)
-        dispatch(setCalendarSurgeonOption(CalendarMenuOptions.Selected))
-        }
-    },[allSurgeonsSelected, ])
+    },[allSurgeonsSelected])
 
   useEffect (() => {
     if (allBlockCalendar && allBlockCalendar.length > 0) {
@@ -165,7 +159,7 @@ const Block = () => {
 
       
       useEffect(()=> {
-        if (allSurgeonsSelected && allRoomsSelected) {
+        if (allRoomsSelected) {
           const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
             title: 'Rooms',
             isDisabled:true,
@@ -176,7 +170,7 @@ const Block = () => {
           setRoomMenu(calendarRoomSelector);
           dispatch(setCalendarRoomOption(CalendarMenuOptions.All))
         } 
-      },[allSurgeonsSelected, allRoomsSelected])
+      },[ allRoomsSelected])
 
 
 
@@ -238,7 +232,7 @@ const Block = () => {
 
     useEffect(() => {
         if (blockGridData && blockGridData.length > 0 ){
-            console.log('all block calendar', allBlockCalendar)
+            // console.log('all block calendar', allBlockCalendar)
             // console.log('in block calendar', inBlockCalendar)
             // console.log('out block calendar', outBlockCalendar)
             // console.log('all grid', allBlockGrid);
@@ -270,7 +264,7 @@ const Block = () => {
 
     return (
         <section className="blocks">
-            <BlockDetailCards blockCards={blockCards} />
+            <BlockDetailCards blockCards={blockCards} cardsPageSize={1} />
             <div className="block__calendar">
             {surgeonMenu && roomMenu && <Calendar
                 title='TNNAS BLOCK UTILIZATION DATA'

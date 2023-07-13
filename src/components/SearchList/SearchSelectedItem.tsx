@@ -18,7 +18,7 @@ const SearchSelectedItem: React.FC<SearchSelectedItemProps> = ({item, onItemChan
 
 
     const handleListChange = (event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLAnchorElement>) => {
-        console.log('handle')
+        // console.log('handle')
         if (event.target as HTMLAnchorElement) {
             const id = (event.target as HTMLAnchorElement).id;
            onItemChanged(id)

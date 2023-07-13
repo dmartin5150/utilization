@@ -15,7 +15,7 @@ const SearchListCheckboxItem: React.FC<SearchListCheckboxItemProps> = ({item, on
 
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLAnchorElement>) => {
-        console.log('handle')
+        // console.log('handle')
         if (event.target as HTMLAnchorElement) {
             const id = (event.target as HTMLAnchorElement).id;
            onItemChanged(id)

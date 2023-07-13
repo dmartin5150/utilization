@@ -25,7 +25,7 @@ export function timeConvert(n:number):string {
     const totalMinutes = allMinutes.reduce((ac, total) => ac + total, 0);
     let utilization = '0%';
     if (totalMinutes > 0) {
-        utilization = Math.round(totalbtminutes/totalMinutes*100).toString() + '%' 
+        utilization = Math.round(totalbtminutes/totalMinutes*100).toString() +'%'
     }
     const stats: BlockStats = {btMinutes:totalbtminutes, nbtMinutes:totalnbtminutes,totalMinutes, utilization}
     return stats
