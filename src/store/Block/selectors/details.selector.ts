@@ -32,6 +32,10 @@ export const selectBlockRoom = createSelector(
     (ORBlockSlice) => ORBlockSlice.selectedBlockRoom
 )
 
+export const selectBlockCards = createSelector(
+    [selectBlockReducer],
+    (ORBlockSlice) => ORBlockSlice.blockCards  
+)
 
 const getBlockSubHeader = (blockWithId:BlockDetails):DetailsSubHeader => {
     return {name:blockWithId.blockName, startTime:blockWithId.start_time, endTime:blockWithId.end_time,

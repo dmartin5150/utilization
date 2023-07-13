@@ -44,6 +44,8 @@ import { setBlockCalendarData, setBlockCalendarTotals } from "../../store/Block/
 import { selectPTHours } from "../../store/ORData/selectors/ordata.selector";
 import { selectBlockLists } from "../../store/Block/selectors/calendar.selector";
 import { selectCalculatedTotals } from "../../store/Block/selectors/calendar.selector";
+import { setBlockCards } from "../../store/Block/block.actions";
+import { selectBlockCards } from "../../store/Block/selectors/details.selector";
 
 
 
@@ -51,9 +53,8 @@ import { selectCalculatedTotals } from "../../store/Block/selectors/calendar.sel
 const Block = () => {
     const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
-    const [blockCards, setBlockCards] = useState<BlockDetailCard[]>([]);
-    const [roomSelected, setRoomSelected] = useState<CalendarMenuOptions>(CalendarMenuOptions.All)
-    const [cardDetails, setCardDetails] = useState<DetailsSummary[]>([])
+    const [roomStatus, setRoomStatus] = useState<CalendarMenuOptions>(CalendarMenuOptions.All)
+
 
 
 
@@ -81,6 +82,7 @@ const Block = () => {
     const blockCalendarTotals = useSelector(selectBlockCalendarTotals)
     const ptHours = useSelector(selectPTHours)
     const calculatedTotals = useSelector(selectCalculatedTotals);
+    const blockCards = useSelector(selectBlockCards)
 
     useEffect(()=> {
         console.log('triggered')
@@ -136,36 +138,30 @@ const Block = () => {
         }
     },[allSurgeonsSelected])
 
+
   useEffect (() => {
     // if (allBlockCalendar && allBlockCalendar.length > 0) {
-        if (roomSelected == CalendarMenuOptions.All) {
+        if (roomStatus == CalendarMenuOptions.All) {
             dispatch(setBlockCalendarData(allBlockCalendar))
-            console.log('all details', allDetails)
-            const curDetails = allDetails
-            setCardDetails(curDetails)
         }
-        if (roomSelected == CalendarMenuOptions.In) {
+        if (roomStatus == CalendarMenuOptions.In) {
             dispatch(setBlockCalendarData(inBlockCalendar))
-            console.log('in details', inDetails)
-            const curDetails = inDetails
-            setCardDetails(curDetails)
         }
-        if (roomSelected == CalendarMenuOptions.Out) {
-            dispatch(setBlockCalendarData(outBlockCalendar))
-            const curDetails = outDetails
-            console.log('out details', outDetails)
-            setCardDetails(curDetails)
-            
+        if (roomStatus == CalendarMenuOptions.Out) {
+            dispatch(setBlockCalendarData(outBlockCalendar))      
         }
     // }
-  }, [allBlockCalendar,roomSelected ])
+  }, [allBlockCalendar,roomStatus ])
 
 
+
+
+ 
 
 
     const updateCalendarRooms = (option: SingleValue<CalendarMenuItem>) => {
         if (option) {
-            setRoomSelected(option.value as CalendarMenuOptions)
+            setRoomStatus(option.value as CalendarMenuOptions)
         }
       }
 
@@ -190,7 +186,7 @@ const Block = () => {
 
       const onClosePopup = () => {
         dispatch(setBlockPopUpOpen(false))
-        setCardDetails([])
+        // setCardDetails([])
       }
 
     const detailsColHeader:GridNames = {'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Room'}
@@ -216,10 +212,23 @@ const Block = () => {
         })
     }
 
+    const getCardDetails = ():DetailsSummary[] => {
+        if (roomStatus == CalendarMenuOptions.All) {
+            return allDetails
+        }
+        if (roomStatus == CalendarMenuOptions.In) {
+            return inDetails
+        }
+        if (roomStatus == CalendarMenuOptions.Out) {
+            return outDetails
+        }
+        return allDetails
+      }
 
       useEffect (() => {
-        if (selectedDate && cardDetails) {
-            const blockCards:BlockDetailCard[] = cardDetails.map((detail) => {
+        if (selectedDate && blockPopUpIsOpen) {
+            const details = getCardDetails()
+            const blockCards:BlockDetailCard[] = details.map((detail) => {
                 const header = getDetailCardHeader(detail.header);
                 const subHeader = getDetailCardSubHeader(detail.subHeader);
                 const procs = getDetailsProcsArray(detail.procs);
@@ -230,16 +239,16 @@ const Block = () => {
                     columns: detailsColHeader, // 5 col strings
                     highLightItemsGreen:[],
                     data:procs,
-                    onClosePopup: onClosePopup,
-                    popUpOpen: blockPopUpIsOpen,
+                    popUpOpen: true,
                     classIsOpen: 'open',
                     highLightItemsRed: [],
                     subHeaderData:subHeader,
                     pageSize: 6
                   }
             })
-            setBlockCards(blockCards)
-        }},[selectedDate,cardDetails,blockPopUpIsOpen]);
+            dispatch(setBlockCards(blockCards))
+        }
+    },[selectedDate,blockPopUpIsOpen]);
 
 
 
@@ -280,7 +289,11 @@ const Block = () => {
 
     return (
         <section className="blocks">
-            <BlockDetailCards blockCards={blockCards} cardsPageSize={1} />
+            <BlockDetailCards 
+                blockCards={blockCards} 
+                classIsOpen={`${blockPopUpIsOpen ? "open" : "close"}`}
+                onCloseBlockDetails={onClosePopup} 
+                cardsPageSize={1} />
             <div className="block__calendar">
             {surgeonMenu && roomMenu && <Calendar
                 title='TNNAS BLOCK UTILIZATION DATA'

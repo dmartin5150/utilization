@@ -88,7 +88,7 @@ const DetailsCard: React.FC<DetailsCardProps> = ({title, columns,highLightItemsG
         />
       </div>
     </Popup> : 
-      <div className={classnames("teamcard")}>
+      <div className={classnames("teamcard-visible")}>
           <a href="#" className="teamcard__close" onClick={closePopupHandler}>
             &times;
           </a>
