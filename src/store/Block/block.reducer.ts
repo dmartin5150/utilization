@@ -2,7 +2,7 @@ import { AnyAction } from "redux";
 import { BlockLists } from "./block.types";
 import { fetchBlockStart,fetchBlockFailed,fetchBlockSuccess, setSelectedBlockDate,
         setSelectedBlockRoom, setBlockPopUpOpen, setBlockCalendarData, setBlockCalendarTotals,
-        setBlockCards } from "./block.actions";
+        setBlockCards, setBlockRoomOption } from "./block.actions";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { BlockDetailCard } from "../../components/blockdetails/blockDetailCards";
 
@@ -14,6 +14,7 @@ export type BlockState = {
     isLoading:boolean;
     selectedBlockDate: string; 
     selectedBlockRoom: string;
+    blockRoomOption: string
     popUpOpen: boolean; 
     error: null | Error;
 }
@@ -32,6 +33,7 @@ const BLOCK_INITIAL_STATE: BlockState = {
     blockCards: [],
     selectedBlockDate: '2023-07-12',
     selectedBlockRoom: 'BH JRI 08',
+    blockRoomOption: '1',
     popUpOpen:false, 
     isLoading:false,
     error:null
@@ -66,6 +68,9 @@ export const BlockReducer = (state=BLOCK_INITIAL_STATE, action: AnyAction):Block
     }
     if(setBlockCards.match(action)) {
         return {...state, blockCards:action.payload}
+    }
+    if (setBlockRoomOption.match(action)) {
+        return {...state, blockRoomOption:action.payload}
     }
 
     return state;

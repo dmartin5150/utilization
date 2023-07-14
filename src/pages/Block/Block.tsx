@@ -46,6 +46,9 @@ import { selectBlockLists } from "../../store/Block/selectors/calendar.selector"
 import { selectCalculatedTotals } from "../../store/Block/selectors/calendar.selector";
 import { setBlockCards } from "../../store/Block/block.actions";
 import { selectBlockCards } from "../../store/Block/selectors/details.selector";
+import { selectRoomOption} from "../../store/Block/selectors/calendar.selector";
+import { setBlockRoomOption } from "../../store/Block/block.actions";
+
 
 
 
@@ -53,7 +56,7 @@ import { selectBlockCards } from "../../store/Block/selectors/details.selector";
 const Block = () => {
     const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
-    const [roomStatus, setRoomStatus] = useState<CalendarMenuOptions>(CalendarMenuOptions.All)
+    // const [roomStatus, setRoomStatus] = useState<CalendarMenuOptions>()
 
 
 
@@ -82,7 +85,8 @@ const Block = () => {
     const blockCalendarTotals = useSelector(selectBlockCalendarTotals)
     const ptHours = useSelector(selectPTHours)
     const calculatedTotals = useSelector(selectCalculatedTotals);
-    const blockCards = useSelector(selectBlockCards)
+    const blockCards = useSelector(selectBlockCards);
+    const roomOption = useSelector(selectRoomOption)
 
     useEffect(()=> {
         console.log('triggered')
@@ -141,17 +145,17 @@ const Block = () => {
 
   useEffect (() => {
     // if (allBlockCalendar && allBlockCalendar.length > 0) {
-        if (roomStatus == CalendarMenuOptions.All) {
+        if (roomOption == CalendarMenuOptions.All) {
             dispatch(setBlockCalendarData(allBlockCalendar))
         }
-        if (roomStatus == CalendarMenuOptions.In) {
+        if (roomOption == CalendarMenuOptions.In) {
             dispatch(setBlockCalendarData(inBlockCalendar))
         }
-        if (roomStatus == CalendarMenuOptions.Out) {
+        if (roomOption == CalendarMenuOptions.Out) {
             dispatch(setBlockCalendarData(outBlockCalendar))      
         }
     // }
-  }, [allBlockCalendar,roomStatus ])
+  }, [allBlockCalendar,roomOption ])
 
 
 
@@ -160,8 +164,10 @@ const Block = () => {
 
 
     const updateCalendarRooms = (option: SingleValue<CalendarMenuItem>) => {
+        console.log('menu',roomMenu)
+        console.log()
         if (option) {
-            setRoomStatus(option.value as CalendarMenuOptions)
+            dispatch(setBlockRoomOption(option.value as CalendarMenuOptions))
         }
       }
 
@@ -169,24 +175,26 @@ const Block = () => {
       useEffect(()=> {
 
         const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
-        title: 'Rooms',
-        isDisabled:true,
-        selectedOption: calendaBlockRoomMenus['All'][0],
-        optionList: calendaBlockRoomMenus['All'],
-        onChange:updateCalendarRooms
-        }
-        setRoomMenu(calendarRoomSelector);
-        dispatch(setCalendarRoomOption(CalendarMenuOptions.All))
-        console.log('rooms', calendarRoomSelector)
+            title: 'Rooms',
+            isDisabled:true,
+            selectedOption: calendaBlockRoomMenus['All'][0],
+            optionList: calendaBlockRoomMenus['All'],
+            onChange:updateCalendarRooms
+            }
+            setRoomMenu(calendarRoomSelector);
+            console.log('rooms', calendarRoomSelector)
 
-      },[ allRoomsSelected])
+      },[])
+
+
+
+
 
 
 
 
       const onClosePopup = () => {
         dispatch(setBlockPopUpOpen(false))
-        // setCardDetails([])
       }
 
     const detailsColHeader:GridNames = {'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Room'}
@@ -213,20 +221,24 @@ const Block = () => {
     }
 
     const getCardDetails = ():DetailsSummary[] => {
-        if (roomStatus == CalendarMenuOptions.All) {
+        console.log('room', roomOption)
+        if (roomOption == CalendarMenuOptions.All) {
+            console.log('in 1')
             return allDetails
         }
-        if (roomStatus == CalendarMenuOptions.In) {
+        if (roomOption == CalendarMenuOptions.In) {
+            console.log('in 2')
             return inDetails
         }
-        if (roomStatus == CalendarMenuOptions.Out) {
+        if (roomOption == CalendarMenuOptions.Out) {
+            console.log('in 3')
             return outDetails
         }
         return allDetails
       }
 
       useEffect (() => {
-        if (selectedDate && blockPopUpIsOpen) {
+        if (blockPopUpIsOpen) {
             const details = getCardDetails()
             const blockCards:BlockDetailCard[] = details.map((detail) => {
                 const header = getDetailCardHeader(detail.header);
@@ -247,8 +259,9 @@ const Block = () => {
                   }
             })
             dispatch(setBlockCards(blockCards))
+            console.log('after', roomMenu)
         }
-    },[selectedDate,blockPopUpIsOpen]);
+    },[roomOption,blockPopUpIsOpen]);
 
 
 

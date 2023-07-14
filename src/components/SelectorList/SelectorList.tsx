@@ -25,7 +25,7 @@ function SelectorList <T extends Option >({title,isDisabled, selectedOption, opt
     const handleSelector = (option: SingleValue<T> )  => {
         if (option) {
             onChange(option)
-            // console.log(option.value)
+            console.log('option List', optionList)
             setSelectedValue(option)
         }
     }

@@ -65,12 +65,12 @@ const BlockDetailCards: React.FC<BlockDetailCardsProps> = ({blockCards,classIsOp
                         pageSize={blockCard.pageSize} /> 
 
                 })}
-            <Pagination
+            {/* <Pagination
                 currentPage={currentPage}
                 totalCount={blockCards.length}
                 pageSize={1}
                 onPageChange={setCurrentPage}
-            />
+            /> */}
             </div>
 
         </Popup>

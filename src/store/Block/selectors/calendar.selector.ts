@@ -28,6 +28,12 @@ export const selectBlockCalendarData = createSelector(
     (ORBlockSlice) => ORBlockSlice.calendarData
 )
 
+export const selectRoomOption = createSelector(
+    [selectBlockReducer],
+    (ORBlockSlice) => ORBlockSlice.blockRoomOption
+)
+
+
 export const selectBlockCalendarTotals = createSelector(
     [selectBlockReducer],
     (ORBlockSlice) => ORBlockSlice.calendarTotals

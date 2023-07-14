@@ -16,6 +16,7 @@ export type SetBlockPopUpOpen = ActionWithPayload<BLOCK_TYPES.SET_BLOCK_POPUP_OP
 export type SetBlockCalendarData = ActionWithPayload<BLOCK_TYPES.SET_CALENDAR_DATA, CalendarDayData[]>
 export type SetBlockCalendarTotals = ActionWithPayload<BLOCK_TYPES.SET_CALENDAR_TOTALS, CalendarDayData[]>
 export type SetBlockCards = ActionWithPayload<BLOCK_TYPES.SET_BLOCK_CARDS, BlockDetailCard[]>
+export type SetBlockRoomOption = ActionWithPayload<BLOCK_TYPES.SET_BLOCK_ROOM_OPTION ,string>
 
 
 export const fetchBlockStart = withMatcher(():FetchBlockStart=> {
@@ -54,6 +55,9 @@ export const setBlockCards = withMatcher((blockCards:BlockDetailCard[]):SetBlock
     return createAction(BLOCK_TYPES.SET_BLOCK_CARDS, blockCards)
 })
 
+export const setBlockRoomOption = withMatcher((roomOption:string):SetBlockRoomOption => {
+    return createAction(BLOCK_TYPES.SET_BLOCK_ROOM_OPTION, roomOption)
+})
 
 
 // export const setSelectedRoomStatus = withMatcher((status:string):SetSelectedRoomStatus => {
