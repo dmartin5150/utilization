@@ -66,6 +66,7 @@ const getBlockDetailsDay = (details:BlockDetails[], blockDate:string,room:string
             const subHeader = getBlockSubHeader(blockWithId)
             if (selectAll) {
                 const procs = blockWithId.procs
+                console.log('procs', procs)
                 summary.push({header, subHeader,procs})
             } else {
                 const procs = blockWithId.procs.filter((proc)=> proc.type === blockType)

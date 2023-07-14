@@ -60,7 +60,6 @@ const getAllBlockforGrid = (blockData:BlockData[],blockDate:string, selectAll: b
                 newGridDay.push(getGridData(blockroom, dailyGrid))           
             }
         })
-    // newGridDay = newGridDay.filter((grid) => ((grid.ptHours != 'bt: 0H: 0M') && (grid.nptHours != 'nbt: 0H: 0M')))
     newGridDay = newGridDay.filter((grid) => grid.id != 'none').sort(compare)
     // console.log('new grid',newGridDay)
     return newGridDay

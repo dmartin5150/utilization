@@ -293,7 +293,8 @@ const Block = () => {
 
     const setDetailData = (data:SummaryGridRowData) => {
         const room: FacilityRoom = {"name":data.id, "utilization":data.utilization}
-        if (data.utilization !== '0%') {
+        console.log(data.procedures)
+        if (data.procedures !== '0H: 0M') {
           dispatch(setSelectedBlockRoom(room.name))
           dispatch(setBlockPopUpOpen(true))
         }
@@ -314,8 +315,8 @@ const Block = () => {
                 calendarData={blockCalendarData}
                 calendarTotals={blockCalendarTotals}
                 selectedDate={selectedDate}
-                list1={surgeonMenu}
-                list2={roomMenu}
+                list1={roomMenu}
+                list2={surgeonMenu}
                 hiddenID={[]}
                 onDateChange={setBlockDate}
                 pageSize={30}
