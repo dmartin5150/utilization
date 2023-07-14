@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import './blockDetailsCard.scss'
 import DetailsCard from "../../components/team-card/details-card";
 import { DetailsHeader } from "../team-card/details-card-header";
@@ -35,12 +35,22 @@ interface BlockDetailCardsProps  {
 
 const BlockDetailCards: React.FC<BlockDetailCardsProps> = ({blockCards,classIsOpen,onCloseBlockDetails, cardsPageSize}) => {
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [currentCalendarData, setCurrentCalendarData] = useState<BlockDetailCard[]>(blockCards);
+    const [currentBlockData, setCurrentBlockData] = useState<BlockDetailCard[]>(blockCards);
+
+
+
+    useEffect(() => {
+        const firstPageIndex = (currentPage - 1) * cardsPageSize;
+        const lastPageIndex = firstPageIndex + cardsPageSize;
+        console.log('pages', firstPageIndex, lastPageIndex)
+        setCurrentBlockData(blockCards.slice(firstPageIndex, lastPageIndex));
+      }, [currentPage, blockCards]);
+
     
     return (
         <Popup className={classnames("popup",{open:classIsOpen=== 'open'})}>
             <div className={classnames('blockdetailcards',{open:classIsOpen=== 'open'})}>
-                {blockCards.map((blockCard, idx) => {
+                {currentBlockData.map((blockCard, idx) => {
                 return  <DetailsCard key={idx}
                         title={blockCard.title} 
                         header={blockCard.header}
@@ -55,7 +65,14 @@ const BlockDetailCards: React.FC<BlockDetailCardsProps> = ({blockCards,classIsOp
                         pageSize={blockCard.pageSize} /> 
 
                 })}
+            <Pagination
+                currentPage={currentPage}
+                totalCount={blockCards.length}
+                pageSize={1}
+                onPageChange={setCurrentPage}
+            />
             </div>
+
         </Popup>
     )
 }
