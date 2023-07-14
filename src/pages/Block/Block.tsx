@@ -48,6 +48,7 @@ import { setBlockCards } from "../../store/Block/block.actions";
 import { selectBlockCards } from "../../store/Block/selectors/details.selector";
 import { selectRoomOption} from "../../store/Block/selectors/calendar.selector";
 import { setBlockRoomOption } from "../../store/Block/block.actions";
+import { selectActiveSurgeons } from "../../store/ORData/selectors/ordata.selector";
 
 
 
@@ -86,7 +87,8 @@ const Block = () => {
     const ptHours = useSelector(selectPTHours)
     const calculatedTotals = useSelector(selectCalculatedTotals);
     const blockCards = useSelector(selectBlockCards);
-    const roomOption = useSelector(selectRoomOption)
+    const roomOption = useSelector(selectRoomOption);
+    const activeSurgeons = useSelector(selectActiveSurgeons)
 
     useEffect(()=> {
         console.log('triggered')
@@ -158,7 +160,7 @@ const Block = () => {
   }, [allBlockCalendar,roomOption ])
 
 
-
+  
 
  
 
@@ -171,6 +173,8 @@ const Block = () => {
         }
       }
 
+
+
       
       useEffect(()=> {
 
@@ -182,7 +186,7 @@ const Block = () => {
             onChange:updateCalendarRooms
             }
             setRoomMenu(calendarRoomSelector);
-            console.log('rooms', calendarRoomSelector)
+            dispatch(setBlockRoomOption(CalendarMenuOptions.All))
 
       },[])
 
