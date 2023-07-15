@@ -51,11 +51,12 @@ export type BlockDetails = {
     room:string;
     unit:string;
     blockDate:string;
-    type:string
+    type:string;
     procs: BlockProcedure[];
-    start_time:string,
-    end_time:string,
-    releaseDate:string
+    start_time:string;
+    end_time:string;
+    releaseDate:string;
+    blockType: string;
 
 }
 

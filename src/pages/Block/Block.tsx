@@ -15,7 +15,7 @@ import { selectActiveSurgeonNPIs } from "../../store/ORData/selectors/ordata.sel
 import { selectBlockGrid } from "../../store/Block/selectors/calendar.selector";
 // import { selectAllBlockforCalendar,selectInBlockforCalendar,selectOutBlockforCalendar } from "../../store/Block/selectors/calendar.selector";
 import { selectAllBlockforGrid } from "../../store/Block/selectors/grid.selector";
-import { selectAllBlockDetailsDay, selectInBlockDetailsDay, selectOutBlockDetailsDay } from "../../store/Block/selectors/details.selector";
+import { selectAllBlockDetailsDay } from "../../store/Block/selectors/details.selector";
 import { setSelectedBlockDate } from "../../store/Block/block.actions";
 import { selectAllSurgeonsSelected } from "../../store/ORData/selectors/ordata.selector";
 import { calendarSurgeonMenus } from "../utilization/utilization.constants";
@@ -83,8 +83,8 @@ const Block = () => {
     // const inBlockGrid = useSelector(selectInBlockforGrid);
     // const outBlockGrid = useSelector(selectOutBlockforGrid);
     const allDetails = useSelector(selectAllBlockDetailsDay);
-    const inDetails = useSelector(selectInBlockDetailsDay);
-    const outDetails = useSelector(selectOutBlockDetailsDay);
+    // const inDetails = useSelector(selectInBlockDetailsDay);
+    // const outDetails = useSelector(selectOutBlockDetailsDay);
     const allSurgeonsSelected = useSelector(selectAllSurgeonsSelected);
     const allRoomsSelected = useSelector(selectAllRoomsSelected);
     const blockRoom = useSelector(selectBlockRoom);
@@ -221,27 +221,26 @@ const Block = () => {
         })
     }
 
-    const getCardDetails = ():DetailsSummary[] => {
-        console.log('room', roomOption)
-        if (roomOption == CalendarMenuOptions.All) {
-            console.log('in 1')
-            return allDetails
-        }
-        if (roomOption == CalendarMenuOptions.In) {
-            console.log('in 2')
-            return inDetails
-        }
-        if (roomOption == CalendarMenuOptions.Out) {
-            console.log('in 3')
-            return outDetails
-        }
-        return allDetails
-      }
+    // const getCardDetails = ():DetailsSummary[] => {
+    //     console.log('room', roomOption)
+    //     if (roomOption == CalendarMenuOptions.All) {
+    //         console.log('in 1')
+    //         return allDetails
+    //     }
+    //     if (roomOption == CalendarMenuOptions.In) {
+    //         console.log('in 2')
+    //         return inDetails
+    //     }
+    //     if (roomOption == CalendarMenuOptions.Out) {
+    //         console.log('in 3')
+    //         return outDetails
+    //     }
+    //     return allDetails
+    //   }
 
       useEffect (() => {
         if (blockPopUpIsOpen) {
-            const details = getCardDetails()
-            const blockCards:BlockDetailCard[] = details.map((detail) => {
+            const blockCards:BlockDetailCard[] = allDetails.map((detail) => {
                 const header = getDetailCardHeader(detail.header);
                 const subHeader = getDetailCardSubHeader(detail.subHeader);
                 const procs = getDetailsProcsArray(detail.procs);
@@ -262,7 +261,7 @@ const Block = () => {
             dispatch(setBlockCards(blockCards))
             console.log('after', roomMenu)
         }
-    },[blockTypeOption, roomOption,blockPopUpIsOpen]);
+    },[blockPopUpIsOpen]);
 
 
 

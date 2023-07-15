@@ -74,7 +74,7 @@ const getBlockCalendarData = (blockData:BlockData[],roomOption:string,blockOptio
     blockDates.forEach((date) => {
         const weekday = new Date(date + 'T00:00:00').getDay()
         const blockDay = blockData.filter((day) => {
-            console.log('day',day)
+            // console.log('day',day)
             // console.log(roomOption)
             return (day.blockDate === date) && (day.type === roomOption) 
                                         && (day.blockType == blockOption)});

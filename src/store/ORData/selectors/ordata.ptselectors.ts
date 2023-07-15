@@ -195,10 +195,13 @@ export const calculateCalendarTotals = (calendarData:CalendarDayData[]) => {
         const ptMinutes = getArrayTotals(dailyptMinutes)
         const nonptMinutes = getArrayTotals(dailynonptMinutes)
         const totalptMinutes = getArrayTotals(dailytotalptMinutes)
-        let utilization = '0%'
-        if (totalptMinutes > 0) {
+        let utilization:string;
+        if (totalptMinutes === 0) {
+            utilization = "None"
+        } else {
             utilization = Math.round(ptMinutes/totalptMinutes*100).toString() + '%'
-        } 
+        }
+
         const dailyTotal:CalendarDayData = {
             date: 'Total', 
             display: utilization, 

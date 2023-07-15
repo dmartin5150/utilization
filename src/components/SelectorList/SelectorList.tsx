@@ -40,18 +40,14 @@ function SelectorList <T extends Option >({title,isDisabled, selectedOption, opt
                     value={selectedValue} 
                     options={optionList} 
                     onChange={handleSelector} 
-                    menuPlacement='auto'
-                    menuPosition='fixed'
                     styles={{
                         control: (baseStyles, state) => ({
                           ...baseStyles,
-                          fontSize: '16px',
+                          fontSize: '14px',
                         }),
                         option: (styles, state) => ({
                             ...styles,
-                            // padding:'1.5rem 0.5rem',
-                            // margin: '0.5rem, 0',
-                            fontSize:'16px'
+                            fontSize:'14px'
                         })
                       }}   
                     />
