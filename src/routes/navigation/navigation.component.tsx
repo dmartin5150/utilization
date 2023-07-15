@@ -19,16 +19,60 @@ const Navigation = () => {
         </div>
 
         <div className="nav__links-container">
-          <NavLink  to="/" className="nav__link" >
+          <NavLink  
+           style={
+            ({isActive}) => (
+             isActive 
+             ? {
+                textDecoration: 'none',
+                color: '#00a896'
+               }
+             :{}
+             )
+           }
+           to="/" className="nav__link" >
             OR Data
           </NavLink>
-          <NavLink  to="/surgeon" className="nav__link">
+          <NavLink  
+              style={
+              ({isActive}) => (
+                isActive 
+                ? {
+                  textDecoration: 'none',
+                  color: '#00a896'
+                  }
+                :{}
+                )
+              }
+          to="/surgeon" className="nav__link">
             Surgeon
           </NavLink>
-          <NavLink  to="/block" className="nav__link">
+          <NavLink  
+              style={
+              ({isActive}) => (
+                isActive 
+                ? {
+                  textDecoration: 'none',
+                  color: '#00a896'
+                  }
+                :{}
+                )
+              }
+          to="/block" className="nav__link">
             Block
           </NavLink>
-          <NavLink  to="/settings" className="nav__link">
+          <NavLink  
+            style={
+            ({isActive}) => (
+              isActive 
+              ? {
+                textDecoration: 'none',
+                color: '#00a896'
+                }
+              :{}
+              )
+            }
+          to="/settings" className="nav__link">
             Settings
           </NavLink>
         </div>
