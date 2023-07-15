@@ -6,13 +6,12 @@ import { timeConvert } from "../utilities";
 import { selectBlockLists } from "./calendar.selector";
 import { selectBlockGrid } from "./calendar.selector";
 import { selectBlockDate } from "./details.selector";
-
+import { selectRoomOption,selectBlockTypeOption } from "./calendar.selector";
 
 
 
 const getGridData = (blockroom: string, data:BlockData[]):SummaryGridRowData => {
     const gridData = data.filter((grid)=> grid.id != 'none')
-    // console.log('gridData', gridData)
     const blockStats = getBlockStats(gridData)
     const dailyGridRow:SummaryGridRowData = {
         id: blockroom,
@@ -43,25 +42,18 @@ export function compare<T extends hasId>( a:T, b:T ):number {
     return 0;
   }
 
-const getAllBlockforGrid = (blockData:BlockData[],blockDate:string, selectAll: boolean, blockType:string):SummaryGridRowData[] => {
+const getAllBlockforGrid = (blockData:BlockData[],blockDate:string, roomOption:string,blockOption:string):SummaryGridRowData[] => {
     let newGridDay:SummaryGridRowData[] = [];
     let blockRooms = blockData.map((block) => block.room)
     blockRooms = [...new Set(blockRooms)]
         blockRooms.forEach((blockroom) => {
-            if (selectAll) {
-                let dailyGrid = blockData.filter((block) => (block.blockDate === blockDate) && 
-                        (block.room === blockroom) && (block.type === blockType))
-                // console.log('room', blockroom, 'date',  blockDate)
-                newGridDay.push(getGridData(blockroom, dailyGrid))
-            }else {
-                let dailyGrid = blockData.filter((block) => (block.blockDate === blockDate) && (block.room === blockroom)
-                                            && (block.type === blockType))
-                // console.log('room', blockroom, 'date',  blockDate)
-                newGridDay.push(getGridData(blockroom, dailyGrid))           
-            }
+            let dailyGrid = blockData.filter((block) => (block.blockDate === blockDate) && 
+                        (block.room === blockroom) && (block.type === roomOption) &&
+                        (block.blockType == blockOption))
+            newGridDay.push(getGridData(blockroom, dailyGrid))
         })
-    newGridDay = newGridDay.filter((grid) => grid.id != 'none').sort(compare)
-    // console.log('new grid',newGridDay)
+    newGridDay = newGridDay.filter((grid) => grid.procedures !== '0H: 0M')
+    newGridDay = newGridDay.filter((grid) => grid.id !== 'none').sort(compare)
     return newGridDay
 }
 
@@ -70,17 +62,8 @@ const getAllBlockforGrid = (blockData:BlockData[],blockDate:string, selectAll: b
 
 
 export const selectAllBlockforGrid = createSelector(
-    [selectBlockGrid, selectBlockDate],
-    (ORBlockSlice,blockDate) =>  getAllBlockforGrid(ORBlockSlice, blockDate, true, 'ALL')
+    [selectBlockGrid, selectBlockDate,selectRoomOption,selectBlockTypeOption],
+    (ORBlockSlice,blockDate,roomOption,blockOption) =>  getAllBlockforGrid(ORBlockSlice, blockDate, roomOption,blockOption)
 )
 
 
-export const selectInBlockforGrid = createSelector(
-    [selectBlockGrid,selectBlockDate],
-    (ORBlockSlice, blockDate) =>  getAllBlockforGrid(ORBlockSlice, blockDate,false, 'IN')
-)
-
-export const selectOutBlockforGrid = createSelector(
-    [selectBlockGrid,selectBlockDate],
-    (ORBlockSlice, blockDate) =>  getAllBlockforGrid(ORBlockSlice,blockDate, false, 'OUT')
-)

@@ -14,7 +14,7 @@ import { BlockList } from "net";
 import { selectActiveSurgeonNPIs } from "../../store/ORData/selectors/ordata.selector";
 import { selectBlockGrid } from "../../store/Block/selectors/calendar.selector";
 // import { selectAllBlockforCalendar,selectInBlockforCalendar,selectOutBlockforCalendar } from "../../store/Block/selectors/calendar.selector";
-import { selectAllBlockforGrid, selectInBlockforGrid,selectOutBlockforGrid } from "../../store/Block/selectors/grid.selector";
+import { selectAllBlockforGrid } from "../../store/Block/selectors/grid.selector";
 import { selectAllBlockDetailsDay, selectInBlockDetailsDay, selectOutBlockDetailsDay } from "../../store/Block/selectors/details.selector";
 import { setSelectedBlockDate } from "../../store/Block/block.actions";
 import { selectAllSurgeonsSelected } from "../../store/ORData/selectors/ordata.selector";
@@ -80,8 +80,8 @@ const Block = () => {
     // const inBlockCalendar = useSelector(selectInBlockforCalendar);
     // const outBlockCalendar = useSelector(selectOutBlockforCalendar)
     const allBlockGrid = useSelector(selectAllBlockforGrid);
-    const inBlockGrid = useSelector(selectInBlockforGrid);
-    const outBlockGrid = useSelector(selectOutBlockforGrid);
+    // const inBlockGrid = useSelector(selectInBlockforGrid);
+    // const outBlockGrid = useSelector(selectOutBlockforGrid);
     const allDetails = useSelector(selectAllBlockDetailsDay);
     const inDetails = useSelector(selectInBlockDetailsDay);
     const outDetails = useSelector(selectOutBlockDetailsDay);
@@ -190,12 +190,6 @@ const Block = () => {
             dispatch(setBlockRoomOption(BlockRoomOptions.All))
 
       },[])
-
-
-
-
-
-
 
 
       const onClosePopup = () => {
