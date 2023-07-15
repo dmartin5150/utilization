@@ -13,6 +13,6 @@ export const blockRoomOptions: CalendarMenuItem[] = [
     {id:2, label: 'Out', value:CalendarMenuOptions.Out},
 ]
 
-export const calendaBlockRoomMenus:CalendarMenus = {
+export const calendarBlockRoomMenus:CalendarMenus = {
     'All': blockRoomOptions,
 }

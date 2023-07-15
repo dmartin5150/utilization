@@ -37,7 +37,7 @@ import { DetailsSubHeaderData } from "../../components/team-card/details-subhead
 import { DetailsData } from "../../components/team-card/details-card";
 import { setBlockPopUpOpen } from "../../store/Block/block.actions";
 import { selectBlockPopUpIsOpen } from "../../store/Block/selectors/details.selector";
-import { calendaBlockRoomMenus } from "./block.constants";
+import { calendarBlockRoomMenus } from "./block.constants";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { selectBlockCalendarData, selectBlockCalendarTotals } from "../../store/Block/selectors/calendar.selector";
 import { setBlockCalendarData, setBlockCalendarTotals } from "../../store/Block/block.actions";
@@ -166,25 +166,31 @@ const Block = () => {
 
 
     const updateCalendarRooms = (option: SingleValue<CalendarMenuItem>) => {
-        console.log('menu',roomMenu)
-        console.log()
+        console.log('room menu',roomMenu)
         if (option) {
             dispatch(setBlockRoomOption(option.value as CalendarMenuOptions))
         }
       }
 
-
+    //   const roomMenu: SingleSelector<CalendarMenuItem> = {
+    //     title: 'Rooms',
+    //     // isDisabled:true,
+    //     selectedOption: calendaBlockRoomMenus['All'][0],
+    //     optionList: calendaBlockRoomMenus['All'],
+    //     onChange:updateCalendarRooms
+    //     }
 
       
       useEffect(()=> {
-
+        console.log('triggered Menu')
         const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
             title: 'Rooms',
-            isDisabled:true,
-            selectedOption: calendaBlockRoomMenus['All'][0],
-            optionList: calendaBlockRoomMenus['All'],
+            isDisabled: false,
+            selectedOption: calendarBlockRoomMenus['All'][0],
+            optionList: calendarBlockRoomMenus['All'],
             onChange:updateCalendarRooms
             }
+            console.log('setting menu', calendarRoomSelector)
             setRoomMenu(calendarRoomSelector);
             dispatch(setBlockRoomOption(CalendarMenuOptions.All))
 
@@ -198,7 +204,9 @@ const Block = () => {
 
 
       const onClosePopup = () => {
+        // console.log('room menu popup', roomMenu)
         dispatch(setBlockPopUpOpen(false))
+        // console.log('room menu popup', roomMenu)
       }
 
     const detailsColHeader:GridNames = {'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Room'}
@@ -319,8 +327,8 @@ const Block = () => {
                 calendarData={blockCalendarData}
                 calendarTotals={blockCalendarTotals}
                 selectedDate={selectedDate}
-                list1={roomMenu}
-                list2={surgeonMenu}
+                list1={surgeonMenu}
+                list2={roomMenu}
                 hiddenID={[]}
                 onDateChange={setBlockDate}
                 pageSize={30}

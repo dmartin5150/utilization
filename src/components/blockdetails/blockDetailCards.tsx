@@ -49,7 +49,7 @@ const BlockDetailCards: React.FC<BlockDetailCardsProps> = ({blockCards,classIsOp
     
     return (
         <Popup className={classnames("popup",{open:classIsOpen=== 'open'})}>
-            <div className={classnames('blockdetailcards',{open:classIsOpen=== 'open'})}>
+            <div className={classnames('blockdetailcards',{open:classIsOpen=== 'open'},{close:classIsOpen!=='open'})}>
                 {currentBlockData.map((blockCard, idx) => {
                 return  <DetailsCard key={idx}
                         title={blockCard.title} 
