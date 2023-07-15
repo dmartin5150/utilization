@@ -5,10 +5,16 @@ import Block from "./Block"
 
 
 export enum BlockMenuOptions {
-    Surgeon = '1',
-    Surgeon_Group = '2',
-    Surgical_Specialty= '3',
-    All = '4'
+    Surgeon = 'Surgeon',
+    Surgeon_Group = 'Surgeon Group',
+    Surgical_Specialty= 'Surgical Specialty',
+    All = 'All'
+}
+
+export enum BlockRoomOptions {
+    All = 'ALL',
+    In = 'IN',
+    Out = 'OUT'
 }
 
 
@@ -23,9 +29,9 @@ export const blockTypeOptions: CalendarMenuItem[] = [
 
 
 export const blockRoomOptions: CalendarMenuItem[] = [
-    {id:0, label: 'All', value: CalendarMenuOptions.All,},
-    {id:1, label: 'In', value:CalendarMenuOptions.In},
-    {id:2, label: 'Out', value:CalendarMenuOptions.Out},
+    {id:0, label: 'ALL', value: BlockRoomOptions.All},
+    {id:1, label: 'IN', value:BlockRoomOptions.In},
+    {id:2, label: 'OUT', value:BlockRoomOptions.Out},
 ]
 
 export const calendarBlockMenus:CalendarMenus = {

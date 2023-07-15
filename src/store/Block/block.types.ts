@@ -25,7 +25,8 @@ export type BlockData = {
     bt_minutes:string;
     nbt_minutes:string;
     total_minutes:string;
-    type:string
+    type:string;
+    blockType:string;
 
 }
 

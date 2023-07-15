@@ -34,8 +34,8 @@ const BLOCK_INITIAL_STATE: BlockState = {
     blockCards: [],
     selectedBlockDate: '2023-07-12',
     selectedBlockRoom: 'BH JRI 08',
-    blockRoomOption: '1',
-    blockTypeOption: '1',
+    blockRoomOption: 'ALL',
+    blockTypeOption: 'Surgeon',
     popUpOpen:false, 
     isLoading:false,
     error:null

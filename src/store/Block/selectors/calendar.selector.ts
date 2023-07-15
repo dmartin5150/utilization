@@ -28,6 +28,11 @@ export const selectBlockCalendarData = createSelector(
     (ORBlockSlice) => ORBlockSlice.calendarData
 )
 
+// export const selectSurgeonBlockCalendarData = createSelector(
+//     [selectAllBlockCalendarData],
+//     // (ORBlockSlice) => ORBlockSlice.calendarData.filter((data) => data.type)
+// )
+
 export const selectRoomOption = createSelector(
     [selectBlockReducer],
     (ORBlockSlice) => ORBlockSlice.blockRoomOption
@@ -60,13 +65,20 @@ export function compare<T extends hasDate>( a:T, b:T ):number {
 
 
 
-const getBlockCalendarData = (blockData:BlockData[],type:string) => {
+
+
+const getBlockCalendarData = (blockData:BlockData[],roomOption:string,blockOption:string) => {
     const blockCalendar:CalendarDayData[] =[];
     let blockDates = blockData.map((item)=>item.blockDate);
     blockDates = [...new Set(blockDates)]
     blockDates.forEach((date) => {
         const weekday = new Date(date + 'T00:00:00').getDay()
-        const blockDay = blockData.filter((day) => (day.blockDate === date) && (day.type === type));
+        const blockDay = blockData.filter((day) => {
+            // console.log('day',day)
+            // console.log(roomOption)
+            // console.log(blockOption)
+            return (day.blockDate === date) && (day.type === roomOption) 
+                                        && (day.blockType == blockOption)});
         const blockStats = getBlockStats(blockDay);
         const newBlockDay:CalendarDayData = {
             date,
@@ -85,24 +97,18 @@ const getBlockCalendarData = (blockData:BlockData[],type:string) => {
 } 
 
 
+
+export const selectBlockCalendar = createSelector(
+    [selectBlockGrid,selectRoomOption,selectBlockTypeOption],
+    (ORBlockSlice,roomOption,blockOption):CalendarDayData[] =>  getBlockCalendarData(ORBlockSlice,roomOption,blockOption)
+)
+
 export const selectCalculatedTotals = createSelector(
-    [selectBlockCalendarData],
+    [selectBlockCalendar],
     (calendarData):CalendarDayData[] =>  calculateCalendarTotals(calendarData)
 )
 
-export const selectAllBlockforCalendar = createSelector(
-    [selectBlockGrid],
-    (ORBlockSlice):CalendarDayData[] =>  getBlockCalendarData(ORBlockSlice,'ALL')
-)
 
-export const selectInBlockforCalendar = createSelector(
-    [selectBlockGrid],
-    (ORBlockSlice):CalendarDayData[] =>  getBlockCalendarData(ORBlockSlice,'IN')
-)
-export const selectOutBlockforCalendar = createSelector(
-    [selectBlockGrid],
-    (ORBlockSlice):CalendarDayData[] =>  getBlockCalendarData(ORBlockSlice,'OUT')
-)
 
 
 const getBlockDayUtilization = (blockData:BlockData[]):DayUtilization[] => {
