@@ -37,7 +37,7 @@ import { DetailsSubHeaderData } from "../../components/team-card/details-subhead
 import { DetailsData } from "../../components/team-card/details-card";
 import { setBlockPopUpOpen } from "../../store/Block/block.actions";
 import { selectBlockPopUpIsOpen } from "../../store/Block/selectors/details.selector";
-import { calendarBlockRoomMenus } from "./block.constants";
+import { calendarBlockMenus } from "./block.constants";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { selectBlockCalendarData, selectBlockCalendarTotals } from "../../store/Block/selectors/calendar.selector";
 import { setBlockCalendarData, setBlockCalendarTotals } from "../../store/Block/block.actions";
@@ -49,6 +49,11 @@ import { selectBlockCards } from "../../store/Block/selectors/details.selector";
 import { selectRoomOption} from "../../store/Block/selectors/calendar.selector";
 import { setBlockRoomOption } from "../../store/Block/block.actions";
 import { selectActiveSurgeons } from "../../store/ORData/selectors/ordata.selector";
+import { setBlockTypeOption } from "../../store/Block/block.actions";
+import { selectBlockTypeOption } from "../../store/Block/selectors/calendar.selector";
+import { BlockMenuOptions } from "./block.constants";
+
+
 
 
 
@@ -57,7 +62,8 @@ import { selectActiveSurgeons } from "../../store/ORData/selectors/ordata.select
 const Block = () => {
     const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
-    // const [roomStatus, setRoomStatus] = useState<CalendarMenuOptions>()
+    const [blockTypeMenu, setBlockTypeMenu] = useState<SingleSelector<CalendarMenuItem>>()
+
 
 
 
@@ -88,7 +94,8 @@ const Block = () => {
     const calculatedTotals = useSelector(selectCalculatedTotals);
     const blockCards = useSelector(selectBlockCards);
     const roomOption = useSelector(selectRoomOption);
-    const activeSurgeons = useSelector(selectActiveSurgeons)
+    // const activeSurgeons = useSelector(selectActiveSurgeons)
+    const blockTypeOption = useSelector(selectBlockTypeOption)
 
     useEffect(()=> {
         console.log('triggered')
@@ -109,7 +116,11 @@ const Block = () => {
         }
     },[blockCalendarData])
 
+
  
+
+
+
 
     const updateCalendarSurgeons = (option: SingleValue<CalendarMenuItem>) => {
         if (option) {
@@ -172,13 +183,25 @@ const Block = () => {
         }
       }
 
-    //   const roomMenu: SingleSelector<CalendarMenuItem> = {
-    //     title: 'Rooms',
-    //     // isDisabled:true,
-    //     selectedOption: calendaBlockRoomMenus['All'][0],
-    //     optionList: calendaBlockRoomMenus['All'],
-    //     onChange:updateCalendarRooms
-    //     }
+
+      const updateBlockTypesMenu = (option: SingleValue<CalendarMenuItem>) => {
+        if (option){
+            dispatch(setBlockTypeOption(option.value as CalendarMenuOptions))
+        }
+      }
+ 
+      useEffect(()=> {
+        const calendarBlockTypeSelector: SingleSelector<CalendarMenuItem> = {
+            'title': 'Block Types', 
+            isDisabled: false,
+            selectedOption: calendarBlockMenus['Types'][0],
+            optionList: calendarBlockMenus['Types'],
+            onChange:updateBlockTypesMenu
+        }
+        setBlockTypeMenu(calendarBlockTypeSelector);
+        dispatch(setBlockRoomOption(BlockMenuOptions.Surgeon));
+      },[])
+
 
       
       useEffect(()=> {
@@ -186,8 +209,8 @@ const Block = () => {
         const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
             title: 'Rooms',
             isDisabled: false,
-            selectedOption: calendarBlockRoomMenus['All'][0],
-            optionList: calendarBlockRoomMenus['All'],
+            selectedOption: calendarBlockMenus['Rooms'][0],
+            optionList: calendarBlockMenus['Rooms'],
             onChange:updateCalendarRooms
             }
             console.log('setting menu', calendarRoomSelector)
@@ -321,13 +344,13 @@ const Block = () => {
                 onCloseBlockDetails={onClosePopup} 
                 cardsPageSize={1} />
             <div className="block__calendar">
-            {surgeonMenu && roomMenu && <Calendar
+            {blockTypeMenu && roomMenu && <Calendar
                 title='TNNAS BLOCK UTILIZATION DATA'
                 subTitle={unit}
                 calendarData={blockCalendarData}
                 calendarTotals={blockCalendarTotals}
                 selectedDate={selectedDate}
-                list1={surgeonMenu}
+                list1={blockTypeMenu}
                 list2={roomMenu}
                 hiddenID={[]}
                 onDateChange={setBlockDate}

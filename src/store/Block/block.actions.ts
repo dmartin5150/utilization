@@ -17,6 +17,7 @@ export type SetBlockCalendarData = ActionWithPayload<BLOCK_TYPES.SET_CALENDAR_DA
 export type SetBlockCalendarTotals = ActionWithPayload<BLOCK_TYPES.SET_CALENDAR_TOTALS, CalendarDayData[]>
 export type SetBlockCards = ActionWithPayload<BLOCK_TYPES.SET_BLOCK_CARDS, BlockDetailCard[]>
 export type SetBlockRoomOption = ActionWithPayload<BLOCK_TYPES.SET_BLOCK_ROOM_OPTION ,string>
+export type SetBlockTypeOption = ActionWithPayload<BLOCK_TYPES.SET_BLOCK_TYPE_OPTION,string>
 
 
 export const fetchBlockStart = withMatcher(():FetchBlockStart=> {
@@ -57,6 +58,10 @@ export const setBlockCards = withMatcher((blockCards:BlockDetailCard[]):SetBlock
 
 export const setBlockRoomOption = withMatcher((roomOption:string):SetBlockRoomOption => {
     return createAction(BLOCK_TYPES.SET_BLOCK_ROOM_OPTION, roomOption)
+})
+
+export const setBlockTypeOption = withMatcher((blockTypeOption:string):SetBlockTypeOption => {
+    return createAction(BLOCK_TYPES.SET_BLOCK_TYPE_OPTION, blockTypeOption)
 })
 
 

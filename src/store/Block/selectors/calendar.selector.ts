@@ -33,6 +33,10 @@ export const selectRoomOption = createSelector(
     (ORBlockSlice) => ORBlockSlice.blockRoomOption
 )
 
+export const selectBlockTypeOption = createSelector(
+    [selectBlockReducer],
+    (ORBlockSlice) => ORBlockSlice.blockTypeOption
+)
 
 export const selectBlockCalendarTotals = createSelector(
     [selectBlockReducer],
