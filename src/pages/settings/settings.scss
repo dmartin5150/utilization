@@ -3,6 +3,13 @@
     & .set-all {
         display: flex;
         flex-direction: row;
+
+        & .set-selector {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
     }
 
 
@@ -30,7 +37,7 @@
     & .physician-group {
         width: 40rem;
         margin-left:5rem;
-        margin-bottom:5rem;
+        // margin-bottom:5rem;
     }
 
     // .select-unit-container {
@@ -76,6 +83,7 @@
         display:inline-block;
         width:50rem;
         padding-left:2rem;
+        // padding-bottom: 1.8rem
     }
 
 

@@ -22,6 +22,7 @@ import { SummaryGridRowData } from "../../components/summary-grid/summary-grid-r
 import { setGridData } from "./actions/grid.actions";
 import { DetailsWithBlock } from "./ordata.types";
 import { setCalendarTotals } from "./actions/calendar.actions";
+import { setGroupUnit, setGroupId } from "./actions/ordata.actions";
 
 
 
@@ -38,6 +39,8 @@ export type ORDataState = {
     allSurgeonsSelected: boolean;
     calendarSurgeonOption: CalendarMenuOptions, 
     calendarRoomOption: CalendarMenuOptions, 
+    groupUnit: string;
+    groupId: string;
     isLoading:boolean;
     popOpen: boolean;
     ptHours: PT_Hours;
@@ -68,6 +71,8 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
     allSurgeonsSelected:true,
     calendarSurgeonOption: CalendarMenuOptions.All, 
     calendarRoomOption: CalendarMenuOptions.All,
+    groupUnit: 'BH JRI',
+    groupId: '0',
     isLoading:false,
     popOpen: false,
     ptHours:PTHOURS_INITIAL_STATE,
@@ -136,6 +141,12 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     }
     if (setCalendarTotals.match(action)) {
         return {...state, calendarTotals: action.payload}
+    }
+    if (setGroupUnit.match(action)) {
+        return {...state, groupUnit:action.payload}
+    }
+    if (setGroupId.match(action)) {
+        return {...state, groupId:action.payload}
     }
     return state;
 }

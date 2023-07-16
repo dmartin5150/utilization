@@ -38,7 +38,7 @@ function App() {
         dispatch(fetchSurgeonListsAsync())
         dispatch(fetchRoomListsSuccess(TNNASRoomLists))
         dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']));
-        dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
+        // dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
     },[]);
 
   useEffect(() => {

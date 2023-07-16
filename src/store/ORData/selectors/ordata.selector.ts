@@ -17,7 +17,15 @@ export const selectGridData = createSelector(
     (ORDataSlice) => ORDataSlice.gridData
 )
 
+export const selectGroupUnit = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.groupUnit
+)
 
+export const selectGroupId = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.groupId
+)
 export const selectDetailData = createSelector(
     [selectORDataReducer],
     (ORDataSlice) => ORDataSlice.detailsData.room
@@ -80,6 +88,8 @@ export const selectActiveSurgeons = createSelector(
     [selectORDataReducer],
     (ORDataSlice) => ORDataSlice.activeSurgeonList
 )
+
+
 
 
 export const selectAllSurgeonNPIs = createSelector(

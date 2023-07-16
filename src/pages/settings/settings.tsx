@@ -23,6 +23,8 @@ import { SurgeonList,SurgeonLists } from '../../store/ORData/ordata.types';
 import { Group } from '../../components/groupsContainer/groupItem';
 import GroupContainer from '../../components/groupsContainer/groupsContainer';
 import { surgeonGroups } from './settings.constants';
+import { selectGroupUnit,selectGroupId } from '../../store/ORData/selectors/ordata.selector';
+import { setGroupUnit, setGroupId } from '../../store/ORData/actions/ordata.actions';
 
 
 import { unitLists } from './settings.constants';
@@ -91,6 +93,8 @@ const Settings = () => {
     const rooms = useSelector(selectActiveRoomLists);
     const allSurgeonsSelected = useSelector(selectAllSurgeonsSelected);
     const allRoomsSelected = useSelector(selectAllRoomsSelected);
+    const groupUnit = useSelector(selectGroupUnit)
+    const groupId = useSelector(selectGroupId);
  
     
 
@@ -370,17 +374,30 @@ const Settings = () => {
 
 
 
-    const setGroupUnit = (unit:string) => {
-        dispatch(setUnit(unit));
+    const setGroupUnitName = (unit:string) => {
+        dispatch(setGroupUnit(unit));
     }
 
 
 
+
+
+    useEffect(() => {
+        selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
+        selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
+    },[groupId, groupUnit])
+
+
     const onSelectGroupItem = (id:string) => {
         // console.log('group id:', id)
-        setGroupUnit(surgeonGroups[parseInt(id)].unit)
-        selectSurgeonGroup(surgeonGroups[parseInt(id)].surgeons)
-        selectRoomGroup(surgeonGroups[parseInt(id)].rooms)
+        dispatch(setGroupId(id));
+        if (selectedUnit !== surgeonGroups[parseInt(id)].unit){
+            dispatch(setUnit(surgeonGroups[parseInt(id)].unit));
+            setGroupUnitName(surgeonGroups[parseInt(id)].unit);
+        } else {
+            selectSurgeonGroup(surgeonGroups[parseInt(id)].surgeons);
+            selectRoomGroup(surgeonGroups[parseInt(id)].rooms);
+        }
     }
 
 

@@ -67,8 +67,6 @@ const Block = () => {
 
 
 
-
-
     const dispatch = useAppDispatch();
 
     const unit = useSelector(selectUnit);
@@ -120,32 +118,6 @@ const Block = () => {
     },[currentCalendar])
 
 
- 
-
-
-
-
-
-
-
-
-
-//   useEffect (() => {
-//     // if (allBlockCalendar && allBlockCalendar.length > 0) {
-//         if (roomOption == BlockRoomOptions.All) {
-//             dispatch(setBlockCalendarData(allBlockCalendar))
-//         }
-//         if (roomOption == BlockRoomOptions.In) {
-//             dispatch(setBlockCalendarData(inBlockCalendar))
-//         }
-//         if (roomOption == BlockRoomOptions.Out) {
-//             dispatch(setBlockCalendarData(outBlockCalendar))      
-//         }
-//     // }
-//   }, [allBlockCalendar,roomOption ])
-
-
-  
 
 
     const updateCalendarRooms = (option: SingleValue<CalendarMenuItem>) => {
@@ -177,7 +149,6 @@ const Block = () => {
 
       
       useEffect(()=> {
-        console.log('triggered Menu')
         const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
             title: 'Rooms',
             isDisabled: false,
@@ -185,7 +156,6 @@ const Block = () => {
             optionList: calendarBlockMenus['Rooms'],
             onChange:updateCalendarRooms
             }
-            console.log('setting menu', calendarRoomSelector)
             setRoomMenu(calendarRoomSelector);
             dispatch(setBlockRoomOption(BlockRoomOptions.All))
 
@@ -221,22 +191,7 @@ const Block = () => {
         })
     }
 
-    // const getCardDetails = ():DetailsSummary[] => {
-    //     console.log('room', roomOption)
-    //     if (roomOption == CalendarMenuOptions.All) {
-    //         console.log('in 1')
-    //         return allDetails
-    //     }
-    //     if (roomOption == CalendarMenuOptions.In) {
-    //         console.log('in 2')
-    //         return inDetails
-    //     }
-    //     if (roomOption == CalendarMenuOptions.Out) {
-    //         console.log('in 3')
-    //         return outDetails
-    //     }
-    //     return allDetails
-    //   }
+
 
       useEffect (() => {
         if (blockPopUpIsOpen) {
