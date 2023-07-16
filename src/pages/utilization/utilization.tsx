@@ -1,41 +1,30 @@
 import React, { useEffect, useState } from "react";
-import SummaryGrid, { SummaryGridData } from "../../components/summary-grid/summary-grid";
+import SummaryGrid from "../../components/summary-grid/summary-grid";
 import Calendar from "../../components/calendar/calendar";
 import DetailsCard from "../../components/team-card/details-card";
 import "./utilization.scss";
 import { useSelector } from "react-redux";
 import { selectCalendarData, selectCalendarRoomOption, selectDetailData, selectGridData, selectPopUpIsOpen } from "../../store/ORData/selectors/ordata.selector";
 import { selectDate,selectUnit,selectRoom  } from "../../store/Facility/facility.selector";
-import { fetchCalendarDataAsync } from "../../store/ORData/actions/calendar.actions";
-import { fetchGridDataAsync, setGridData } from "../../store/ORData/actions/grid.actions";
 import { fetchDetailDataAsync, closePopUp } from "../../store/ORData/actions/details.actions";
 import { useAppDispatch } from "../../hooks/hooks";
 import { setRoom, setDate, setUnit } from "../../store/Facility/facilty.actions";
 import { FacilityRoom } from "../../store/Facility/facitlity.reducer";
-import { DropDownBox } from "../../components/dropdown/DropDown";
 import { GridNames } from "../../components/team-card/details-grid";
 import { DetailsHeader } from "../../components/team-card/details-card-header";
-import getPTHours from "../../utilities/fetchData/getPTHours";
 import { selectPrimeTime } from "../../store/Facility/facility.selector";
-import { fetchSurgeonListsAsync } from "../../store/ORData/actions/surgeonLists.actions";
-import { fetchRoomLists,setActiveRoomList } from "../../store/ORData/actions/roomsListActions";
-import { TNNASRoomLists } from "../settings/settings.constants";
 import { selectSurgeonLists } from "../../store/ORData/selectors/ordata.selector";
-import { TNNASUNIT } from "../../store/Facility/facility.types";
 import { setActiveSurgeonList } from "../../store/ORData/actions/surgeonLists.actions";
-import { selectPTminutesperroom } from "../../store/Facility/facility.selector";
 import { CalendarMenuItem } from "./utilization.constants";
-import SelectorList from "../../components/SelectorList/SelectorList";
 import { SingleSelector } from "../../components/SelectorList/SelectorList";
 import {  CalendarMenuOptions } from "./utilization.constants";
-import Select,{SingleValue} from "react-select";
+import {SingleValue} from "react-select";
 import { setCalendarSurgeonOption, setCalendarRoomOption} from "../../store/ORData/actions/calendar.actions";
 import { selectCalendarSurgeonOption } from "../../store/ORData/selectors/ordata.selector";
 import { calendarSurgeonMenus, calendarRoomMenus} from "./utilization.constants";
 import { selectAllRoomsSelected,selectAllSurgeonsSelected } from "../../store/ORData/selectors/ordata.selector";
 import { selectCalendar } from "../../store/ORData/selectors/ordata.selector";
 import { selectCalendarPTHoursAll } from "../../store/ORData/selectors/ordata.ptselectors";
-import {  } from "../../store/ORData/selectors/ordata.selector";
 import {selectPTHoursTotalsAll} from "../../store/ORData/selectors/ordata.ptselectors";
 import { selectActiveSurgeons } from "../../store/ORData/selectors/ordata.selector";
 import {selectActiveRoomLists} from "../../store/ORData/selectors/ordata.selector";
@@ -46,11 +35,9 @@ import { selectGrid } from "../../store/ORData/selectors/ordata.selector";
 import { SummaryGridRowData } from "../../components/summary-grid/summary-grid-row";
 import { selectActiveSurgeonNPIs } from "../../store/ORData/selectors/ordata.selector";
 import { selectDetailBlockData } from "../../store/ORData/selectors/ordata.selector";
-import { calendarTotalData } from "./utilization.constants";
 import { setCalendarTotals } from "../../store/ORData/actions/calendar.actions";
 import { selectCalendarTotals } from "../../store/ORData/selectors/ordata.ptselectors";
-
-
+import { setGridData } from "../../store/ORData/actions/grid.actions";
 
 
 
@@ -64,15 +51,10 @@ const Utilization = () => {
 
   
   const hiddenIDs = ["-1","-2","-3","-4","-5"]
-  const UnitMenuItems = ['BH JRI','STM ST OR', 'MT OR']
-  const MonthMenuItems = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
-                          'August', 'September', 'October', 'November', 'December']
 
   const dispatch = useAppDispatch();
   const calendarData = useSelector(selectCalendarData);
-  const calendar = useSelector(selectCalendar)
   const gridData = useSelector(selectGridData);
-  const grid = useSelector(selectGrid)
   const detailsData = useSelector(selectDetailData);
   const popupOpen = useSelector(selectPopUpIsOpen);
   const selectedDate = useSelector(selectDate);
@@ -81,13 +63,10 @@ const Utilization = () => {
   const primeTime = useSelector(selectPrimeTime);
   const surgeonLists = useSelector(selectSurgeonLists);
   const activeSurgeonList = useSelector(selectActiveSurgeons);
-  const calendarSurgeonOption = useSelector(selectCalendarSurgeonOption);
-  const calendarRoomOption = useSelector(selectCalendarRoomOption)
   const allRoomsSelected = useSelector(selectAllRoomsSelected);
   const allSurgeonsSelected = useSelector(selectAllSurgeonsSelected);
   const allPTHours = useSelector(selectCalendarPTHoursAll);
   const PTTotalAll = useSelector(selectPTHoursTotalsAll);
-  const activeRoomList = useSelector(selectActiveRoomLists)
   const allGridData = useSelector(selectGridDataAll);
   const selectedNPIs = useSelector(selectActiveSurgeonNPIs)
   const blockData = useSelector(selectDetailBlockData)
@@ -112,9 +91,7 @@ useEffect(() => {
 }, [calendarData])
 
 
-// Active NPIs are to highlight selected surgeons on details card
-// If all surgeons selected, do not highlight any surgeon which is 
-// why it is set to empty
+
   useEffect(()=> {
     if(allSurgeonsSelected) {
       setActiveNPIs([])
@@ -122,7 +99,6 @@ useEffect(() => {
       const npis = selectedNPIs.map((npi)=> npi.toString())
       setActiveNPIs(npis)
     }
-    // console.log('selectedNPIs', selectedNPIs)
   },[activeSurgeonList])
 
 
@@ -186,21 +162,7 @@ useEffect(() => {
   }
 
 
-  const calendarDropDownLeft: DropDownBox = {
-    title: "Select Month",
-    selected: month,
-    menuItems: MonthMenuItems,
-    disabled: true,
-    onSelectItem:setMonth
-  }
 
-  const calendarDropDownRight: DropDownBox = {
-    title: "Select Unit",
-    selected: unit,
-    menuItems: UnitMenuItems,
-    disabled: false,
-    onSelectItem:setSelectedUnit,
-  }
   const detailsHeader:DetailsHeader = {'col1':room.name,'col2':selectedDate, 'col3':`Utilization ${room.utilization}`, 'col4': ''}
   const detailsColHeader:GridNames = {'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Duration'}
 
@@ -211,7 +173,6 @@ const updateCalendarSurgeons = (option: SingleValue<CalendarMenuItem>) => {
   }
   
 }
-
 
 
 

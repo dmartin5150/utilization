@@ -25,6 +25,7 @@ import GroupContainer from '../../components/groupsContainer/groupsContainer';
 import { surgeonGroups } from './settings.constants';
 import { selectUpdateWithGroup,selectGroupId } from '../../store/ORData/selectors/ordata.selector';
 import {  setGroupId, setUpdateWithGroup } from '../../store/ORData/actions/ordata.actions';
+import { primeTimeMenuStartItems,primeTimeMenuEndItems } from './settings.constants';
 
 
 import { unitLists } from './settings.constants';
@@ -51,26 +52,6 @@ const providerGroups:Group[] = [
 
 
 
-
-const primeTimeMenuStartItems = {
-    '6:30': primeTimeStartOptions[0],
-    '7:00': primeTimeStartOptions[1],
-    '7:30': primeTimeStartOptions[2],
-    '8:00': primeTimeStartOptions[3],
-    '8:30': primeTimeStartOptions[4],
-    '9:00': primeTimeStartOptions[5],
-    '9:30': primeTimeStartOptions[6],
-}
-
-const primeTimeMentEndItems = {
-    '15:00': primeTimeEndOptions[0],
-    '15:30': primeTimeEndOptions[1],
-    '16:00': primeTimeEndOptions[2],
-    '16:30': primeTimeEndOptions[3],
-    '17:00': primeTimeEndOptions[4],
-    '17:30': primeTimeEndOptions[5],
-    '18:00': primeTimeEndOptions[6],
-}
 
 
 const Settings = () => {
@@ -120,7 +101,7 @@ const Settings = () => {
 
     const primeTimeEndSelector: SingleSelector<PrimeTimeMenuItem> = {
         title: 'Prime Time End',
-        selectedOption: primeTimeMentEndItems[primeTime.end],
+        selectedOption: primeTimeMenuEndItems[primeTime.end],
         optionList:primeTimeEndOptions,
         onChange: updatePrimeTimeEnd
     }
@@ -145,6 +126,7 @@ const Settings = () => {
         }
         return false;
     }
+
 
 
     useEffect(()=> {
@@ -197,14 +179,6 @@ const Settings = () => {
     },[activeSurgeons])
 
 
-
-    const setAllItems = (items:item[],setItems:(items:item[])=>void,itemSelected:boolean ) => {
-        const updatedItems = items.map((item) => {
-            item.selected = itemSelected;
-            return item;
-        })
-        setItems([...updatedItems]);
-    }
 
 
     const setAllRooms = (status:boolean) => {
@@ -265,8 +239,6 @@ const Settings = () => {
     }
 
     const onSurgeonChanged = (id:string):void => {
-        // console.log('surgeon changed', id)
-        // onItemChanged(id, surgeons, setSurgeons)
         setSurgeonChanged(id)
     }
 
@@ -283,7 +255,6 @@ const Settings = () => {
 
     const handleUnitChange = (option: SingleValue<Unit>) => {
         const unitName = (option as Unit).name.toString();
-        // setSelectedUnit(option)
         dispatch(setUnit(unitName))
     }
 
@@ -329,6 +300,12 @@ const Settings = () => {
         onSearchTextChanged:onSurgeonSearchTextChanged
     }
 
+
+
+
+
+
+
     const selectSurgeonGroup = (group:string[]) => {
         let newSurgeonList = activeSurgeons.map((surgeon)=> {
             if (group.includes(surgeon.NPI.toString())) {
@@ -339,6 +316,7 @@ const Settings = () => {
             return surgeon
         });
         if (newSurgeonList.length > 0) {
+            console.log('seeting group surgeons')
             dispatch(setActiveSurgeonList(newSurgeonList));
         }
     }
@@ -357,35 +335,21 @@ const Settings = () => {
             return room;
         })
         if (newRoomList.length > 0) {
-            // console.log(newRoomList)
-            dispatch(setActiveRoomList(newRoomList))
+            console.log('setting group rooms')
+            
         }
     
     }
 
 
-
-
-
-
-    useEffect(() => {
-        if (updateWithGroup) {
-            if (selectedUnit === surgeonGroups[parseInt(groupId)].unit) {
-                selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
-                selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
-                dispatch(setUpdateWithGroup(false))
-            }
-        }
-
-    },[groupId,selectedUnit,updateWithGroup])
-
-
     const onSelectGroupItem = (id:string) => {
-        dispatch(setGroupId(id));
-        dispatch(setUpdateWithGroup(true))
+        console.log('Setting group update')
         if (selectedUnit !== surgeonGroups[parseInt(id)].unit){
             dispatch(setUnit(surgeonGroups[parseInt(id)].unit));
         } 
+        selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
+        selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
+        
     }
 
 

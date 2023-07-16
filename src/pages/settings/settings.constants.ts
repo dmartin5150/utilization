@@ -86,3 +86,23 @@ export const neuroSurgeonGroup:SurgeonGroup = {
 }
 
 export const surgeonGroups = [neuroSurgeonGroup]
+
+export const primeTimeMenuStartItems = {
+    '6:30': primeTimeStartOptions[0],
+    '7:00': primeTimeStartOptions[1],
+    '7:30': primeTimeStartOptions[2],
+    '8:00': primeTimeStartOptions[3],
+    '8:30': primeTimeStartOptions[4],
+    '9:00': primeTimeStartOptions[5],
+    '9:30': primeTimeStartOptions[6],
+}
+
+export const primeTimeMenuEndItems = {
+    '15:00': primeTimeEndOptions[0],
+    '15:30': primeTimeEndOptions[1],
+    '16:00': primeTimeEndOptions[2],
+    '16:30': primeTimeEndOptions[3],
+    '17:00': primeTimeEndOptions[4],
+    '17:30': primeTimeEndOptions[5],
+    '18:00': primeTimeEndOptions[6],
+}
