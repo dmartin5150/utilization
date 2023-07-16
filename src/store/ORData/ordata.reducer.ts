@@ -10,7 +10,7 @@ import { fetchDetailsSuccess, closePopUp } from "./actions/details.actions";
 import { fetchDataStart, fetchDataFailed} from "./actions/ordata.actions";
 import { item } from "./ordata.types";
 import { UnitRoomLists,UnitRoomListItem } from "../../pages/settings/settings.constants";
-import { fetchRoomListsSuccess,setRoomListsSuccess, setActiverRoomListSuccess, 
+import { fetchRoomLists,setRoomLists, setActiveRoomList, 
     setAllRoomsSelected } from "./actions/roomsListActions";
 import { setSurgeonLists, setActiveSurgeonList,setAllSurgeonsSelected } from "./actions/surgeonLists.actions";
 import {  PT_Hours, SurgeryInfo } from "./ordata.types";
@@ -22,7 +22,7 @@ import { SummaryGridRowData } from "../../components/summary-grid/summary-grid-r
 import { setGridData } from "./actions/grid.actions";
 import { DetailsWithBlock } from "./ordata.types";
 import { setCalendarTotals } from "./actions/calendar.actions";
-import { setGroupUnit, setGroupId } from "./actions/ordata.actions";
+import { setUpdateWithGroup, setGroupId } from "./actions/ordata.actions";
 
 
 
@@ -39,7 +39,7 @@ export type ORDataState = {
     allSurgeonsSelected: boolean;
     calendarSurgeonOption: CalendarMenuOptions, 
     calendarRoomOption: CalendarMenuOptions, 
-    groupUnit: string;
+    updateWithGroup: boolean;
     groupId: string;
     isLoading:boolean;
     popOpen: boolean;
@@ -71,7 +71,7 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
     allSurgeonsSelected:true,
     calendarSurgeonOption: CalendarMenuOptions.All, 
     calendarRoomOption: CalendarMenuOptions.All,
-    groupUnit: 'BH JRI',
+    updateWithGroup: false,
     groupId: '0',
     isLoading:false,
     popOpen: false,
@@ -99,13 +99,13 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     if (fetchSurgeonListsSuccess.match(action)) {
         return {...state, surgeonLists:action.payload, isLoading:false}
     }
-    if (fetchRoomListsSuccess.match(action)) {
+    if (fetchRoomLists.match(action)) {
         return {...state, unitRoomLists:action.payload}
     }
-    if (setRoomListsSuccess.match(action)){
+    if (setRoomLists.match(action)){
         return {...state, unitRoomLists:action.payload}
     }       
-    if (setActiverRoomListSuccess.match(action)) {
+    if (setActiveRoomList.match(action)) {
         return {...state, activeRoomList: action.payload}
     }     
     if (setSurgeonLists.match(action)) {
@@ -142,8 +142,8 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     if (setCalendarTotals.match(action)) {
         return {...state, calendarTotals: action.payload}
     }
-    if (setGroupUnit.match(action)) {
-        return {...state, groupUnit:action.payload}
+    if (setUpdateWithGroup.match(action)) {
+        return {...state, updateWithGroup:action.payload}
     }
     if (setGroupId.match(action)) {
         return {...state, groupId:action.payload}

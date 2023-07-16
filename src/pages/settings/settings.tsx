@@ -17,14 +17,14 @@ import { useSelector } from 'react-redux';
 import { selectSurgeonLists, selectUnitRoomLists, selectActiveRoomLists, selectActiveSurgeons, selectAllRoomsSelected,selectAllSurgeonsSelected } from '../../store/ORData/selectors/ordata.selector';
 import { setPrimeTime, setDateRange, setUnit, setRoom } from '../../store/Facility/facilty.actions';
 import { selectPrimeTime, selectDateRange,selectUnit } from '../../store/Facility/facility.selector';
-import { fetchRoomListsSuccess,setRoomListsSuccess, setActiverRoomListSuccess,setAllRoomsSelected} from '../../store/ORData/actions/roomsListActions';
+import { fetchRoomLists,setRoomLists, setActiveRoomList,setAllRoomsSelected} from '../../store/ORData/actions/roomsListActions';
 import { setActiveSurgeonList, setSurgeonLists,setAllSurgeonsSelected } from '../../store/ORData/actions/surgeonLists.actions';
 import { SurgeonList,SurgeonLists } from '../../store/ORData/ordata.types';
 import { Group } from '../../components/groupsContainer/groupItem';
 import GroupContainer from '../../components/groupsContainer/groupsContainer';
 import { surgeonGroups } from './settings.constants';
-import { selectGroupUnit,selectGroupId } from '../../store/ORData/selectors/ordata.selector';
-import { setGroupUnit, setGroupId } from '../../store/ORData/actions/ordata.actions';
+import { selectUpdateWithGroup,selectGroupId } from '../../store/ORData/selectors/ordata.selector';
+import {  setGroupId, setUpdateWithGroup } from '../../store/ORData/actions/ordata.actions';
 
 
 import { unitLists } from './settings.constants';
@@ -76,8 +76,6 @@ const primeTimeMentEndItems = {
 const Settings = () => {
  
 
-    // const [allRoomsSelected, setAllRoomsSelected]= useState(true);
-    // const [allSurgeonsSelected, setAllSurgeonsSelected] = useState(true);
     const [filteredSurgeons, setFilteredSurgeons] = useState<item[]>([])
     const [selectedSurgeons, setSelectedSurgeons] = useState<item[]>([])
     
@@ -93,8 +91,8 @@ const Settings = () => {
     const rooms = useSelector(selectActiveRoomLists);
     const allSurgeonsSelected = useSelector(selectAllSurgeonsSelected);
     const allRoomsSelected = useSelector(selectAllRoomsSelected);
-    const groupUnit = useSelector(selectGroupUnit)
     const groupId = useSelector(selectGroupId);
+    const updateWithGroup = useSelector(selectUpdateWithGroup);
  
     
 
@@ -153,7 +151,6 @@ const Settings = () => {
         console.log('setting lists')
         if (selectedUnit  && surgeonLists[selectedUnit]) {
             setSelectedSurgeons(surgeonLists[selectedUnit])
-            // console.log('setting surgeons', selectedUnit, surgeonLists[selectedUnit])
             dispatch(setActiveSurgeonList(surgeonLists[selectedUnit]));
             setFilteredSurgeons(surgeonLists[selectedUnit])
         }
@@ -161,17 +158,16 @@ const Settings = () => {
 
 
     useEffect(()=> {
-        // console.log('in room update selected unit', selectedUnit, unitRoomLists[selectedUnit])
         if (selectedUnit && unitRoomLists[selectedUnit]) {
-            setActiverRoomListSuccess(unitRoomLists[selectedUnit])
+            setActiveRoomList(unitRoomLists[selectedUnit])
         }
     },[selectedUnit])
 
 
     useEffect(()=> {
+        console.log('updating room list')
         if (unitRoomLists && selectedUnit && unitRoomLists[selectedUnit]) {
-            // setRooms(unitRoomLists[selectedUnit])
-            dispatch(setActiverRoomListSuccess(unitRoomLists[selectedUnit]))
+            dispatch(setActiveRoomList(unitRoomLists[selectedUnit]))
         }
     },[selectedUnit,unitRoomLists])
 
@@ -216,12 +212,11 @@ const Settings = () => {
             item.selected = status;
             return item;
         })
-        dispatch(setActiverRoomListSuccess(updatedRooms))
+        dispatch(setActiveRoomList(updatedRooms))
     }
 
 
     const onAllRoomsSelected = () => {
-        // setAllItems(rooms, setRooms,true);
         setAllRooms(true)
     }
 
@@ -248,16 +243,14 @@ const Settings = () => {
     }
 
 
-    const setRoomChanged = (id:string) => {
+
+    const onRoomChanged = (id:string):void => {
+        console.log('room changed')
         const itemIndex = rooms.findIndex((item)=> item.id.toString() === id);
         if (itemIndex !== -1) {
             rooms[itemIndex].selected = !rooms[itemIndex].selected;
         }
-        dispatch(setActiverRoomListSuccess([...rooms]));
-    }
-
-    const onRoomChanged = (id:string):void => {
-        setRoomChanged(id);
+        dispatch(setActiveRoomList([...rooms]));
     }
 
 
@@ -365,39 +358,34 @@ const Settings = () => {
         })
         if (newRoomList.length > 0) {
             // console.log(newRoomList)
-            dispatch(setActiverRoomListSuccess(newRoomList))
+            dispatch(setActiveRoomList(newRoomList))
         }
     
     }
 
-    
-
-
-
-    const setGroupUnitName = (unit:string) => {
-        dispatch(setGroupUnit(unit));
-    }
 
 
 
 
 
     useEffect(() => {
-        selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
-        selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
-    },[groupId, groupUnit])
+        if (updateWithGroup) {
+            if (selectedUnit === surgeonGroups[parseInt(groupId)].unit) {
+                selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
+                selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
+                dispatch(setUpdateWithGroup(false))
+            }
+        }
+
+    },[groupId,selectedUnit,updateWithGroup])
 
 
     const onSelectGroupItem = (id:string) => {
-        // console.log('group id:', id)
         dispatch(setGroupId(id));
+        dispatch(setUpdateWithGroup(true))
         if (selectedUnit !== surgeonGroups[parseInt(id)].unit){
             dispatch(setUnit(surgeonGroups[parseInt(id)].unit));
-            setGroupUnitName(surgeonGroups[parseInt(id)].unit);
-        } else {
-            selectSurgeonGroup(surgeonGroups[parseInt(id)].surgeons);
-            selectRoomGroup(surgeonGroups[parseInt(id)].rooms);
-        }
+        } 
     }
 
 

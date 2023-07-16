@@ -6,12 +6,12 @@ import { ORDATA_TYPES } from "../ordata.types"
 
 
 
-export type FetchRoomListsSuccess = 
+export type FetchRoomLists = 
     ActionWithPayload<ORDATA_TYPES.FETCH_ROOM_LISTS_SUCCESS,UnitRoomLists>
 
-export type SetRoomListsSuccess = ActionWithPayload<ORDATA_TYPES.SET_ROOM_LISTS,UnitRoomLists >
+export type SetRoomLists = ActionWithPayload<ORDATA_TYPES.SET_ROOM_LISTS,UnitRoomLists >
 
-export type SetActiveRoomListSuccess = ActionWithPayload<ORDATA_TYPES.SET_ACTIVE_ROOM_LIST,UnitRoomListItem[]>
+export type SetActiveRoomList = ActionWithPayload<ORDATA_TYPES.SET_ACTIVE_ROOM_LIST,UnitRoomListItem[]>
 
 export type SetAllRoomsSelected = ActionWithPayload<ORDATA_TYPES.SET_ALL_ROOMS_SELECTED, boolean>
 
@@ -20,14 +20,14 @@ export const setAllRoomsSelected = withMatcher((selected:boolean):SetAllRoomsSel
     return createAction(ORDATA_TYPES.SET_ALL_ROOMS_SELECTED, selected)
 });
 
-export const fetchRoomListsSuccess = withMatcher((roomLists:UnitRoomLists):FetchRoomListsSuccess => {
+export const fetchRoomLists = withMatcher((roomLists:UnitRoomLists):FetchRoomLists => {
     return createAction(ORDATA_TYPES.FETCH_ROOM_LISTS_SUCCESS, roomLists)
 });
 
-export const setRoomListsSuccess = withMatcher((roomLists:UnitRoomLists):SetRoomListsSuccess => {
+export const setRoomLists = withMatcher((roomLists:UnitRoomLists):SetRoomLists => {
     return createAction(ORDATA_TYPES.SET_ROOM_LISTS,roomLists)
 });
 
-export const setActiverRoomListSuccess = withMatcher((roomList:UnitRoomListItem[]):SetActiveRoomListSuccess => {
+export const setActiveRoomList = withMatcher((roomList:UnitRoomListItem[]):SetActiveRoomList => {
     return createAction(ORDATA_TYPES.SET_ACTIVE_ROOM_LIST,roomList);
 });

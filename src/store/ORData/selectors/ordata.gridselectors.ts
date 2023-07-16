@@ -1,11 +1,17 @@
 import { createSelector } from "reselect";
 import { selectDate } from "../../Facility/facility.selector";
 import { selectGrid} from "./ordata.selector";
-import { Grid } from "../ordata.types";
+import { Grid, SurgeonList } from "../ordata.types";
 import { minutestohours } from "../ordata.utilities";
 import { selectPTminutesperroom } from "../../Facility/facility.selector";
 import { selectAllRoomNames, selectActiveRoomNames,selectAllSurgeonNPIs, selectActiveSurgeonNPIs } from "./ordata.selector";
 import { getPTHoursFilterdbyNPI } from "./ordata.ptselectors";
+import { selectCalendarSurgeonOption,selectCalendarRoomOption } from "./ordata.selector";
+import { CalendarMenuOptions } from "../../../pages/utilization/utilization.constants";
+import { selectActiveSurgeons,selectActiveRoomLists } from "./ordata.selector";
+import { UnitRoomListItem } from "../../../pages/settings/settings.constants";
+
+
 
 export type GridPTHours = {
     date: string;
@@ -45,22 +51,56 @@ const createNoUtiliztionGridData = (date:string, rooms:string[]) => {
 }
 
 
+
+
+
+
+
+
+
+export const getNPIs = (surgeons:SurgeonList[], surgeonOption:CalendarMenuOptions):string[] => {
+    if (surgeonOption == CalendarMenuOptions.All) {
+        return surgeons.map((surgeon) => surgeon.NPI)
+    } else {
+        const selectedSurgeons = surgeons.filter((surgeon)=> surgeon.selected);
+        return selectedSurgeons.map((surgeon) => surgeon.NPI)
+    }
+}
+
+
+
+
+export const getRoomNames = (rooms:UnitRoomListItem[], roomOption:CalendarMenuOptions):string[] => {
+    if (roomOption === CalendarMenuOptions.All) {
+        return rooms.map((room) => room.name)
+    } else {
+        const selectedRooms = rooms.filter((room) => room.selected);
+        return selectedRooms.map((room) => room.name)
+    }
+}
+
+
+
 const calculateRoomUtilization = (
     grid:Grid[],
     date:string,
-    npis:string[], 
-    rooms:string[],
+    surgeons:SurgeonList[], 
+    rooms:UnitRoomListItem[],
     availablePTMinutes:number,
-    filterNPI: boolean) =>{
+    surgeonOption:CalendarMenuOptions,
+    roomOption: CalendarMenuOptions) =>{
     const gridDataForDate: GridPTHours[] = [];
+
+    const npis = getNPIs(surgeons, surgeonOption);
+    const roomNames = getRoomNames(rooms, roomOption)
     let gridFilteredbyDate = grid.filter((gridData) => gridData.procedureDate === date);
-    if (filterNPI) {
+    if (surgeonOption === CalendarMenuOptions.Selected) {
         gridFilteredbyDate = getPTHoursFilterdbyNPI<Grid>(npis, gridFilteredbyDate);
     }
     if (gridFilteredbyDate.length === 0 || availablePTMinutes === 0) {
-        return  createNoUtiliztionGridData(date, rooms);
+        return  createNoUtiliztionGridData(date, roomNames);
     } else {
-        for (let room of rooms) {
+        for (let room of roomNames) {
             const gridFilteredbyRoom = gridFilteredbyDate.filter((grid) => grid.room === room);
             if (gridFilteredbyRoom.length === 0){
                 gridDataForDate.push(getEmptyRoom(date, room));
@@ -93,21 +133,29 @@ const calculateRoomUtilization = (
 
 
 export const selectGridDataAll = createSelector(
-    [selectGrid, selectDate,selectAllSurgeonNPIs,selectAllRoomNames, selectPTminutesperroom],
-    (ORGridData, selectedDate,npis,rooms,minutes):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate,npis,rooms,minutes,false)
+    [selectGrid, selectDate,selectActiveSurgeons,selectActiveRoomLists, selectPTminutesperroom,selectCalendarSurgeonOption, selectCalendarRoomOption],
+    (ORGridData, selectedDate,surgeons,rooms,minutes,surgeonOption,roomOption):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate,surgeons,rooms,minutes,surgeonOption,roomOption)
 )
 
-export const selectGridDataFilteredRooms = createSelector(
-    [selectGrid, selectDate,selectAllSurgeonNPIs,selectActiveRoomNames, selectPTminutesperroom],
-    (ORGridData, selectedDate,npis,rooms,minutes):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate,npis,rooms,minutes,false)
-)
 
-export const selectGridDataFilteredNPIs = createSelector(
-    [selectGrid, selectDate,selectActiveSurgeonNPIs,selectAllRoomNames, selectPTminutesperroom],
-    (ORGridData, selectedDate,npis,rooms,minutes):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate,npis,rooms,minutes,true)
-)
 
-export const selectGridDataFilteredBoth = createSelector(
-    [selectGrid, selectDate,selectActiveSurgeonNPIs,selectActiveRoomNames, selectPTminutesperroom],
-    (ORGridData, selectedDate,npis,rooms,minutes):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate,npis,rooms,minutes,true)
-)
+
+// export const selectGridDataAll = createSelector(
+//     [selectGrid, selectDate,selectAllSurgeonNPIs,selectAllRoomNames, selectPTminutesperroom],
+//     (ORGridData, selectedDate,npis,rooms,minutes):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate,npis,rooms,minutes,false)
+// )
+
+// export const selectGridDataFilteredRooms = createSelector(
+//     [selectGrid, selectDate,selectAllSurgeonNPIs,selectActiveRoomNames, selectPTminutesperroom],
+//     (ORGridData, selectedDate,npis,rooms,minutes):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate,npis,rooms,minutes,false)
+// )
+
+// export const selectGridDataFilteredNPIs = createSelector(
+//     [selectGrid, selectDate,selectActiveSurgeonNPIs,selectAllRoomNames, selectPTminutesperroom],
+//     (ORGridData, selectedDate,npis,rooms,minutes):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate,npis,rooms,minutes,true)
+// )
+
+// export const selectGridDataFilteredBoth = createSelector(
+//     [selectGrid, selectDate,selectActiveSurgeonNPIs,selectActiveRoomNames, selectPTminutesperroom],
+//     (ORGridData, selectedDate,npis,rooms,minutes):GridPTHours[] => calculateRoomUtilization(ORGridData,selectedDate,npis,rooms,minutes,true)
+// )

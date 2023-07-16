@@ -15,7 +15,7 @@ import { selectCalendarPTHoursAll,selectPTHoursTotalsAll  } from './store/ORData
 import { selectCalendar, selectSurgeryInfo, selectPTHours, } from './store/ORData/selectors/ordata.selector';
 import { selectActiveRoomLists } from './store/ORData/selectors/ordata.selector';
 import { fetchSurgeonListsAsync } from './store/ORData/actions/surgeonLists.actions';
-import { fetchRoomListsSuccess, setActiverRoomListSuccess} from './store/ORData/actions/roomsListActions';
+import { fetchRoomLists, setActiveRoomList} from './store/ORData/actions/roomsListActions';
 import { TNNASRoomLists } from './pages/settings/settings.constants';
 import { fetchBlockDataAsync } from './store/Block/block.actions';
 
@@ -36,8 +36,8 @@ function App() {
 
     useEffect(()=> {
         dispatch(fetchSurgeonListsAsync())
-        dispatch(fetchRoomListsSuccess(TNNASRoomLists))
-        dispatch(setActiverRoomListSuccess(TNNASRoomLists['BH JRI']));
+        dispatch(fetchRoomLists(TNNASRoomLists))
+        dispatch(setActiveRoomList(TNNASRoomLists['BH JRI']));
         // dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
     },[]);
 

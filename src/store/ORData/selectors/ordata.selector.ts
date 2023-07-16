@@ -17,9 +17,9 @@ export const selectGridData = createSelector(
     (ORDataSlice) => ORDataSlice.gridData
 )
 
-export const selectGroupUnit = createSelector(
+export const selectUpdateWithGroup = createSelector(
     [selectORDataReducer],
-    (ORDataSlice) => ORDataSlice.groupUnit
+    (ORDataSlice) => ORDataSlice.updateWithGroup
 )
 
 export const selectGroupId = createSelector(
