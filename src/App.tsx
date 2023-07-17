@@ -41,11 +41,11 @@ function App() {
         // dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
     },[]);
 
-  // useEffect(() => {
-  //   if (unit && primeTime) {
-  //     dispatch(fetchPTHourSuccessAsync(primeTime, unit));
-  //   }
-  // },[primeTime, unit])
+  useEffect(() => {
+    if (primeTime) {
+      dispatch(fetchPTHourSuccessAsync(primeTime, unit));
+    }
+  },[primeTime])
 
 
 

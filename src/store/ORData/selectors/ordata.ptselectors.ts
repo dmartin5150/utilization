@@ -145,6 +145,7 @@ const calculatePTHours = (
     const ptHoursTotal: any = []
     const npiList = getNPIs(surgeons,surgeonOption)
     const roomList = getRoomNames(rooms, roomOption)
+    console.log('calcpt hours', roomList)
     uniqueDates.forEach((curDate) => {
         let curData = calendarData.filter(((item) => item.procedureDate === curDate))
         if (roomOption !== CalendarMenuOptions.All) {

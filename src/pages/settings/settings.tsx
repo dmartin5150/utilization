@@ -26,6 +26,7 @@ import { surgeonGroups } from './settings.constants';
 import { selectUpdateWithGroup,selectGroupId } from '../../store/ORData/selectors/ordata.selector';
 import {  setGroupId, setUpdateWithGroup } from '../../store/ORData/actions/ordata.actions';
 import { primeTimeMenuStartItems,primeTimeMenuEndItems } from './settings.constants';
+import { fetchSurgeonListsAsync } from '../../store/ORData/actions/surgeonLists.actions';
 
 
 import { unitLists } from './settings.constants';
@@ -128,6 +129,12 @@ const Settings = () => {
     }
 
 
+    useEffect(()=> {
+        dispatch(fetchSurgeonListsAsync())
+        dispatch(fetchRoomLists(TNNASRoomLists))
+        // dispatch(setActiveRoomList(TNNASRoomLists['MT OR']));
+        // dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
+    },[]);
 
     useEffect(()=> {
         console.log('setting lists')
@@ -141,19 +148,14 @@ const Settings = () => {
 
     useEffect(()=> {
         if (selectedUnit && unitRoomLists[selectedUnit]) {
-            setActiveRoomList(unitRoomLists[selectedUnit])
+            dispatch(setActiveRoomList(unitRoomLists[selectedUnit]))
         }
     },[selectedUnit])
 
 
-    useEffect(()=> {
-        console.log('updating room list')
-        if (unitRoomLists && selectedUnit && unitRoomLists[selectedUnit]) {
-            dispatch(setActiveRoomList(unitRoomLists[selectedUnit]))
-        }
-    },[selectedUnit,unitRoomLists])
 
     useEffect(() => {
+        console.log('updating room')
         if (rooms) {
             updateAllSelectedItems(rooms, setAllRoomsSelected);
             const selected = allItemsSelected(rooms);
@@ -325,6 +327,7 @@ const Settings = () => {
 
 
     const selectRoomGroup = (group:string[]) => {
+        console.log('rooms',group )
         let newRoomList = rooms.map((room) => {
 
             if (group.includes(room['name'].toString())) {
@@ -337,19 +340,34 @@ const Settings = () => {
         if (newRoomList.length > 0) {
             console.log('setting group rooms')
             
+            dispatch(setActiveRoomList(newRoomList));
         }
     
     }
 
+    // useEffect(() => {
+    //     if (updateWithGroup && selectedUnit) {
+    //         if (selectedUnit === surgeonGroups[parseInt(groupId)].unit){
+    //             console.log('updating group group update')
+    //             selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
+    //             selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
+    //             dispatch(setUpdateWithGroup(false));
+    //         } 
+    //     }
+    // },[updateWithGroup,selectedUnit])
+
 
     const onSelectGroupItem = (id:string) => {
         console.log('Setting group update')
+        dispatch(setGroupId(id))
         if (selectedUnit !== surgeonGroups[parseInt(id)].unit){
             dispatch(setUnit(surgeonGroups[parseInt(id)].unit));
-        } 
-        selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
-        selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
-        
+            // dispatch(setUpdateWithGroup(true));
+        } else {
+            selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
+            selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
+        }
+
     }
 
 

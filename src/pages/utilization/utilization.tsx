@@ -38,6 +38,10 @@ import { selectDetailBlockData } from "../../store/ORData/selectors/ordata.selec
 import { setCalendarTotals } from "../../store/ORData/actions/calendar.actions";
 import { selectCalendarTotals } from "../../store/ORData/selectors/ordata.ptselectors";
 import { setGridData } from "../../store/ORData/actions/grid.actions";
+import { fetchSurgeonListsAsync } from '../../store/ORData/actions/surgeonLists.actions';
+import { fetchRoomLists, setActiveRoomList} from '../../store/ORData/actions/roomsListActions';
+import { fetchPTHourSuccessAsync} from '../../store/ORData/actions/pthours.action';
+import { TNNASRoomLists } from '../../pages/settings/settings.constants';
 
 
 
@@ -71,6 +75,20 @@ const Utilization = () => {
   const selectedNPIs = useSelector(selectActiveSurgeonNPIs)
   const blockData = useSelector(selectDetailBlockData)
   const calendarTotals = useSelector(selectCalendarTotals)
+
+
+  useEffect(()=> {
+    dispatch(fetchSurgeonListsAsync())
+    // dispatch(fetchRoomLists(TNNASRoomLists))
+    // dispatch(setActiveRoomList(TNNASRoomLists['BH JRI']));
+    // dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
+},[]);
+
+useEffect(() => {
+if (primeTime) {
+  dispatch(fetchPTHourSuccessAsync(primeTime, unit));
+}
+},[primeTime])
 
 
 
