@@ -130,8 +130,8 @@ const Settings = () => {
 
 
     useEffect(()=> {
-        dispatch(fetchSurgeonListsAsync())
-        dispatch(fetchRoomLists(TNNASRoomLists))
+        // dispatch(fetchSurgeonListsAsync())
+        // dispatch(fetchRoomLists(TNNASRoomLists))
         // dispatch(setActiveRoomList(TNNASRoomLists['MT OR']));
         // dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
     },[]);
