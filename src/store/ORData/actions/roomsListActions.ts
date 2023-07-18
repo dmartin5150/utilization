@@ -3,6 +3,7 @@ import { createAction, ActionWithPayload, Action, withMatcher } from "../../../u
 import { UnitRoomLists, UnitRoomListItem } from "../../../pages/settings/settings.constants"
 import { ORDATA_TYPES } from "../ordata.types"
 
+import { UpdatableRoomList } from "../../../pages/settings/settings.constants"
 
 
 
@@ -15,10 +16,16 @@ export type SetActiveRoomList = ActionWithPayload<ORDATA_TYPES.SET_ACTIVE_ROOM_L
 
 export type SetAllRoomsSelected = ActionWithPayload<ORDATA_TYPES.SET_ALL_ROOMS_SELECTED, boolean>
 
+export type SetUnitRoomList = ActionWithPayload<ORDATA_TYPES.SET_ROOM_UNIT_LIST,UpdatableRoomList>
 
 export const setAllRoomsSelected = withMatcher((selected:boolean):SetAllRoomsSelected=> {
     return createAction(ORDATA_TYPES.SET_ALL_ROOMS_SELECTED, selected)
 });
+
+
+export const setUnitRoomList = withMatcher((roomList:UpdatableRoomList):SetUnitRoomList => {
+    return createAction(ORDATA_TYPES.SET_ROOM_UNIT_LIST, roomList);
+})
 
 export const fetchRoomLists = withMatcher((roomLists:UnitRoomLists):FetchRoomLists => {
     return createAction(ORDATA_TYPES.FETCH_ROOM_LISTS_SUCCESS, roomLists)

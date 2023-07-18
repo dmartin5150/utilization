@@ -12,7 +12,7 @@ import { item } from "./ordata.types";
 import { UnitRoomLists,UnitRoomListItem } from "../../pages/settings/settings.constants";
 import { fetchRoomLists,setRoomLists, setActiveRoomList, 
     setAllRoomsSelected } from "./actions/roomsListActions";
-import { setSurgeonLists, setActiveSurgeonList,setAllSurgeonsSelected } from "./actions/surgeonLists.actions";
+import { setSurgeonLists, setActiveSurgeonList,setAllSurgeonsSelected,  } from "./actions/surgeonLists.actions";
 import {  PT_Hours, SurgeryInfo } from "./ordata.types";
 import { fetchPTHoursSuccess } from "./actions/pthours.action";
 import { JRIroomList } from "../Facility/facility.types";
@@ -23,6 +23,8 @@ import { setGridData } from "./actions/grid.actions";
 import { DetailsWithBlock } from "./ordata.types";
 import { setCalendarTotals } from "./actions/calendar.actions";
 import { setUpdateWithGroup, setGroupId } from "./actions/ordata.actions";
+import { setUnitRoomList } from "./actions/roomsListActions";
+import { setSurgeonUnitList } from "./actions/surgeonLists.actions";
 
 
 
@@ -99,6 +101,9 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     if (fetchSurgeonListsSuccess.match(action)) {
         return {...state, surgeonLists:action.payload, isLoading:false}
     }
+    if (setSurgeonUnitList.match(action)) {
+        return {...state, surgeonLists:{...state.surgeonLists, [action.payload.key]: action.payload.list}}
+    }
     if (fetchRoomLists.match(action)) {
         return {...state, unitRoomLists:action.payload}
     }
@@ -108,9 +113,14 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     if (setActiveRoomList.match(action)) {
         return {...state, activeRoomList: action.payload}
     }     
+
+    if (setUnitRoomList.match(action)) {
+        return {...state, unitRoomLists:{...state.unitRoomLists, [action.payload.key]:action.payload.list}}
+    }
+
     if (setSurgeonLists.match(action)) {
         return {...state, surgeonLists: action.payload}
-    }     
+    }  
     if (setActiveSurgeonList.match(action)) {
         return {...state, activeSurgeonList: action.payload}
     }             

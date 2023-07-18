@@ -23,6 +23,8 @@ export enum  ORDATA_TYPES {
     SET_CALENDAR_ROOM_OPTION = 'orData/SET_CALENDAR_ROOM_OPTION',
     UPDATE_WITH_GROUP = 'ordata/UPDATE_WITH_GROUP', 
     SET_GROUP_ID = 'order/SET_GROUP_ID',
+    SET_ROOM_UNIT_LIST = 'ordata/SET_ROOM_UNIT_LIST',
+    SET_SURGEON_UNIT_LIST = 'ordata/SET_SURGEON_UNIT_LIST',
     CLOSE_POPUP = 'ordata/CLOSE_POPUP'
 }
 
@@ -108,6 +110,17 @@ export type SurgeonList = {
 export type SurgeonLists = {
     [key:string]: SurgeonList[];
 }
+
+export type UpdatableSurgeonList = {
+    key: string,
+    list: SurgeonList[]
+}
+
+export type UnitSurgeonList = {
+    key: string,
+    list: SurgeonList[]
+}
+
 
 export type BlockData = {
     name:string;

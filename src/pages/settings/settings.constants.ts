@@ -24,6 +24,11 @@ export interface UnitRoomLists {
     [key: string]: UnitRoomListItem[]
 }
 
+export type UpdatableRoomList = {
+    key: string;
+    list: UnitRoomListItem[]
+}
+
 export const TNNASRoomLists:UnitRoomLists = {
     [TNNASUNIT.BHJRI]: JRIroomList,
     [TNNASUNIT.STMSTOR]:STMSTORroomList,

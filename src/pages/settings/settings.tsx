@@ -27,6 +27,12 @@ import { selectUpdateWithGroup,selectGroupId } from '../../store/ORData/selector
 import {  setGroupId, setUpdateWithGroup } from '../../store/ORData/actions/ordata.actions';
 import { primeTimeMenuStartItems,primeTimeMenuEndItems } from './settings.constants';
 import { fetchSurgeonListsAsync } from '../../store/ORData/actions/surgeonLists.actions';
+import { setUnitRoomList } from '../../store/ORData/actions/roomsListActions';
+import { UpdatableRoomList } from './settings.constants';
+import { setSurgeonUnitList } from '../../store/ORData/actions/surgeonLists.actions';
+import { UpdatableSurgeonList } from '../../store/ORData/ordata.types';
+import { fetchPTHourSuccessAsync } from '../../store/ORData/actions/pthours.action';
+import { fetchCalendarDataAsync } from '../../store/ORData/actions/calendar.actions';
 
 
 import { unitLists } from './settings.constants';
@@ -75,16 +81,85 @@ const Settings = () => {
     const allRoomsSelected = useSelector(selectAllRoomsSelected);
     const groupId = useSelector(selectGroupId);
     const updateWithGroup = useSelector(selectUpdateWithGroup);
+
+
  
     
+    useEffect(()=> {
+        if(surgeonLists) {
+            dispatch(setActiveSurgeonList(surgeonLists[selectedUnit]));
+        }
+    },[])
 
     const updatePrimeTimeStart = (option:SingleValue<PrimeTimeMenuItem>) => {
         if (option) {
-            // console.log('start', option )
             dispatch(setPrimeTime({...primeTime, start: option.value as PRIME_TIME_START}))
         }
       
     }
+
+
+
+
+
+    useEffect(()=> {
+        console.log('setting lists')
+        if (selectedUnit  && surgeonLists[selectedUnit]) {
+            dispatch(setActiveSurgeonList(surgeonLists[selectedUnit]));
+            setFilteredSurgeons(surgeonLists[selectedUnit])
+        }
+    }, [selectedUnit, surgeonLists])
+
+
+
+    useEffect(()=> {
+        if (unitRoomLists){
+            dispatch(setActiveRoomList(unitRoomLists[selectedUnit]))
+        }
+    },[unitRoomLists])
+
+    useEffect(()=> {
+        if (selectedUnit && unitRoomLists[selectedUnit]) {
+            const curList:UpdatableRoomList = {
+                key: selectedUnit,
+                list:unitRoomLists[selectedUnit]
+            }
+            dispatch(setUnitRoomList(curList))
+        }
+    },[selectedUnit])
+
+
+
+    useEffect(() => {
+        console.log('updating room')
+        if (unitRoomLists && unitRoomLists[selectedUnit]) {
+            updateAllSelectedItems(unitRoomLists[selectedUnit], setAllRoomsSelected);
+            const selected = allItemsSelected(rooms);
+            dispatch(setAllRoomsSelected(selected));
+        }
+    },[unitRoomLists])
+
+    useEffect(() => {
+        if (surgeonLists && surgeonLists[selectedUnit]) {
+            updateAllSelectedItems(surgeonLists[selectedUnit], setAllSurgeonsSelected);
+            const allSelected = allItemsSelected(surgeonLists[selectedUnit])
+            dispatch(setAllSurgeonsSelected(allSelected))
+        }
+    },[surgeonLists])
+
+    useEffect(()=>{
+        if (activeSurgeons) {
+            const selected = activeSurgeons.filter((activeSurgeon)=> activeSurgeon.selected === true)
+            setSelectedSurgeons(selected)
+            // dispatch(setActiveSurgeonList(selected))
+        }
+
+    },[activeSurgeons])
+
+
+
+
+
 
     const updatePrimeTimeEnd = (option: SingleValue<PrimeTimeMenuItem>) => {
         if (option) {
@@ -106,6 +181,9 @@ const Settings = () => {
         optionList:primeTimeEndOptions,
         onChange: updatePrimeTimeEnd
     }
+
+
+   
    
     const updateAllSelectedItems = (items:item[], setItem: (itemStatus: boolean)=>void) => {
         if (items) {
@@ -129,56 +207,8 @@ const Settings = () => {
     }
 
 
-    useEffect(()=> {
-        // dispatch(fetchSurgeonListsAsync())
-        // dispatch(fetchRoomLists(TNNASRoomLists))
-        // dispatch(setActiveRoomList(TNNASRoomLists['MT OR']));
-        // dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
-    },[]);
-
-    useEffect(()=> {
-        console.log('setting lists')
-        if (selectedUnit  && surgeonLists[selectedUnit]) {
-            setSelectedSurgeons(surgeonLists[selectedUnit])
-            dispatch(setActiveSurgeonList(surgeonLists[selectedUnit]));
-            setFilteredSurgeons(surgeonLists[selectedUnit])
-        }
-    }, [selectedUnit, surgeonLists])
 
 
-    useEffect(()=> {
-        if (selectedUnit && unitRoomLists[selectedUnit]) {
-            dispatch(setActiveRoomList(unitRoomLists[selectedUnit]))
-        }
-    },[selectedUnit])
-
-
-
-    useEffect(() => {
-        console.log('updating room')
-        if (rooms) {
-            updateAllSelectedItems(rooms, setAllRoomsSelected);
-            const selected = allItemsSelected(rooms);
-            dispatch(setAllRoomsSelected(selected));
-        }
-    },[rooms])
-
-    useEffect(() => {
-        if (activeSurgeons) {
-            updateAllSelectedItems(activeSurgeons, setAllSurgeonsSelected);
-            const allSelected = allItemsSelected(activeSurgeons)
-            dispatch(setAllSurgeonsSelected(allSelected))
-        }
-    },[activeSurgeons])
-
-    useEffect(()=>{
-        if (activeSurgeons) {
-            const selected = activeSurgeons.filter((activeSurgeon)=> activeSurgeon.selected === true)
-            setSelectedSurgeons(selected)
-            // dispatch(setActiveSurgeonList(selected))
-        }
-
-    },[activeSurgeons])
 
 
 
@@ -188,7 +218,12 @@ const Settings = () => {
             item.selected = status;
             return item;
         })
-        dispatch(setActiveRoomList(updatedRooms))
+        // dispatch(setActiveRoomList(updatedRooms))
+        const curList:UpdatableRoomList = {
+            key: selectedUnit,
+            list:updatedRooms
+        }
+        dispatch(setUnitRoomList(curList))
     }
 
 
@@ -226,7 +261,12 @@ const Settings = () => {
         if (itemIndex !== -1) {
             rooms[itemIndex].selected = !rooms[itemIndex].selected;
         }
-        dispatch(setActiveRoomList([...rooms]));
+        // dispatch(setActiveRoomList([...rooms]));
+        const curList:UpdatableRoomList = {
+            key: selectedUnit,
+            list:rooms
+        }
+        dispatch(setUnitRoomList(curList))
     }
 
 
@@ -236,7 +276,11 @@ const Settings = () => {
         if (itemIndex !== -1) {
             activeSurgeons[itemIndex].selected = !activeSurgeons[itemIndex].selected;
         }
-        dispatch(setActiveSurgeonList([...activeSurgeons]))
+        const curSurgList:UpdatableSurgeonList = {
+            key:selectedUnit,
+            list:[...activeSurgeons]
+        }
+        dispatch(setSurgeonUnitList(curSurgList))
         setSelectedSurgeons([...activeSurgeons])
     }
 
@@ -274,14 +318,18 @@ const Settings = () => {
         options: unitList
      }
 
+     console.log('unit selector', unitSelector)
+
+
 
     const unitListSelector: UnitListSelector = {
-        rooms:rooms,
+        rooms:unitRoomLists[selectedUnit],
         allRoomsSelected:allRoomsSelected,
         onRoomChanged: onRoomChanged,
         onAllRoomsSelected:onAllRoomsSelected,
         onClearAllRooms:onClearAllRooms
     }
+    console.log(unitListSelector)
     const searchCheckboxList: SearchListItems = {
         itemList: filteredSurgeons,
         emptySearchMessage:'No Surgeon Selected',
@@ -307,9 +355,9 @@ const Settings = () => {
 
 
 
-
     const selectSurgeonGroup = (group:string[]) => {
-        let newSurgeonList = activeSurgeons.map((surgeon)=> {
+        let newSurgeonList = surgeonLists[selectedUnit]
+        newSurgeonList = newSurgeonList.map((surgeon)=> {
             if (group.includes(surgeon.NPI.toString())) {
                 surgeon.selected = true;
             } else {
@@ -319,7 +367,12 @@ const Settings = () => {
         });
         if (newSurgeonList.length > 0) {
             console.log('seeting group surgeons')
-            dispatch(setActiveSurgeonList(newSurgeonList));
+            const curSurgList:UpdatableSurgeonList = {
+                key:selectedUnit,
+                list:newSurgeonList
+            }
+            dispatch(setSurgeonUnitList(curSurgList))
+            // dispatch(setActiveSurgeonList(newSurgeonList));
         }
     }
 
@@ -328,7 +381,10 @@ const Settings = () => {
 
     const selectRoomGroup = (group:string[]) => {
         console.log('rooms',group )
-        let newRoomList = rooms.map((room) => {
+        console.log('selected Unit', selectedUnit)
+        console.log('selected rooms', selectedUnit)
+        let newRoomList = unitRoomLists[selectedUnit]
+        newRoomList = newRoomList.map((room) => {
 
             if (group.includes(room['name'].toString())) {
                 room.selected = true;
@@ -337,24 +393,32 @@ const Settings = () => {
             }
             return room;
         })
+        console.log('new room list',newRoomList)
         if (newRoomList.length > 0) {
             console.log('setting group rooms')
-            
-            dispatch(setActiveRoomList(newRoomList));
+            const curList:UpdatableRoomList = {
+                key: selectedUnit,
+                list:newRoomList
+            }
+            dispatch(setUnitRoomList(curList))
+            // dispatch(setActiveRoomList(newRoomList));
         }
     
     }
 
-    // useEffect(() => {
-    //     if (updateWithGroup && selectedUnit) {
-    //         if (selectedUnit === surgeonGroups[parseInt(groupId)].unit){
-    //             console.log('updating group group update')
-    //             selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
-    //             selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
-    //             dispatch(setUpdateWithGroup(false));
-    //         } 
-    //     }
-    // },[updateWithGroup,selectedUnit])
+    useEffect(() => {
+        if (updateWithGroup && selectedUnit) {
+            if (selectedUnit === surgeonGroups[parseInt(groupId)].unit){
+                console.log('updating group group update')
+                console.log('unit', selectedUnit)
+                console.log('group unit',surgeonGroups[parseInt(groupId)].unit)
+                console.log('group rooms',surgeonGroups[parseInt(groupId)].rooms)
+                selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
+                selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
+                dispatch(setUpdateWithGroup(false));
+            } 
+        }
+    },[updateWithGroup,selectedUnit])
 
 
     const onSelectGroupItem = (id:string) => {
@@ -362,7 +426,7 @@ const Settings = () => {
         dispatch(setGroupId(id))
         if (selectedUnit !== surgeonGroups[parseInt(id)].unit){
             dispatch(setUnit(surgeonGroups[parseInt(id)].unit));
-            // dispatch(setUpdateWithGroup(true));
+            dispatch(setUpdateWithGroup(true));
         } else {
             selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
             selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
@@ -398,7 +462,7 @@ const Settings = () => {
 
             </div>
             <div className='sel-unit'>
-                <SelectUnit title='Select Unit' unitSelector={unitSelector} unitListSelector={unitListSelector} />
+               {unitRoomLists[selectedUnit] && <SelectUnit title='Select Unit' unitSelector={unitSelector} unitListSelector={unitListSelector} />}
             </div>
             <div className='provider-search-list'>
                 <SearchList
