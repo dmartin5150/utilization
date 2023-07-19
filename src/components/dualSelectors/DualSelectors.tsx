@@ -21,6 +21,7 @@ function DualSelectors <T extends Option, U extends Option >({selector1, selecto
                 <label>{selector1.title}</label>
                 <SelectorList 
                     selectedOption={selector1.selectedOption} 
+                    showBorder={false}
                     optionList={selector1.optionList} 
                     onChange={selector1.onChange}
                     />
@@ -29,6 +30,7 @@ function DualSelectors <T extends Option, U extends Option >({selector1, selecto
                 <label>{selector2.title}</label>
                 <SelectorList
                     selectedOption={selector2.selectedOption} 
+                    showBorder={false}
                     optionList={selector2.optionList} 
                     onChange={selector2.onChange}
                     />

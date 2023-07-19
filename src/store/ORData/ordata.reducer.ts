@@ -46,7 +46,10 @@ export type ORDataState = {
     calendarRoomOption: CalendarMenuOptions, 
     updateWithGroup: boolean;
     groupId: string;
-    isLoading:boolean;
+    orDetailsLoading:boolean;
+    orGridLoading:boolean;
+    ptHoursLoading:boolean;
+    surgeonListsLoading:boolean;
     popOpen: boolean;
     ptHours: PT_Hours;
 
@@ -78,7 +81,10 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
     calendarRoomOption: CalendarMenuOptions.All,
     updateWithGroup: false,
     groupId: '0',
-    isLoading:false,
+    orDetailsLoading:false,
+    orGridLoading:false,
+    ptHoursLoading:false,
+    surgeonListsLoading:false,
     popOpen: false,
     ptHours:PTHOURS_INITIAL_STATE,
     error: null
@@ -87,34 +93,34 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
 export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):ORDataState =>  {
     // console.log(action.type)
     if (getCalendarData.match(action)) {
-        return { ...state, calendarData: action.payload, isLoading:false}
+        return { ...state, calendarData: action.payload}
     }
     if (fetchGridStart.match(action)){
-        return {...state, isLoading:true}
+        return {...state, orGridLoading:true}
     }
     if (fetchGridSuccess.match(action)) {
-        return {...state, gridData:action.payload, isLoading:false}
+        return {...state, gridData:action.payload, orGridLoading:false}
     }
     if (fetchGridFailed.match(action)) {
-        return {...state, error:action.payload, isLoading:false}
+        return {...state, error:action.payload, orGridLoading:false}
     }
     if (fetchDetailsStart.match(action)) {
-        return {...state, isLoading:true}
+        return {...state, orDetailsLoading:true}
     }
     if (fetchDetailsSuccess.match(action)) {
-        return {...state, detailsData: action.payload, isLoading:false, popOpen:true}
+        return {...state, detailsData: action.payload, orDetailsLoading:false, popOpen:true}
     }
     if (fetchDetailsFailed.match(action)) {
-        return {...state, error:action.payload, isLoading:false}
+        return {...state, error:action.payload, orDetailsLoading:false}
     }
     if (fetchSurgeonListsStart.match(action)) {
-        return {...state, isLoading:true}
+        return {...state, surgeonListsLoading:true}
     }
     if (fetchSurgeonListsSuccess.match(action)) {
-        return {...state, surgeonLists:action.payload, isLoading:false}
+        return {...state, surgeonLists:action.payload, surgeonListsLoading:false}
     }
     if (fetchSurgeonListsFailed.match(action)) {
-        return {...state, error:action.payload, isLoading:false}
+        return {...state, error:action.payload, surgeonListsLoading:false}
     }
     if (setSurgeonUnitList.match(action)) {
         return {...state, surgeonLists:{...state.surgeonLists, [action.payload.key]: action.payload.list}}
@@ -142,7 +148,6 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     if (closePopUp.match(action)) {
         return {...state, popOpen: false}
     }
-
     if (setAllRoomsSelected.match(action)){
         return {...state, allRoomsSelected: action.payload}
     }
@@ -150,13 +155,13 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
         return {...state, allSurgeonsSelected: action.payload}
     }
     if (fetchPTHoursStart.match(action)) {
-        return {...state, isLoading:true}
+        return {...state, ptHoursLoading:true}
     }
     if (fetchPTHoursSuccess.match(action)) {
-        return {...state, ptHours: action.payload}
+        return {...state, ptHours: action.payload, ptHoursLoading:false}
     }
     if (fetchPTHoursFailed.match(action)) {
-        return {...state, error: action.payload, isLoading:false}
+        return {...state, error: action.payload, ptHoursLoading:false}
     }
     if (setCalendarSurgeonOption.match(action)) {
         return {...state, calendarSurgeonOption: action.payload}

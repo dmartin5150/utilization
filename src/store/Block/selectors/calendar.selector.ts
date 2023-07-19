@@ -18,6 +18,11 @@ export const selectBlockLists = createSelector(
     (ORBlockSlice) => ORBlockSlice.lists
 )
 
+export const selectBlockIsLoading = createSelector(
+    [selectBlockReducer],
+    (ORBlockSlice) => ORBlockSlice.blockIsLoading
+)
+
 export const selectBlockGrid = createSelector(
     [selectBlockLists],
     (ORBlockSlice) => ORBlockSlice.grid

@@ -72,7 +72,7 @@ export const setBlockTypeOption = withMatcher((blockTypeOption:string):SetBlockT
 
 export const fetchBlockDataAsync = (unit:string, selectAll:boolean, startDate:string,selectedProviders:string[]) => {
     return async (dispatch: AppDispatch) => {
-        dispatch(fetchBlockStart);
+        dispatch(fetchBlockStart());
         try {
             const blockData = await getBlockData(unit,selectAll, startDate, selectedProviders);
             dispatch(fetchBlockSuccess(blockData))

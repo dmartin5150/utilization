@@ -12,6 +12,17 @@ export const selectCalendarData = createSelector(
     (ORDataSlice) => ORDataSlice.calendarData
 )
 
+
+
+
+export const selectORDataIsLoading = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) =>  {
+        return (ORDataSlice.orDetailsLoading || ORDataSlice.orGridLoading 
+                || ORDataSlice.ptHoursLoading || ORDataSlice.surgeonListsLoading)
+    }
+)
+
 export const selectGridData = createSelector(
     [selectORDataReducer],
     (ORDataSlice) => ORDataSlice.gridData

@@ -56,7 +56,7 @@ export const fetchSurgeonListsFailed = withMatcher((error:Error): FetchSurgeonLi
 
 export const fetchSurgeonListsAsync = () => {
     return async(dispatch:AppDispatch) => {
-        dispatch(fetchSurgeonListsStart);
+        dispatch(fetchSurgeonListsStart());
         try {
             const surgeonLists  = await getSurgeonLists();
             console.log('surgeon Lists', surgeonLists)

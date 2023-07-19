@@ -36,7 +36,7 @@ export const closePopUp = withMatcher(():ClosePopUp => {
 
 export const fetchDetailDataAsync = (unit:string, date:string, room:FacilityRoom,primeTime:PrimeTime) => {
     return async (dispatch:AppDispatch) => {
-        dispatch(fetchDetailsStart)
+        dispatch(fetchDetailsStart())
         try {
             const detailData = await getDetails(unit, date, room.name,primeTime );
             dispatch(fetchDetailsSuccess(detailData))

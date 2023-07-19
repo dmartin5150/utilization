@@ -73,6 +73,7 @@ function Calendar<T extends Option>({
         <div className="calendar-dropdown">
           <SelectorList 
           title={list1.title}
+          showBorder={list1.showBorder}
           selectedOption={list1.selectedOption} 
           optionList = {list1.optionList}
           onChange = {list1.onChange}
@@ -81,6 +82,7 @@ function Calendar<T extends Option>({
         <div className="calendar-dropdown">
           <SelectorList 
           title={list2.title}
+          showBorder={list2.showBorder}
           selectedOption={list2.selectedOption} 
           optionList = {list2.optionList}
           onChange = {list2.onChange}

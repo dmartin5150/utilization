@@ -1,5 +1,11 @@
 @import '../../sass/abstracts/variables';
 
+
+.utilization-container {
+    position:relative;
+}
+
+
 .utilization {
     display: flex;
     flex-direction: row;
@@ -8,6 +14,7 @@
     margin-top:1rem;
     max-width: 50rem;
     border:5px;
+    position:relative;
 
 
     & .patient__calendar {

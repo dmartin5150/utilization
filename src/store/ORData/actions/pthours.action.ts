@@ -25,7 +25,7 @@ export const fetchPTHoursFailed = withMatcher((error:Error):FetchPTHoursFailed =
 
 export const fetchPTHourSuccessAsync = (primeTime:PrimeTime, unit:string) => {
     return async (dispatch: AppDispatch) => {
-        dispatch(fetchPTHoursStart);
+        dispatch(fetchPTHoursStart());
         try {
             const ptHours = await getPTHours(primeTime, unit);
             dispatch(fetchPTHoursSuccess(ptHours))

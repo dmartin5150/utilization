@@ -53,6 +53,9 @@ import { setBlockTypeOption } from "../../store/Block/block.actions";
 import { selectBlockTypeOption } from "../../store/Block/selectors/calendar.selector";
 import { BlockMenuOptions, BlockRoomOptions } from "./block.constants";
 import { selectBlockCalendar } from "../../store/Block/selectors/calendar.selector";
+import { selectBlockIsLoading } from "../../store/Block/selectors/calendar.selector";
+import { selectORDataIsLoading } from "../../store/ORData/selectors/ordata.selector";
+import Spinner from "../../components/spinner/spinner";
 
 
 
@@ -96,6 +99,8 @@ const Block = () => {
     // const activeSurgeons = useSelector(selectActiveSurgeons)
     const blockTypeOption = useSelector(selectBlockTypeOption)
     const currentCalendar = useSelector(selectBlockCalendar)
+    const blockIsLoading = useSelector(selectBlockIsLoading)
+    const orIsLoading = useSelector(selectORDataIsLoading)
     
 
     useEffect(()=> {
@@ -138,6 +143,7 @@ const Block = () => {
         const calendarBlockTypeSelector: SingleSelector<CalendarMenuItem> = {
             'title': 'Block Types', 
             isDisabled: false,
+            showBorder:false,
             selectedOption: calendarBlockMenus['Types'][0],
             optionList: calendarBlockMenus['Types'],
             onChange:updateBlockTypesMenu
@@ -152,6 +158,7 @@ const Block = () => {
         const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
             title: 'Rooms',
             isDisabled: false,
+            showBorder:false,
             selectedOption: calendarBlockMenus['Rooms'][0],
             optionList: calendarBlockMenus['Rooms'],
             onChange:updateCalendarRooms
@@ -257,6 +264,8 @@ const Block = () => {
 
 
     return (
+        <div className='block-container'>
+        {(blockIsLoading || orIsLoading)  ? <Spinner /> :
         <section className="blocks">
             <BlockDetailCards 
                 blockCards={blockCards} 
@@ -289,7 +298,8 @@ const Block = () => {
                 pageSize={18}
             ></SummaryGrid>
             </div>
-        </section>
+        </section>}
+        </div>
     );
 }
 export default Block;

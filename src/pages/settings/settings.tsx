@@ -170,6 +170,7 @@ const Settings = () => {
 
     const primeTimeStartSelector: SingleSelector<PrimeTimeMenuItem> = {
         title: 'Prime Time Start',
+        showBorder:true,
         selectedOption: primeTimeMenuStartItems[primeTime.start],
         optionList: primeTimeStartOptions,
         onChange: updatePrimeTimeStart,
@@ -177,6 +178,7 @@ const Settings = () => {
 
     const primeTimeEndSelector: SingleSelector<PrimeTimeMenuItem> = {
         title: 'Prime Time End',
+        showBorder:true,
         selectedOption: primeTimeMenuEndItems[primeTime.end],
         optionList:primeTimeEndOptions,
         onChange: updatePrimeTimeEnd

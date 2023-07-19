@@ -34,7 +34,7 @@ export const fetchGridFailed = withMatcher((error:Error):FetchGridFailed => {
 
 export const fetchGridDataAsync = (unit: string, date: string) => {
     return async(dispatch:AppDispatch) => {
-        dispatch(fetchGridStart);
+        dispatch(fetchGridStart());
         try {
             const gridData  = await getGridData(unit, date)
             dispatch(fetchGridSuccess(gridData))

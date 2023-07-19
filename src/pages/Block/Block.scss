@@ -1,5 +1,9 @@
 @import '../../sass/abstracts/variables';
 
+.block-container {
+    position:absolute;
+}
+
 .blocks{
     display: flex;
     flex-direction: row;

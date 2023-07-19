@@ -58,6 +58,7 @@ const Surgeons = () => {
             <div className="selector">
                 <SelectorList 
                     title={'Select Surgeon'} 
+                    showBorder={false}
                     selectedOption={selectedSurgeon} 
                     optionList={surgeonList}
                     onChange={handleSurgeonChanged}

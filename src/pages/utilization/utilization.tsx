@@ -4,7 +4,7 @@ import Calendar from "../../components/calendar/calendar";
 import DetailsCard from "../../components/team-card/details-card";
 import "./utilization.scss";
 import { useSelector } from "react-redux";
-import { selectCalendarData, selectCalendarRoomOption, selectDetailData, selectGridData, selectPopUpIsOpen } from "../../store/ORData/selectors/ordata.selector";
+import { selectCalendarData,  selectDetailData, selectGridData, selectPopUpIsOpen } from "../../store/ORData/selectors/ordata.selector";
 import { selectDate,selectUnit,selectRoom  } from "../../store/Facility/facility.selector";
 import { fetchDetailDataAsync, closePopUp } from "../../store/ORData/actions/details.actions";
 import { useAppDispatch } from "../../hooks/hooks";
@@ -20,28 +20,25 @@ import { SingleSelector } from "../../components/SelectorList/SelectorList";
 import {  CalendarMenuOptions } from "./utilization.constants";
 import {SingleValue} from "react-select";
 import { setCalendarSurgeonOption, setCalendarRoomOption} from "../../store/ORData/actions/calendar.actions";
-import { selectCalendarSurgeonOption } from "../../store/ORData/selectors/ordata.selector";
 import { calendarSurgeonMenus, calendarRoomMenus} from "./utilization.constants";
 import { selectAllRoomsSelected,selectAllSurgeonsSelected } from "../../store/ORData/selectors/ordata.selector";
-import { selectCalendar } from "../../store/ORData/selectors/ordata.selector";
 import { selectCalendarPTHoursAll } from "../../store/ORData/selectors/ordata.ptselectors";
 import {selectPTHoursTotalsAll} from "../../store/ORData/selectors/ordata.ptselectors";
 import { selectActiveSurgeons } from "../../store/ORData/selectors/ordata.selector";
-import {selectActiveRoomLists} from "../../store/ORData/selectors/ordata.selector";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { setCalendarData } from "../../store/ORData/actions/calendar.actions";
 import { selectGridDataAll} from "../../store/ORData/selectors/ordata.gridselectors";
-import { selectGrid } from "../../store/ORData/selectors/ordata.selector";
 import { SummaryGridRowData } from "../../components/summary-grid/summary-grid-row";
 import { selectActiveSurgeonNPIs } from "../../store/ORData/selectors/ordata.selector";
 import { selectDetailBlockData } from "../../store/ORData/selectors/ordata.selector";
 import { setCalendarTotals } from "../../store/ORData/actions/calendar.actions";
 import { selectCalendarTotals } from "../../store/ORData/selectors/ordata.ptselectors";
 import { setGridData } from "../../store/ORData/actions/grid.actions";
-import { fetchSurgeonListsAsync } from '../../store/ORData/actions/surgeonLists.actions';
-import { fetchRoomLists, setActiveRoomList} from '../../store/ORData/actions/roomsListActions';
 import { fetchPTHourSuccessAsync} from '../../store/ORData/actions/pthours.action';
-import { TNNASRoomLists } from '../../pages/settings/settings.constants';
+import { selectBlockIsLoading } from "../../store/Block/selectors/calendar.selector";
+import { selectORDataIsLoading } from "../../store/ORData/selectors/ordata.selector";
+import Spinner from "../../components/spinner/spinner";
+
 
 
 
@@ -75,6 +72,8 @@ const Utilization = () => {
   const selectedNPIs = useSelector(selectActiveSurgeonNPIs)
   const blockData = useSelector(selectDetailBlockData)
   const calendarTotals = useSelector(selectCalendarTotals)
+  const blockIsLoading = useSelector(selectBlockIsLoading)
+  const orIsLoading = useSelector(selectORDataIsLoading)
 
 
   // useEffect(()=> {
@@ -198,6 +197,7 @@ useEffect(()=> {
   if (allSurgeonsSelected) {
     const calendarSurgeonSelector: SingleSelector<CalendarMenuItem> = {
       title: 'Surgeons',
+      showBorder:false,
       selectedOption: calendarSurgeonMenus['None'][0],
       optionList:calendarSurgeonMenus['None'],
       onChange:updateCalendarSurgeons 
@@ -207,6 +207,7 @@ useEffect(()=> {
   } else {
     const calendarSurgeonSelector: SingleSelector<CalendarMenuItem> = {
       title: 'Surgeons',
+      showBorder:false,
       selectedOption: calendarSurgeonMenus['All'][1],
       optionList:calendarSurgeonMenus['All'],
       onChange:updateCalendarSurgeons 
@@ -230,6 +231,7 @@ useEffect(()=> {
     const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
       title: 'Rooms',
       isDisabled:true,
+      showBorder:false,
       selectedOption: calendarRoomMenus['Selected'][0],
       optionList: calendarRoomMenus['Selected'],
       onChange:updateCalendarRooms
@@ -240,6 +242,7 @@ useEffect(()=> {
     const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
       title: 'Rooms',
       isDisabled: false,
+      showBorder: false,
       selectedOption: calendarRoomMenus['Mixed'][0],
       optionList: calendarRoomMenus['Mixed'],
       onChange:updateCalendarRooms
@@ -250,6 +253,7 @@ useEffect(()=> {
     const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
       title: 'Rooms',
       isDisabled: false,
+      showBorder:false,
       selectedOption: calendarRoomMenus['All'][1],
       optionList: calendarRoomMenus['All'],
       onChange:updateCalendarRooms
@@ -264,8 +268,10 @@ useEffect(()=> {
 
 
   return (
+    <div className='utilization-container'>
+      {(blockIsLoading || orIsLoading)  ? <Spinner /> :
       <section className="utilization">
-        <DetailsCard 
+         <DetailsCard 
           title={"OR Utilization"} 
           header={detailsHeader}
           columns={detailsColHeader}
@@ -304,7 +310,8 @@ useEffect(()=> {
             pageSize={18}
           ></SummaryGrid>
         </div>
-      </section>
+      </section>}
+    </div>
   );
 };
 
