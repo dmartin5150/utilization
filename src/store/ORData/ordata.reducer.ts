@@ -3,11 +3,10 @@ import { setCalendarData } from "./actions/calendar.actions";
 import { SummaryGridData } from "../../components/summary-grid/summary-grid";
 import { DetailsData } from "../../components/team-card/details-card";
 import { AnyAction } from "redux";
-import { fetchCalendarSuccess, setCalendarSurgeonOption, setCalendarRoomOption} from "./actions/calendar.actions";
+import { getCalendarData, setCalendarSurgeonOption, setCalendarRoomOption} from "./actions/calendar.actions";
 import { fetchGridSuccess} from "./actions/grid.actions";
 import { fetchSurgeonListsSuccess} from "./actions/surgeonLists.actions";
 import { fetchDetailsSuccess, closePopUp } from "./actions/details.actions";
-import { fetchDataStart, fetchDataFailed} from "./actions/ordata.actions";
 import { item } from "./ordata.types";
 import { UnitRoomLists,UnitRoomListItem } from "../../pages/settings/settings.constants";
 import { fetchRoomLists,setRoomLists, setActiveRoomList, 
@@ -25,6 +24,10 @@ import { setCalendarTotals } from "./actions/calendar.actions";
 import { setUpdateWithGroup, setGroupId } from "./actions/ordata.actions";
 import { setUnitRoomList } from "./actions/roomsListActions";
 import { setSurgeonUnitList } from "./actions/surgeonLists.actions";
+import { fetchDetailsStart, fetchDetailsFailed } from "./actions/details.actions";
+import { fetchGridStart,fetchGridFailed } from "./actions/grid.actions";
+import { fetchPTHoursStart, fetchPTHoursFailed } from "./actions/pthours.action";
+import { fetchSurgeonListsStart,fetchSurgeonListsFailed } from "./actions/surgeonLists.actions";
 
 
 
@@ -83,23 +86,35 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
 
 export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):ORDataState =>  {
     // console.log(action.type)
-    if (fetchDataStart.match(action)) {
-        return {...state, isLoading: true}
-    }
-    if (fetchDataFailed.match(action)) {
-        return {...state, error: action.payload, isLoading: false, popOpen:false}
-    }
-    if (fetchCalendarSuccess.match(action)) {
+    if (getCalendarData.match(action)) {
         return { ...state, calendarData: action.payload, isLoading:false}
+    }
+    if (fetchGridStart.match(action)){
+        return {...state, isLoading:true}
     }
     if (fetchGridSuccess.match(action)) {
         return {...state, gridData:action.payload, isLoading:false}
     }
+    if (fetchGridFailed.match(action)) {
+        return {...state, error:action.payload, isLoading:false}
+    }
+    if (fetchDetailsStart.match(action)) {
+        return {...state, isLoading:true}
+    }
     if (fetchDetailsSuccess.match(action)) {
         return {...state, detailsData: action.payload, isLoading:false, popOpen:true}
     }
+    if (fetchDetailsFailed.match(action)) {
+        return {...state, error:action.payload, isLoading:false}
+    }
+    if (fetchSurgeonListsStart.match(action)) {
+        return {...state, isLoading:true}
+    }
     if (fetchSurgeonListsSuccess.match(action)) {
         return {...state, surgeonLists:action.payload, isLoading:false}
+    }
+    if (fetchSurgeonListsFailed.match(action)) {
+        return {...state, error:action.payload, isLoading:false}
     }
     if (setSurgeonUnitList.match(action)) {
         return {...state, surgeonLists:{...state.surgeonLists, [action.payload.key]: action.payload.list}}
@@ -134,8 +149,14 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     if (setAllSurgeonsSelected.match(action)){
         return {...state, allSurgeonsSelected: action.payload}
     }
+    if (fetchPTHoursStart.match(action)) {
+        return {...state, isLoading:true}
+    }
     if (fetchPTHoursSuccess.match(action)) {
         return {...state, ptHours: action.payload}
+    }
+    if (fetchPTHoursFailed.match(action)) {
+        return {...state, error: action.payload, isLoading:false}
     }
     if (setCalendarSurgeonOption.match(action)) {
         return {...state, calendarSurgeonOption: action.payload}

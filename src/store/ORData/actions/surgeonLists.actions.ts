@@ -1,7 +1,6 @@
 import { ORDATA_TYPES } from "../ordata.types"
-import { createAction, ActionWithPayload, withMatcher } from "../../../utilities/reducer/reducerutils"
+import { createAction, Action, ActionWithPayload, withMatcher } from "../../../utilities/reducer/reducerutils"
 import { AppDispatch } from "../../store";
-import { fetchDataStart, fetchDataFailed } from "./ordata.actions";
 import getSurgeonLists from "../../../utilities/fetchData/getSurgeonLists";
 import { SurgeonList, SurgeonLists } from "../ordata.types";
 import { UpdatableSurgeonList } from "../ordata.types";
@@ -11,7 +10,8 @@ export type SetSurgeonLists = ActionWithPayload<ORDATA_TYPES.SET_SURGEON_LISTS, 
 export type SetActiveSurgeonList = ActionWithPayload<ORDATA_TYPES.SET_ACTIVE_SURGEON_LIST, SurgeonList[]>
 export type SetAllSurgeonsSelected = ActionWithPayload<ORDATA_TYPES.SET_ALL_SURGEONS_SELECTED, boolean>;
 export type SetSurgeonUnitList = ActionWithPayload<ORDATA_TYPES.SET_SURGEON_UNIT_LIST, UpdatableSurgeonList>
-
+export type FetchSurgeonListsStart = Action<ORDATA_TYPES.FETCH_SURGEON_LISTS_START>
+export type FetchSurgeonListsFailed = ActionWithPayload<ORDATA_TYPES.FETCH_SURGEON_LISTS_FAILED,Error>
 
 
 
@@ -39,21 +39,30 @@ export const setActiveSurgeonList = withMatcher((surgeonList:SurgeonList[]):SetA
 });
 
 
+
+export const fetchSurgeonListsStart = withMatcher(():FetchSurgeonListsStart => {
+    return createAction(ORDATA_TYPES.FETCH_SURGEON_LISTS_START)
+})
+
 export const fetchSurgeonListsSuccess = withMatcher((data:SurgeonLists):FetchSurgeonListsSuccess => {
     return createAction(ORDATA_TYPES.FETCH_SURGEON_LISTS_SUCCESS, data)
 })
+
+export const fetchSurgeonListsFailed = withMatcher((error:Error): FetchSurgeonListsFailed=> {
+    return createAction(ORDATA_TYPES.FETCH_SURGEON_LISTS_FAILED,error)
+} )
 
 
 
 export const fetchSurgeonListsAsync = () => {
     return async(dispatch:AppDispatch) => {
-        dispatch(fetchDataStart);
+        dispatch(fetchSurgeonListsStart);
         try {
             const surgeonLists  = await getSurgeonLists();
             console.log('surgeon Lists', surgeonLists)
             dispatch(fetchSurgeonListsSuccess(surgeonLists))
         } catch (error) {
-            dispatch(fetchDataFailed(error as Error))
+            dispatch(fetchSurgeonListsFailed(error as Error))
         }
     }
 }

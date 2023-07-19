@@ -32,7 +32,7 @@ import { UpdatableRoomList } from './settings.constants';
 import { setSurgeonUnitList } from '../../store/ORData/actions/surgeonLists.actions';
 import { UpdatableSurgeonList } from '../../store/ORData/ordata.types';
 import { fetchPTHourSuccessAsync } from '../../store/ORData/actions/pthours.action';
-import { fetchCalendarDataAsync } from '../../store/ORData/actions/calendar.actions';
+// import { fetchCalendarDataAsync } from '../../store/ORData/actions/calendar.actions';
 
 
 import { unitLists } from './settings.constants';
@@ -415,7 +415,6 @@ const Settings = () => {
                 console.log('group rooms',surgeonGroups[parseInt(groupId)].rooms)
                 selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
                 selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
-                // dispatch(setUpdateWithGroup(false));
             } 
         }
     },[groupId,selectedUnit])
@@ -426,7 +425,6 @@ const Settings = () => {
         dispatch(setGroupId(id))
         if (selectedUnit !== surgeonGroups[parseInt(id)].unit){
             dispatch(setUnit(surgeonGroups[parseInt(id)].unit));
-            // dispatch(setUpdateWithGroup(true));
         } else {
             selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
             selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
