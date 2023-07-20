@@ -16,7 +16,7 @@ export const getPTHours = async (primeTime:PrimeTime, unit: string) => {
   });
   if (response) {
     const data:PT_Hours = await response.json();
-    // console.log(data)
+    console.log('pthours', data)
     return data
   }
   return emptyPTHours

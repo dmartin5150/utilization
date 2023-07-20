@@ -133,11 +133,12 @@ const Settings = () => {
     useEffect(() => {
         console.log('updating room')
         if (unitRoomLists && unitRoomLists[selectedUnit]) {
+            console.log(unitRoomLists[selectedUnit])
             updateAllSelectedItems(unitRoomLists[selectedUnit], setAllRoomsSelected);
-            const selected = allItemsSelected(rooms);
+            const selected = allItemsSelected(unitRoomLists[selectedUnit]);
             dispatch(setAllRoomsSelected(selected));
         }
-    },[unitRoomLists])
+    },[unitRoomLists, selectedUnit])
 
     useEffect(() => {
         if (surgeonLists && surgeonLists[selectedUnit]) {
@@ -409,22 +410,24 @@ const Settings = () => {
     }
 
     useEffect(() => {
-        if (groupId && selectedUnit) {
+        if (updateWithGroup && selectedUnit) {
             if (selectedUnit === surgeonGroups[parseInt(groupId)].unit){
                 console.log('updating group group update')
                 console.log('unit', selectedUnit)
                 console.log('group unit',surgeonGroups[parseInt(groupId)].unit)
                 console.log('group rooms',surgeonGroups[parseInt(groupId)].rooms)
+                dispatch(setUpdateWithGroup(false))
                 selectRoomGroup(surgeonGroups[parseInt(groupId)].rooms);
                 selectSurgeonGroup(surgeonGroups[parseInt(groupId)].surgeons);
             } 
         }
-    },[groupId,selectedUnit])
+    },[updateWithGroup,selectedUnit])
 
 
     const onSelectGroupItem = (id:string) => {
         console.log('Setting group update')
-        dispatch(setGroupId(id))
+        dispatch(setUpdateWithGroup(true))
+
         if (selectedUnit !== surgeonGroups[parseInt(id)].unit){
             dispatch(setUnit(surgeonGroups[parseInt(id)].unit));
         } else {
