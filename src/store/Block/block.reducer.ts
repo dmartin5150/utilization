@@ -32,7 +32,7 @@ const BLOCK_INITIAL_STATE: BlockState = {
     calendarData: [],
     calendarTotals: [],
     blockCards: [],
-    selectedBlockDate: '2023-07-12',
+    selectedBlockDate: '2023-08-1',
     selectedBlockRoom: 'BH JRI 08',
     blockRoomOption: 'ALL',
     blockTypeOption: 'Surgeon',

@@ -56,6 +56,7 @@ import { selectBlockCalendar } from "../../store/Block/selectors/calendar.select
 import { selectBlockIsLoading } from "../../store/Block/selectors/calendar.selector";
 import { selectORDataIsLoading } from "../../store/ORData/selectors/ordata.selector";
 import Spinner from "../../components/spinner/spinner";
+import { MonthChangeDirection } from "../../components/calendar/calendar";
 
 
 
@@ -107,7 +108,7 @@ const Block = () => {
         console.log('triggered')
         console.log('unit', unit, 'npis', npis, 'selected', allSurgeonsSelected)
         if (unit && npis) {
-            dispatch(fetchBlockDataAsync(unit,allSurgeonsSelected,'2023-7-1',npis))
+            dispatch(fetchBlockDataAsync(unit,allSurgeonsSelected,'2023-8-1',npis))
 
         }
 
@@ -199,6 +200,7 @@ const Block = () => {
     }
 
 
+      
 
       useEffect (() => {
         if (blockPopUpIsOpen) {
@@ -262,6 +264,10 @@ const Block = () => {
         }
       }
 
+      const onMonthChange = (direction:MonthChangeDirection) => {
+        console.log('month changed')
+      }
+      
 
     return (
         <div className='block-container'>
@@ -282,7 +288,8 @@ const Block = () => {
                 selectedDate={selectedDate}
                 list1={blockTypeMenu}
                 list2={roomMenu}
-                hiddenID={[]}
+                onMonthChange={onMonthChange}
+                hiddenID={["-1","-2","-3","-4","-5"]}
                 onDateChange={setBlockDate}
                 pageSize={30}
             />}

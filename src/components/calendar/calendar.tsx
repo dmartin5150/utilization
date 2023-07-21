@@ -11,8 +11,14 @@ import { selectCalendarData } from "../../store/ORData/selectors/ordata.selector
 import { selectUnit } from "../../store/Facility/facility.selector";
 import SelectorList from "../SelectorList/SelectorList";
 import { Option, SingleSelector } from "../SelectorList/SelectorList";
+import MonthControl from "./monthControl";
 
 import { CalendarDayData } from "./calendarDay";
+
+export enum MonthChangeDirection {
+   FORWARD,
+   BACKWARD
+}
 
 
 
@@ -25,16 +31,18 @@ interface CalendarProps<T extends Option> {
   hiddenID: string[];
   list1: SingleSelector<T>;
   list2: SingleSelector<T>
+  onMonthChange: (direction:MonthChangeDirection)=>void;
   onDateChange:(id:string)=>void;
   pageSize: number
 }
 
 
 function Calendar<T extends Option>({
-  title,subTitle, selectedDate,calendarData, calendarTotals, hiddenID,list1,list2, onDateChange, pageSize
+  title,subTitle, selectedDate,calendarData, calendarTotals, hiddenID,list1,list2,onMonthChange,  onDateChange, pageSize
 }: React.PropsWithChildren<CalendarProps<T>>)  {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentCalendarData, setCurrentCalendarData] = useState<CalendarDayData[]>([]);
+  const [month, setMonth] = useState<string>('July')
 
   const calendar = useSelector(selectCalendarData);
   const unit = useSelector(selectUnit);
@@ -45,7 +53,9 @@ function Calendar<T extends Option>({
   useEffect(()=> {
     if (calendarData.length > 0) {
       const date = new Date(calendarData[0].date + 'T00:00:00');
+      const month = date.toLocaleString('default', { month: 'long' });
       const padding = date.getDay()-1;
+      setMonth(month);
       // console.log('offset', padding, calendarData[0], date)
       let index = -1;
       for (let step = 0; step < padding; step++) {
@@ -88,6 +98,9 @@ function Calendar<T extends Option>({
           onChange = {list2.onChange}
           />
         </div>
+      </div>
+      <div>
+        <MonthControl month={month} onMonthChange={onMonthChange} />
       </div>
       <ul className='daysofweek'>
         {daysOfWeek.map((day, index)=> {

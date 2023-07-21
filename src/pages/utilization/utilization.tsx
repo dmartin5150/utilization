@@ -38,6 +38,7 @@ import { fetchPTHourSuccessAsync} from '../../store/ORData/actions/pthours.actio
 import { selectBlockIsLoading } from "../../store/Block/selectors/calendar.selector";
 import { selectORDataIsLoading } from "../../store/ORData/selectors/ordata.selector";
 import Spinner from "../../components/spinner/spinner";
+import { MonthChangeDirection } from "../../components/calendar/calendar";
 
 
 
@@ -264,7 +265,9 @@ useEffect(()=> {
 },[allSurgeonsSelected, allRoomsSelected])
  
 
-
+const onMonthChange = (direction:MonthChangeDirection) => {
+  console.log('month changed')
+}
 
 
   return (
@@ -292,6 +295,7 @@ useEffect(()=> {
             selectedDate={selectedDate}
             list1={surgeonMenu}
             list2={roomMenu}
+            onMonthChange={onMonthChange}
             // dropDownLeft={calendarDropDownLeft}
             // dropDownRight= {calendarDropDownRight}
             hiddenID={hiddenIDs}
