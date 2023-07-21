@@ -20,15 +20,21 @@ export enum MonthChangeDirection {
    BACKWARD
 }
 
+export type DataDateRange = {
+  startDate: Date,
+  endDate: Date, 
+  currentDate: Date
+}
+
 
 
 interface CalendarProps<T extends Option> {
   title: string,
   subTitle: string,
   selectedDate: string;
+  dataDateRange:DataDateRange
   calendarData:CalendarDayData[];
   calendarTotals:CalendarDayData[];
-  hiddenID: string[];
   list1: SingleSelector<T>;
   list2: SingleSelector<T>
   onMonthChange: (direction:MonthChangeDirection)=>void;
@@ -38,7 +44,7 @@ interface CalendarProps<T extends Option> {
 
 
 function Calendar<T extends Option>({
-  title,subTitle, selectedDate,calendarData, calendarTotals, hiddenID,list1,list2,onMonthChange,  onDateChange, pageSize
+  title,subTitle, selectedDate,calendarData, dataDateRange, calendarTotals,list1,list2,onMonthChange,  onDateChange, pageSize
 }: React.PropsWithChildren<CalendarProps<T>>)  {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentCalendarData, setCurrentCalendarData] = useState<CalendarDayData[]>([]);
@@ -47,13 +53,13 @@ function Calendar<T extends Option>({
   const calendar = useSelector(selectCalendarData);
   const unit = useSelector(selectUnit);
   const dispatch = useAppDispatch();
-
+  const hiddenID = ["-1","-2","-3","-4","-5"]
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
   useEffect(()=> {
     if (calendarData.length > 0) {
       const date = new Date(calendarData[0].date + 'T00:00:00');
-      const month = date.toLocaleString('default', { month: 'long' });
+
       const padding = date.getDay()-1;
       setMonth(month);
       // console.log('offset', padding, calendarData[0], date)
@@ -100,7 +106,7 @@ function Calendar<T extends Option>({
         </div>
       </div>
       <div>
-        <MonthControl month={month} onMonthChange={onMonthChange} />
+        <MonthControl dateRange={dataDateRange} onMonthChange={onMonthChange} />
       </div>
       <ul className='daysofweek'>
         {daysOfWeek.map((day, index)=> {

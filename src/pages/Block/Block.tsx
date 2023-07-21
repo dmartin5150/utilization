@@ -57,6 +57,8 @@ import { selectBlockIsLoading } from "../../store/Block/selectors/calendar.selec
 import { selectORDataIsLoading } from "../../store/ORData/selectors/ordata.selector";
 import Spinner from "../../components/spinner/spinner";
 import { MonthChangeDirection } from "../../components/calendar/calendar";
+import { selectDataStartDate, selectDataEndDate, selectDataCurrentDate } from "../../store/ORData/selectors/ordata.selector";
+import { DataDateRange } from "../../components/calendar/calendar";
 
 
 
@@ -102,7 +104,15 @@ const Block = () => {
     const currentCalendar = useSelector(selectBlockCalendar)
     const blockIsLoading = useSelector(selectBlockIsLoading)
     const orIsLoading = useSelector(selectORDataIsLoading)
-    
+    const dataStartDate = useSelector(selectDataStartDate)
+    const dataEndDate = useSelector(selectDataEndDate)
+    const dataCurrentDate = useSelector(selectDataCurrentDate)
+  
+    const currentDateRange:DataDateRange = {
+      startDate: dataStartDate,
+      endDate: dataEndDate,
+      currentDate:dataCurrentDate
+    }
 
     useEffect(()=> {
         console.log('triggered')
@@ -286,10 +296,10 @@ const Block = () => {
                 calendarData={currentCalendar}
                 calendarTotals={blockCalendarTotals}
                 selectedDate={selectedDate}
+                dataDateRange={currentDateRange}
                 list1={blockTypeMenu}
                 list2={roomMenu}
                 onMonthChange={onMonthChange}
-                hiddenID={["-1","-2","-3","-4","-5"]}
                 onDateChange={setBlockDate}
                 pageSize={30}
             />}

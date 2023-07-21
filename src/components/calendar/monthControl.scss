@@ -16,6 +16,11 @@
  & .back-arrow {
     height: 25px;
     width: 25px;
+
+    .disabled {
+        pointer-events: none;
+        cursor: pointer;
+    }
      
     button {
         background-color: #1b4297;

@@ -39,6 +39,9 @@ import { selectBlockIsLoading } from "../../store/Block/selectors/calendar.selec
 import { selectORDataIsLoading } from "../../store/ORData/selectors/ordata.selector";
 import Spinner from "../../components/spinner/spinner";
 import { MonthChangeDirection } from "../../components/calendar/calendar";
+import { selectDataStartDate, selectDataEndDate, selectDataCurrentDate } from "../../store/ORData/selectors/ordata.selector";
+import { DataDateRange } from "../../components/calendar/calendar";
+
 
 
 
@@ -52,7 +55,7 @@ const Utilization = () => {
 
 
   
-  const hiddenIDs = ["-1","-2","-3","-4","-5"]
+
 
   const dispatch = useAppDispatch();
   const calendarData = useSelector(selectCalendarData);
@@ -75,7 +78,15 @@ const Utilization = () => {
   const calendarTotals = useSelector(selectCalendarTotals)
   const blockIsLoading = useSelector(selectBlockIsLoading)
   const orIsLoading = useSelector(selectORDataIsLoading)
+  const dataStartDate = useSelector(selectDataStartDate)
+  const dataEndDate = useSelector(selectDataEndDate)
+  const dataCurrentDate = useSelector(selectDataCurrentDate)
 
+  const currentDateRange:DataDateRange = {
+    startDate: dataStartDate,
+    endDate: dataEndDate,
+    currentDate:dataCurrentDate
+  }
 
   // useEffect(()=> {
   //   dispatch(fetchSurgeonListsAsync())
@@ -296,9 +307,9 @@ const onMonthChange = (direction:MonthChangeDirection) => {
             list1={surgeonMenu}
             list2={roomMenu}
             onMonthChange={onMonthChange}
+            dataDateRange={currentDateRange}
             // dropDownLeft={calendarDropDownLeft}
             // dropDownRight= {calendarDropDownRight}
-            hiddenID={hiddenIDs}
             onDateChange={setSelectedDate}
             pageSize={30}
           />}
