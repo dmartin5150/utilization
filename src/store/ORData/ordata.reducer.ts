@@ -28,6 +28,7 @@ import { fetchDetailsStart, fetchDetailsFailed } from "./actions/details.actions
 import { fetchGridStart,fetchGridFailed } from "./actions/grid.actions";
 import { fetchPTHoursStart, fetchPTHoursFailed } from "./actions/pthours.action";
 import { fetchSurgeonListsStart,fetchSurgeonListsFailed } from "./actions/surgeonLists.actions";
+import { setDataStartDate,setDataEndDate, setDataCurrentDate  } from "./actions/calendar.actions";
 
 
 
@@ -50,6 +51,9 @@ export type ORDataState = {
     orGridLoading:boolean;
     ptHoursLoading:boolean;
     surgeonListsLoading:boolean;
+    dataStartDate:Date,
+    dataEndDate:Date,
+    dataCurentDate:Date,
     popOpen: boolean;
     ptHours: PT_Hours;
 
@@ -85,6 +89,9 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
     orGridLoading:false,
     ptHoursLoading:false,
     surgeonListsLoading:false,
+    dataStartDate:new Date('2023,3-1' + 'T00:00:00'),
+    dataEndDate:new Date('2023-8-1' + 'T00:00:00'),
+    dataCurentDate: new Date('2023-7-1' + 'T00:00:00'),
     popOpen: false,
     ptHours:PTHOURS_INITIAL_STATE,
     error: null
@@ -181,6 +188,18 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     if (setUpdateWithGroup.match(action)) {
         return {...state, updateWithGroup:action.payload}
     }
+    if (setDataStartDate.match(action)){
+        return {...state, dataStartDate: action.payload}
+    }
+
+    if (setDataEndDate.match(action)) {
+        return {...state, dataEndDate: action.payload}
+    }
+
+    if (setDataCurrentDate.match(action)){
+        return {...state, dataCurentDate: action.payload}
+    }
+
     if (setGroupId.match(action)) {
         return {...state, groupId:action.payload}
     }

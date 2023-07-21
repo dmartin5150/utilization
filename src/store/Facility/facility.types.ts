@@ -5,7 +5,9 @@ export enum FACILITY_TYPES {
     SELECT_DATE = '/facilty/SELECT_DATE',
     SELECT_ROOM = '/facility/SELECT_ROOM',
     SET_PRIME_TIME = '/facility/SET_PRIME_TIME',
-    SET_DATE_RANGE = '/facility/SET_DATE_RANGE'
+    SET_DATE_RANGE = '/facility/SET_DATE_RANGE',
+
+    
 }
 
 

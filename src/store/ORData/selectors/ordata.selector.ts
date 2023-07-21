@@ -13,6 +13,21 @@ export const selectCalendarData = createSelector(
 )
 
 
+export const selectDataStartDate = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.dataStartDate
+)
+
+export const selectDataEndDate = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.dataEndDate
+)
+
+export const selectDataCurrentDate = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.dataCurentDate
+)
+
 
 
 export const selectORDataIsLoading = createSelector(
