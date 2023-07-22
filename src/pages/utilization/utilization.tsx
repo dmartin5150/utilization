@@ -43,6 +43,8 @@ import { selectDataStartDate, selectDataEndDate, selectDataCurrentDate } from ".
 import { DataDateRange } from "../../components/calendar/calendar";
 import { getPreviousDate, getNextDate } from "../../utilities/dates/dates";
 import { setDataCurrentDate } from "../../store/ORData/actions/calendar.actions";
+import UtilDrawer from '../../components/utilDrawer/utilDrawer'
+import { DrawerDirections } from "../../components/utilDrawer/utilDrawer";
 
 
 
@@ -53,7 +55,7 @@ const Utilization = () => {
   const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
   const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
   const [activeNPIs, setActiveNPIs] = useState<string[]>([])
-
+  const [isOpen, setIsOpen] = React.useState(false)
 
 
   
@@ -290,11 +292,22 @@ const onMonthChange = (direction:MonthChangeDirection) => {
   console.log(newDate)
 }
 
+const toggleDrawer = () => {
+  setIsOpen((prevState) => !prevState)
+}
+
 
   return (
     <div className='utilization-container'>
       {(blockIsLoading || orIsLoading)  ? <Spinner /> :
       <section className="utilization">
+        <UtilDrawer 
+          isOpen={isOpen} 
+          title='Selected Surgeons' 
+          direction={DrawerDirections.right} 
+          list={activeSurgeonList}
+          toggleDrawer={toggleDrawer}
+          />
          <DetailsCard 
           title={"OR Utilization"} 
           header={detailsHeader}
@@ -331,6 +344,7 @@ const onMonthChange = (direction:MonthChangeDirection) => {
             onSelectItem={setDetailData}
             firstColumnName={'Room'}
             secondColumnName={'Utilization'}
+            onSelectSurgeons={toggleDrawer}
             buttonText={'Details'}
             pageSize={18}
           ></SummaryGrid>

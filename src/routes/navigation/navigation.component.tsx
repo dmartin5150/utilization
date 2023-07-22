@@ -74,6 +74,20 @@ const Navigation = () => {
           to="/settings" className="nav__link">
             Settings
           </NavLink>
+          <NavLink  
+            style={
+            ({isActive}) => (
+              isActive 
+              ? {
+                textDecoration: 'none',
+                color: '#1b4297'
+                }
+              :{}
+              )
+            }
+          to="/drawer" className="nav__link">
+            Drawer
+          </NavLink>
         </div>
       </nav>
       <Outlet />

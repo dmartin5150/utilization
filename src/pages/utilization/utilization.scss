@@ -2,7 +2,7 @@
 
 
 .utilization-container {
-    position:relative;
+    position:absolute;
 }
 
 
@@ -14,7 +14,7 @@
     margin-top:1rem;
     max-width: 50rem;
     border:5px;
-    position:relative;
+    // position:relative;
 
 
     & .patient__calendar {

@@ -22,11 +22,12 @@ interface SummaryGridProps {
   secondColumnName: string;
   buttonText: string;
   onSelectItem: (data: SummaryGridRowData)=>void;
+  onSelectSurgeons: ()=>void;
   pageSize: number;
 }
 
 
-const SummaryGrid: React.FC<SummaryGridProps> = ({data,title, firstColumnName,secondColumnName,buttonText, onSelectItem, pageSize=11}) => {
+const SummaryGrid: React.FC<SummaryGridProps> = ({data,title, firstColumnName,secondColumnName,buttonText,onSelectSurgeons, onSelectItem, pageSize=11}) => {
 
       const [currentPage, setCurrentPage] = useState(1);
       const [currentData, setCurrentData]= useState<SummaryGridRowData[]>([]);
@@ -46,7 +47,7 @@ const SummaryGrid: React.FC<SummaryGridProps> = ({data,title, firstColumnName,se
           <div className="summary-grid">
             <div className="outline">
               <SummaryGridHeader title={title} />
-              <SummaryRowHeader firstColumnName={firstColumnName} secondColumnName={secondColumnName}/>
+              <SummaryRowHeader firstColumnName={firstColumnName} secondColumnName={secondColumnName} onSelectSurgeon={onSelectSurgeons}/>
               <div className="summary-grid-data">
                 {currentData.map((item) => {
                   return(<SummaryGridRow key={item.id} row={item} buttonText={buttonText} onSelectItem={onSelectItem} />)

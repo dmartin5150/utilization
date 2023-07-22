@@ -61,7 +61,8 @@ import { selectDataStartDate, selectDataEndDate, selectDataCurrentDate } from ".
 import { DataDateRange } from "../../components/calendar/calendar";
 import { getPreviousDate,getNextDate } from "../../utilities/dates/dates";
 import { setDataCurrentDate } from "../../store/ORData/actions/calendar.actions";
-
+import UtilDrawer from '../../components/utilDrawer/utilDrawer'
+import { DrawerDirections } from "../../components/utilDrawer/utilDrawer";
 
 
 
@@ -73,6 +74,7 @@ const Block = () => {
     const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [blockTypeMenu, setBlockTypeMenu] = useState<SingleSelector<CalendarMenuItem>>()
+    const [isOpen, setIsOpen] = React.useState(false)
 
 
 
@@ -83,6 +85,7 @@ const Block = () => {
     const selectedDate = useSelector(selectBlockDate);
     const npis = useSelector(selectActiveSurgeonNPIs);
     const blockGridData = useSelector(selectBlockGrid);
+    const activeSurgeons = useSelector(selectActiveSurgeons)
     // const allBlockCalendar = useSelector(selectAllBlockforCalendar);
     // const inBlockCalendar = useSelector(selectInBlockforCalendar);
     // const outBlockCalendar = useSelector(selectOutBlockforCalendar)
@@ -289,10 +292,21 @@ const Block = () => {
       }
       
 
+    const toggleDrawer = () => {
+        setIsOpen((prevState) => !prevState)
+      }
+
     return (
         <div className='block-container'>
         {(blockIsLoading || orIsLoading)  ? <Spinner /> :
         <section className="blocks">
+        <UtilDrawer 
+          isOpen={isOpen} 
+          title='Selected Surgeons' 
+          direction={DrawerDirections.right} 
+          list={activeSurgeons}
+          toggleDrawer={toggleDrawer}
+          />
             <BlockDetailCards 
                 blockCards={blockCards} 
                 classIsOpen={`${blockPopUpIsOpen ? "open" : "close"}`}
@@ -322,6 +336,7 @@ const Block = () => {
                 firstColumnName={'Room'}
                 secondColumnName={'Utilization'}
                 buttonText={'Details'}
+                onSelectSurgeons={toggleDrawer}
                 pageSize={18}
             ></SummaryGrid>
             </div>

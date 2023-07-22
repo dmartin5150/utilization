@@ -1,10 +1,19 @@
 .head {
-    display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    // display:grid;
+    // grid-template-columns: 1fr 1fr 1fr;
+    display:flex;
+    justify-content: space-between;
     text-align: center;
     border-radius: 3px;
 }
 .header-secondary {
     width: 17rem;
     margin:0;
+}
+.header-show-surgeon {
+    width:14.9rem;
+    background-color: white;
+    color:#00A393;
+    border:none;
+    border-left: 1px solid black;
 }

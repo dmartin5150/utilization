@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Navigation from './routes/navigation/navigation.component';
 import Utilization from "./pages/utilization/utilization";
 import Settings from './pages/settings/settings';
+import TestDrawer from './pages/testDrawer/testDrawer';
 import Surgeons from './pages/surgeons/surgeons';
 // import Rooms from './pages/Rooms/Block';
 import Block from './pages/Block/Block';
@@ -61,14 +62,17 @@ function App() {
 
 
   return (
-  <Routes>
-    <Route path="/" element={<Navigation />}>
-      <Route path="/" element={<Utilization />}></Route>
-      <Route index  path="/surgeon" element={<Surgeons />}></Route>
-      <Route index  path="/block" element={<Block />}></Route>
-      <Route index  path="/settings" element={<Settings />}></Route>
-    </Route>
-  </Routes>
+  <div className='app'>
+    <Routes>
+      <Route path="/" element={<Navigation />}>
+        <Route path="/" element={<Utilization />}></Route>
+        <Route index  path="/surgeon" element={<Surgeons />}></Route>
+        <Route index  path="/block" element={<Block />}></Route>
+        <Route index  path="/settings" element={<Settings />}></Route>
+        <Route index  path="/drawer" element={<TestDrawer />}></Route>
+      </Route>
+    </Routes>
+  </div>
   );
 }
 export default App;

@@ -1,0 +1,11 @@
+.drawer-list {
+    & .drawer-list--title {
+        font-size:18px;
+        font-weight: bold;
+    }
+
+    & .drawer-list--items{
+        overflow-y: auto;
+        font-size:15px;
+    }
+}
