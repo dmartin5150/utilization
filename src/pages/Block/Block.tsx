@@ -116,7 +116,7 @@ const Block = () => {
       endDate: dataEndDate,
       currentDate:dataCurrentDate
     }
-    console.log('test')
+
     useEffect(()=> {
         console.log('triggered')
         console.log('unit', unit, 'npis', npis, 'selected', allSurgeonsSelected)
