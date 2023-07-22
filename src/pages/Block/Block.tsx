@@ -59,6 +59,9 @@ import Spinner from "../../components/spinner/spinner";
 import { MonthChangeDirection } from "../../components/calendar/calendar";
 import { selectDataStartDate, selectDataEndDate, selectDataCurrentDate } from "../../store/ORData/selectors/ordata.selector";
 import { DataDateRange } from "../../components/calendar/calendar";
+import { getPreviousDate,getNextDate } from "../../utilities/dates/dates";
+import { setDataCurrentDate } from "../../store/ORData/actions/calendar.actions";
+
 
 
 
@@ -113,16 +116,16 @@ const Block = () => {
       endDate: dataEndDate,
       currentDate:dataCurrentDate
     }
-
+    console.log('test')
     useEffect(()=> {
         console.log('triggered')
         console.log('unit', unit, 'npis', npis, 'selected', allSurgeonsSelected)
         if (unit && npis) {
-            dispatch(fetchBlockDataAsync(unit,allSurgeonsSelected,'2023-8-1',npis))
-
+            const newDate = `${dataCurrentDate.getFullYear()}-${dataCurrentDate.getMonth() +1}-${dataCurrentDate.getDate()}`
+            dispatch(fetchBlockDataAsync(unit,allSurgeonsSelected,newDate,npis))
         }
 
-    },[unit,npis,allSurgeonsSelected]);
+    },[unit,npis,allSurgeonsSelected,dataCurrentDate]);
     
 
 
@@ -275,7 +278,14 @@ const Block = () => {
       }
 
       const onMonthChange = (direction:MonthChangeDirection) => {
-        console.log('month changed')
+        let newDate;
+        if (direction == MonthChangeDirection.BACKWARD) {
+          newDate =getPreviousDate(dataStartDate,dataCurrentDate)
+        } else {
+          newDate =getNextDate(dataEndDate,dataCurrentDate)
+        }
+        dispatch(setDataCurrentDate(newDate))
+        console.log(newDate)
       }
       
 

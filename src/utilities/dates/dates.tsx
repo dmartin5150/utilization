@@ -1,9 +1,9 @@
 export const getPreviousDate = (dataStartDate:Date, currentDate:Date) => { 
-    if (dataStartDate <= currentDate) {
+    if (currentDate <= dataStartDate ) {
         return dataStartDate
     } else {
         const dateCopy = new Date(currentDate);
-        return dateCopy.setMonth(dateCopy.getMonth() - 1);
+        return new Date(dateCopy.setMonth(dateCopy.getMonth() - 1));
     }
 }
 
@@ -12,6 +12,7 @@ export const getNextDate = (dataEndDate:Date, currentDate:Date) => {
         return dataEndDate
     } else {
         const dateCopy = new Date(currentDate);
-        return dateCopy.setMonth(dateCopy.getMonth() + 1);
+        const newmonth = dateCopy.getMonth() + 1
+        return new Date(dateCopy.setMonth(dateCopy.getMonth() + 1));
     }
 }

@@ -41,6 +41,8 @@ import Spinner from "../../components/spinner/spinner";
 import { MonthChangeDirection } from "../../components/calendar/calendar";
 import { selectDataStartDate, selectDataEndDate, selectDataCurrentDate } from "../../store/ORData/selectors/ordata.selector";
 import { DataDateRange } from "../../components/calendar/calendar";
+import { getPreviousDate, getNextDate } from "../../utilities/dates/dates";
+import { setDataCurrentDate } from "../../store/ORData/actions/calendar.actions";
 
 
 
@@ -96,10 +98,11 @@ const Utilization = () => {
 // },[]);
 
 useEffect(() => {
-if (primeTime) {
-  dispatch(fetchPTHourSuccessAsync(primeTime, unit));
+if (primeTime && dataCurrentDate) {
+  dispatch(fetchPTHourSuccessAsync(primeTime, unit,`${dataCurrentDate.getFullYear()}-${dataCurrentDate.getMonth() +1}-${dataCurrentDate.getDate()}`));
 }
-},[primeTime])
+},[primeTime,dataCurrentDate])
+
 
 
 
@@ -277,7 +280,14 @@ useEffect(()=> {
  
 
 const onMonthChange = (direction:MonthChangeDirection) => {
-  console.log('month changed')
+  let newDate;
+  if (direction == MonthChangeDirection.BACKWARD) {
+    newDate =getPreviousDate(dataStartDate,dataCurrentDate)
+  } else {
+    newDate =getNextDate(dataEndDate,dataCurrentDate)
+  }
+  dispatch(setDataCurrentDate(newDate))
+  console.log(newDate)
 }
 
 

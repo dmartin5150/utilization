@@ -49,12 +49,12 @@ function App() {
 },[]);
 
 
-  useEffect(() => {
-    if (primeTime) {
-      dispatch(fetchPTHourSuccessAsync(primeTime, unit));
+  // useEffect(() => {
+  //   if (primeTime) {
+  //     dispatch(fetchPTHourSuccessAsync(primeTime, unit));
 
-    }
-  },[primeTime])
+  //   }
+  // },[primeTime])
 
 
 
