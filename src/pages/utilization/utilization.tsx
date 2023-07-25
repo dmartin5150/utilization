@@ -188,6 +188,7 @@ useEffect(() => {
   }
 
   const setSelectedDate = (date:string) => {
+    
     dispatch(setDate(date))
   }
    

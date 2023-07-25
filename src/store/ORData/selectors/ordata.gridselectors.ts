@@ -124,10 +124,12 @@ const calculateRoomUtilization = (
                 block_status: block_status.toString()
 
             }
+            console.log('grid', gridDataForDate)
             gridDataForDate.push(gridPTHours);
         }
 
     }
+    console.log('grid', gridDataForDate)
     return gridDataForDate;
 }
 
