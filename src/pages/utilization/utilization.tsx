@@ -45,6 +45,7 @@ import { getPreviousDate, getNextDate } from "../../utilities/dates/dates";
 import { setDataCurrentDate } from "../../store/ORData/actions/calendar.actions";
 import UtilDrawer from '../../components/utilDrawer/utilDrawer'
 import { DrawerDirections } from "../../components/utilDrawer/utilDrawer";
+import { selectAllSelectedSurgeons } from "../../store/ORData/selectors/ordata.selector";
 
 
 
@@ -85,6 +86,7 @@ const Utilization = () => {
   const dataStartDate = useSelector(selectDataStartDate)
   const dataEndDate = useSelector(selectDataEndDate)
   const dataCurrentDate = useSelector(selectDataCurrentDate)
+  const selectedSurgeonNames = useSelector(selectAllSelectedSurgeons)
 
   const currentDateRange:DataDateRange = {
     startDate: dataStartDate,
@@ -306,7 +308,7 @@ const toggleDrawer = () => {
           isOpen={isOpen} 
           title='Selected Surgeons' 
           direction={DrawerDirections.right} 
-          list={activeSurgeonList}
+          list={selectedSurgeonNames}
           toggleDrawer={toggleDrawer}
           />
          <DetailsCard 

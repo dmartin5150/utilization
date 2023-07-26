@@ -116,7 +116,10 @@ export const selectActiveSurgeons = createSelector(
 )
 
 
-
+export const selectAllSelectedSurgeons = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.activeSurgeonList.filter((surgeon)=> surgeon.selected )
+)
 
 export const selectAllSurgeonNPIs = createSelector(
     [selectActiveSurgeons],
