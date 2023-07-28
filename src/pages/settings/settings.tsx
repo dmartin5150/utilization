@@ -241,6 +241,7 @@ const Settings = () => {
         })
         dispatch(setActiveSurgeonList(updatedSurgeons));
         setSelectedSurgeons([...updatedSurgeons])
+        dispatch(setAllSurgeonsSelected(allItemsSelected(updatedSurgeons)))
     }
 
 

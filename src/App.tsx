@@ -45,7 +45,7 @@ function App() {
     console.log('getting surgeon list')
     dispatch(fetchSurgeonListsAsync())
     dispatch(fetchRoomLists(TNNASRoomLists))
-           // dispatch(setActiveRoomList(TNNASRoomLists['BH JRI']));
+    dispatch(setActiveRoomList(TNNASRoomLists['BH JRI']));
     // dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
 },[]);
 
