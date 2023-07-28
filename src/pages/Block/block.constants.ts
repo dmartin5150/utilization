@@ -19,12 +19,14 @@ export enum BlockRoomOptions {
 
 
 
+
+
+
 export const blockTypeOptions: CalendarMenuItem[] = [
     {id:0, label: 'Surgeon', value:BlockMenuOptions.Surgeon},
     {id:1, label: 'Group', value:BlockMenuOptions.Surgeon_Group}
 ]
-
-
+ 
 
 export const blockRoomOptions: CalendarMenuItem[] = [
     {id:0, label: 'ALL', value: BlockRoomOptions.All},

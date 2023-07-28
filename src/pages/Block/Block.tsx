@@ -71,6 +71,7 @@ import { selectAllSelectedSurgeons } from "../../store/ORData/selectors/ordata.s
 
 
 
+
 const Block = () => {
     const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
@@ -168,12 +169,13 @@ const Block = () => {
             onChange:updateBlockTypesMenu
         }
         setBlockTypeMenu(calendarBlockTypeSelector);
-        dispatch(setBlockRoomOption(BlockMenuOptions.Surgeon));
+        dispatch(setBlockTypeOption(BlockMenuOptions.Surgeon));
       },[])
 
 
       
       useEffect(()=> {
+
         const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
             title: 'Rooms',
             isDisabled: false,
