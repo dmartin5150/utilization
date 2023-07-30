@@ -12,6 +12,7 @@ import { selectUnit } from "../../store/Facility/facility.selector";
 import SelectorList from "../SelectorList/SelectorList";
 import { Option, SingleSelector } from "../SelectorList/SelectorList";
 import MonthControl from "./monthControl";
+import CalendarSummary from "../calendarsummary/calendarSummary";
 
 import { CalendarDayData } from "./calendarDay";
 
@@ -104,7 +105,34 @@ function Calendar<T extends Option>({
           onChange = {list2.onChange}
           />
         </div>
+        <div className="calendar-dropdown">
+          <SelectorList 
+          title={list1.title}
+          showBorder={list1.showBorder}
+          selectedOption={list1.selectedOption} 
+          optionList = {list1.optionList}
+          onChange = {list1.onChange}
+          />
+        </div>
       </div>
+      <CalendarSummary calendarTotals={calendarTotals} list={list1} />
+      {/* <ul className="layout totals">
+        {calendarTotals.map((calendarDay, idx) => {
+          const hideElement:boolean = hiddenID.includes(calendarDay.date.toString());
+          return (
+            <li key={idx}>
+              <CalendarDay
+                id={idx.toString()}
+                calendarDay={calendarDay}
+                selectedDay={idx.toString()}
+                highLightSelected={false}
+                hideElement={false}
+                onDateChange={()=>{}}
+              ></CalendarDay>
+            </li>
+          );
+        })}
+      </ul> */}
       <div>
         <MonthControl dateRange={dataDateRange} onMonthChange={onMonthChange} />
       </div>
@@ -113,6 +141,7 @@ function Calendar<T extends Option>({
           return <DaysOfWeek key={index} day={day} />
         })}
       </ul>
+
       <ul className="layout">
         {currentCalendarData.map((calendarDay) => {
           const hideElement:boolean = hiddenID.includes(calendarDay.date.toString());
