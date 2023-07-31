@@ -18,6 +18,9 @@ export enum  ORDATA_TYPES {
     FETCH_SURGEON_LISTS_SUCCESS = 'ordata/FETCH_SURGEON_LISTS_SUCCESS',
     FETCH_SURGEON_LISTS_FAILED = 'ordata/FETCH_SURGEON_LISTS_FAILED',
     FETCH_ROOM_LISTS_SUCCESS = 'ordata/FETCH_ROOM_LISTS_SUCCESS',
+    FETCH_SUMMARY_TOTALS_START = 'ordata/FETCH_SUMMARY_TOTALS_START',
+    FETCH_SUMMARY_TOTALS_SUCCESS = 'ordata/FETCH_SUMMARY_TOTALS_SUCCESS',
+    FETCH_SUMMAR_TOTALS_FAILED = 'ordata/FETCH_SUMMARY_TOTALS_FAILED',
     SET_ACTIVE_ROOM_LIST = 'ordata/SET_ACTIVE_ROOM_LIST', 
     SET_ACTIVE_SURGEON_LIST = 'ordata/SET_ACTIVE_SURGEON_LIST',
     SET_ROOM_LISTS = 'ordata/SET_ROOM_LISTS',
@@ -103,6 +106,10 @@ export type Grid = {
     num_procedures?: number
     block_status:number
 
+}
+
+export type SummaryTotals = {
+    totals: CalendarDayData[]
 }
 
 
