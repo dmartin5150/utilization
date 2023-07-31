@@ -28,14 +28,19 @@ export const getFY23Q4Dates = ():DateRange => {
 }
 
 export const getRunningQuarterDates = (currentDate:Date):DateRange => {
-    console.log('currentDate', currentDate)
+
+    const dataStartDate = new Date('2023-3-1')
+    const dataEndDate = new Date('2023-9-1')
     let currentDateCopy =  new Date();
     currentDateCopy.setDate(currentDate.getDate())
-    const firstDay = new Date(currentDateCopy.setMonth(currentDate.getMonth() - 3));
-    console.log('start Month',firstDay)
+    let firstDay = new Date(currentDateCopy.setMonth(currentDate.getMonth() - 3));
+    if (firstDay < dataStartDate){
+        firstDay = dataStartDate
+    }
     let lastDay = new Date(currentDate);
-    // console.log('currentDate', currentDate.getDate()-1)
     lastDay.setDate(currentDate.getDate() -1);
-    console.log('last day', lastDay)
+    if (lastDay > dataEndDate) {
+        lastDay = dataEndDate
+    }
     return createDateRange(firstDay, lastDay)
 }

@@ -44,10 +44,7 @@ export type PrimeTime = {
     end: PRIME_TIME_END;
 }
 
-export type DateRange = {
-    start:Date;
-    end: Date;
-}
+
 
 
 

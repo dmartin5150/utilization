@@ -44,7 +44,7 @@ export const selectPTminutesperroom = createSelector(
 )
 
 
-export const selectDateRange = createSelector(
+export const selectCustomDateRange = createSelector(
     [selectFacilityReducer],
     (facilitySlice) => facilitySlice.dateRange
 )

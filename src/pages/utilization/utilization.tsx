@@ -5,7 +5,7 @@ import DetailsCard from "../../components/team-card/details-card";
 import "./utilization.scss";
 import { useSelector } from "react-redux";
 import { selectCalendarData,  selectDetailData, selectGridData, selectPopUpIsOpen } from "../../store/ORData/selectors/ordata.selector";
-import { selectDate,selectUnit,selectRoom  } from "../../store/Facility/facility.selector";
+import { selectDate,selectUnit,selectRoom, selectCustomDateRange  } from "../../store/Facility/facility.selector";
 import { fetchDetailDataAsync, closePopUp } from "../../store/ORData/actions/details.actions";
 import { useAppDispatch } from "../../hooks/hooks";
 import { setRoom, setDate, setUnit } from "../../store/Facility/facilty.actions";
@@ -50,6 +50,9 @@ import { calendarSummaryOptions,CalendarSummaryOptions } from "./utilization.con
 import { setUtilSummaryOption } from "../../store/ORData/actions/ordata.actions";
 import { selectUtilSummaryOption } from "../../store/ORData/selectors/ordata.selector";
 import { getFY23Q4Dates,getRunningQuarterDates } from "../../utilities/dates/dates";
+import { setSummaryDateRange } from "../../store/ORData/actions/ordata.actions";
+import { createDateRange } from "../../utilities/dates/dates";
+
 
 
 
@@ -96,6 +99,7 @@ const Utilization = () => {
   const summaryStartDate = useSelector(selectDataStartDate)
   const  summaryEndDate = useSelector(selectDataEndDate)
   const curSummaryOption = useSelector(selectUtilSummaryOption)
+  const customDateRange = useSelector(selectCustomDateRange)
 
   const currentDateRange:DataDateRange = {
     startDate: dataStartDate,
@@ -294,17 +298,22 @@ useEffect(()=> {
 
 useEffect(()=> {
   
-  if (curSummaryOption && dataCurrentDate) {
+  if (curSummaryOption && dataCurrentDate && customDateRange) {
     if (curSummaryOption == CalendarSummaryOptions.Q4) {
       const newRange = getFY23Q4Dates()
+      dispatch(setSummaryDateRange(newRange))
       console.log(newRange)
     }
     if (curSummaryOption == CalendarSummaryOptions.RunQ) {
       const newRange = getRunningQuarterDates(dataCurrentDate)
+      dispatch(setSummaryDateRange(newRange))
       console.log(newRange)
     }
+    if (curSummaryOption == CalendarSummaryOptions.Custom) {
+      dispatch(setSummaryDateRange(customDateRange))
+    }
   }
-},[curSummaryOption,dataCurrentDate])
+},[curSummaryOption,dataCurrentDate,customDateRange])
 
 
 

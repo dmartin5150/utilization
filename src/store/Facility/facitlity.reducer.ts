@@ -1,7 +1,8 @@
 import { AnyAction } from "redux";
 import { FACILITY_UNITS } from "./facitlityUnits";
-import { setUnit,setDate,setRoom, setPrimeTime, setDateRange } from "./facilty.actions";
-import { PRIME_TIME_END, PRIME_TIME_START, PrimeTime,DateRange } from "./facility.types";
+import { setUnit,setDate,setRoom, setPrimeTime, setCustomDateRange } from "./facilty.actions";
+import { PRIME_TIME_END, PRIME_TIME_START, PrimeTime } from "./facility.types";
+import { DateRange } from "../ORData/ordata.types";
 
 
 import { TNNASUNIT } from "./facility.types";
@@ -26,8 +27,8 @@ const initialPrimeTime:PrimeTime = {
 }
 
 const initialDateRange:DateRange = {
-    start: new Date('6/1/2023'),
-    end: new Date('6/30/2023')
+    startDate: new Date('6/1/2023'),
+    endDate: new Date('6/30/2023')
 }
 
 
@@ -55,7 +56,7 @@ export const FacilityReducer = (state=FACILITY_DATA_INITIAL_STATE, action: AnyAc
     if( setPrimeTime.match(action)) {
         return {...state, primeTime: action.payload}
     }
-    if (setDateRange.match(action)) {
+    if (setCustomDateRange.match(action)) {
         return {...state, dateRange: action.payload}
     }
     return state;

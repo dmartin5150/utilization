@@ -15,8 +15,8 @@ import { Unit, TNNASRoomLists, unitList,UnitRoomListItem, UnitRoomLists,
 import { useAppDispatch } from '../../hooks/hooks';
 import { useSelector } from 'react-redux';
 import { selectSurgeonLists, selectUnitRoomLists, selectActiveRoomLists, selectActiveSurgeons, selectAllRoomsSelected,selectAllSurgeonsSelected } from '../../store/ORData/selectors/ordata.selector';
-import { setPrimeTime, setDateRange, setUnit, setRoom } from '../../store/Facility/facilty.actions';
-import { selectPrimeTime, selectDateRange,selectUnit } from '../../store/Facility/facility.selector';
+import { setPrimeTime, setCustomDateRange, setUnit, setRoom } from '../../store/Facility/facilty.actions';
+import { selectPrimeTime, selectCustomDateRange,selectUnit } from '../../store/Facility/facility.selector';
 import { fetchRoomLists,setRoomLists, setActiveRoomList,setAllRoomsSelected} from '../../store/ORData/actions/roomsListActions';
 import { setActiveSurgeonList, setSurgeonLists,setAllSurgeonsSelected } from '../../store/ORData/actions/surgeonLists.actions';
 import { SurgeonList,SurgeonLists } from '../../store/ORData/ordata.types';
@@ -73,7 +73,7 @@ const Settings = () => {
     const activeSurgeons = useSelector(selectActiveSurgeons);
     const surgeonLists = useSelector(selectSurgeonLists);
     const primeTime = useSelector(selectPrimeTime);
-    const dateRange = useSelector(selectDateRange);
+    const dateRange = useSelector(selectCustomDateRange);
     const selectedUnit = useSelector(selectUnit);
     const unitRoomLists = useSelector(selectUnitRoomLists);
     const rooms = useSelector(selectActiveRoomLists);
@@ -309,11 +309,11 @@ const Settings = () => {
     }
 
     const onStartDateChange = (date:Date) => {
-        dispatch(setDateRange({...dateRange, start:date}))
+        dispatch(setCustomDateRange({...dateRange, startDate:date}))
     }
 
     const onEndDateChange = (date:Date) => {
-        dispatch(setDateRange({...dateRange, end:date}))
+        dispatch(setCustomDateRange({...dateRange, endDate:date}))
     }
 
     const unitSelector:UnitSelector = {
@@ -445,8 +445,8 @@ const Settings = () => {
                 <div className='date-range'>
                     <RangeSelectors 
                         title='Date Range' 
-                        startDate={dateRange.start} 
-                        stopDate={dateRange.end} 
+                        startDate={dateRange.startDate} 
+                        stopDate={dateRange.endDate} 
                         onSelectDate1={onStartDateChange}
                         onSelectDate2={onEndDateChange} />
                 </div>
