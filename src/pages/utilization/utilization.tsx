@@ -46,6 +46,11 @@ import { setDataCurrentDate } from "../../store/ORData/actions/calendar.actions"
 import UtilDrawer from '../../components/utilDrawer/utilDrawer'
 import { DrawerDirections } from "../../components/utilDrawer/utilDrawer";
 import { selectAllSelectedSurgeons } from "../../store/ORData/selectors/ordata.selector";
+import { calendarSummaryOptions,CalendarSummaryOptions } from "./utilization.constants";
+import { setUtilSummaryOption } from "../../store/ORData/actions/ordata.actions";
+import { selectUtilSummaryOption } from "../../store/ORData/selectors/ordata.selector";
+import { getFY23Q4Dates,getRunningQuarterDates } from "../../utilities/dates/dates";
+
 
 
 
@@ -55,6 +60,7 @@ const Utilization = () => {
   const [month, setMonth] = useState('June')
   const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
   const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
+  const [summaryMenu, setSummaryMenu] = useState<SingleSelector<CalendarMenuItem>>()
   const [activeNPIs, setActiveNPIs] = useState<string[]>([])
   const [isOpen, setIsOpen] = React.useState(false)
 
@@ -87,6 +93,9 @@ const Utilization = () => {
   const dataEndDate = useSelector(selectDataEndDate)
   const dataCurrentDate = useSelector(selectDataCurrentDate)
   const selectedSurgeonNames = useSelector(selectAllSelectedSurgeons)
+  const summaryStartDate = useSelector(selectDataStartDate)
+  const  summaryEndDate = useSelector(selectDataEndDate)
+  const curSummaryOption = useSelector(selectUtilSummaryOption)
 
   const currentDateRange:DataDateRange = {
     startDate: dataStartDate,
@@ -208,7 +217,6 @@ const updateCalendarSurgeons = (option: SingleValue<CalendarMenuItem>) => {
   if (option) {
     dispatch(setCalendarSurgeonOption(option.value as CalendarMenuOptions))
   }
-  
 }
 
 
@@ -284,6 +292,46 @@ useEffect(()=> {
 },[allSurgeonsSelected, allRoomsSelected])
  
 
+useEffect(()=> {
+  
+  if (curSummaryOption && dataCurrentDate) {
+    if (curSummaryOption == CalendarSummaryOptions.Q4) {
+      const newRange = getFY23Q4Dates()
+      console.log(newRange)
+    }
+    if (curSummaryOption == CalendarSummaryOptions.RunQ) {
+      const newRange = getRunningQuarterDates(dataCurrentDate)
+      console.log(newRange)
+    }
+  }
+},[curSummaryOption,dataCurrentDate])
+
+
+
+const updateCalendarSummary = (option: SingleValue<CalendarMenuItem>) => {
+  if (option) {
+    dispatch(setUtilSummaryOption(option.value as CalendarSummaryOptions))
+  }
+}
+
+
+useEffect (() => {
+  if (curSummaryOption) {
+    const curOption = parseInt(curSummaryOption)
+    const calendarSummarySelector: SingleSelector<CalendarMenuItem> = {
+      title: 'Summary',
+      isDisabled: false,
+      showBorder:false,
+      selectedOption: calendarSummaryOptions[curOption],
+      optionList: calendarSummaryOptions,
+      onChange:updateCalendarSummary
+    }
+    setSummaryMenu(calendarSummarySelector)
+  }
+},[summaryStartDate, summaryEndDate,curSummaryOption ])
+
+
+
 const onMonthChange = (direction:MonthChangeDirection) => {
   let newDate;
   if (direction == MonthChangeDirection.BACKWARD) {
@@ -332,6 +380,7 @@ const toggleDrawer = () => {
             selectedDate={selectedDate}
             list1={surgeonMenu}
             list2={roomMenu}
+            list3={summaryMenu}
             onMonthChange={onMonthChange}
             dataDateRange={currentDateRange}
             // dropDownLeft={calendarDropDownLeft}

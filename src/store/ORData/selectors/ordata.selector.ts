@@ -28,7 +28,15 @@ export const selectDataCurrentDate = createSelector(
     (ORDataSlice) => ORDataSlice.dataCurentDate
 )
 
+export const selectUtilSummaryOption = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice)=> ORDataSlice.utilSummaryOption
+)
 
+export const selectSummaryDateRange = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice)=> ORDataSlice.summaryDateRange
+)
 
 export const selectORDataIsLoading = createSelector(
     [selectORDataReducer],

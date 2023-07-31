@@ -19,12 +19,25 @@ export enum CalendarMenuOptions {
     Out = '5'
 }
 
+export enum CalendarSummaryOptions {
+    Q4 = '0',
+    RunQ = '1',
+    Custom = '2'
+
+}
+
 export type CalendarMenus = {
     [key:string]: CalendarMenuItem[]
 }
 
 
 
+
+export const calendarSummaryOptions: CalendarMenuItem[] =[
+    {id:0, label:'Q4: FY23', value: CalendarSummaryOptions.Q4},
+    {id:1, label:'Q3: Run', value: CalendarSummaryOptions.RunQ},
+    {id:2, label:'Custom', value: CalendarSummaryOptions.Custom}
+]
 
 export const calendarSurgeonOptionsNone: CalendarMenuItem[] = [
     {id:0, label: 'All', value: CalendarMenuOptions.All},

@@ -29,7 +29,10 @@ import { fetchGridStart,fetchGridFailed } from "./actions/grid.actions";
 import { fetchPTHoursStart, fetchPTHoursFailed } from "./actions/pthours.action";
 import { fetchSurgeonListsStart,fetchSurgeonListsFailed } from "./actions/surgeonLists.actions";
 import { setDataStartDate,setDataEndDate, setDataCurrentDate  } from "./actions/calendar.actions";
-
+import { setUtilSummaryOption } from "./actions/ordata.actions";
+import { CalendarSummaryOptions } from "../../pages/utilization/utilization.constants";
+import { DateRange } from "./ordata.types";
+import { setSummaryDateRange } from "./actions/ordata.actions";
 
 
 export type ORDataState = {
@@ -45,6 +48,7 @@ export type ORDataState = {
     allSurgeonsSelected: boolean;
     calendarSurgeonOption: CalendarMenuOptions, 
     calendarRoomOption: CalendarMenuOptions, 
+    utilSummaryOption:CalendarSummaryOptions,
     updateWithGroup: boolean;
     groupId: string;
     orDetailsLoading:boolean;
@@ -54,6 +58,7 @@ export type ORDataState = {
     dataStartDate:Date,
     dataEndDate:Date,
     dataCurentDate:Date,
+    summaryDateRange:DateRange,
     popOpen: boolean;
     ptHours: PT_Hours;
 
@@ -83,6 +88,7 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
     allSurgeonsSelected:true,
     calendarSurgeonOption: CalendarMenuOptions.All, 
     calendarRoomOption: CalendarMenuOptions.All,
+    utilSummaryOption: CalendarSummaryOptions.Q4, 
     updateWithGroup: false,
     groupId: '0',
     orDetailsLoading:false,
@@ -93,6 +99,10 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
     dataEndDate:new Date('2023-8-1'),
     // dataCurentDate: new Date('2023-7-1'),
     dataCurentDate: new Date('2023-7-1'),
+    summaryDateRange: {
+        startDate: new Date('2023-4-1'),
+        endDate: new Date('2023-6-30')
+    },
     popOpen: false,
     ptHours:PTHOURS_INITIAL_STATE,
     error: null
@@ -176,6 +186,12 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     }
     if (setCalendarRoomOption.match(action)) {
         return {...state, calendarRoomOption: action.payload}
+    }
+    if (setUtilSummaryOption.match(action)) {
+        return {...state, utilSummaryOption: action.payload}
+    }
+    if (setSummaryDateRange.match(action)) {
+        return {...state, summaryDateRange: action.payload}
     }
     if (setCalendarData.match(action)) {
         return {...state, calendarData: action.payload}

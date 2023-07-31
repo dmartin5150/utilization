@@ -38,6 +38,7 @@ interface CalendarProps<T extends Option> {
   calendarTotals:CalendarDayData[];
   list1: SingleSelector<T>;
   list2: SingleSelector<T>
+  list3?: SingleSelector<T>
   onMonthChange: (direction:MonthChangeDirection)=>void;
   onDateChange:(id:string)=>void;
   pageSize: number
@@ -45,7 +46,7 @@ interface CalendarProps<T extends Option> {
 
 
 function Calendar<T extends Option>({
-  title,subTitle, selectedDate,calendarData, dataDateRange, calendarTotals,list1,list2,onMonthChange,  onDateChange, pageSize
+  title,subTitle, selectedDate,calendarData, dataDateRange, calendarTotals,list1,list2,list3, onMonthChange,  onDateChange, pageSize
 }: React.PropsWithChildren<CalendarProps<T>>)  {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentCalendarData, setCurrentCalendarData] = useState<CalendarDayData[]>([]);
@@ -105,34 +106,17 @@ function Calendar<T extends Option>({
           onChange = {list2.onChange}
           />
         </div>
-        <div className="calendar-dropdown">
+        {list3 && <div className="calendar-dropdown">
           <SelectorList 
-          title={list1.title}
-          showBorder={list1.showBorder}
-          selectedOption={list1.selectedOption} 
-          optionList = {list1.optionList}
-          onChange = {list1.onChange}
+          title={list3.title}
+          showBorder={list3.showBorder}
+          selectedOption={list3.selectedOption} 
+          optionList = {list3.optionList}
+          onChange = {list3.onChange}
           />
-        </div>
+        </div>}
       </div>
-      <CalendarSummary calendarTotals={calendarTotals} list={list1} />
-      {/* <ul className="layout totals">
-        {calendarTotals.map((calendarDay, idx) => {
-          const hideElement:boolean = hiddenID.includes(calendarDay.date.toString());
-          return (
-            <li key={idx}>
-              <CalendarDay
-                id={idx.toString()}
-                calendarDay={calendarDay}
-                selectedDay={idx.toString()}
-                highLightSelected={false}
-                hideElement={false}
-                onDateChange={()=>{}}
-              ></CalendarDay>
-            </li>
-          );
-        })}
-      </ul> */}
+      {list3 && <CalendarSummary calendarTotals={calendarTotals} list={list1} />}
       <div>
         <MonthControl dateRange={dataDateRange} onMonthChange={onMonthChange} />
       </div>

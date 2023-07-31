@@ -36,6 +36,8 @@ export enum  ORDATA_TYPES {
     SET_DATA_START_DATE = '/facilty/DATA_START_DATE',
     SET_DATA_END_DATE = 'facility/DATA_END_DATE',
     SET_DATA_CURRENT_DATE = 'facility/DATA_CURRENT_DATE',
+    SET_UTIL_SUMMARY_OPTION = 'facility/SET_UTIL_SUMMAR_OPTION',
+    SET_SUMMARY_DATE_RANGE = 'facility/SET_SUMMARY_DATE_RANGE',
     CLOSE_POPUP = 'ordata/CLOSE_POPUP'
 }
 
@@ -55,6 +57,10 @@ export const weekDays:WEEKDAYS[] = [
     WEEKDAYS.MONDAY, WEEKDAYS.TUESDAY,WEEKDAYS.WEDNESDAY,WEEKDAYS.THURSDAY,WEEKDAYS.FRIDAY]
 
 
+export type DateRange ={
+    startDate: Date,
+    endDate: Date
+}
 
 export type item = {
     id: number;
