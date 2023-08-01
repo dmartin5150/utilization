@@ -5,19 +5,23 @@ import CalendarDay from '../calendar/calendarDay';
 import SelectorList from '../SelectorList/SelectorList';
 import { Option, SingleSelector } from "../SelectorList/SelectorList";
 import DateTimeSetting from '../dateTimeSettings/dateTimeSetting';
+import { DateRange } from '../../store/ORData/ordata.types';
 
 
 interface CalendarSummaryProps <T extends Option> {
     calendarTotals: CalendarDayData[]
+    dateRange:DateRange
 }
 
 
 
-function CalendarSummary<T extends Option>({calendarTotals}: React.PropsWithChildren<CalendarSummaryProps<T>>) {
+function CalendarSummary<T extends Option>({calendarTotals,dateRange}: React.PropsWithChildren<CalendarSummaryProps<T>>) {
     console.log('calendar summary',calendarTotals )
+    const start = `${dateRange.startDate.getMonth() + 1}-${dateRange.startDate.getDate()}-${dateRange.startDate.getFullYear()}`
+    const end = `${dateRange.endDate.getMonth() + 1}-${dateRange.endDate.getDate()}-${dateRange.endDate.getFullYear()}`
     return (
         <div className = 'calendar-summary'>
-            <h2 className='calendar-summary--title'>Dates: 3/1/2023 - 5/31/2023</h2>
+            <h2 className='calendar-summary--title'>Dates: {start} - {end}</h2>
             <ul className="layout-list totals">
                 {calendarTotals.map((calendarDay, idx) => {
                 return (

@@ -414,6 +414,7 @@ const toggleDrawer = () => {
             calendarTotals={calendarTotals}
             calendarSummary={summaryTotals}
             selectedDate={selectedDate}
+            summaryDateRange={customDateRange}
             list1={surgeonMenu}
             list2={roomMenu}
             list3={summaryMenu}
