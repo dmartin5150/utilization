@@ -13,6 +13,12 @@ export const selectCalendarData = createSelector(
 )
 
 
+export const selectSummaryTotals = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.summaryTotals
+)
+
+
 export const selectDataStartDate = createSelector(
     [selectORDataReducer],
     (ORDataSlice) => ORDataSlice.dataStartDate

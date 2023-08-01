@@ -5,6 +5,8 @@ import { AppDispatch } from "../../store"
 
 import getPTHours from "../../../utilities/fetchData/getPTHours"
 import { SummaryTotals } from "../ordata.types"
+import { SummaryTotalRequest } from "../ordata.types"
+import getUtilSummaryData from "../../../utilities/fetchData/getUtilSummaryData"
 
 
 export type FetchPTHoursStart = Action<ORDATA_TYPES.FETCH_PT_HOURS_START>
@@ -53,3 +55,15 @@ export const fetchPTHourSuccessAsync = (primeTime:PrimeTime, unit:string, startD
     }
 }
 
+export const fetchUtilSummaryDataAsync = (summaryRequest:SummaryTotalRequest) => {
+    return async(dispatch:AppDispatch) => {
+        console.log('dispatching summary start')
+        dispatch(fetchSummaryTotalsStart());
+        try {
+            const totals  = await getUtilSummaryData(summaryRequest)
+            dispatch(fetchSummaryTotalsSuccess(totals))
+        } catch (error) {
+            dispatch(fetchSummaryTotalsFailed(error as Error))
+        }
+    }
+}

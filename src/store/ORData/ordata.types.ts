@@ -1,5 +1,6 @@
 import { DetailsData } from "../../components/team-card/details-card";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
+import { PrimeTime } from "../Facility/facility.types";
 
 export enum  ORDATA_TYPES {
     FETCH_DATA_START  = 'ordata/FETCH_CALENDAR_DATA_START',
@@ -157,4 +158,15 @@ export type BlockData = {
 export type DetailsWithBlock = {
     room:DetailsData[],
     block: BlockData[]
+}
+
+export type SummaryTotalRequest = {
+    unit:string;
+    startDate:string;
+    endDate:string;
+    selectAll: boolean;
+    selectedProviders:string[];
+    selectedRooms:string[];
+    roomSelectionOption:number;
+    primeTime:PrimeTime;
 }

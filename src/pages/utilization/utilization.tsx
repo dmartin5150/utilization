@@ -52,7 +52,9 @@ import { selectUtilSummaryOption } from "../../store/ORData/selectors/ordata.sel
 import { getFY23Q4Dates,getRunningQuarterDates } from "../../utilities/dates/dates";
 import { setSummaryDateRange } from "../../store/ORData/actions/ordata.actions";
 import { createDateRange } from "../../utilities/dates/dates";
-
+import {fetchUtilSummaryDataAsync } from "../../store/ORData/actions/pthours.action";
+import { SummaryTotalRequest } from "../../store/ORData/ordata.types";
+import { selectSummaryTotals } from "../../store/ORData/selectors/ordata.selector";
 
 
 
@@ -100,6 +102,7 @@ const Utilization = () => {
   const  summaryEndDate = useSelector(selectDataEndDate)
   const curSummaryOption = useSelector(selectUtilSummaryOption)
   const customDateRange = useSelector(selectCustomDateRange)
+  const summaryTotals = useSelector(selectSummaryTotals)
 
   const currentDateRange:DataDateRange = {
     startDate: dataStartDate,
@@ -119,6 +122,27 @@ if (primeTime && dataCurrentDate) {
   dispatch(fetchPTHourSuccessAsync(primeTime, unit,`${dataCurrentDate.getFullYear()}-${dataCurrentDate.getMonth() +1}-${dataCurrentDate.getDate()}`));
 }
 },[primeTime,dataCurrentDate])
+
+
+useEffect(()=> {
+  console.log('getting total')
+   if(allPTHours) {
+    console.log('getting total')
+    const request:SummaryTotalRequest = {
+      'unit': unit,
+      'startDate': '2023-7-1',
+      'endDate': '2023-7-31',
+      'selectAll':true,
+      'selectedProviders':[],
+      'selectedRooms':[],
+      'roomSelectionOption': 1,
+      'primeTime':primeTime
+    }
+    console.log('fetching summary')
+    dispatch(fetchUtilSummaryDataAsync(request))
+   }
+
+},[allPTHours])
 
 
 
