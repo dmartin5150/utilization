@@ -34,7 +34,7 @@ import { CalendarSummaryOptions } from "../../pages/utilization/utilization.cons
 import { DateRange } from "./ordata.types";
 import { setSummaryDateRange } from "./actions/ordata.actions";
 import { fetchSummaryTotalsStart,fetchSummaryTotalsSuccess,fetchSummaryTotalsFailed } from "./actions/pthours.action";
-import { SummaryTotals } from "./ordata.types";
+
 
 
 
@@ -66,7 +66,7 @@ export type ORDataState = {
     dataEndDate:Date,
     dataCurentDate:Date,
     summaryDateRange:DateRange,
-    summaryTotals:SummaryTotals,
+    summaryTotals:CalendarDayData[],
     summaryTotalsLoading:boolean,
     popOpen: boolean;
     ptHours: PT_Hours;
@@ -108,7 +108,7 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
     dataEndDate:new Date('2023-8-1'),
     // dataCurentDate: new Date('2023-7-1'),
     dataCurentDate: new Date('2023-7-1'),
-    summaryTotals: {totals:[]},
+    summaryTotals: [],
     summaryTotalsLoading:false,
     summaryDateRange: {
         startDate: new Date('2023-4-1'),

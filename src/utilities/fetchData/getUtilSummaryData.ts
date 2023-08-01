@@ -1,5 +1,6 @@
 import  {SummaryTotalRequest} from "../../store/ORData/ordata.types"
-import { SummaryTotals } from "../../store/ORData/ordata.types";
+import { CalendarDayData } from "../../components/calendar/calendarDay";
+
 
 
 const getUtilSummaryData = async (request:SummaryTotalRequest) => {
@@ -13,9 +14,9 @@ const getUtilSummaryData = async (request:SummaryTotalRequest) => {
                         'primeTime':request.primeTime, 'selectAll':request.selectAll,'selectedRooms':request.selectedRooms})
   });
   if (response) {
-    const data:SummaryTotals = await response.json();
+    const data:CalendarDayData[] = await response.json();
     return data
   }
-  return {totals:[]}
+  return []
 }
  export default getUtilSummaryData;

@@ -145,7 +145,9 @@ useEffect(()=> {
 },[allPTHours])
 
 
-
+useEffect(()=> {
+  console.log('summary', summaryTotals)
+},[summaryTotals])
 
   useEffect(()=> {
     // console.log('active surgeonList', surgeonLists)
@@ -410,6 +412,7 @@ const toggleDrawer = () => {
             subTitle={unit}
             calendarData={calendarData}
             calendarTotals={calendarTotals}
+            calendarSummary={summaryTotals}
             selectedDate={selectedDate}
             list1={surgeonMenu}
             list2={roomMenu}

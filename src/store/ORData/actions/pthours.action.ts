@@ -4,7 +4,7 @@ import { PrimeTime } from "../../Facility/facility.types"
 import { AppDispatch } from "../../store"
 
 import getPTHours from "../../../utilities/fetchData/getPTHours"
-import { SummaryTotals } from "../ordata.types"
+import { CalendarDayData } from "../../../components/calendar/calendarDay"
 import { SummaryTotalRequest } from "../ordata.types"
 import getUtilSummaryData from "../../../utilities/fetchData/getUtilSummaryData"
 
@@ -13,7 +13,7 @@ export type FetchPTHoursStart = Action<ORDATA_TYPES.FETCH_PT_HOURS_START>
 export type FetchPTHoursSuccess = ActionWithPayload<ORDATA_TYPES.FETCH_PT_HOURS_SUCCESS, PT_Hours>
 export type FetchPTHoursFailed = ActionWithPayload<ORDATA_TYPES.FETCH_PT_HOURS_FAILED,Error>
 export type FetchSummaryTotalsStart = Action<ORDATA_TYPES.FETCH_SUMMARY_TOTALS_START>
-export type FetchSummaryTotalsSuccess = ActionWithPayload<ORDATA_TYPES.FETCH_SUMMARY_TOTALS_SUCCESS,SummaryTotals>
+export type FetchSummaryTotalsSuccess = ActionWithPayload<ORDATA_TYPES.FETCH_SUMMARY_TOTALS_SUCCESS,CalendarDayData[]>
 export type FetchSummaryTotalsFailed = ActionWithPayload<ORDATA_TYPES.FETCH_SUMMAR_TOTALS_FAILED, Error>
 
 
@@ -29,7 +29,7 @@ export const fetchPTHoursSuccess = withMatcher((ptHours:PT_Hours):FetchPTHoursSu
     return createAction(ORDATA_TYPES.FETCH_PT_HOURS_SUCCESS,ptHours)
 })
 
-export const fetchSummaryTotalsSuccess = withMatcher((totals:SummaryTotals):FetchSummaryTotalsSuccess => {
+export const fetchSummaryTotalsSuccess = withMatcher((totals:CalendarDayData[]):FetchSummaryTotalsSuccess => {
     return createAction(ORDATA_TYPES.FETCH_SUMMARY_TOTALS_SUCCESS, totals)
 })
 

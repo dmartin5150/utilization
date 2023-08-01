@@ -9,12 +9,12 @@ import DateTimeSetting from '../dateTimeSettings/dateTimeSetting';
 
 interface CalendarSummaryProps <T extends Option> {
     calendarTotals: CalendarDayData[]
-    list:SingleSelector<T>
 }
 
 
 
-function CalendarSummary<T extends Option>({calendarTotals,list}: React.PropsWithChildren<CalendarSummaryProps<T>>) {
+function CalendarSummary<T extends Option>({calendarTotals}: React.PropsWithChildren<CalendarSummaryProps<T>>) {
+    console.log('calendar summary',calendarTotals )
     return (
         <div className = 'calendar-summary'>
             <h2 className='calendar-summary--title'>Dates: 3/1/2023 - 5/31/2023</h2>

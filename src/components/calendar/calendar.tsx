@@ -13,6 +13,7 @@ import SelectorList from "../SelectorList/SelectorList";
 import { Option, SingleSelector } from "../SelectorList/SelectorList";
 import MonthControl from "./monthControl";
 import CalendarSummary from "../calendarsummary/calendarSummary";
+import { SummaryTotals } from "../../store/ORData/ordata.types";
 
 import { CalendarDayData } from "./calendarDay";
 
@@ -35,6 +36,7 @@ interface CalendarProps<T extends Option> {
   selectedDate: string;
   dataDateRange:DataDateRange
   calendarData:CalendarDayData[];
+  calendarSummary:CalendarDayData[];
   calendarTotals:CalendarDayData[];
   list1: SingleSelector<T>;
   list2: SingleSelector<T>
@@ -46,7 +48,7 @@ interface CalendarProps<T extends Option> {
 
 
 function Calendar<T extends Option>({
-  title,subTitle, selectedDate,calendarData, dataDateRange, calendarTotals,list1,list2,list3, onMonthChange,  onDateChange, pageSize
+  title,subTitle, selectedDate,calendarData, dataDateRange,calendarSummary, calendarTotals,list1,list2,list3, onMonthChange,  onDateChange, pageSize
 }: React.PropsWithChildren<CalendarProps<T>>)  {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentCalendarData, setCurrentCalendarData] = useState<CalendarDayData[]>([]);
@@ -116,7 +118,7 @@ function Calendar<T extends Option>({
           />
         </div>}
       </div>
-      {list3 && <CalendarSummary calendarTotals={calendarTotals} list={list1} />}
+      {list3 && <CalendarSummary calendarTotals={calendarSummary} />}
       <div>
         <MonthControl dateRange={dataDateRange} onMonthChange={onMonthChange} />
       </div>

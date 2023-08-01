@@ -109,9 +109,9 @@ export type Grid = {
 
 }
 
-export type SummaryTotals = {
-    totals: CalendarDayData[]
-}
+// export type SummaryTotals = {
+//     totals: CalendarDayData[]
+// }
 
 
 export type SurgeryInfo = {
