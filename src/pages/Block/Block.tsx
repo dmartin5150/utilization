@@ -163,11 +163,8 @@ const Block = () => {
       const endDate = `${summaryDateRange.endDate.getFullYear()}-${summaryDateRange.endDate.getMonth() + 1}-${summaryDateRange.endDate.getDate()}`
       console.log('calendar surgeon option', blockTypeOption.valueOf())
       console.log('startdate', startDate)
+      console.log('npis', selectedNPIs)
       console.log('enddate', endDate)
-      let allSurgeonsSelected = false
-      if (blockTypeOption == CalendarMenuOptions.All) {
-        allSurgeonsSelected = true
-      } 
       console.log('calendar surgeon option',allSurgeonsSelected)
       const request:BlockTotalRequest = {
         'unit': unit,
@@ -178,7 +175,7 @@ const Block = () => {
       }
       dispatch(fetchBlockTotalsAsync(request))
   
-  },[summaryDateRange,blockTypeOption])
+  },[summaryDateRange,blockTypeOption,allSurgeonsSelected])
 
 
 
@@ -411,7 +408,7 @@ const Block = () => {
                 // calendarData={blockCalendarData}
                 calendarData={currentCalendar}
                 calendarTotals={blockCalendarTotals}
-                calendarSummary={blockCalendarTotals}
+                calendarSummary={blockTotals}
                 summaryDateRange={summaryDateRange}
                 selectedDate={selectedDate}
                 dataDateRange={currentDateRange}

@@ -52,16 +52,22 @@ export const selectBlockDataIsLoading = createSelector(
 )
 
 
-export const selectBlockTotals = createSelector(
-    [selectBlockReducer],
-    (ORBlockSlice) => ORBlockSlice.blockTotals
-)
-
-
 export const selectBlockTypeOption = createSelector(
     [selectBlockReducer],
     (ORBlockSlice) => ORBlockSlice.blockTypeOption
 )
+
+export const selectBlockTotals = createSelector(
+    [selectBlockReducer,selectRoomOption,selectBlockTypeOption],
+    (ORBlockSlice, roomOptions,blockType) =>  {
+        // const roomOption = ORBlockSlice.blockTypeOption
+        console.log('room option', roomOptions)
+        return ORBlockSlice.blockTotals.filter((total) => (total.type === roomOptions) && (total.class == blockType))
+    }
+)
+
+
+
 
 export const selectBlockCalendarTotals = createSelector(
     [selectBlockReducer],

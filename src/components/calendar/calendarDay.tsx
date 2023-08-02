@@ -11,7 +11,9 @@ export type  CalendarDayData = {
   ptMinutes:number,
   nonptMinutes:number,
   totalptMinutes:number,
-  dayOfWeek:number
+  dayOfWeek:number,
+  type?:string,
+  class?:string
 }
 
 interface CalendarDayProps {

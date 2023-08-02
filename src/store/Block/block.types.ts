@@ -69,6 +69,7 @@ export type BlockLists = {
 }
 
 
+
 export type BlockStats = {
     btMinutes: number,
     nbtMinutes: number,
