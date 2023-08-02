@@ -33,12 +33,13 @@ export const getRunningQuarterDates = (currentDate:Date):DateRange => {
     const dataEndDate = new Date('2023-9-1')
     let currentDateCopy =  new Date();
     currentDateCopy.setDate(currentDate.getDate())
-    let firstDay = new Date(currentDateCopy.setMonth(currentDate.getMonth() - 3));
+    let firstDay = new Date(currentDateCopy.setMonth(currentDate.getMonth() - 2));
     if (firstDay < dataStartDate){
         firstDay = dataStartDate
     }
     let lastDay = new Date(currentDate);
-    lastDay.setDate(currentDate.getDate() -1);
+    lastDay = new Date(currentDateCopy.setMonth(currentDate.getMonth() + 1));
+    lastDay.setDate(lastDay.getDate() -1);
     if (lastDay > dataEndDate) {
         lastDay = dataEndDate
     }
