@@ -18,14 +18,19 @@ export type SetAllRoomsSelected = ActionWithPayload<ORDATA_TYPES.SET_ALL_ROOMS_S
 
 export type SetUnitRoomList = ActionWithPayload<ORDATA_TYPES.SET_ROOM_UNIT_LIST,UpdatableRoomList>
 
-export const setAllRoomsSelected = withMatcher((selected:boolean):SetAllRoomsSelected=> {
-    return createAction(ORDATA_TYPES.SET_ALL_ROOMS_SELECTED, selected)
-});
+
 
 
 export const setUnitRoomList = withMatcher((roomList:UpdatableRoomList):SetUnitRoomList => {
     return createAction(ORDATA_TYPES.SET_ROOM_UNIT_LIST, roomList);
 })
+
+export const setAllRoomsSelected = withMatcher((selected:boolean):SetAllRoomsSelected=> {
+    return createAction(ORDATA_TYPES.SET_ALL_ROOMS_SELECTED, selected)
+});
+
+
+
 
 export const fetchRoomLists = withMatcher((roomLists:UnitRoomLists):FetchRoomLists => {
     return createAction(ORDATA_TYPES.FETCH_ROOM_LISTS_SUCCESS, roomLists)

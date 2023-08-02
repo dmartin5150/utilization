@@ -55,6 +55,9 @@ import { createDateRange } from "../../utilities/dates/dates";
 import {fetchUtilSummaryDataAsync } from "../../store/ORData/actions/pthours.action";
 import { SummaryTotalRequest } from "../../store/ORData/ordata.types";
 import { selectSummaryTotals } from "../../store/ORData/selectors/ordata.selector";
+import { selectActiveRoomNames } from "../../store/ORData/selectors/ordata.selector";
+import { selectSummaryDateRange } from "../../store/ORData/selectors/ordata.selector";
+import { selectCalendarRoomOption,selectCalendarSurgeonOption } from "../../store/ORData/selectors/ordata.selector";
 
 
 
@@ -90,6 +93,8 @@ const Utilization = () => {
   const PTTotalAll = useSelector(selectPTHoursTotalsAll);
   const allGridData = useSelector(selectGridDataAll);
   const selectedNPIs = useSelector(selectActiveSurgeonNPIs)
+  const selectedRooms = useSelector(selectActiveRoomNames)
+  const summaryDateRange = useSelector(selectSummaryDateRange)
   const blockData = useSelector(selectDetailBlockData)
   const calendarTotals = useSelector(selectCalendarTotals)
   const blockIsLoading = useSelector(selectBlockIsLoading)
@@ -101,6 +106,8 @@ const Utilization = () => {
   const summaryStartDate = useSelector(selectDataStartDate)
   const  summaryEndDate = useSelector(selectDataEndDate)
   const curSummaryOption = useSelector(selectUtilSummaryOption)
+  const calendarRoomOption = useSelector(selectCalendarRoomOption)
+  const calendarSurgeonOption = useSelector(selectCalendarSurgeonOption)
   const customDateRange = useSelector(selectCustomDateRange)
   const summaryTotals = useSelector(selectSummaryTotals)
 
@@ -110,12 +117,7 @@ const Utilization = () => {
     currentDate:dataCurrentDate
   }
 
-  // useEffect(()=> {
-  //   dispatch(fetchSurgeonListsAsync())
-    // dispatch(fetchRoomLists(TNNASRoomLists))
-    // dispatch(setActiveRoomList(TNNASRoomLists['BH JRI']));
-    // dispatch(fetchBlockDataAsync('BH JRI',true,'2023-7-1',['1548430291']))
-// },[]);
+
 
 useEffect(() => {
 if (primeTime && dataCurrentDate) {
@@ -124,25 +126,25 @@ if (primeTime && dataCurrentDate) {
 },[primeTime,dataCurrentDate])
 
 
-useEffect(()=> {
-  console.log('getting total')
-   if(allPTHours) {
-    console.log('getting total')
-    const request:SummaryTotalRequest = {
-      'unit': unit,
-      'startDate': '2023-7-1',
-      'endDate': '2023-7-31',
-      'selectAll':true,
-      'selectedProviders':[],
-      'selectedRooms':[],
-      'roomSelectionOption': 1,
-      'primeTime':primeTime
-    }
-    console.log('fetching summary')
-    dispatch(fetchUtilSummaryDataAsync(request))
-   }
+// useEffect(()=> {
+//   console.log('getting total')
+//    if(allPTHours) {
+//     console.log('getting total')
+//     const request:SummaryTotalRequest = {
+//       'unit': unit,
+//       'startDate': '2023-7-1',
+//       'endDate': '2023-7-31',
+//       'selectAll':true,
+//       'selectedProviders':['1982657276'],
+//       'selectedRooms':['BH JRI 04'],
+//       'roomSelectionOption': 2,
+//       'primeTime':primeTime
+//     }
+//     console.log('fetching summary')
+//     dispatch(fetchUtilSummaryDataAsync(request))
+//    }
 
-},[allPTHours])
+// },[allPTHours])
 
 
 useEffect(()=> {
@@ -341,6 +343,37 @@ useEffect(()=> {
   }
 },[curSummaryOption,dataCurrentDate,customDateRange])
 
+// const selectedNPIs = useSelector(selectActiveSurgeonNPIs)
+// const selectedRooms = useSelector(selectActiveRoomNames)
+// const summaryDateRange = useSelector(selectSummaryDateRange)
+
+useEffect(()=> {
+
+    console.log('daterange', summaryDateRange)
+    const startDate = `${summaryDateRange.startDate.getFullYear()}-${summaryDateRange.startDate.getMonth() + 1}-${summaryDateRange.startDate.getDate()}`
+    const endDate = `${summaryDateRange.endDate.getFullYear()}-${summaryDateRange.endDate.getMonth() + 1}-${summaryDateRange.endDate.getDate()}`
+    console.log('calendar surgeon option', calendarSurgeonOption.valueOf())
+    console.log('startdate', startDate)
+    console.log('enddate', endDate)
+    let allSurgeonsSelected = false
+    if (calendarSurgeonOption == CalendarMenuOptions.All) {
+      allSurgeonsSelected = true
+    } 
+    console.log('calendar surgeon option',allSurgeonsSelected)
+    const request:SummaryTotalRequest = {
+      'unit': unit,
+      'startDate': startDate,
+      'endDate': endDate,
+      'selectAll':allSurgeonsSelected,
+      'selectedProviders':selectedNPIs,
+      'selectedRooms':selectedRooms,
+      'roomSelectionOption': parseInt(calendarRoomOption.valueOf()),
+      'primeTime':primeTime
+    }
+    dispatch(fetchUtilSummaryDataAsync(request))
+
+},[summaryDateRange,calendarSurgeonOption,calendarRoomOption])
+
 
 
 const updateCalendarSummary = (option: SingleValue<CalendarMenuItem>) => {
@@ -414,7 +447,7 @@ const toggleDrawer = () => {
             calendarTotals={calendarTotals}
             calendarSummary={summaryTotals}
             selectedDate={selectedDate}
-            summaryDateRange={customDateRange}
+            summaryDateRange={summaryDateRange}
             list1={surgeonMenu}
             list2={roomMenu}
             list3={summaryMenu}
