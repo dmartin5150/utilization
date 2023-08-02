@@ -74,7 +74,9 @@ import { selectCustomDateRange } from "../../store/Facility/facility.selector";
 import { BlockTotalRequest } from "../../store/ORData/ordata.types";
 import { selectActiveRoomNames } from "../../store/ORData/selectors/ordata.selector";
 import { selectPrimeTime } from "../../store/Facility/facility.selector";
-
+import { selectBlockDataIsLoading } from "../../store/Block/selectors/calendar.selector";
+import { selectBlockTotals } from "../../store/Block/selectors/calendar.selector";
+import { fetchBlockTotalsAsync } from "../../store/Block/block.actions";
 
 
 
@@ -121,7 +123,7 @@ const Block = () => {
     // const activeSurgeons = useSelector(selectActiveSurgeons)
     const blockTypeOption = useSelector(selectBlockTypeOption)
     const currentCalendar = useSelector(selectBlockCalendar)
-    const blockIsLoading = useSelector(selectBlockIsLoading)
+    const blockIsLoading = useSelector(selectBlockDataIsLoading)
     const orIsLoading = useSelector(selectORDataIsLoading)
     const dataStartDate = useSelector(selectDataStartDate)
     const dataEndDate = useSelector(selectDataEndDate)
@@ -133,6 +135,8 @@ const Block = () => {
     const selectedNPIs = useSelector(selectActiveSurgeonNPIs)
     const selectedRooms = useSelector(selectActiveRoomNames)
     const primeTime = useSelector(selectPrimeTime);
+    const blockTotals = useSelector(selectBlockTotals)
+
 
   
     const currentDateRange:DataDateRange = {
@@ -172,9 +176,9 @@ const Block = () => {
         'selectAll':allSurgeonsSelected,
         'selectedProviders':selectedNPIs,
       }
-      // dispatch(fetchUtilSummaryDataAsync(request))
+      dispatch(fetchBlockTotalsAsync(request))
   
-  },[summaryDateRange,blockTypeOption,])
+  },[summaryDateRange,blockTypeOption])
 
 
 

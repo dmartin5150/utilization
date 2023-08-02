@@ -6,6 +6,7 @@ import getBlockData from "../../utilities/fetchData/getBlockData";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { BlockDetailCard } from "../../components/blockdetails/blockDetailCards";
 import { BlockTotalRequest } from "../ORData/ordata.types";
+import getBlockTotals from "../../utilities/fetchData/getBlockTotals"
 
 
 export type FetchBlockStart =  Action<BLOCK_TYPES.FETCH_BLOCK_START>
@@ -98,3 +99,17 @@ export const fetchBlockDataAsync = (unit:string, selectAll:boolean, startDate:st
         }
     }
 }
+
+export const fetchBlockTotalsAsync = (request:BlockTotalRequest) => {
+    return async (dispatch: AppDispatch) => {
+        dispatch(fetchBlockTotalsStart());
+        try {
+            const blockTotals = await getBlockTotals(request);
+            dispatch(fetchBlockTotalsSuccess(blockTotals))
+        } catch (error) {
+        dispatch(fetchBlockTotalsFailed(error as Error))
+        }
+    }
+}
+
+
