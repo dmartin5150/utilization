@@ -3,6 +3,7 @@ import { BlockLists } from "./block.types";
 import { fetchBlockStart,fetchBlockFailed,fetchBlockSuccess, setSelectedBlockDate,
         setSelectedBlockRoom, setBlockPopUpOpen, setBlockCalendarData, setBlockCalendarTotals,
         setBlockCards, setBlockRoomOption, setBlockTypeOption } from "./block.actions";
+import { fetchBlockTotalsStart,fetchBlockTotalsFailed,fetchBlockTotalsSuccess } from "./block.actions";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { BlockDetailCard } from "../../components/blockdetails/blockDetailCards";
 
@@ -10,12 +11,14 @@ export type BlockState = {
     lists:BlockLists;
     calendarData: CalendarDayData[];
     calendarTotals: CalendarDayData[];
+    blockTotals: CalendarDayData[];
     blockCards: BlockDetailCard[];
     blockIsLoading:boolean;
     selectedBlockDate: string; 
     selectedBlockRoom: string;
     blockRoomOption: string
     blockTypeOption:string;
+    blockTotalsLoading:boolean;
     popUpOpen: boolean; 
     error: null | Error;
 }
@@ -31,6 +34,7 @@ const BLOCK_INITIAL_STATE: BlockState = {
     },
     calendarData: [],
     calendarTotals: [],
+    blockTotals: [],
     blockCards: [],
     selectedBlockDate: '2023-08-1',
     selectedBlockRoom: 'BH JRI 08',
@@ -38,6 +42,7 @@ const BLOCK_INITIAL_STATE: BlockState = {
     blockTypeOption: 'Surgeon',
     popUpOpen:false, 
     blockIsLoading:false,
+    blockTotalsLoading:false,
     error:null
 }
 
@@ -48,6 +53,18 @@ export const BlockReducer = (state=BLOCK_INITIAL_STATE, action: AnyAction):Block
         console.log('in start')
         return {...state, blockIsLoading:true}
     }
+
+    if (fetchBlockTotalsStart.match(action)) {
+        return {...state, blockTotalsLoading:true}
+    }
+    if (fetchBlockTotalsSuccess.match(action)) {
+        return {...state, blockTotals: action.payload, blockTotalsLoading:false}
+    }
+    if (fetchBlockTotalsFailed.match(action)) {
+        return {...state, error: action.payload, blockTotalsLoading:false}
+    }
+
+
     if (fetchBlockSuccess.match(action)) {
   
         return {...state, lists: {...state.lists,['grid']: action.payload.grid,['details']:action.payload.details },  blockIsLoading:false}
@@ -55,6 +72,8 @@ export const BlockReducer = (state=BLOCK_INITIAL_STATE, action: AnyAction):Block
     if (fetchBlockFailed.match(action)) {
         return {...state, error: action.payload, blockIsLoading:false}
     }
+
+
     if (setSelectedBlockDate.match(action)) {
         return {...state, selectedBlockDate:action.payload}
     }

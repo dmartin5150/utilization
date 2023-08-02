@@ -170,3 +170,11 @@ export type SummaryTotalRequest = {
     roomSelectionOption:number;
     primeTime:PrimeTime;
 }
+
+export type BlockTotalRequest = {
+    unit:string;
+    startDate:string;
+    endDate:string;
+    selectAll: boolean;
+    selectedProviders:string[];
+}

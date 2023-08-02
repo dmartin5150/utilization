@@ -5,6 +5,7 @@ import { BlockLists } from "./block.types";
 import getBlockData from "../../utilities/fetchData/getBlockData";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { BlockDetailCard } from "../../components/blockdetails/blockDetailCards";
+import { BlockTotalRequest } from "../ORData/ordata.types";
 
 
 export type FetchBlockStart =  Action<BLOCK_TYPES.FETCH_BLOCK_START>
@@ -18,6 +19,9 @@ export type SetBlockCalendarTotals = ActionWithPayload<BLOCK_TYPES.SET_CALENDAR_
 export type SetBlockCards = ActionWithPayload<BLOCK_TYPES.SET_BLOCK_CARDS, BlockDetailCard[]>
 export type SetBlockRoomOption = ActionWithPayload<BLOCK_TYPES.SET_BLOCK_ROOM_OPTION ,string>
 export type SetBlockTypeOption = ActionWithPayload<BLOCK_TYPES.SET_BLOCK_TYPE_OPTION,string>
+export type FetchBlockTotalsStart = Action<BLOCK_TYPES.FETCH_BLOCK_TOTALS_START>
+export type FetchBlockTotalsSuccess = ActionWithPayload<BLOCK_TYPES.FETCH_BLOCK_TOTALS_SUCCESS,CalendarDayData[]>
+export type FetchBlockTotalsFailed = ActionWithPayload<BLOCK_TYPES.FETCH_BLOCK_TOTALS_FAILED, Error>
 
 
 export const fetchBlockStart = withMatcher(():FetchBlockStart=> {
@@ -31,6 +35,19 @@ export const fetchBlockSuccess = withMatcher((data:BlockLists):FetchBlockSuccess
 export const fetchBlockFailed = withMatcher((error:Error):FetchBlockFailed => {
     return createAction(BLOCK_TYPES.FETCH_BLOCK_FAILED, error)
 })
+
+export const fetchBlockTotalsStart = withMatcher(():FetchBlockTotalsStart => {
+    return createAction(BLOCK_TYPES.FETCH_BLOCK_TOTALS_START)
+})
+
+export const fetchBlockTotalsSuccess = withMatcher((blockTotals:CalendarDayData[]):FetchBlockTotalsSuccess => {
+    return createAction(BLOCK_TYPES.FETCH_BLOCK_TOTALS_SUCCESS, blockTotals)
+})
+
+export const fetchBlockTotalsFailed = withMatcher((error:Error):FetchBlockTotalsFailed => {
+    return createAction(BLOCK_TYPES.FETCH_BLOCK_TOTALS_FAILED, error)
+})
+
 
 export const setSelectedBlockDate = withMatcher((date:string):SetSelectedBlockDate => {
     return createAction(BLOCK_TYPES.SET_SELECTED_BLOCK_DATE, date);

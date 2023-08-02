@@ -64,6 +64,16 @@ import { setDataCurrentDate } from "../../store/ORData/actions/calendar.actions"
 import UtilDrawer from '../../components/utilDrawer/utilDrawer'
 import { DrawerDirections } from "../../components/utilDrawer/utilDrawer";
 import { selectAllSelectedSurgeons } from "../../store/ORData/selectors/ordata.selector";
+import { selectSummaryDateRange } from "../../store/ORData/selectors/ordata.selector";
+import { CalendarSummaryOptions,calendarSummaryOptions } from "../utilization/utilization.constants";
+import { setUtilSummaryOption } from "../../store/ORData/actions/ordata.actions";
+import { selectUtilSummaryOption } from "../../store/ORData/selectors/ordata.selector";
+import { getFY23Q4Dates,getRunningQuarterDates } from "../../utilities/dates/dates";
+import { setSummaryDateRange } from "../../store/ORData/actions/ordata.actions";
+import { selectCustomDateRange } from "../../store/Facility/facility.selector";
+import { BlockTotalRequest } from "../../store/ORData/ordata.types";
+import { selectActiveRoomNames } from "../../store/ORData/selectors/ordata.selector";
+import { selectPrimeTime } from "../../store/Facility/facility.selector";
 
 
 
@@ -74,6 +84,7 @@ import { selectAllSelectedSurgeons } from "../../store/ORData/selectors/ordata.s
 
 const Block = () => {
     const [surgeonMenu, setSurgeonMenu] = useState<SingleSelector<CalendarMenuItem>>()
+    const [summaryMenu, setSummaryMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [roomMenu, setRoomMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [blockTypeMenu, setBlockTypeMenu] = useState<SingleSelector<CalendarMenuItem>>()
     const [isOpen, setIsOpen] = React.useState(false)
@@ -116,6 +127,13 @@ const Block = () => {
     const dataEndDate = useSelector(selectDataEndDate)
     const dataCurrentDate = useSelector(selectDataCurrentDate)
     const selectedSurgeonNames = useSelector(selectAllSelectedSurgeons)
+    const summaryDateRange = useSelector(selectSummaryDateRange)
+    const curSummaryOption = useSelector(selectUtilSummaryOption)
+    const customDateRange = useSelector(selectCustomDateRange)
+    const selectedNPIs = useSelector(selectActiveSurgeonNPIs)
+    const selectedRooms = useSelector(selectActiveRoomNames)
+    const primeTime = useSelector(selectPrimeTime);
+
   
     const currentDateRange:DataDateRange = {
       startDate: dataStartDate,
@@ -134,6 +152,72 @@ const Block = () => {
     },[unit,npis,allSurgeonsSelected,dataCurrentDate]);
     
 
+    useEffect(()=> {
+
+      console.log('daterange', summaryDateRange)
+      const startDate = `${summaryDateRange.startDate.getFullYear()}-${summaryDateRange.startDate.getMonth() + 1}-${summaryDateRange.startDate.getDate()}`
+      const endDate = `${summaryDateRange.endDate.getFullYear()}-${summaryDateRange.endDate.getMonth() + 1}-${summaryDateRange.endDate.getDate()}`
+      console.log('calendar surgeon option', blockTypeOption.valueOf())
+      console.log('startdate', startDate)
+      console.log('enddate', endDate)
+      let allSurgeonsSelected = false
+      if (blockTypeOption == CalendarMenuOptions.All) {
+        allSurgeonsSelected = true
+      } 
+      console.log('calendar surgeon option',allSurgeonsSelected)
+      const request:BlockTotalRequest = {
+        'unit': unit,
+        'startDate': startDate,
+        'endDate': endDate,
+        'selectAll':allSurgeonsSelected,
+        'selectedProviders':selectedNPIs,
+      }
+      // dispatch(fetchUtilSummaryDataAsync(request))
+  
+  },[summaryDateRange,blockTypeOption,])
+
+
+
+    const updateCalendarSummary = (option: SingleValue<CalendarMenuItem>) => {
+      if (option) {
+        dispatch(setUtilSummaryOption(option.value as CalendarSummaryOptions))
+      }
+    }
+
+    useEffect(()=> {
+
+      if (curSummaryOption && dataCurrentDate && customDateRange) {
+        if (curSummaryOption == CalendarSummaryOptions.Q4) {
+          const newRange = getFY23Q4Dates()
+          dispatch(setSummaryDateRange(newRange))
+          console.log(newRange)
+        }
+        if (curSummaryOption == CalendarSummaryOptions.RunQ) {
+          const newRange = getRunningQuarterDates(dataCurrentDate)
+          dispatch(setSummaryDateRange(newRange))
+          console.log(newRange)
+        }
+        if (curSummaryOption == CalendarSummaryOptions.Custom) {
+          dispatch(setSummaryDateRange(customDateRange))
+        }
+      }
+    },[curSummaryOption,dataCurrentDate,customDateRange])
+
+
+    useEffect (() => {
+      if (curSummaryOption) {
+        const curOption = parseInt(curSummaryOption)
+        const calendarSummarySelector: SingleSelector<CalendarMenuItem> = {
+          title: 'Summary',
+          isDisabled: false,
+          showBorder:false,
+          selectedOption: calendarSummaryOptions[curOption],
+          optionList: calendarSummaryOptions,
+          onChange:updateCalendarSummary
+        }
+        setSummaryMenu(calendarSummarySelector)
+      }
+    },[summaryDateRange ,curSummaryOption ])
 
 
     useEffect(()=> {
@@ -323,10 +407,13 @@ const Block = () => {
                 // calendarData={blockCalendarData}
                 calendarData={currentCalendar}
                 calendarTotals={blockCalendarTotals}
+                calendarSummary={blockCalendarTotals}
+                summaryDateRange={summaryDateRange}
                 selectedDate={selectedDate}
                 dataDateRange={currentDateRange}
                 list1={blockTypeMenu}
                 list2={roomMenu}
+                list3={summaryMenu}
                 onMonthChange={onMonthChange}
                 onDateChange={setBlockDate}
                 pageSize={30}

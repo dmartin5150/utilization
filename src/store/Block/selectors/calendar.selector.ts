@@ -43,6 +43,21 @@ export const selectRoomOption = createSelector(
     (ORBlockSlice) => ORBlockSlice.blockRoomOption
 )
 
+
+export const selectBlockDataIsLoading = createSelector(
+    [selectBlockReducer],
+    (ORDataSlice) =>  {
+        return (ORDataSlice.blockIsLoading || ORDataSlice.blockTotalsLoading)
+    }
+)
+
+
+export const selectBlockTotals = createSelector(
+    [selectBlockReducer],
+    (ORBlockSlice) => ORBlockSlice.blockTotals
+)
+
+
 export const selectBlockTypeOption = createSelector(
     [selectBlockReducer],
     (ORBlockSlice) => ORBlockSlice.blockTypeOption
