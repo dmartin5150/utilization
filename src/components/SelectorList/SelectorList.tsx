@@ -24,6 +24,7 @@ function SelectorList <T extends Option >({title, showBorder, isDisabled, select
     const [selectedValue, setSelectedValue]=useState<SingleValue<T>>(selectedOption)
 
     const handleSelector = (option: SingleValue<T> )  => {
+        console.log('option ', option)
         if (option) {
             onChange(option)
             console.log('option List', optionList)

@@ -237,6 +237,25 @@ const Block = () => {
         }
       }
 
+      useEffect(()=> {
+        let blockOptionIndex
+        if (blockTypeOption == BlockMenuOptions.Surgeon) {
+          blockOptionIndex = 0
+        } else {
+          blockOptionIndex = 1
+        }
+        const calendarBlockTypeSelector: SingleSelector<CalendarMenuItem> = {
+            'title': 'Block Types', 
+            isDisabled: false,
+            showBorder:false,
+            selectedOption: calendarBlockMenus['Types'][blockOptionIndex],
+            optionList: calendarBlockMenus['Types'],
+            onChange:updateBlockTypesMenu
+        }
+        setBlockTypeMenu(calendarBlockTypeSelector);
+      },[blockTypeOption])
+
+
 
       const updateBlockTypesMenu = (option: SingleValue<CalendarMenuItem>) => {
         if (option){
@@ -244,41 +263,48 @@ const Block = () => {
         }
       }
  
+
       useEffect(()=> {
-        const calendarBlockTypeSelector: SingleSelector<CalendarMenuItem> = {
-            'title': 'Block Types', 
-            isDisabled: false,
-            showBorder:false,
-            selectedOption: calendarBlockMenus['Types'][0],
-            optionList: calendarBlockMenus['Types'],
-            onChange:updateBlockTypesMenu
+        let roomIndex;
+        if (roomOption == BlockRoomOptions.All) {
+          roomIndex = 0
+        } else if (roomOption == BlockRoomOptions.In) {
+          roomIndex = 1
+        } else {
+          roomIndex = 2
         }
-        setBlockTypeMenu(calendarBlockTypeSelector);
-        dispatch(setBlockTypeOption(BlockMenuOptions.Surgeon));
-      },[])
-
-
-      
-      useEffect(()=> {
-
         const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
             title: 'Rooms',
             isDisabled: false,
             showBorder:false,
-            selectedOption: calendarBlockMenus['Rooms'][0],
+            selectedOption: calendarBlockMenus['Rooms'][roomIndex],
             optionList: calendarBlockMenus['Rooms'],
             onChange:updateCalendarRooms
             }
             setRoomMenu(calendarRoomSelector);
-            dispatch(setBlockRoomOption(BlockRoomOptions.All))
 
-      },[])
+      },[roomOption])
+
+
+      
+      // useEffect(()=> {
+
+      //   const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
+      //       title: 'Rooms',
+      //       isDisabled: false,
+      //       showBorder:false,
+      //       selectedOption: calendarBlockMenus['Rooms'][0],
+      //       optionList: calendarBlockMenus['Rooms'],
+      //       onChange:updateCalendarRooms
+      //       }
+      //       setRoomMenu(calendarRoomSelector);
+      //       dispatch(setBlockRoomOption(BlockRoomOptions.All))
+
+      // },[])
 
 
       const onClosePopup = () => {
-        // console.log('room menu popup', roomMenu)
         dispatch(setBlockPopUpOpen(false))
-        // console.log('room menu popup', roomMenu)
       }
 
     const detailsColHeader:GridNames = {'col1':'Surgeon', 'col2':'Procedure', 'col3': 'Start Time', 'col4':'End Time', 'col5':'Room'}
@@ -308,7 +334,9 @@ const Block = () => {
       
 
       useEffect (() => {
+        console.log('all details', allDetails)
         if (blockPopUpIsOpen) {
+            console.log('all details', allDetails)
             const blockCards:BlockDetailCard[] = allDetails.map((detail) => {
                 const header = getDetailCardHeader(detail.header);
                 const subHeader = getDetailCardSubHeader(detail.subHeader);
@@ -330,26 +358,12 @@ const Block = () => {
             dispatch(setBlockCards(blockCards))
             console.log('after', roomMenu)
         }
-    },[blockPopUpIsOpen]);
+    },[blockPopUpIsOpen, allDetails]);
 
 
 
      
 
-
-    useEffect(() => {
-        if (blockGridData && blockGridData.length > 0 ){
-            // console.log('all block calendar', allBlockCalendar)
-            // console.log('in block calendar', inBlockCalendar)
-            // console.log('out block calendar', outBlockCalendar)
-            // console.log('all grid', allBlockGrid);
-            // console.log('in block grid', inBlockGrid);
-            // console.log('out block grid', outBlockGrid)
-            // console.log('all details', allDetails )
-            // console.log('in details', inDetails);
-            // console.log('out details', outDetails)
-        }
-    },[blockGridData,selectedDate])
 
 
     const setBlockDate = (date:string) => {
@@ -362,6 +376,7 @@ const Block = () => {
 
     const setDetailData = (data:SummaryGridRowData) => {
         const room: FacilityRoom = {"name":data.id, "utilization":data.utilization}
+        console.log('data',data)
         console.log(data.procedures)
         if (data.procedures !== '0H: 0M') {
           dispatch(setSelectedBlockRoom(room.name))

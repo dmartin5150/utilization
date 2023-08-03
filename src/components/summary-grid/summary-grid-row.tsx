@@ -31,6 +31,7 @@ const SummaryGridRow: React.FC<SummaryGridRowProps> = ({row, buttonText, onSelec
     
   const updateItemHandler = (event:React.MouseEvent<HTMLButtonElement>)=> {
    row.id = (event.target as HTMLButtonElement).id
+    console.log('row',row)
     onSelectItem(row);
   }
 
