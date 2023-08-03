@@ -62,10 +62,11 @@ const DetailsCard: React.FC<DetailsCardProps> = ({title, columns,highLightItemsG
     onClosePopup();
   }
 
+  // "teamcard__popup"
 
   return (
-    <div>
-    {usePopUp ? <Popup className={classnames("popup", "teamcard__popup",{open:classIsOpen=== 'open'})}>
+    <Fragment>  
+      {usePopUp ? <Popup className={classnames("popup",{open:classIsOpen=== 'open'})}>
       <div className={classnames("teamcard",{open:classIsOpen=== 'open'})}>
           <a href="#" className="teamcard__close" onClick={closePopupHandler}>
             &times;
@@ -110,7 +111,7 @@ const DetailsCard: React.FC<DetailsCardProps> = ({title, columns,highLightItemsG
         />
       </div>
     }
-    </div>
+    </Fragment>
 
   );
 };
