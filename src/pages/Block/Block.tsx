@@ -286,21 +286,7 @@ const Block = () => {
       },[roomOption])
 
 
-      
-      // useEffect(()=> {
 
-      //   const calendarRoomSelector: SingleSelector<CalendarMenuItem> = {
-      //       title: 'Rooms',
-      //       isDisabled: false,
-      //       showBorder:false,
-      //       selectedOption: calendarBlockMenus['Rooms'][0],
-      //       optionList: calendarBlockMenus['Rooms'],
-      //       onChange:updateCalendarRooms
-      //       }
-      //       setRoomMenu(calendarRoomSelector);
-      //       dispatch(setBlockRoomOption(BlockRoomOptions.All))
-
-      // },[])
 
 
       const onClosePopup = () => {
