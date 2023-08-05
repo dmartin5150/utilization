@@ -5,6 +5,8 @@
 
 .block-container {
     position:absolute;
+    height:100vh;
+    width:100vw;
     
     & .spinner {
         & h1 {

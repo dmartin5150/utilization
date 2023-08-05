@@ -20,8 +20,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({message}) => {
 
     return (
         <div className='error-page'>
-            <h1>Unable to get data</h1>
-            {/* <button onClick={handleErrorReturn}>Return to HomePage</button> */}
+            <h1>{message}</h1>
         </div>
 
 

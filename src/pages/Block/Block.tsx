@@ -77,6 +77,8 @@ import { selectPrimeTime } from "../../store/Facility/facility.selector";
 import { selectBlockDataIsLoading } from "../../store/Block/selectors/calendar.selector";
 import { selectBlockTotals } from "../../store/Block/selectors/calendar.selector";
 import { fetchBlockTotalsAsync } from "../../store/Block/block.actions";
+import { selectBlockError } from "../../store/Block/selectors/calendar.selector";
+import MessagingPage from "../messaging/messagingPage";
 
 
 
@@ -136,6 +138,7 @@ const Block = () => {
     const selectedRooms = useSelector(selectActiveRoomNames)
     const primeTime = useSelector(selectPrimeTime);
     const blockTotals = useSelector(selectBlockTotals)
+    const blockError = useSelector(selectBlockError)
 
 
   
@@ -388,7 +391,7 @@ const Block = () => {
 
     return (
         <div className='block-container'>
-        {(blockIsLoading || orIsLoading)  ? <Spinner /> :
+        {(blockIsLoading || orIsLoading || blockError)  ? <MessagingPage isLoading={(blockIsLoading || orIsLoading)} errorMessage={'Unable to get block data'} /> :
         <section className="blocks">
         <UtilDrawer 
           isOpen={isOpen} 

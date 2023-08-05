@@ -55,10 +55,10 @@ export const BlockReducer = (state=BLOCK_INITIAL_STATE, action: AnyAction):Block
     }
 
     if (fetchBlockTotalsStart.match(action)) {
-        return {...state, blockTotalsLoading:true}
+        return {...state, blockTotalsLoading:true,error:null}
     }
     if (fetchBlockTotalsSuccess.match(action)) {
-        return {...state, blockTotals: action.payload, blockTotalsLoading:false}
+        return {...state, blockTotals: action.payload, blockTotalsLoading:false,error:null}
     }
     if (fetchBlockTotalsFailed.match(action)) {
         return {...state, error: action.payload, blockTotalsLoading:false}
@@ -67,7 +67,7 @@ export const BlockReducer = (state=BLOCK_INITIAL_STATE, action: AnyAction):Block
 
     if (fetchBlockSuccess.match(action)) {
   
-        return {...state, lists: {...state.lists,['grid']: action.payload.grid,['details']:action.payload.details },  blockIsLoading:false}
+        return {...state, lists: {...state.lists,['grid']: action.payload.grid,['details']:action.payload.details },  blockIsLoading:false,error:null}
     }
     if (fetchBlockFailed.match(action)) {
         return {...state, error: action.payload, blockIsLoading:false}

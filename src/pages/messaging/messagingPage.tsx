@@ -5,7 +5,7 @@ import ErrorPage from "../Error/Error";
 
 interface MessagingPage {
     isLoading:boolean;
-    errorMessage:Error
+    errorMessage:string
 }
 
 
@@ -13,13 +13,13 @@ interface MessagingPage {
 
 const MessagingPage: React.FC<MessagingPage> = ({isLoading, errorMessage}) => {
     if(errorMessage) {
-        console.log(errorMessage.message)
+        console.log(errorMessage)
     }
     return (
         <Fragment>
         {isLoading ? 
             <Spinner /> : 
-            <ErrorPage message={errorMessage.message} />}
+            <ErrorPage message={errorMessage} />}
         </Fragment>
 
     )

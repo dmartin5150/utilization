@@ -1,0 +1,49 @@
+.messagecard {
+    @include absCenter;
+    width: 70%;
+    top:50%;
+    left:50%;
+    box-shadow: 0 2rem 4rem rgba($color-black, 0.2);
+    background-color: $color-white;
+    border-radius: 3px;
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%) scale(0);
+    transition: all 0.4s 0.2s;
+    animation: popup-appear 0.5s;
+  
+    &.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%,-50%) scale(1);
+    }
+
+
+    &__close {
+        &:link,
+        &:visited {
+          color:$color-grey-dark-3;
+          position: absolute;
+          top:2.5rem;
+          right: 2.5rem;
+          font-size: 3rem;
+          display:inline-block;
+          line-height: 1;
+        }
+      }
+
+      &__heading {
+        padding-top: 1rem;
+        font-size: 3rem;
+        font-weight: 600;
+        text-align: center;
+        color: $color-grey-dark-4;
+    
+        &--main {
+            display:block;
+        }
+      }
+           
+
+}

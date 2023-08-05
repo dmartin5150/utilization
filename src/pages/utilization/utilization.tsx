@@ -421,7 +421,7 @@ const toggleDrawer = () => {
 
   return (
     <div className='utilization-container'>
-      {(blockIsLoading || orIsLoading || utilError)  ? <MessagingPage isLoading={(blockIsLoading || orIsLoading)} errorMessage={utilError!} /> :
+      {(blockIsLoading || orIsLoading || utilError)  ? <MessagingPage isLoading={(blockIsLoading || orIsLoading)} errorMessage={'Unable to get utilization data'} /> :
       <section className="utilization">
         <UtilDrawer 
           isOpen={isOpen} 
