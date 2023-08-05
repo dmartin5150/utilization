@@ -125,28 +125,28 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
         return { ...state, calendarData: action.payload}
     }
     if (fetchGridStart.match(action)){
-        return {...state, orGridLoading:true}
+        return {...state, orGridLoading:true, error:null}
     }
     if (fetchGridSuccess.match(action)) {
-        return {...state, gridData:action.payload, orGridLoading:false}
+        return {...state, gridData:action.payload, orGridLoading:false, error:null}
     }
     if (fetchGridFailed.match(action)) {
         return {...state, error:action.payload, orGridLoading:false}
     }
     if (fetchDetailsStart.match(action)) {
-        return {...state, orDetailsLoading:true}
+        return {...state, orDetailsLoading:true, error:null}
     }
     if (fetchDetailsSuccess.match(action)) {
-        return {...state, detailsData: action.payload, orDetailsLoading:false, popOpen:true}
+        return {...state, detailsData: action.payload, orDetailsLoading:false, popOpen:true, error:null}
     }
     if (fetchDetailsFailed.match(action)) {
         return {...state, error:action.payload, orDetailsLoading:false}
     }
     if (fetchSurgeonListsStart.match(action)) {
-        return {...state, surgeonListsLoading:true}
+        return {...state, surgeonListsLoading:true, error:null}
     }
     if (fetchSurgeonListsSuccess.match(action)) {
-        return {...state, surgeonLists:action.payload, surgeonListsLoading:false}
+        return {...state, surgeonLists:action.payload, surgeonListsLoading:false, error:null}
     }
     if (fetchSurgeonListsFailed.match(action)) {
         return {...state, error:action.payload, surgeonListsLoading:false}
@@ -159,10 +159,10 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
     }
 
     if (fetchSummaryTotalsStart.match(action)) {
-        return {...state, summaryTotalsLoading: true}
+        return {...state, summaryTotalsLoading: true, error:null}
     }
     if (fetchSummaryTotalsSuccess.match(action)) {
-        return {...state, summaryTotals: action.payload, summaryTotalsLoading: false }
+        return {...state, summaryTotals: action.payload, summaryTotalsLoading: false, error:null }
     }
     if (fetchSummaryTotalsFailed.match(action)){
         return {...state, error: action.payload, summaryTotalsLoading:false}
@@ -194,10 +194,10 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
         return {...state, allSurgeonsSelected: action.payload}
     }
     if (fetchPTHoursStart.match(action)) {
-        return {...state, ptHoursLoading:true}
+        return {...state, ptHoursLoading:true, error:null}
     }
     if (fetchPTHoursSuccess.match(action)) {
-        return {...state, ptHours: action.payload, ptHoursLoading:false}
+        return {...state, ptHours: action.payload, ptHoursLoading:false, error:null}
     }
     if (fetchPTHoursFailed.match(action)) {
         return {...state, error: action.payload, ptHoursLoading:false}

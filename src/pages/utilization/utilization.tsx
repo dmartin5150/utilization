@@ -59,6 +59,8 @@ import { selectActiveRoomNames } from "../../store/ORData/selectors/ordata.selec
 import { selectSummaryDateRange } from "../../store/ORData/selectors/ordata.selector";
 import { selectCalendarRoomOption,selectCalendarSurgeonOption } from "../../store/ORData/selectors/ordata.selector";
 
+import { selectUtilError } from "../../store/ORData/selectors/ordata.selector";
+import MessagingPage from "../messaging/messagingPage";
 
 
 
@@ -110,6 +112,7 @@ const Utilization = () => {
   const calendarSurgeonOption = useSelector(selectCalendarSurgeonOption)
   const customDateRange = useSelector(selectCustomDateRange)
   const summaryTotals = useSelector(selectSummaryTotals)
+  const utilError = useSelector(selectUtilError)
 
   const currentDateRange:DataDateRange = {
     startDate: dataStartDate,
@@ -418,7 +421,7 @@ const toggleDrawer = () => {
 
   return (
     <div className='utilization-container'>
-      {(blockIsLoading || orIsLoading)  ? <Spinner /> :
+      {(blockIsLoading || orIsLoading || utilError)  ? <MessagingPage isLoading={(blockIsLoading || orIsLoading)} errorMessage={utilError!} /> :
       <section className="utilization">
         <UtilDrawer 
           isOpen={isOpen} 

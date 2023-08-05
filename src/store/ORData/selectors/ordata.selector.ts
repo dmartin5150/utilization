@@ -12,6 +12,10 @@ export const selectCalendarData = createSelector(
     (ORDataSlice) => ORDataSlice.calendarData
 )
 
+export const selectUtilError = createSelector(
+    [selectORDataReducer],
+    (ORDataSlice) => ORDataSlice.error
+)
 
 export const selectSummaryTotals = createSelector(
     [selectORDataReducer],

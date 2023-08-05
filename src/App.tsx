@@ -19,6 +19,8 @@ import { fetchSurgeonListsAsync } from './store/ORData/actions/surgeonLists.acti
 import { fetchRoomLists, setActiveRoomList} from './store/ORData/actions/roomsListActions';
 import { TNNASRoomLists } from './pages/settings/settings.constants';
 import { fetchBlockDataAsync } from './store/Block/block.actions';
+import ErrorPage from './pages/Error/Error';
+
 
 import "./App.scss";
 
