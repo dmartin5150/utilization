@@ -8,6 +8,7 @@ import { DetailsHeader } from "./details-card-header";
 import { GridNames } from "./details-grid";
 import Popup from "../popup/popup-component";
 import { DetailsSubHeaderData } from "./details-subheader";
+import MessageCard from "../messageCard/messageCard";
 
 
 
@@ -62,7 +63,11 @@ const DetailsCard: React.FC<DetailsCardProps> = ({title, columns,highLightItemsG
     onClosePopup();
   }
 
-  // "teamcard__popup"
+  if (data.length === 0) {
+    return (
+      <MessageCard classIsOpen={classIsOpen} message={'Unable to get detail data'} onClosePopup={closePopupHandler}  />
+    )
+  }
 
   return (
     <Fragment>  

@@ -1,3 +1,7 @@
+@import "../../sass/abstracts/variables";
+@import "../../sass/abstracts/mixins";
+
+
 .messagecard {
     @include absCenter;
     width: 70%;

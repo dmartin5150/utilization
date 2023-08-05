@@ -1,4 +1,5 @@
 import React from "react";
+import "./messageCard.scss";
 import classnames from 'classnames';
 import Popup from "../popup/popup-component";
 
