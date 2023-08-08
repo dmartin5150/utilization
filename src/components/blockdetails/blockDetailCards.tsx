@@ -8,6 +8,8 @@ import { DetailsSubHeaderData } from "../team-card/details-subheader";
 import Popup from "../popup/popup-component";
 import Pagination from "../pagination/pagination";
 import classnames from 'classnames';
+import { useSelector } from "react-redux";
+import { selectBlockCards } from "../../store/Block/selectors/details.selector";
 
 
 
@@ -36,7 +38,14 @@ interface BlockDetailCardsProps  {
 const BlockDetailCards: React.FC<BlockDetailCardsProps> = ({blockCards,classIsOpen,onCloseBlockDetails, cardsPageSize}) => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [currentBlockData, setCurrentBlockData] = useState<BlockDetailCard[]>(blockCards);
+    const blockCs = useSelector(selectBlockCards)
+   
 
+
+    useEffect(()=> {
+        console.log('updating page')
+        setCurrentPage(1)
+    },[blockCs])
 
 
     useEffect(() => {
@@ -44,7 +53,9 @@ const BlockDetailCards: React.FC<BlockDetailCardsProps> = ({blockCards,classIsOp
         const lastPageIndex = firstPageIndex + cardsPageSize;
         console.log('pages', firstPageIndex, lastPageIndex)
         setCurrentBlockData(blockCards.slice(firstPageIndex, lastPageIndex));
-      }, [currentPage, blockCards]);
+
+
+      }, [currentPage, blockCs]);
 
     
     return (
