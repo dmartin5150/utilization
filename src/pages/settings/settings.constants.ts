@@ -1,6 +1,6 @@
 import { PrimeTimeMenuItem } from "./settings";
 import { TNNASUNIT } from "../../store/Facility/facility.types";
-import { JRIroomList,STMSTORroomList, MTORroomList } from "../../store/Facility/facility.types";
+import { JRIroomList,STMSTORroomList, MTORroomList,CSCroomList } from "../../store/Facility/facility.types";
 import { PRIME_TIME_START,PRIME_TIME_END } from "../../store/Facility/facility.types";
 
 
@@ -32,14 +32,16 @@ export type UpdatableRoomList = {
 export const TNNASRoomLists:UnitRoomLists = {
     [TNNASUNIT.BHJRI]: JRIroomList,
     [TNNASUNIT.STMSTOR]:STMSTORroomList,
-    [TNNASUNIT.STOR]:MTORroomList
+    [TNNASUNIT.STOR]:MTORroomList,
+    [TNNASUNIT.BHCSC]:CSCroomList
 }
 
 
 export const unitList: Unit[] = [
     {id:0, name:TNNASUNIT.BHJRI, label:TNNASUNIT.BHJRI, value:TNNASUNIT.BHJRI},
     {id:1, name:TNNASUNIT.STOR, label:TNNASUNIT.STOR, value:TNNASUNIT.STOR},
-    {id:2, name:TNNASUNIT.STMSTOR, label:TNNASUNIT.STMSTOR, value:TNNASUNIT.STMSTOR}
+    {id:2, name:TNNASUNIT.STMSTOR, label:TNNASUNIT.STMSTOR, value:TNNASUNIT.STMSTOR},
+    {id:3, name:TNNASUNIT.BHCSC, label:TNNASUNIT.BHCSC, value:TNNASUNIT.BHCSC}
 ]
 
 export type UnitLists = {
@@ -49,7 +51,8 @@ export type UnitLists = {
 export const unitLists:UnitLists = {
     'BH JRI' : unitList[0],
     'MT OR': unitList[1],
-    'STM ST OR': unitList[2]
+    'STM ST OR': unitList[2],
+    'BH CSC': unitList[3]
 }
 
 export const primeTimeStartOptions: PrimeTimeMenuItem[] = [

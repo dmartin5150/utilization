@@ -14,7 +14,8 @@ export enum FACILITY_TYPES {
 export enum TNNASUNIT  {
     BHJRI = 'BH JRI',
     STMSTOR = 'STM ST OR',
-    STOR = 'MT OR' 
+    STOR = 'MT OR',
+    BHCSC = 'BH CSC'
 }
 
 
@@ -46,6 +47,16 @@ export type PrimeTime = {
 
 
 
+export const CSCroomList:UnitRoomListItem[] = [
+    {id:0, name: 'BH CSC 01', selected: true},
+    {id:1, name:'BH CSC 02', selected: true},
+    {id:3, name:'BH CSC 03', selected: true},
+    {id:4, name:'BH CSC 04', selected: true},
+    {id:5, name:'BH CSC 05', selected: true},
+    {id:6, name:'BH CSC 06', selected: true},
+    {id:7, name: 'BH CSC 07', selected: true},
+    {id:8, name:'BH CSC 09', selected: true}
+]
 
 
 export const JRIroomList:UnitRoomListItem[] = [
