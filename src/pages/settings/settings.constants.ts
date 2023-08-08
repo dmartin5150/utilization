@@ -55,7 +55,7 @@ export const unitLists:UnitLists = {
     'MT OR': unitList[1],
     'STM ST OR': unitList[2],
     'BH CSC': unitList[3],
-    'West': unitList[4]
+    'ST OR': unitList[4]
 }
 
 export const primeTimeStartOptions: PrimeTimeMenuItem[] = [
