@@ -63,7 +63,7 @@ const DetailsCard: React.FC<DetailsCardProps> = ({title, columns,highLightItemsG
     onClosePopup();
   }
 
-  if (data.length === 0) {
+  if (subHeaderData.length === 0) {
     return (
       <MessageCard classIsOpen={classIsOpen} message={'Unable to get detail data'} onClosePopup={closePopupHandler}  />
     )
