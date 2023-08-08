@@ -15,7 +15,8 @@ export enum TNNASUNIT  {
     BHJRI = 'BH JRI',
     STMSTOR = 'STM ST OR',
     STOR = 'MT OR',
-    BHCSC = 'BH CSC'
+    BHCSC = 'BH CSC',
+    West = 'ST OR'
 }
 
 
@@ -89,6 +90,26 @@ export const STMSTORroomList:UnitRoomListItem[] = [
     {id:15, name: 'STM ST OR 17', selected: true},
     {id:16, name: 'STM ST OR 18', selected: true},
     {id:17, name: 'STM ST OR Hybrid', selected: true},
+]
+
+export const STORroomList:UnitRoomListItem[] = [
+    {id:0, name: 'ST OR 09', selected: true},
+    {id:1, name: 'ST OR 10', selected: true},
+    {id:2, name: 'ST OR 11', selected: true},
+    {id:3, name: 'ST OR 12', selected: true},
+    {id:4, name: 'ST OR 13', selected: true},
+    {id:5, name: 'ST OR 14', selected: true},
+    {id:6, name: 'ST OR 15', selected: true},
+    {id:7, name: 'ST OR 16', selected: true},
+    {id:8, name: 'ST OR 17', selected: true},
+    {id:9, name: 'ST OR 18', selected: true},
+    {id:10, name: 'ST OR 19', selected: true},
+    {id:11, name: 'ST OR 20', selected: true},
+    {id:12, name: 'ST OR 21', selected: true},
+    {id:13, name: 'ST OR 22', selected: true},
+    {id:14, name: 'ST OR 23', selected: true},
+    {id:15, name: 'ST OR 24', selected: true},
+    {id:16, name: 'ST OR 25', selected: true},
 ]
 
 export const MTORroomList:UnitRoomListItem[] = [

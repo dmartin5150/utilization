@@ -1,6 +1,6 @@
 import { PrimeTimeMenuItem } from "./settings";
 import { TNNASUNIT } from "../../store/Facility/facility.types";
-import { JRIroomList,STMSTORroomList, MTORroomList,CSCroomList } from "../../store/Facility/facility.types";
+import { JRIroomList,STMSTORroomList, MTORroomList,CSCroomList,STORroomList } from "../../store/Facility/facility.types";
 import { PRIME_TIME_START,PRIME_TIME_END } from "../../store/Facility/facility.types";
 
 
@@ -33,7 +33,8 @@ export const TNNASRoomLists:UnitRoomLists = {
     [TNNASUNIT.BHJRI]: JRIroomList,
     [TNNASUNIT.STMSTOR]:STMSTORroomList,
     [TNNASUNIT.STOR]:MTORroomList,
-    [TNNASUNIT.BHCSC]:CSCroomList
+    [TNNASUNIT.BHCSC]:CSCroomList,
+    [TNNASUNIT.West]:STORroomList
 }
 
 
@@ -41,7 +42,8 @@ export const unitList: Unit[] = [
     {id:0, name:TNNASUNIT.BHJRI, label:TNNASUNIT.BHJRI, value:TNNASUNIT.BHJRI},
     {id:1, name:TNNASUNIT.STOR, label:TNNASUNIT.STOR, value:TNNASUNIT.STOR},
     {id:2, name:TNNASUNIT.STMSTOR, label:TNNASUNIT.STMSTOR, value:TNNASUNIT.STMSTOR},
-    {id:3, name:TNNASUNIT.BHCSC, label:TNNASUNIT.BHCSC, value:TNNASUNIT.BHCSC}
+    {id:3, name:TNNASUNIT.BHCSC, label:TNNASUNIT.BHCSC, value:TNNASUNIT.BHCSC},
+    {id:4, name:TNNASUNIT.West, label:TNNASUNIT.West, value:TNNASUNIT.West}
 ]
 
 export type UnitLists = {
@@ -52,7 +54,8 @@ export const unitLists:UnitLists = {
     'BH JRI' : unitList[0],
     'MT OR': unitList[1],
     'STM ST OR': unitList[2],
-    'BH CSC': unitList[3]
+    'BH CSC': unitList[3],
+    'West': unitList[4]
 }
 
 export const primeTimeStartOptions: PrimeTimeMenuItem[] = [
