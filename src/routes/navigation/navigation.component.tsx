@@ -82,6 +82,20 @@ const Navigation = () => {
               :{}
               )
             }
+          to="/opentimes" className="nav__link">
+            Open Times
+          </NavLink>
+          <NavLink  
+            style={
+            ({isActive}) => (
+              isActive 
+              ? {
+                textDecoration: 'none',
+                color: '#1b4297'
+                }
+              :{}
+              )
+            }
           to="/settings" className="nav__link">
             Settings
           </NavLink>

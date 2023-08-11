@@ -8,6 +8,7 @@ import TestDrawer from './pages/testDrawer/testDrawer';
 import Surgeons from './pages/surgeons/surgeons';
 // import Rooms from './pages/Rooms/Block';
 import Block from './pages/Block/Block';
+import OpenTimes from './pages/openTimes/OpenTimes';
 import { useSelector } from 'react-redux';
 import { fetchPTHourSuccessAsync} from './store/ORData/actions/pthours.action';
 import { selectPrimeTime,selectUnit } from './store/Facility/facility.selector';
@@ -72,6 +73,7 @@ function App() {
         <Route index  path="/block" element={<Block />}></Route>
         <Route index  path="/settings" element={<Settings />}></Route>
         <Route index  path="/drawer" element={<TestDrawer />}></Route>
+        <Route index  path="/opentimes" element={<OpenTimes />}></Route>
       </Route>
     </Routes>
   </div>
