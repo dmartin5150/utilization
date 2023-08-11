@@ -9,6 +9,28 @@ export const selectUnit = createSelector(
     (facilitySlice) => facilitySlice.unit
 )
 
+export const selectOpenTimesLoading = createSelector(
+    [selectFacilityReducer],
+    (facilitySlice) => facilitySlice.isLoading
+)
+
+export const selectOpenTimeError = createSelector(
+    [selectFacilityReducer],
+    (facilitySlice) => facilitySlice.error
+)
+
+export const selectOpenTimeType = createSelector(
+    [selectFacilityReducer],
+    (facilitySlice) => facilitySlice.openTimeType
+)
+
+
+export const selectOpenTimes = createSelector(
+    [selectFacilityReducer],
+    (facilitySlice) => facilitySlice.openTimes
+)
+
+
 export const selectDate = createSelector(
     [selectFacilityReducer],
     (facilitySlice) => facilitySlice.date

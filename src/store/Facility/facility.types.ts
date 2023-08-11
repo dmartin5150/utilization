@@ -6,8 +6,11 @@ export enum FACILITY_TYPES {
     SELECT_ROOM = '/facility/SELECT_ROOM',
     SET_PRIME_TIME = '/facility/SET_PRIME_TIME',
     SET_DATE_RANGE = '/facility/SET_DATE_RANGE',
+    FETCH_OPEN_TIME_START = '/facility/FETCH_OPEN_TIME_START',
+    FETCH_OPEN_TIME_SUCCESS = '/facility/FETCH_OPEN_TIME_SUCCESS',
+    FETCH_OPEN_TIME_FAILED = '/facility/FETCH_OPEN_TIME_FAILED',
+    SET_SELECTED_TIME_TYPE = 'facility/SET_SELECTED_TIME_TYPE'
 
-    
 }
 
 
@@ -131,3 +134,26 @@ export const MTORroomList:UnitRoomListItem[] = [
     {id:16, name: 'MT OR 16', selected: true},
     {id:17, name: 'MT OR 17', selected: true}
 ]
+
+
+export enum OpenTimeTypes  {
+    all = 'ALL',
+    open ='OPEN',
+    block = 'BLOCK'
+}
+
+
+export type OpenTimes = {
+    name:string;
+    proc_date:string,
+    local_start_time:string;
+    local_end_time:string;
+    unit:string;
+    room:string;
+    unused_block_minutes:string;
+    formatted_minutes:string;
+    open_type: OpenTimeTypes;
+    release_date:string;
+}
+
+

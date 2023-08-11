@@ -54,7 +54,6 @@ const BlockDetailCards: React.FC<BlockDetailCardsProps> = ({blockCards,classIsOp
         console.log('pages', firstPageIndex, lastPageIndex)
         setCurrentBlockData(blockCards.slice(firstPageIndex, lastPageIndex));
 
-
       }, [currentPage, blockCs]);
 
     
