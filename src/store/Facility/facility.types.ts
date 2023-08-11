@@ -9,7 +9,8 @@ export enum FACILITY_TYPES {
     FETCH_OPEN_TIME_START = '/facility/FETCH_OPEN_TIME_START',
     FETCH_OPEN_TIME_SUCCESS = '/facility/FETCH_OPEN_TIME_SUCCESS',
     FETCH_OPEN_TIME_FAILED = '/facility/FETCH_OPEN_TIME_FAILED',
-    SET_SELECTED_TIME_TYPE = 'facility/SET_SELECTED_TIME_TYPE'
+    SET_SELECTED_TIME_TYPE = 'facility/SET_SELECTED_TIME_TYPE',
+    SET_OPEN_TIME_DURATION = 'facility/SET_OPEN_TIME_DURATION'
 
 }
 
@@ -145,12 +146,12 @@ export enum OpenTimeTypes  {
 
 export type OpenTimes = {
     name:string;
-    proc_date:string,
+    proc_date:Date,
     local_start_time:string;
     local_end_time:string;
     unit:string;
     room:string;
-    unused_block_minutes:string;
+    unused_block_minutes:number;
     formatted_minutes:string;
     open_type: OpenTimeTypes;
     release_date:string;

@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 import { FACILITY_UNITS } from "./facitlityUnits";
 import { setUnit,setDate,setRoom, setPrimeTime, setCustomDateRange } from "./facilty.actions";
-import { fetchOpenTimeFailed,fetchOpenTimeStart,fetchOpenTimeSuccess,setSelectedTimeType } from "./facilty.actions";
+import { fetchOpenTimeFailed,fetchOpenTimeStart,fetchOpenTimeSuccess,setSelectedTimeType,setOpenTimeDuration } from "./facilty.actions";
 import { PRIME_TIME_END, PRIME_TIME_START, PrimeTime,OpenTimes, OpenTimeTypes } from "./facility.types";
 import { DateRange } from "../ORData/ordata.types";
 
@@ -21,7 +21,8 @@ export type FacilityDataState = {
     room: FacilityRoom,
     primeTime:PrimeTime,
     openTimes: OpenTimes[],
-    openTimeType:OpenTimeTypes
+    openTimeType:OpenTimeTypes,
+    openTimeDuration: number,
     isLoading:boolean,
     error:Error | null
 }
@@ -48,6 +49,7 @@ const FACILITY_DATA_INITIAL_STATE: FacilityDataState = {
     primeTime:initialPrimeTime,
     openTimes:[],
     openTimeType: OpenTimeTypes.all,
+    openTimeDuration:0,
     isLoading:false,
     error:null
 }
@@ -65,6 +67,9 @@ export const FacilityReducer = (state=FACILITY_DATA_INITIAL_STATE, action: AnyAc
     }
     if (setSelectedTimeType.match(action)) {
         return {...state, openTimeType:action.payload}
+    }
+    if (setOpenTimeDuration.match(action)) {
+        return {...state, openTimeDuration:action.payload}
     }
 
     if (setUnit.match(action)) {

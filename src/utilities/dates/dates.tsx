@@ -1,21 +1,58 @@
 import { DateRange } from "../../store/ORData/ordata.types";
 
+
+
+export const getPrevMonth  = (curMonth:number) => {
+    if (curMonth != 1) 
+        return curMonth -1
+    return 12
+}
+
+
+
+export const getNextMonth = (curMonth:number) => {
+    if (curMonth != 12)
+        return curMonth + 1
+    return 1
+}
+
+export const getPrevYear = (curMonth:number, curYear:number) => {
+    if (curMonth == 1) {
+        return curYear -1
+    }
+    return curYear + 1
+}
+
+
+export const getNextYear = (curMonth:number, curYear:number) => {
+    if (curMonth == 12) {
+        return curYear + 1
+    }
+    return curYear
+}
+
+
+
 export const getPreviousDate = (dataStartDate:Date, currentDate:Date) => { 
     if (currentDate <= dataStartDate ) {
         return dataStartDate
     } else {
         const dateCopy = new Date(currentDate);
-        return new Date(dateCopy.setMonth(dateCopy.getMonth() - 1));
+        const prevMonth = getPrevMonth(dateCopy.getMonth())
+        return new Date(dateCopy.setMonth(prevMonth));
     }
 }
+
+
+
 
 export const getNextDate = (dataEndDate:Date, currentDate:Date) => { 
     if (currentDate >= dataEndDate) {
         return dataEndDate
     } else {
         const dateCopy = new Date(currentDate);
-        const newmonth = dateCopy.getMonth() + 1
-        return new Date(dateCopy.setMonth(dateCopy.getMonth() + 1));
+        const newMonth = getNextMonth(dateCopy.getMonth())
+        return new Date(dateCopy.setMonth(newMonth))
     }
 }
 

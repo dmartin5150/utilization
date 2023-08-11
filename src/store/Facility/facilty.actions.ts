@@ -10,6 +10,8 @@ import { AppDispatch } from "../store";
 import getOpenTimes from "../../utilities/fetchData/getOpenTimes"
 
 
+
+export type SetOpenTimeDuration = ActionWithPayload<FACILITY_TYPES.SET_OPEN_TIME_DURATION, number>
 export type SetSelectedTimeType = ActionWithPayload<FACILITY_TYPES.SET_SELECTED_TIME_TYPE,OpenTimeTypes>
 export type SetUnit = ActionWithPayload<FACILITY_TYPES.SELECT_UNIT, string>
 export type SetDate = ActionWithPayload<FACILITY_TYPES.SELECT_DATE, string>
@@ -21,6 +23,10 @@ export type FetchOpenTimeSuccess = ActionWithPayload<FACILITY_TYPES.FETCH_OPEN_T
 export type FetchOpenTimeFailed = ActionWithPayload<FACILITY_TYPES.FETCH_OPEN_TIME_FAILED, Error>
 
 
+
+export const setOpenTimeDuration = withMatcher((duration:number):SetOpenTimeDuration => {
+    return createAction(FACILITY_TYPES.SET_OPEN_TIME_DURATION, duration)
+})
 
 export const setSelectedTimeType = withMatcher((timeType:OpenTimeTypes):SetSelectedTimeType => {
     return createAction(FACILITY_TYPES.SET_SELECTED_TIME_TYPE, timeType)
@@ -64,7 +70,9 @@ export const fetchOpenTimesAsync = (unit:string, startDate:string) => {
     return async (dispatch: AppDispatch) => {
         dispatch(fetchOpenTimeStart());
         try {
-            const openTimes = await getOpenTimes(unit, startDate);
+            let openTimes = await getOpenTimes(unit, startDate);
+            openTimes = openTimes.map((openTime:OpenTimes) => {
+               return  {...openTime, proc_date: new Date(openTime.proc_date + 'T00:00:00')}})
             dispatch(fetchOpenTimeSuccess(openTimes))
         } catch (error) {
         dispatch(fetchOpenTimeFailed(error as Error))
