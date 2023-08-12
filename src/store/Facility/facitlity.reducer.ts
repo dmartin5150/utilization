@@ -2,10 +2,11 @@ import { AnyAction } from "redux";
 import { FACILITY_UNITS } from "./facitlityUnits";
 import { setUnit,setDate,setRoom, setPrimeTime, setCustomDateRange, setSelectedOpenTimeRoom } from "./facilty.actions";
 import { fetchOpenTimeFailed,fetchOpenTimeStart,fetchOpenTimeSuccess,setSelectedTimeType,setOpenTimeDuration } from "./facilty.actions";
-import { setOpenTimeCalendar,SetSelectedOpenTimeRoom } from "./facilty.actions";
-import { PRIME_TIME_END, PRIME_TIME_START, PrimeTime,OpenTimes, OpenTimeTypes } from "./facility.types";
+import { setOpenTimeCalendar,setOpenTimeRoomList} from "./facilty.actions";
+import { PRIME_TIME_END, PRIME_TIME_START, PrimeTime,OpenTimes, OpenTimeTypes, JRIroomList } from "./facility.types";
 import { DateRange } from "../ORData/ordata.types";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
+import { UnitRoomListItem } from "../../pages/settings/settings.constants";
 
 import { TNNASUNIT } from "./facility.types";
 
@@ -25,6 +26,7 @@ export type FacilityDataState = {
     openTimeType:OpenTimeTypes,
     openTimeDuration: number,
     openTimeCalendar: CalendarDayData[],
+    openTimeRoomList: UnitRoomListItem[];
     selectedRoom: string,
     isLoading:boolean,
     error:Error | null
@@ -54,13 +56,14 @@ const FACILITY_DATA_INITIAL_STATE: FacilityDataState = {
     openTimeType: OpenTimeTypes.all,
     openTimeDuration:0,
     openTimeCalendar:[],
+    openTimeRoomList: JRIroomList,
     selectedRoom:'BH JRI 06',
     isLoading:false,
     error:null
 }
 
 export const FacilityReducer = (state=FACILITY_DATA_INITIAL_STATE, action: AnyAction):FacilityDataState =>  {
-
+    console.log('updating ')
     if (fetchOpenTimeStart.match(action)) {
         return{...state, isLoading:true, error:null}
     }
@@ -78,6 +81,10 @@ export const FacilityReducer = (state=FACILITY_DATA_INITIAL_STATE, action: AnyAc
     }
     if (setSelectedOpenTimeRoom.match(action)) {
         return {...state, selectedRoom:action.payload}
+    }
+    if (setOpenTimeRoomList.match(action)) {
+        console.log('updating open time room list')
+        return {...state, openTimeRoomList: action.payload}
     }
 
     if (setOpenTimeCalendar.match(action)) {

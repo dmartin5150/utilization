@@ -5,7 +5,7 @@ import { selectDataCurrentDate } from "../ORData/selectors/ordata.selector";
 import { OpenTimes, OpenTimeTypes } from "./facility.types";
 import {getNextMonth, getNextYear} from "../../utilities/dates/dates"
 import { CalendarDayData } from "../../components/calendar/calendarDay";
-import { selectUnitRoomLists } from "../../store/ORData/selectors/ordata.selector";
+import { selectUnitRoomLists,selectActiveRoomLists } from "../../store/ORData/selectors/ordata.selector";
 import { item } from "../../store/ORData/ordata.types";
 
 
@@ -22,6 +22,13 @@ export const selectOpenTimeDuration = createSelector(
     [selectFacilityReducer],
     (facilitySlice) => facilitySlice.openTimeDuration
 )
+
+
+export const selectOpenTimeRoomList= createSelector(
+    [selectFacilityReducer],
+    (facilitySlice) => facilitySlice.openTimeRoomList
+)
+
 
 export const selectOpenTimeRoom = createSelector(
     [selectFacilityReducer],
@@ -131,14 +138,13 @@ export const selectOpenTimeCalendar = createSelector(
 
 
 export const selectOpenTimeRoomHours = createSelector(
-    [selectUnitRoomLists,selectUnit,selectDataCurrentDate,selectFilteredOpenTimes],
-    (roomList, unit, curDate, data) => {
+    [selectOpenTimeRoomList,selectDataCurrentDate,selectFilteredOpenTimes],
+    (roomList, curDate, data) => {
         const roomListItems:item[] = []
-        const selectedRooms = roomList[unit]
-        if (!selectedRooms || selectedRooms.length === 0) {
+        if (!roomList || roomList.length === 0) {
             return roomListItems
         }
-        selectedRooms.forEach((room,index) => {
+        roomList.forEach((room,index) => {
             let curData = data.filter((openTime)=> openTime.room === room.name);
             curData = curData.filter((data) => data.proc_date.getTime() === curDate.getTime())
             let totalUnusedMinutes = calculateUnusedMinutes(curData)

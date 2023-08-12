@@ -9,8 +9,11 @@ import { TNNASUNIT,OpenTimes,OpenTimeTypes } from "./facility.types";
 import { AppDispatch } from "../store";
 import getOpenTimes from "../../utilities/fetchData/getOpenTimes"
 import { CalendarDayData } from "../../components/calendar/calendarDay";
+import { UnitRoomListItem } from "../../pages/settings/settings.constants";
 
 
+
+export type SetOpenTimeRoomList = ActionWithPayload<FACILITY_TYPES.SET_OPEN_TIME_ROOM_LIST,UnitRoomListItem[]>
 export type SetOpenTimeDuration = ActionWithPayload<FACILITY_TYPES.SET_OPEN_TIME_DURATION, number>
 export type SetSelectedTimeType = ActionWithPayload<FACILITY_TYPES.SET_SELECTED_TIME_TYPE,OpenTimeTypes>
 export type SetUnit = ActionWithPayload<FACILITY_TYPES.SELECT_UNIT, string>
@@ -35,6 +38,10 @@ export const setSelectedTimeType = withMatcher((timeType:OpenTimeTypes):SetSelec
 
 export const setSelectedOpenTimeRoom = withMatcher((room:string):SetSelectedOpenTimeRoom => {
     return createAction(FACILITY_TYPES.SET_SELECTED_OPEN_TIME_ROOM, room)
+})
+
+export const setOpenTimeRoomList = withMatcher((roomList:UnitRoomListItem[]):SetOpenTimeRoomList =>{
+    return createAction(FACILITY_TYPES.SET_OPEN_TIME_ROOM_LIST, roomList)
 })
 
 export const fetchOpenTimeStart = withMatcher(():FetchOpenTimeStart => {
