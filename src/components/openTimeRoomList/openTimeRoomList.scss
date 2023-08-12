@@ -1,0 +1,35 @@
+.open-time-room-list {
+    max-width:25rem;
+    font-size:15px;
+    margin-left:3rem;
+    & .list-selector {
+
+        & .items {
+            display:grid;
+            margin-top: 0;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            grid-gap: 1rem;
+            border: 1px solid black;
+    
+            & .empty {
+                font-size:medium;
+                padding-left:0.5rem;
+            }
+    
+            &.small {
+                grid-template-columns: 1fr;
+                grid-gap: 0.1rem;
+            }
+    
+        }
+
+
+
+
+
+        & .checkbox {
+            font-size:15px;
+        }
+    }
+}

@@ -1,17 +1,13 @@
 import React,{useEffect} from "react";
 import "./openTimeRoomList.scss"
-import ListItem from "../ListSelector/ListItem";
+import ListSelector from "../ListSelector/ListSelector";
 import { useSelector } from 'react-redux';
 import { selectUnit } from "../../store/Facility/facility.selector";
 import { selectUnitRoomLists } from "../../store/ORData/selectors/ordata.selector";
 import { ITEM_DISPLAY_TYPE } from "../ListSelector/ListItem";
 import { selectOpenTimeCalendar,selectOpenTimeRoomHours} from "../../store/Facility/facility.selector";
 
-// interface ListItemProps {
-//     item:item;
-//     displayType: ITEM_DISPLAY_TYPE;
-//     onItemChanged: (id:string)=>void;
-// }
+
 
 
 const OpenTimeRoomList = () => {
@@ -29,12 +25,16 @@ const OpenTimeRoomList = () => {
     },[roomData])
 
 
-
-
-
     return (
-        <div>
-            <div>Room List</div>
+        <div className='open-time-room-list'>
+            <ListSelector 
+                itemList={roomData} 
+                allItemsSelected={true} 
+                displayType={ITEM_DISPLAY_TYPE.checkbox}
+                onItemChanged={()=>{}}
+                onAllItemsSelected={()=>{}}
+                onClearAllSelected={()=>{}}
+            />
         </div>
     )
     
