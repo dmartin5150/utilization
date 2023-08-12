@@ -22,6 +22,7 @@ export type FetchOpenTimeStart = Action<FACILITY_TYPES.FETCH_OPEN_TIME_START>
 export type FetchOpenTimeSuccess = ActionWithPayload<FACILITY_TYPES.FETCH_OPEN_TIME_SUCCESS, OpenTimes[]>
 export type FetchOpenTimeFailed = ActionWithPayload<FACILITY_TYPES.FETCH_OPEN_TIME_FAILED, Error>
 export type SetOpenTimeCalendar = ActionWithPayload<FACILITY_TYPES.SET_OPEN_TIME_CALENDAR, CalendarDayData[]>
+export type SetSelectedOpenTimeRoom = ActionWithPayload<FACILITY_TYPES.SET_SELECTED_OPEN_TIME_ROOM, string>
 
 
 export const setOpenTimeDuration = withMatcher((duration:number):SetOpenTimeDuration => {
@@ -30,6 +31,10 @@ export const setOpenTimeDuration = withMatcher((duration:number):SetOpenTimeDura
 
 export const setSelectedTimeType = withMatcher((timeType:OpenTimeTypes):SetSelectedTimeType => {
     return createAction(FACILITY_TYPES.SET_SELECTED_TIME_TYPE, timeType)
+})
+
+export const setSelectedOpenTimeRoom = withMatcher((room:string):SetSelectedOpenTimeRoom => {
+    return createAction(FACILITY_TYPES.SET_SELECTED_OPEN_TIME_ROOM, room)
 })
 
 export const fetchOpenTimeStart = withMatcher(():FetchOpenTimeStart => {
