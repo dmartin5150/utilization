@@ -3,7 +3,7 @@ import { DateRange } from "../../store/ORData/ordata.types";
 
 
 export const getPrevMonth  = (curMonth:number) => {
-    if (curMonth != 1) 
+    if (curMonth !== 1) 
         return curMonth -1
     return 12
 }
@@ -11,13 +11,13 @@ export const getPrevMonth  = (curMonth:number) => {
 
 
 export const getNextMonth = (curMonth:number) => {
-    if (curMonth != 12)
+    if (curMonth !== 12)
         return curMonth + 1
     return 1
 }
 
 export const getPrevYear = (curMonth:number, curYear:number) => {
-    if (curMonth == 1) {
+    if (curMonth === 1) {
         return curYear -1
     }
     return curYear + 1
@@ -25,11 +25,12 @@ export const getPrevYear = (curMonth:number, curYear:number) => {
 
 
 export const getNextYear = (curMonth:number, curYear:number) => {
-    if (curMonth == 12) {
+    if (curMonth === 12) {
         return curYear + 1
     }
     return curYear
 }
+
 
 
 

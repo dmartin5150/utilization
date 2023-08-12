@@ -8,7 +8,7 @@ import { FacilityRoom } from "./facitlity.reducer";
 import { TNNASUNIT,OpenTimes,OpenTimeTypes } from "./facility.types";
 import { AppDispatch } from "../store";
 import getOpenTimes from "../../utilities/fetchData/getOpenTimes"
-
+import { CalendarDayData } from "../../components/calendar/calendarDay";
 
 
 export type SetOpenTimeDuration = ActionWithPayload<FACILITY_TYPES.SET_OPEN_TIME_DURATION, number>
@@ -21,7 +21,7 @@ export type SetCustomDateRange = ActionWithPayload<FACILITY_TYPES.SET_DATE_RANGE
 export type FetchOpenTimeStart = Action<FACILITY_TYPES.FETCH_OPEN_TIME_START>
 export type FetchOpenTimeSuccess = ActionWithPayload<FACILITY_TYPES.FETCH_OPEN_TIME_SUCCESS, OpenTimes[]>
 export type FetchOpenTimeFailed = ActionWithPayload<FACILITY_TYPES.FETCH_OPEN_TIME_FAILED, Error>
-
+export type SetOpenTimeCalendar = ActionWithPayload<FACILITY_TYPES.SET_OPEN_TIME_CALENDAR, CalendarDayData[]>
 
 
 export const setOpenTimeDuration = withMatcher((duration:number):SetOpenTimeDuration => {
@@ -63,6 +63,10 @@ export const setPrimeTime = withMatcher((primeTime:PrimeTime):SetPrimeTime => {
 
 export const setCustomDateRange = withMatcher((dateRange:DateRange):SetCustomDateRange => {
     return createAction(FACILITY_TYPES.SET_DATE_RANGE, dateRange)
+})
+
+export const setOpenTimeCalendar = withMatcher((calendar:CalendarDayData[]):SetOpenTimeCalendar => {
+    return createAction(FACILITY_TYPES.SET_OPEN_TIME_CALENDAR, calendar)
 })
 
 

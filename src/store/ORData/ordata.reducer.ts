@@ -107,7 +107,7 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
     dataStartDate:new Date('2023-3-1'),
     dataEndDate:new Date('2023-8-1'),
     // dataCurentDate: new Date('2023-7-1'),
-    dataCurentDate: new Date('2023-7-1'),
+    dataCurentDate: new Date('2023-8-1'),
     summaryTotals: [],
     summaryTotalsLoading:false,
     summaryDateRange: {

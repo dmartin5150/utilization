@@ -4,6 +4,7 @@ import { FacilityDataState } from "./facitlity.reducer";
 import { selectDataCurrentDate } from "../ORData/selectors/ordata.selector";
 import { OpenTimes, OpenTimeTypes } from "./facility.types";
 import {getNextMonth, getNextYear} from "../../utilities/dates/dates"
+import { CalendarDayData } from "../../components/calendar/calendarDay";
 
 
 
@@ -43,13 +44,32 @@ export const selectOpenTimes = createSelector(
     (facilitySlice) => facilitySlice.openTimes
 )
 
+
+export const selectUnusedTimeCalendar = createSelector(
+    [selectFacilityReducer],
+    (facilitySlice) => facilitySlice.openTimeCalendar
+)
+
+
+const getEndDateRange = (curDate:Date) => {
+    const startDate = new Date(`${curDate.getFullYear()}-${curDate.getMonth()+1}-1`)
+    const nextMonth = getNextMonth(curDate.getMonth() + 1)
+    const nextYear = getNextYear(curDate.getMonth() + 1,curDate.getFullYear())
+    return new Date(`${nextYear}-${nextMonth}-1`)
+}
+
+
 const getFilteredOpenTimes = (unit:string, curDate:Date,openType:OpenTimeTypes, data: OpenTimes[]) => {
-    let filteredData = data.filter((openTime) => ((openTime.unit == unit) && (openTime.open_type == openType)))
-    const startDate = new Date(`${curDate.getFullYear()}-${curDate.getMonth()}-${curDate.getDate()}T00:00:00`)
-    const nextMonth = getNextMonth(curDate.getMonth())
-    const nextYear = getNextYear(curDate.getMonth(),curDate.getFullYear())
-    const endDate = new Date(`${nextYear}-${nextMonth}-1T00:00:00`)
-    return filteredData.filter((openTime) => ((openTime.proc_date <= startDate) && (openTime.proc_date < endDate)))
+    let filteredData:OpenTimes[]
+    if (openType === OpenTimeTypes.all) {
+        filteredData = data.filter((openTime) => (openTime.unit ===unit))
+    } else {
+        filteredData = data.filter((openTime) => ((openTime.unit === unit) && (openTime.open_type === openType)))
+    }
+    const startDate = new Date(`${curDate.getFullYear()}-${curDate.getMonth()+1}-1`)
+    const endDate = getEndDateRange(curDate)
+    return filteredData.filter((openTime) => ((openTime.proc_date >= startDate) && (openTime.proc_date < endDate)))
+
 }
 
 
@@ -60,6 +80,42 @@ export const selectFilteredOpenTimes = createSelector(
 )
 
 
+
+
+const getCalendarData = (curDate:Date, data:OpenTimes[]):CalendarDayData[] => {
+    const calendarDays:CalendarDayData[] = []
+    const dates = data.map((openTime) => openTime.proc_date)
+    const endDate = getEndDateRange(curDate)
+    let loopDate = new Date(`${curDate.getFullYear()}-${curDate.getMonth()+1}-1`)
+    while (loopDate < endDate) {
+        if ((loopDate.getDay() === 0) || (loopDate.getDay() === 6)) {
+            const newDate = loopDate.setDate(loopDate.getDate() + 1);
+            loopDate = new Date(newDate);
+            continue;
+        }
+        const curData = data.filter((data) => data.proc_date.getTime() === loopDate.getTime())
+        let totalUnusedMinutes:number
+        if (curData.length !== 0) {
+            console.log('curData', curData)
+            const unusedMinutes = curData.map((data) => data.unused_block_minutes)
+            totalUnusedMinutes = (unusedMinutes.reduce((ac,total)=> ac + total, 0))/60;
+        } else {
+            totalUnusedMinutes = 0;
+        }
+        const display = Math.round(totalUnusedMinutes).toString()
+        const calDay:CalendarDayData = {date:loopDate.toString(),display,subHeading1:'Hours',ptMinutes:0, nonptMinutes:0, totalptMinutes:0,dayOfWeek:curDate.getDay()}
+        calendarDays.push(calDay)
+        const newDate = loopDate.setDate(loopDate.getDate() + 1);
+        loopDate = new Date(newDate);
+    }
+    return calendarDays
+}
+
+
+export const selectOpenTimeCalendar = createSelector(
+   [selectDataCurrentDate, selectFilteredOpenTimes],
+   (curDate, data) => getCalendarData(curDate, data)
+)
 
 
 
