@@ -5,7 +5,8 @@ import { selectDataCurrentDate } from "../ORData/selectors/ordata.selector";
 import { OpenTimes, OpenTimeTypes } from "./facility.types";
 import {getNextMonth, getNextYear} from "../../utilities/dates/dates"
 import { CalendarDayData } from "../../components/calendar/calendarDay";
-
+import { selectUnitRoomLists } from "../../store/ORData/selectors/ordata.selector";
+import { item } from "../../store/ORData/ordata.types";
 
 
 
@@ -87,6 +88,18 @@ export const selectFilteredOpenTimes = createSelector(
 
 
 
+const calculateUnusedMinutes = (curData:OpenTimes[]) => {
+    let totalUnusedMinutes
+    if (curData.length !== 0) {
+        console.log('curData', curData)
+        const unusedMinutes = curData.map((data) => data.unused_block_minutes)
+        totalUnusedMinutes = (unusedMinutes.reduce((ac,total)=> ac + total, 0))/60;
+    } else {
+        totalUnusedMinutes = 0;
+    }
+    return totalUnusedMinutes
+}
+
 
 const getCalendarData = (curDate:Date, data:OpenTimes[]):CalendarDayData[] => {
     const calendarDays:CalendarDayData[] = []
@@ -100,14 +113,7 @@ const getCalendarData = (curDate:Date, data:OpenTimes[]):CalendarDayData[] => {
             continue;
         }
         const curData = data.filter((data) => data.proc_date.getTime() === loopDate.getTime())
-        let totalUnusedMinutes:number
-        if (curData.length !== 0) {
-            console.log('curData', curData)
-            const unusedMinutes = curData.map((data) => data.unused_block_minutes)
-            totalUnusedMinutes = (unusedMinutes.reduce((ac,total)=> ac + total, 0))/60;
-        } else {
-            totalUnusedMinutes = 0;
-        }
+        let totalUnusedMinutes = calculateUnusedMinutes(curData)
         const display = Math.round(totalUnusedMinutes).toString()
         const calDay:CalendarDayData = {date:loopDate.toString(),display,subHeading1:'Hours',ptMinutes:0, nonptMinutes:0, totalptMinutes:0,dayOfWeek:curDate.getDay()}
         calendarDays.push(calDay)
@@ -123,6 +129,25 @@ export const selectOpenTimeCalendar = createSelector(
    (curDate, data) => getCalendarData(curDate, data)
 )
 
+
+export const selectOpenTimeRoomHours = createSelector(
+    [selectUnitRoomLists,selectUnit,selectDataCurrentDate,selectFilteredOpenTimes],
+    (roomList, unit, curDate, data) => {
+        const roomListItems:item[] = []
+        const selectedRooms = roomList[unit]
+        if (!selectedRooms || selectedRooms.length === 0) {
+            return roomListItems
+        }
+        selectedRooms.forEach((room,index) => {
+            let curData = data.filter((openTime)=> openTime.room === room.name);
+            curData = curData.filter((data) => data.proc_date.getTime() === curDate.getTime())
+            let totalUnusedMinutes = calculateUnusedMinutes(curData)
+            let curItem:item = {'id': index, 'name':`${room.name}: ${totalUnusedMinutes.toFixed(2)} hours`, 'selected':room.selected}
+            roomListItems.push(curItem)
+        })
+        return roomListItems
+    }
+)
 
 
 

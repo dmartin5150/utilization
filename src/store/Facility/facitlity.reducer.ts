@@ -51,7 +51,7 @@ const FACILITY_DATA_INITIAL_STATE: FacilityDataState = {
     },
     primeTime:initialPrimeTime,
     openTimes:[],
-    openTimeType: OpenTimeTypes.block,
+    openTimeType: OpenTimeTypes.all,
     openTimeDuration:0,
     openTimeCalendar:[],
     selectedRoom:'BH JRI 06',
