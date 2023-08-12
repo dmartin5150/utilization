@@ -63,8 +63,9 @@ function Calendar<T extends Option>({
 
   useEffect(()=> {
     if (calendarData.length > 0) {
+      // const date = new Date(calendarData[0].date);
       const date = new Date(calendarData[0].date + 'T00:00:00');
-
+      console.log('initial date', calendarData[0].date)
       const padding = date.getDay()-1;
       setMonth(month);
       // console.log('offset', padding, calendarData[0], date)

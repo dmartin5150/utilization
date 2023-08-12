@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import "./OpenTimes.scss"
 import { useAppDispatch } from "../../hooks/hooks";
 import { fetchOpenTimesAsync } from "../../store/Facility/facilty.actions";
 import { selectOpenTimeCalendar,selectOpenTimeRoomHours} from "../../store/Facility/facility.selector";
@@ -10,6 +11,7 @@ import { selectActiveRoomLists } from "../../store/ORData/selectors/ordata.selec
 import { selectOpenTimeRoomList,} from "../../store/Facility/facility.selector";
 import { setOpenTimeRoomList } from "../../store/Facility/facilty.actions";
 import { selectUnit } from "../../store/Facility/facility.selector";
+import OpenTimeCalendar from "../../components/openTimeCalendar/openTimeCalendar"
 
 
 
@@ -47,9 +49,11 @@ const OpenTimes = () => {
     
     
 
-    return (<div>
+    return (
+    <div className='open-times'>
         Open times
         <OpenTimeRoomList />
+        <OpenTimeCalendar calendarData={calendar}/>
     </div>)
 }
 export default OpenTimes;

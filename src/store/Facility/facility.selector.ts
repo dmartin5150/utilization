@@ -112,6 +112,23 @@ const calculateUnusedMinutes = (curData:OpenTimes[]) => {
     return totalUnusedMinutes
 }
 
+const getFormattedDate = (curDate:Date) => {
+    let curMonth;
+    let curDay;
+    if ((curDate.getMonth() +1) < 10) {
+        curMonth = `0${curDate.getMonth() +1}`
+    } else {
+        curMonth = `${curDate.getMonth() +1}`
+    }
+    if ((curDate.getDate()) < 10) {
+        curDay = `0${curDate.getDate()}`
+    } else {
+        curDay = `${curDate.getDate()}`
+    }
+
+    return `${curDate.getFullYear()}-${curMonth}-${curDay}`
+}
+
 
 const getCalendarData = (curDate:Date, data:OpenTimes[]):CalendarDayData[] => {
     const calendarDays:CalendarDayData[] = []
@@ -127,7 +144,7 @@ const getCalendarData = (curDate:Date, data:OpenTimes[]):CalendarDayData[] => {
         const curData = data.filter((data) => data.proc_date.getTime() === loopDate.getTime())
         let totalUnusedMinutes = calculateUnusedMinutes(curData)
         const display = Math.round(totalUnusedMinutes).toString()
-        const calDay:CalendarDayData = {date:loopDate.toString(),display,subHeading1:'Hours',ptMinutes:0, nonptMinutes:0, totalptMinutes:0,dayOfWeek:curDate.getDay()}
+        const calDay:CalendarDayData = {date:getFormattedDate(loopDate),display,subHeading1:'Hours',ptMinutes:0, nonptMinutes:0, totalptMinutes:0,dayOfWeek:curDate.getDay()}
         calendarDays.push(calDay)
         const newDate = loopDate.setDate(loopDate.getDate() + 1);
         loopDate = new Date(newDate);
