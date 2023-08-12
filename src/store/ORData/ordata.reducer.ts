@@ -171,6 +171,7 @@ export const ORDataReducer = (state=OR_DATA_INITIAL_STATE, action: AnyAction):OR
         return {...state, unitRoomLists:action.payload}
     }       
     if (setActiveRoomList.match(action)) {
+        console.log('updating active room list')
         return {...state, activeRoomList: action.payload}
     }     
 

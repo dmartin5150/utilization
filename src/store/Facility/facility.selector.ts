@@ -5,7 +5,6 @@ import { selectDataCurrentDate } from "../ORData/selectors/ordata.selector";
 import { OpenTimes, OpenTimeTypes } from "./facility.types";
 import {getNextMonth, getNextYear} from "../../utilities/dates/dates"
 import { CalendarDayData } from "../../components/calendar/calendarDay";
-import { selectUnitRoomLists,selectActiveRoomLists } from "../../store/ORData/selectors/ordata.selector";
 import { item } from "../../store/ORData/ordata.types";
 
 

@@ -21,9 +21,9 @@ const OpenTimes = () => {
 
     useEffect(() => {
         console.log('updating calendar')
-        if(calendar) {
-            dispatch(setOpenTimeCalendar(calendar))
-        }
+        // if(calendar) {
+        //     dispatch(setOpenTimeCalendar(calendar))
+        // }
     },[calendar])
     
 

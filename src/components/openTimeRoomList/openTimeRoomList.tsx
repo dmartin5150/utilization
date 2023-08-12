@@ -9,6 +9,7 @@ import { selectOpenTimeRoomList,selectOpenTimeRoomHours} from "../../store/Facil
 import { selectActiveRoomLists } from "../../store/ORData/selectors/ordata.selector";
 import { useAppDispatch } from "../../hooks/hooks";
 import { setOpenTimeRoomList } from "../../store/Facility/facilty.actions";
+import { UnitRoomListItem } from "../../pages/settings/settings.constants";
 
 
 
@@ -18,9 +19,6 @@ const OpenTimeRoomList = () => {
     const [allRoomsSelected, setAllRoomsSelected] = useState(true)
 
 
-    const selectedUnit = useSelector(selectUnit);
-    const unitRoomLists = useSelector(selectUnitRoomLists);
-    const roomData = useSelector(selectOpenTimeRoomHours)
     const openTimeRoomList = useSelector(selectOpenTimeRoomList)
     const activeRoomList = useSelector(selectActiveRoomLists)
     
@@ -35,7 +33,6 @@ const OpenTimeRoomList = () => {
         return false;
 
     }
-
 
     const onRoomChanged = (id:string):void => {
         const itemIndex = openTimeRoomList.findIndex((item)=> item.id.toString() === id);
@@ -66,14 +63,19 @@ const OpenTimeRoomList = () => {
 
     useEffect(() => {
         if (activeRoomList && activeRoomList.length !== 0) {
-            const newList = activeRoomList.slice(0)
-            dispatch(setOpenTimeRoomList(newList))
+            let filteredList:UnitRoomListItem[] = []
+            activeRoomList.forEach((item) => {
+                const curItem = {'id':item.id, 'name':item.name, 'selected':item.selected}
+                filteredList.push(curItem)
+            })
+            filteredList = filteredList.filter((room) => room.selected === true)
+            dispatch(setOpenTimeRoomList(filteredList))
         }
-    },[activeRoomList])
+    },[])
 
 
-    const newRender = () => {
-        return (       
+
+    return (       
         <div className='open-time-room-list'>
             <ListSelector 
                 itemList={openTimeRoomList} 
@@ -84,11 +86,6 @@ const OpenTimeRoomList = () => {
                 onClearAllSelected={onClearAllRooms}
             />
         </div>)
-    }
-
-
-
-    return (newRender())
     
 }
 export default OpenTimeRoomList
