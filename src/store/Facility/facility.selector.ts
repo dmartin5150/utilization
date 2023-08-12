@@ -64,13 +64,13 @@ const getEndDateRange = (curDate:Date) => {
 }
 
 
-const getFilteredOpenTimes = (unit:string, curDate:Date,openType:OpenTimeTypes,room:string, data: OpenTimes[]) => {
+const getFilteredOpenTimes = (unit:string, curDate:Date,openType:OpenTimeTypes,room:string, duration: number, data: OpenTimes[]) => {
     let filteredData:OpenTimes[]
     if (openType === OpenTimeTypes.all) {
         filteredData = data.filter((openTime) => (openTime.unit ===unit))
     } else {
         filteredData = data.filter((openTime) => ((openTime.unit === unit) && (openTime.open_type === openType) 
-                                                && openTime.room === room))
+                                                && (openTime.room === room) && (openTime.unused_block_minutes >= duration)))
     }
     const startDate = new Date(`${curDate.getFullYear()}-${curDate.getMonth()+1}-1`)
     const endDate = getEndDateRange(curDate)
@@ -81,8 +81,8 @@ const getFilteredOpenTimes = (unit:string, curDate:Date,openType:OpenTimeTypes,r
 
 
 export const selectFilteredOpenTimes = createSelector(
-    [selectUnit,selectDataCurrentDate,selectOpenTimeType,selectOpenTimeRoom, selectOpenTimes],
-    (unit, curDate,openType,room, data) => getFilteredOpenTimes(unit, curDate,openType,room, data)
+    [selectUnit,selectDataCurrentDate,selectOpenTimeType,selectOpenTimeRoom, selectOpenTimeDuration, selectOpenTimes],
+    (unit, curDate,openType,room,duration, data) => getFilteredOpenTimes(unit, curDate,openType,room,duration, data)
 )
 
 
