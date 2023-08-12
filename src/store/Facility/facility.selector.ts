@@ -6,6 +6,7 @@ import { OpenTimes, OpenTimeTypes } from "./facility.types";
 import {getNextMonth, getNextYear} from "../../utilities/dates/dates"
 import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { item } from "../../store/ORData/ordata.types";
+import { selectActiveRoomLists } from "../ORData/selectors/ordata.selector";
 
 
 
@@ -20,6 +21,11 @@ export const selectUnit = createSelector(
 export const selectOpenTimeDuration = createSelector(
     [selectFacilityReducer],
     (facilitySlice) => facilitySlice.openTimeDuration
+)
+
+export const selectOpenTimeDate = createSelector(
+    [selectFacilityReducer],
+    (facilitySlice) => facilitySlice.selectedOpenTimeDate
 )
 
 
@@ -137,7 +143,7 @@ export const selectOpenTimeCalendar = createSelector(
 
 
 export const selectOpenTimeRoomHours = createSelector(
-    [selectOpenTimeRoomList,selectDataCurrentDate,selectFilteredOpenTimes],
+    [selectActiveRoomLists,selectDataCurrentDate,selectFilteredOpenTimes],
     (roomList, curDate, data) => {
         const roomListItems:item[] = []
         if (!roomList || roomList.length === 0) {

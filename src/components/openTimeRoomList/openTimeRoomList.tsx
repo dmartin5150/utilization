@@ -2,25 +2,27 @@ import React,{useEffect,useState} from "react";
 import "./openTimeRoomList.scss"
 import ListSelector from "../ListSelector/ListSelector";
 import { useSelector } from 'react-redux';
-import { selectUnit } from "../../store/Facility/facility.selector";
-import { selectUnitRoomLists } from "../../store/ORData/selectors/ordata.selector";
 import { ITEM_DISPLAY_TYPE } from "../ListSelector/ListItem";
-import { selectOpenTimeRoomList,selectOpenTimeRoomHours} from "../../store/Facility/facility.selector";
-import { selectActiveRoomLists } from "../../store/ORData/selectors/ordata.selector";
+import { selectOpenTimeRoomList} from "../../store/Facility/facility.selector";
 import { useAppDispatch } from "../../hooks/hooks";
 import { setOpenTimeRoomList } from "../../store/Facility/facilty.actions";
 import { UnitRoomListItem } from "../../pages/settings/settings.constants";
+import { selectActiveRoomLists } from "../../store/ORData/selectors/ordata.selector";
+import { selectOpenTimeRoomHours } from "../../store/Facility/facility.selector";
 
 
 
 
-const OpenTimeRoomList = () => {
+const OpenTimeRoomList= () => {
 
     const [allRoomsSelected, setAllRoomsSelected] = useState(true)
 
 
     const openTimeRoomList = useSelector(selectOpenTimeRoomList)
+    const roomData = useSelector(selectOpenTimeRoomHours)
     const activeRoomList = useSelector(selectActiveRoomLists)
+
+
     
     const dispatch = useAppDispatch()
 
@@ -62,16 +64,16 @@ const OpenTimeRoomList = () => {
 
 
     useEffect(() => {
-        if (activeRoomList && activeRoomList.length !== 0) {
+        if (activeRoomList && activeRoomList.length !== 0 && roomData) {
             let filteredList:UnitRoomListItem[] = []
-            activeRoomList.forEach((item) => {
+            roomData.forEach((item) => {
                 const curItem = {'id':item.id, 'name':item.name, 'selected':item.selected}
                 filteredList.push(curItem)
             })
             filteredList = filteredList.filter((room) => room.selected === true)
             dispatch(setOpenTimeRoomList(filteredList))
         }
-    },[])
+    },[activeRoomList, roomData])
 
 
 

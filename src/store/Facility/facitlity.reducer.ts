@@ -2,11 +2,12 @@ import { AnyAction } from "redux";
 import { FACILITY_UNITS } from "./facitlityUnits";
 import { setUnit,setDate,setRoom, setPrimeTime, setCustomDateRange, setSelectedOpenTimeRoom } from "./facilty.actions";
 import { fetchOpenTimeFailed,fetchOpenTimeStart,fetchOpenTimeSuccess,setSelectedTimeType,setOpenTimeDuration } from "./facilty.actions";
-import { setOpenTimeCalendar,setOpenTimeRoomList} from "./facilty.actions";
+import { setOpenTimeCalendar,setOpenTimeRoomList,setSelectedOpenTimeDate} from "./facilty.actions";
 import { PRIME_TIME_END, PRIME_TIME_START, PrimeTime,OpenTimes, OpenTimeTypes, JRIroomList } from "./facility.types";
 import { DateRange } from "../ORData/ordata.types";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { UnitRoomListItem } from "../../pages/settings/settings.constants";
+import { CalendarMenuItem } from "../../pages/utilization/utilization.constants";
 
 import { TNNASUNIT } from "./facility.types";
 
@@ -27,6 +28,7 @@ export type FacilityDataState = {
     openTimeDuration: number,
     openTimeCalendar: CalendarDayData[],
     openTimeRoomList: UnitRoomListItem[];
+    selectedOpenTimeDate: string;
     selectedRoom: string,
     isLoading:boolean,
     error:Error | null
@@ -57,7 +59,8 @@ const FACILITY_DATA_INITIAL_STATE: FacilityDataState = {
     openTimeDuration:0,
     openTimeCalendar:[],
     openTimeRoomList: JRIroomList,
-    selectedRoom:'BH JRI 06',
+    selectedRoom:'BH JRI 02',
+    selectedOpenTimeDate:'2023-8-1',
     isLoading:false,
     error:null
 }
@@ -79,8 +82,11 @@ export const FacilityReducer = (state=FACILITY_DATA_INITIAL_STATE, action: AnyAc
     if (setOpenTimeDuration.match(action)) {
         return {...state, openTimeDuration:action.payload}
     }
+    if (setSelectedOpenTimeDate.match(action)) {
+        return {...state, selectedOpenTimeDate:action.payload}
+    }
     if (setSelectedOpenTimeRoom.match(action)) {
-        return {...state, selectedRoom:action.payload}
+        return {...state, selectedRoom:action.payload.label}
     }
     if (setOpenTimeRoomList.match(action)) {
         console.log('updating open time room list')

@@ -10,6 +10,8 @@ import { AppDispatch } from "../store";
 import getOpenTimes from "../../utilities/fetchData/getOpenTimes"
 import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { UnitRoomListItem } from "../../pages/settings/settings.constants";
+import { CalendarMenuItem } from "../../pages/utilization/utilization.constants";
+
 
 
 
@@ -25,7 +27,8 @@ export type FetchOpenTimeStart = Action<FACILITY_TYPES.FETCH_OPEN_TIME_START>
 export type FetchOpenTimeSuccess = ActionWithPayload<FACILITY_TYPES.FETCH_OPEN_TIME_SUCCESS, OpenTimes[]>
 export type FetchOpenTimeFailed = ActionWithPayload<FACILITY_TYPES.FETCH_OPEN_TIME_FAILED, Error>
 export type SetOpenTimeCalendar = ActionWithPayload<FACILITY_TYPES.SET_OPEN_TIME_CALENDAR, CalendarDayData[]>
-export type SetSelectedOpenTimeRoom = ActionWithPayload<FACILITY_TYPES.SET_SELECTED_OPEN_TIME_ROOM, string>
+export type SetSelectedOpenTimeRoom = ActionWithPayload<FACILITY_TYPES.SET_SELECTED_OPEN_TIME_ROOM, CalendarMenuItem>
+export type SetSelectedOpenTimeDate = ActionWithPayload<FACILITY_TYPES.SET_SELECTED_OPEN_TIME_DATE, string>
 
 
 export const setOpenTimeDuration = withMatcher((duration:number):SetOpenTimeDuration => {
@@ -36,8 +39,12 @@ export const setSelectedTimeType = withMatcher((timeType:OpenTimeTypes):SetSelec
     return createAction(FACILITY_TYPES.SET_SELECTED_TIME_TYPE, timeType)
 })
 
-export const setSelectedOpenTimeRoom = withMatcher((room:string):SetSelectedOpenTimeRoom => {
+export const setSelectedOpenTimeRoom = withMatcher((room:CalendarMenuItem):SetSelectedOpenTimeRoom => {
     return createAction(FACILITY_TYPES.SET_SELECTED_OPEN_TIME_ROOM, room)
+})
+
+export const setSelectedOpenTimeDate = withMatcher((curDate:string):SetSelectedOpenTimeDate => {
+    return createAction(FACILITY_TYPES.SET_SELECTED_OPEN_TIME_DATE, curDate)
 })
 
 export const setOpenTimeRoomList = withMatcher((roomList:UnitRoomListItem[]):SetOpenTimeRoomList =>{

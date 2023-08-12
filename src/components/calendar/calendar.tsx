@@ -36,9 +36,9 @@ interface CalendarProps<T extends Option> {
   selectedDate: string;
   dataDateRange:DataDateRange
   calendarData:CalendarDayData[];
-  calendarSummary:CalendarDayData[];
-  summaryDateRange:DateRange;
-  calendarTotals:CalendarDayData[];
+  calendarSummary?:CalendarDayData[];
+  summaryDateRange?:DateRange;
+  calendarTotals?:CalendarDayData[];
   list1: SingleSelector<T>;
   list2: SingleSelector<T>
   list3?: SingleSelector<T>
@@ -119,7 +119,7 @@ function Calendar<T extends Option>({
           />
         </div>}
       </div>
-      {list3 && <CalendarSummary calendarTotals={calendarSummary} dateRange={summaryDateRange} />}
+      {list3 && calendarSummary && summaryDateRange && <CalendarSummary calendarTotals={calendarSummary} dateRange={summaryDateRange} />}
       <div>
         <MonthControl dateRange={dataDateRange} onMonthChange={onMonthChange} />
       </div>
@@ -147,7 +147,7 @@ function Calendar<T extends Option>({
         })}
       </ul>
       <ul className="layout totals">
-        {calendarTotals.map((calendarDay, idx) => {
+        {calendarTotals && (calendarTotals.length !== 0) && calendarTotals.map((calendarDay, idx) => {
           const hideElement:boolean = hiddenID.includes(calendarDay.date.toString());
           return (
             <li key={idx}>

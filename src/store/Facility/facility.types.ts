@@ -13,7 +13,8 @@ export enum FACILITY_TYPES {
     SET_OPEN_TIME_DURATION = 'facility/SET_OPEN_TIME_DURATION',
     SET_OPEN_TIME_CALENDAR = 'facility/SET_OPEN_TIME_CALENDAR',
     SET_SELECTED_OPEN_TIME_ROOM = 'facility/SET_SELECTED_OPEN_TIME_ROOM',
-    SET_OPEN_TIME_ROOM_LIST = 'facility/SET_OPEN_TIME_ROOM_LIST'
+    SET_OPEN_TIME_ROOM_LIST = 'facility/SET_OPEN_TIME_ROOM_LIST',
+    SET_SELECTED_OPEN_TIME_DATE = 'facility/SET_SELECTED_OPEN_TIME_DATE'
 }
 
 
@@ -144,6 +145,7 @@ export enum OpenTimeTypes  {
     open ='OPEN',
     block = 'BLOCK'
 }
+
 
 
 export type OpenTimes = {
