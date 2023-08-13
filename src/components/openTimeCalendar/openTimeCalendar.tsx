@@ -94,7 +94,9 @@ const OpenTimeCalendar: React.FC<OpenTimeCalendarProps> = ({calendarData}) => {
         if (openTimeRoomList && openTimeRoomList.length !== 0) {
             const OpenRoomOptions: CalendarMenuItem[] = [{id:0, label: 'All', value:'All'}]
             openTimeRoomList.forEach((item,index) => {
-                const curItem = {'id':index+1, 'label':item.name, 'value':item.name }
+                const nameIndex = item.name.search(':')
+                const roomName = item.name.substring(0,nameIndex)
+                const curItem = {'id':index+1, 'label':roomName, 'value':item.name }
                 OpenRoomOptions.push(curItem)
             })
             setOpenRoomOptions(OpenRoomOptions)

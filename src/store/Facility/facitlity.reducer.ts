@@ -60,7 +60,7 @@ const FACILITY_DATA_INITIAL_STATE: FacilityDataState = {
     openTimeCalendar:[],
     openTimeRoomList: JRIroomList,
     selectedRoom:'BH JRI 02',
-    selectedOpenTimeDate:'2023-8-1',
+    selectedOpenTimeDate:'2023-08-01',
     isLoading:false,
     error:null
 }

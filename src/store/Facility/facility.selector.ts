@@ -77,13 +77,16 @@ const getEndDateRange = (curDate:Date) => {
 }
 
 
-const getFilteredOpenTimes = (unit:string, curDate:Date,openType:OpenTimeTypes,room:string, duration: number, data: OpenTimes[]) => {
+const getFilteredOpenTimes = (unit:string, curDate:Date,openType:OpenTimeTypes,room:string, duration: number, data: OpenTimes[], selectAllRooms:boolean) => {
+    console.log('filtered room',room)
     let filteredData:OpenTimes[]
-    if (openType === OpenTimeTypes.all) {
-        filteredData = data.filter((openTime) => (openTime.unit ===unit))
-    } else {
-        filteredData = data.filter((openTime) => ((openTime.unit === unit) && (openTime.open_type === openType) 
-                                                && (openTime.room === room) && (openTime.unused_block_minutes >= duration)))
+    if (room === 'All' || selectAllRooms) {
+        filteredData = data.filter((openTime) => (openTime.unit ===unit)  && (openTime.unused_block_minutes >= duration))
+    } else { 
+        filteredData = data.filter((openTime) => ((openTime.unit === unit) && (openTime.room === room) && (openTime.unused_block_minutes >= duration)))
+    }
+    if (openType !== OpenTimeTypes.all)  {
+        filteredData = filteredData.filter((openTime) => (openTime.open_type === openType))
     }
     const startDate = new Date(`${curDate.getFullYear()}-${curDate.getMonth()+1}-1`)
     const endDate = getEndDateRange(curDate)
@@ -95,15 +98,18 @@ const getFilteredOpenTimes = (unit:string, curDate:Date,openType:OpenTimeTypes,r
 
 export const selectFilteredOpenTimes = createSelector(
     [selectUnit,selectDataCurrentDate,selectOpenTimeType,selectOpenTimeRoom, selectOpenTimeDuration, selectOpenTimes],
-    (unit, curDate,openType,room,duration, data) => getFilteredOpenTimes(unit, curDate,openType,room,duration, data)
+    (unit, curDate,openType,room,duration, data) => getFilteredOpenTimes(unit, curDate,openType,room,duration, data, false)
 )
 
-
+export const selectAllRoomOpenTimes = createSelector(
+    [selectUnit,selectDataCurrentDate,selectOpenTimeType,selectOpenTimeRoom, selectOpenTimeDuration, selectOpenTimes],
+    (unit, curDate,openType,room,duration, data) => getFilteredOpenTimes(unit, curDate,openType,room,duration, data, true)  
+)
 
 const calculateUnusedMinutes = (curData:OpenTimes[]) => {
     let totalUnusedMinutes
     if (curData.length !== 0) {
-        console.log('curData', curData)
+        // console.log('curData', curData)
         const unusedMinutes = curData.map((data) => data.unused_block_minutes)
         totalUnusedMinutes = (unusedMinutes.reduce((ac,total)=> ac + total, 0))/60;
     } else {
@@ -130,8 +136,10 @@ const getFormattedDate = (curDate:Date) => {
 }
 
 
-const getCalendarData = (curDate:Date, data:OpenTimes[]):CalendarDayData[] => {
+const getCalendarData = (strDate:string, data:OpenTimes[]):CalendarDayData[] => {
     const calendarDays:CalendarDayData[] = []
+    const curDate = new Date(strDate + 'T00:00:00')
+    console.log('calendar data curDate', curDate)
     const dates = data.map((openTime) => openTime.proc_date)
     const endDate = getEndDateRange(curDate)
     let loopDate = new Date(`${curDate.getFullYear()}-${curDate.getMonth()+1}-1`)
@@ -142,6 +150,8 @@ const getCalendarData = (curDate:Date, data:OpenTimes[]):CalendarDayData[] => {
             continue;
         }
         const curData = data.filter((data) => data.proc_date.getTime() === loopDate.getTime())
+        // console.log('curDate', loopDate)
+        // console.log('curdata', curData)
         let totalUnusedMinutes = calculateUnusedMinutes(curData)
         const display = Math.round(totalUnusedMinutes).toString()
         const calDay:CalendarDayData = {date:getFormattedDate(loopDate),display,subHeading1:'Hours',ptMinutes:0, nonptMinutes:0, totalptMinutes:0,dayOfWeek:curDate.getDay()}
@@ -154,18 +164,20 @@ const getCalendarData = (curDate:Date, data:OpenTimes[]):CalendarDayData[] => {
 
 
 export const selectOpenTimeCalendar = createSelector(
-   [selectDataCurrentDate, selectFilteredOpenTimes],
+   [selectOpenTimeDate, selectFilteredOpenTimes],
    (curDate, data) => getCalendarData(curDate, data)
 )
 
 
 export const selectOpenTimeRoomHours = createSelector(
-    [selectActiveRoomLists,selectDataCurrentDate,selectFilteredOpenTimes],
-    (roomList, curDate, data) => {
+    [selectActiveRoomLists,selectOpenTimeDate,selectAllRoomOpenTimes],
+    (roomList, strDate, data) => {
+        const curDate = new Date(strDate + 'T00:00:00')
         const roomListItems:item[] = []
         if (!roomList || roomList.length === 0) {
             return roomListItems
         }
+        console.log('room list', roomList)
         roomList.forEach((room,index) => {
             let curData = data.filter((openTime)=> openTime.room === room.name);
             curData = curData.filter((data) => data.proc_date.getTime() === curDate.getTime())

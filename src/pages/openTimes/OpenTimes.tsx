@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { item } from "../../store/ORData/ordata.types";
 import OpenTimeRoomList from "../../components/openTimeRoomList/openTimeRoomList"
 import { selectActiveRoomLists } from "../../store/ORData/selectors/ordata.selector";
-import { selectOpenTimeRoomList,} from "../../store/Facility/facility.selector";
+import { selectOpenTimeRoomList,selectOpenTimeDate} from "../../store/Facility/facility.selector";
 import { setOpenTimeRoomList } from "../../store/Facility/facilty.actions";
 import { selectUnit } from "../../store/Facility/facility.selector";
 import OpenTimeCalendar from "../../components/openTimeCalendar/openTimeCalendar"
@@ -27,26 +27,16 @@ const OpenTimes = () => {
     const roomData = useSelector(selectOpenTimeRoomHours)
     const activeRoomList = useSelector(selectActiveRoomLists)
     const selectedUnit = useSelector(selectUnit)
+    const selectedDate = useSelector(selectOpenTimeDate)
+    
 
-    useEffect(() => {
-        console.log('updating calendar')
-        // if(calendar) {
-        //     dispatch(setOpenTimeCalendar(calendar))
-        // }
-    },[calendar])
 
     useEffect(()=> {
-        if (selectedUnit) {
-            dispatch(fetchOpenTimesAsync(selectedUnit, '2023-8-1'))
+        if (selectedUnit && selectedDate) {
+            dispatch(fetchOpenTimesAsync(selectedUnit, selectedDate))
         }
-    },[selectedUnit])
-    // useEffect(()=> {
-    //     if (activeRoomList && activeRoomList.length !== 0) {
-    //         dispatch(setOpenTimeRoomList([...roomData]))
-    //     }
+    },[selectedUnit,selectedDate])
 
-    // },[activeRoomList])
-    
     
 
     return (
