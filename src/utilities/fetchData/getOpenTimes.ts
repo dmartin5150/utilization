@@ -11,6 +11,7 @@ const getOpenTimes = async (unit:string, startDate: string)=> {
       });
       if (response) {
         const data: OpenTimes[] = await response.json();
+        // console.log('opentime data', data)
         return data
       }
       return []
