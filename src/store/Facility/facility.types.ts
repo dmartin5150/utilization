@@ -162,3 +162,17 @@ export type OpenTimes = {
 }
 
 
+
+
+export type OpenTimeDisplayInfo = {
+    room:string;
+    name:string;
+    local_start_time:string;
+    local_end_time:string;
+    formatted_minutes:string;
+    release_date:string;
+    open_type: OpenTimeTypes;
+}
+
+
+

@@ -2,6 +2,12 @@
     max-width:25rem;
     font-size:15px;
     margin-left:3rem;
+
+    & .open-time-room-list--header {
+        border: 1px solid black;
+        border-bottom:none;
+    }
+
     & .list-selector {
 
         & .items {

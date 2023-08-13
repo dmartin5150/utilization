@@ -7,6 +7,8 @@ import {getNextMonth, getNextYear} from "../../utilities/dates/dates"
 import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { item } from "../../store/ORData/ordata.types";
 import { selectActiveRoomLists } from "../ORData/selectors/ordata.selector";
+import { UnitRoomListItem } from "../../pages/settings/settings.constants";
+import { OpenTimeDisplayInfo } from "./facility.types";
 
 
 
@@ -150,8 +152,6 @@ const getCalendarData = (strDate:string, data:OpenTimes[]):CalendarDayData[] => 
             continue;
         }
         const curData = data.filter((data) => data.proc_date.getTime() === loopDate.getTime())
-        // console.log('curDate', loopDate)
-        // console.log('curdata', curData)
         let totalUnusedMinutes = calculateUnusedMinutes(curData)
         const display = Math.round(totalUnusedMinutes).toString()
         const calDay:CalendarDayData = {date:getFormattedDate(loopDate),display,subHeading1:'Hours',ptMinutes:0, nonptMinutes:0, totalptMinutes:0,dayOfWeek:curDate.getDay()}
@@ -165,7 +165,34 @@ const getCalendarData = (strDate:string, data:OpenTimes[]):CalendarDayData[] => 
 
 export const selectOpenTimeCalendar = createSelector(
    [selectOpenTimeDate, selectFilteredOpenTimes],
-   (curDate, data) => getCalendarData(curDate, data)
+   (curDate, data:OpenTimes[]) => getCalendarData(curDate, data)
+)
+
+export const getOpenTimeDisplayData = (strDate:string, roomList: UnitRoomListItem[],data:OpenTimes[]):OpenTimeDisplayInfo[] => {
+    const OpenTimeDisplayItems:OpenTimeDisplayInfo[] = []
+    const curDate = new Date(strDate + 'T00:00:00')
+    if (!roomList || roomList.length === 0) {
+        return OpenTimeDisplayItems
+    }
+    roomList.forEach((room,index) => {
+        let curData = data.filter((openTime)=> openTime.room === room.name);
+        curData = curData.filter((data) => data.proc_date.getTime() === curDate.getTime())
+        if (curData.length !== 0) {
+            curData.forEach((curItem) => {
+                let openTime:OpenTimeDisplayInfo = {name:curItem.name, local_start_time:curItem.local_start_time, local_end_time:curItem.local_end_time,
+                                formatted_minutes: curItem.formatted_minutes, release_date:curItem.release_date, 
+                                open_type: curItem.open_type, room:room.name}
+                OpenTimeDisplayItems.push(openTime)
+            })
+        }  
+    })
+    return OpenTimeDisplayItems
+}
+
+
+export const selectOpenTimeDisplayData = createSelector(
+    [selectOpenTimeDate, selectActiveRoomLists, selectAllRoomOpenTimes],
+    (strDate:string, roomList: UnitRoomListItem[],data:OpenTimes[]) => getOpenTimeDisplayData(strDate,roomList,data)
 )
 
 

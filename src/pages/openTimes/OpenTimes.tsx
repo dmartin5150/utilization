@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { item } from "../../store/ORData/ordata.types";
 import OpenTimeRoomList from "../../components/openTimeRoomList/openTimeRoomList"
 import { selectActiveRoomLists } from "../../store/ORData/selectors/ordata.selector";
-import { selectOpenTimeRoomList,selectOpenTimeDate} from "../../store/Facility/facility.selector";
+import { selectOpenTimeRoomList,selectOpenTimeDate,selectOpenTimeDisplayData} from "../../store/Facility/facility.selector";
 import { setOpenTimeRoomList } from "../../store/Facility/facilty.actions";
 import { selectUnit } from "../../store/Facility/facility.selector";
 import OpenTimeCalendar from "../../components/openTimeCalendar/openTimeCalendar"
@@ -28,7 +28,11 @@ const OpenTimes = () => {
     const activeRoomList = useSelector(selectActiveRoomLists)
     const selectedUnit = useSelector(selectUnit)
     const selectedDate = useSelector(selectOpenTimeDate)
-    
+    const openTimes = useSelector(selectOpenTimeDisplayData)
+
+    useEffect(() => {
+        console.log('open times', openTimes)
+    },[openTimes, selectedDate] )
 
 
     useEffect(()=> {

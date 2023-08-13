@@ -8,7 +8,7 @@ import { useAppDispatch } from "../../hooks/hooks";
 import { setOpenTimeRoomList } from "../../store/Facility/facilty.actions";
 import { UnitRoomListItem } from "../../pages/settings/settings.constants";
 import { selectActiveRoomLists } from "../../store/ORData/selectors/ordata.selector";
-import { selectOpenTimeRoomHours } from "../../store/Facility/facility.selector";
+import { selectOpenTimeRoomHours,selectOpenTimeDate } from "../../store/Facility/facility.selector";
 
 
 
@@ -21,6 +21,7 @@ const OpenTimeRoomList= () => {
     const openTimeRoomList = useSelector(selectOpenTimeRoomList)
     const roomData = useSelector(selectOpenTimeRoomHours)
     const activeRoomList = useSelector(selectActiveRoomLists)
+    const selectedDate = useSelector(selectOpenTimeDate)
 
 
     
@@ -79,6 +80,9 @@ const OpenTimeRoomList= () => {
 
     return (       
         <div className='open-time-room-list'>
+            <div className='open-time-room-list--header'>
+                <h3>Date: {selectedDate}</h3>
+            </div>
             <ListSelector 
                 itemList={openTimeRoomList} 
                 allItemsSelected={allRoomsSelected} 
