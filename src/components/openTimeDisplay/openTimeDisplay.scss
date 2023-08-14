@@ -1,11 +1,15 @@
 .open-time_display {
-    display:grid;
-    grid-template-columns: 1fr 5fr;
-    font-size:14px;
-    color:black;
-    justify-content: space-between;
-    min-width:55rem;
-    height: 3rem;
+
+
+    & .open-time-display--header-container{
+        display:grid;
+        grid-template-columns: 1fr 4fr;
+        font-size:14px;
+        color:black;
+        justify-content: space-between;
+        min-width:55rem;
+        height: 3rem;
+        border-bottom:1px solid black !important;
 
 
     & .open-time-display--room {
@@ -13,18 +17,21 @@
 
     }
 
-    & .open-time-display--header {
-        display: grid;
-        grid-template-columns: 3fr 1fr 1fr 1fr 2fr;
-        border:1px solid black;
-
-        & .column-heading {
+        & .open-time-display--header {
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr 1fr 2fr;
             border:1px solid black;
-            padding: 0 1rem; 
-        }
 
-    }
-            
+            & .open-time-display--room-container {
+                border: 1px solid black;
+            }
+            & .column-heading {
+                border:1px solid black;
+                padding: 0 1rem; 
+            }
+
+        }
+    }   
 
 
 }

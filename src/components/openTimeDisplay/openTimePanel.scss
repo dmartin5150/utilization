@@ -1,0 +1,48 @@
+.open-time-panel {
+    display: grid;
+    display:grid;
+    grid-template-columns: 1fr 4fr;
+    // border:1px solid black;
+    color:black;
+    // display: grid;
+    // grid-template-columns: 3fr 1fr 1fr 1fr 2fr;
+    // border:1px solid black;
+
+
+
+    & .open-time-display--room-container {
+            border:1px solid black;
+            border-bottom:none;
+            padding: 0 1rem; 
+            &.notopborders{
+                border-top:none;
+            }
+            &.addbottomborder {
+                border-bottom:1px solid black;
+            }
+    }
+
+
+
+
+
+
+    & .open-time-panel--container {
+        // display:flex;
+        // flex-direction: row;
+        display: grid;
+        grid-template-columns: 3fr 1fr 1fr 1fr 2fr;
+        // border:1px solid black;
+
+        & .column-heading {
+            border:1px solid black;
+            padding: 0 1rem; 
+
+        }
+
+    }
+
+
+
+
+}
