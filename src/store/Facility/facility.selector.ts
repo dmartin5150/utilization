@@ -36,6 +36,11 @@ export const selectOpenTimeRoomList= createSelector(
     (facilitySlice) => facilitySlice.openTimeRoomList
 )
 
+export const getSelectedOpenTimeRooms = createSelector(
+    [selectFacilityReducer],
+    (facilitySlice) => facilitySlice.openTimeRoomList.filter((room) => room.selected === true)
+)
+
 
 export const selectOpenTimeRoom = createSelector(
     [selectFacilityReducer],
@@ -79,32 +84,46 @@ const getEndDateRange = (curDate:Date) => {
 }
 
 
-const getFilteredOpenTimes = (unit:string, curDate:Date,openType:OpenTimeTypes,room:string, duration: number, data: OpenTimes[], selectAllRooms:boolean) => {
-    console.log('filtered room',room)
+const getRoomNames = (rooms:UnitRoomListItem[]) => {
+    return rooms.map((room) => {
+        const nameIndex = room.name.search(':')
+        return room.name.substring(0,nameIndex)
+    })
+}
+
+const getFilteredOpenTimes = (unit:string, curDate:Date,openType:OpenTimeTypes,rooms:UnitRoomListItem[], duration: number, data: OpenTimes[], selectAllRooms:boolean) => {
     let filteredData:OpenTimes[]
-    if (room === 'All' || selectAllRooms) {
-        filteredData = data.filter((openTime) => (openTime.unit ===unit)  && (openTime.unused_block_minutes >= duration))
-    } else { 
-        filteredData = data.filter((openTime) => ((openTime.unit === unit) && (openTime.room === room) && (openTime.unused_block_minutes >= duration)))
-    }
+    if (rooms && rooms.length >0) {
+    console.log('room ', rooms)
+    const roomList = getRoomNames(rooms)
+    filteredData = data.filter((openTime) => (openTime.unit ===unit)  && (openTime.unused_block_minutes >= duration))
+    console.log('filtered 1', filteredData)
+    console.log('roomList', roomList)
+    filteredData = filteredData.filter((openTime) => ((roomList.includes(openTime.room))))
+    console.log('filtered 2', filteredData)
     if (openType !== OpenTimeTypes.all)  {
         filteredData = filteredData.filter((openTime) => (openTime.open_type === openType))
+        console.log('filtered 2', filteredData)
     }
     const startDate = new Date(`${curDate.getFullYear()}-${curDate.getMonth()+1}-1`)
     const endDate = getEndDateRange(curDate)
     return filteredData.filter((openTime) => ((openTime.proc_date >= startDate) && (openTime.proc_date < endDate)))
+} else {
+    return []
+}
+        
 
 }
 
 
 
 export const selectFilteredOpenTimes = createSelector(
-    [selectUnit,selectDataCurrentDate,selectOpenTimeType,selectOpenTimeRoom, selectOpenTimeDuration, selectOpenTimes],
-    (unit, curDate,openType,room,duration, data) => getFilteredOpenTimes(unit, curDate,openType,room,duration, data, false)
+    [selectUnit,selectDataCurrentDate,selectOpenTimeType,getSelectedOpenTimeRooms, selectOpenTimeDuration, selectOpenTimes],
+    (unit, curDate,openType,rooms,duration, data) => getFilteredOpenTimes(unit, curDate,openType,rooms,duration, data, false)
 )
 
 export const selectAllRoomOpenTimes = createSelector(
-    [selectUnit,selectDataCurrentDate,selectOpenTimeType,selectOpenTimeRoom, selectOpenTimeDuration, selectOpenTimes],
+    [selectUnit,selectDataCurrentDate,selectOpenTimeType,getSelectedOpenTimeRooms, selectOpenTimeDuration, selectOpenTimes],
     (unit, curDate,openType,room,duration, data) => getFilteredOpenTimes(unit, curDate,openType,room,duration, data, true)  
 )
 

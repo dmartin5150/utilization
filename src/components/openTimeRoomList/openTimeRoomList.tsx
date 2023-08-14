@@ -65,7 +65,7 @@ const OpenTimeRoomList= () => {
 
 
     useEffect(() => {
-        if (activeRoomList && activeRoomList.length !== 0 && roomData) {
+        if (activeRoomList && activeRoomList.length !== 0) {
             let filteredList:UnitRoomListItem[] = []
             roomData.forEach((item) => {
                 const curItem = {'id':item.id, 'name':item.name, 'selected':item.selected}
@@ -74,7 +74,7 @@ const OpenTimeRoomList= () => {
             filteredList = filteredList.filter((room) => room.selected === true)
             dispatch(setOpenTimeRoomList(filteredList))
         }
-    },[activeRoomList, roomData])
+    },[ activeRoomList])
 
 
 

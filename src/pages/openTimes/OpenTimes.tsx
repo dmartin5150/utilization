@@ -43,6 +43,19 @@ const OpenTimes = () => {
         }
     },[selectedUnit,selectedDate])
 
+    useEffect(()=> {
+        if (roomData) {
+            console.log('printing room data', roomData)
+        }
+        
+    },[roomData])
+
+    useEffect(()=> {
+        if (calendar) {
+            console.log('printing room data', calendar)
+        }
+
+    },[calendar])
     
 
     return (
