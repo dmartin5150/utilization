@@ -8,7 +8,7 @@ import { CalendarDayData } from "../../components/calendar/calendarDay";
 import { item } from "../../store/ORData/ordata.types";
 import { selectActiveRoomLists } from "../ORData/selectors/ordata.selector";
 import { UnitRoomListItem } from "../../pages/settings/settings.constants";
-import { OpenTimeDisplayInfo } from "./facility.types";
+import { OpenTimeDisplayInfo, OpenTimeDisplayObject } from "./facility.types";
 
 
 
@@ -168,25 +168,35 @@ export const selectOpenTimeCalendar = createSelector(
    (curDate, data:OpenTimes[]) => getCalendarData(curDate, data)
 )
 
-export const getOpenTimeDisplayData = (strDate:string, roomList: UnitRoomListItem[],data:OpenTimes[]):OpenTimeDisplayInfo[] => {
-    const OpenTimeDisplayItems:OpenTimeDisplayInfo[] = []
+export const getOpenTimeDisplayData = (strDate:string, roomList: UnitRoomListItem[],data:OpenTimes[]):OpenTimeDisplayObject[] => {
+    let openTimeDisplayItems:OpenTimeDisplayInfo[] = []
+    const openTimeDisplayObject: OpenTimeDisplayObject[] =[]
     const curDate = new Date(strDate + 'T00:00:00')
     if (!roomList || roomList.length === 0) {
-        return OpenTimeDisplayItems
+        return openTimeDisplayObject
     }
+    console.log('roomlist', roomList)
     roomList.forEach((room,index) => {
+        console.log('new loop', room.name)
+        openTimeDisplayItems = []
         let curData = data.filter((openTime)=> openTime.room === room.name);
         curData = curData.filter((data) => data.proc_date.getTime() === curDate.getTime())
+        let opetTime;
         if (curData.length !== 0) {
             curData.forEach((curItem) => {
                 let openTime:OpenTimeDisplayInfo = {name:curItem.name, local_start_time:curItem.local_start_time, local_end_time:curItem.local_end_time,
                                 formatted_minutes: curItem.formatted_minutes, release_date:curItem.release_date, 
                                 open_type: curItem.open_type, room:room.name}
-                OpenTimeDisplayItems.push(openTime)
+                
+                openTimeDisplayItems.push(openTime)
             })
+            
+            let displayObject:OpenTimeDisplayObject = {[room.name]: openTimeDisplayItems}
+            openTimeDisplayObject.push(displayObject)
         }  
     })
-    return OpenTimeDisplayItems
+    console.log('display object', openTimeDisplayObject)
+    return openTimeDisplayObject
 }
 
 

@@ -175,4 +175,7 @@ export type OpenTimeDisplayInfo = {
 }
 
 
+export type OpenTimeDisplayObject = {
+    [key:string] : OpenTimeDisplayInfo[]
+}
 
