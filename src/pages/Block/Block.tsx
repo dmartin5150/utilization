@@ -416,6 +416,7 @@ const Block = () => {
                 summaryDateRange={summaryDateRange}
                 selectedDate={selectedDate}
                 dataDateRange={currentDateRange}
+                useDropDown={true}
                 list1={blockTypeMenu}
                 list2={roomMenu}
                 list3={summaryMenu}

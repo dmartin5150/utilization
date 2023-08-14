@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import Calendar from "../calendar/calendar";
+import "./openTimeCalendar.scss"
 import { useSelector } from "react-redux";
 import { selectUnit } from "../../store/Facility/facility.selector";
 import { selectOpenTimeDate } from "../../store/Facility/facility.selector";
@@ -155,6 +156,7 @@ const OpenTimeCalendar: React.FC<OpenTimeCalendarProps> = ({calendarData}) => {
                 selectedDate={selectedDate}
                 calendarData={calendarData}
                 dataDateRange={currentDateRange}
+                useDropDown={false}
                 list1={openRoomMenu}
                 list2={openTypeMenu}
                 onMonthChange={onMonthChange}

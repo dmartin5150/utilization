@@ -39,21 +39,24 @@ interface CalendarProps<T extends Option> {
   calendarSummary?:CalendarDayData[];
   summaryDateRange?:DateRange;
   calendarTotals?:CalendarDayData[];
+  useDropDown: boolean;
   list1: SingleSelector<T>;
   list2: SingleSelector<T>
   list3?: SingleSelector<T>
   onMonthChange: (direction:MonthChangeDirection)=>void;
   onDateChange:(id:string)=>void;
+  onTextChanged?: (searchText:string)=>void;
   pageSize: number
 }
 
 
 function Calendar<T extends Option>({
-  title,subTitle, selectedDate,calendarData, dataDateRange,calendarSummary, summaryDateRange,calendarTotals,list1,list2,list3, onMonthChange,  onDateChange, pageSize
+  title,subTitle, selectedDate,calendarData, dataDateRange,calendarSummary, summaryDateRange,calendarTotals,useDropDown,list1,list2,list3, onMonthChange,  onDateChange,onTextChanged, pageSize
 }: React.PropsWithChildren<CalendarProps<T>>)  {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentCalendarData, setCurrentCalendarData] = useState<CalendarDayData[]>([]);
   const [month, setMonth] = useState<string>('July')
+  const [searchText, setSearchText] = useState('');
 
   const calendar = useSelector(selectCalendarData);
   const unit = useSelector(selectUnit);
@@ -78,13 +81,23 @@ function Calendar<T extends Option>({
   }
   },[calendarData])
 
-
+  useEffect(() => {
+    if (onTextChanged)  {
+      onTextChanged(searchText)
+    }
+  },[searchText])
 
   useEffect(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
     setCurrentCalendarData(calendarData.slice(firstPageIndex, lastPageIndex));
   }, [currentPage, calendarData]);
+
+
+const handleSearchTextChanged = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value)
+}
+
   return (
     <div className={"calendar"}>
       <div className='header-title'>
@@ -92,6 +105,12 @@ function Calendar<T extends Option>({
           <h2 className="heading">{title}</h2>
           <h2 className="heading">{subTitle}</h2>
         </div>
+        {!useDropDown ? <div className='searchBox'>
+            <h2>{title}</h2>
+            <input value={searchText} type="number"
+            onChange={handleSearchTextChanged}
+            />
+          </div> :
         <div className="calendar-dropdown">
           <SelectorList 
           title={list1.title}
@@ -100,7 +119,7 @@ function Calendar<T extends Option>({
           optionList = {list1.optionList}
           onChange = {list1.onChange}
           />
-        </div>
+        </div>}
         <div className="calendar-dropdown">
           <SelectorList 
           title={list2.title}

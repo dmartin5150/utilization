@@ -25,6 +25,17 @@
             padding: 0 3rem;
 
         }
+        .searchBox {
+            height:3rem;
+            margin-right:2rem;
+            margin-top:1rem;
+            & input {
+                height:3.7rem;
+                border-radius:5px;
+                text-align: center;
+            }
+
+        }
         .calendar-dropdown {
             z-index:10;
         }
