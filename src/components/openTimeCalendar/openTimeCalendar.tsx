@@ -21,6 +21,7 @@ import { getPreviousDate,getNextDate } from "../../utilities/dates/dates";
 import { MonthChangeDirection } from "../calendar/calendar";
 import { setDataCurrentDate } from "../../store/ORData/actions/calendar.actions";
 import { setSelectedOpenTimeDate } from "../../store/Facility/facilty.actions";
+import { setOpenTimeDuration } from "../../store/Facility/facilty.actions";
 
 
 export interface OpenTimeCalendarProps {
@@ -119,7 +120,7 @@ const OpenTimeCalendar: React.FC<OpenTimeCalendarProps> = ({calendarData}) => {
                 selectedIndex = 0
             }
             const calendarOpenRoomSelector: SingleSelector<CalendarMenuItem> = {
-                'title': 'Rooms', 
+                'title': 'Duration (minutes)', 
                 isDisabled: false,
                 showBorder:false,
                 selectedOption: openRoomOptions[selectedIndex],
@@ -131,6 +132,10 @@ const OpenTimeCalendar: React.FC<OpenTimeCalendarProps> = ({calendarData}) => {
 
       },[openRoomOptions,selectedRoom])
 
+    const handleDurationChange = (duration:string) => {
+      console.log('duration changeds', duration)
+      dispatch(setOpenTimeDuration(parseInt(duration)))
+    }
 
     const onMonthChange = (direction:MonthChangeDirection) => {
         let newDate;
@@ -159,6 +164,7 @@ const OpenTimeCalendar: React.FC<OpenTimeCalendarProps> = ({calendarData}) => {
                 useDropDown={false}
                 list1={openRoomMenu}
                 list2={openTypeMenu}
+                onTextChanged={handleDurationChange}
                 onMonthChange={onMonthChange}
                 onDateChange={setOpenTimeDate}
                 pageSize={30}

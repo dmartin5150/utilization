@@ -1,11 +1,20 @@
 
 .calendar {
 
+    & dropdown {
+        color: grey;
+    }
+
     & .searchBox {
+        color:white;
         margin-left:5rem;
     }
 
     & .selector {
+        & label {
+            color:white;
+        }
+        
         max-width:15rem;
     }
 }

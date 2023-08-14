@@ -56,7 +56,7 @@ function Calendar<T extends Option>({
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentCalendarData, setCurrentCalendarData] = useState<CalendarDayData[]>([]);
   const [month, setMonth] = useState<string>('July')
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState('0');
 
   const calendar = useSelector(selectCalendarData);
   const unit = useSelector(selectUnit);
@@ -81,11 +81,7 @@ function Calendar<T extends Option>({
   }
   },[calendarData])
 
-  useEffect(() => {
-    if (onTextChanged)  {
-      onTextChanged(searchText)
-    }
-  },[searchText])
+
 
   useEffect(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
@@ -95,7 +91,20 @@ function Calendar<T extends Option>({
 
 
 const handleSearchTextChanged = (e:React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value)
+  if (e.target.value) {
+      if (e.target.value[0]  === '0') {
+        e.target.value= e.target.value.substring(1)
+      }
+      setSearchText(e.target.value)
+      if (onTextChanged) {
+        onTextChanged(e.target.value)
+      } 
+  } else {
+      setSearchText("0")
+      if (onTextChanged) {
+        onTextChanged("0")
+      }
+  }  
 }
 
   return (
@@ -106,7 +115,7 @@ const handleSearchTextChanged = (e:React.ChangeEvent<HTMLInputElement>) => {
           <h2 className="heading">{subTitle}</h2>
         </div>
         {!useDropDown ? <div className='searchBox'>
-            <h2>{title}</h2>
+            <h2>{list1.title}</h2>
             <input value={searchText} type="number"
             onChange={handleSearchTextChanged}
             />
