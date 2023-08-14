@@ -175,9 +175,9 @@ export const getOpenTimeDisplayData = (strDate:string, roomList: UnitRoomListIte
     if (!roomList || roomList.length === 0) {
         return openTimeDisplayObject
     }
-    console.log('roomlist', roomList)
+    // console.log('roomlist', roomList)
     roomList.forEach((room,index) => {
-        console.log('new loop', room.name)
+        // console.log('new loop', room.name)
         openTimeDisplayItems = []
         let curData = data.filter((openTime)=> openTime.room === room.name);
         curData = curData.filter((data) => data.proc_date.getTime() === curDate.getTime())
@@ -191,11 +191,11 @@ export const getOpenTimeDisplayData = (strDate:string, roomList: UnitRoomListIte
                 openTimeDisplayItems.push(openTime)
             })
             
-            let displayObject:OpenTimeDisplayObject = {[room.name]: openTimeDisplayItems}
+            let displayObject:OpenTimeDisplayObject = {room: room.name, data: openTimeDisplayItems}
             openTimeDisplayObject.push(displayObject)
         }  
     })
-    console.log('display object', openTimeDisplayObject)
+    // console.log('display object', openTimeDisplayObject)
     return openTimeDisplayObject
 }
 
@@ -225,10 +225,6 @@ export const selectOpenTimeRoomHours = createSelector(
         return roomListItems
     }
 )
-
-
-
-
 
 
 export const selectDate = createSelector(

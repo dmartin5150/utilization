@@ -12,6 +12,7 @@ import { selectOpenTimeRoomList,selectOpenTimeDate,selectOpenTimeDisplayData} fr
 import { setOpenTimeRoomList } from "../../store/Facility/facilty.actions";
 import { selectUnit } from "../../store/Facility/facility.selector";
 import OpenTimeCalendar from "../../components/openTimeCalendar/openTimeCalendar"
+import OpenTimeDisplay from "../../components/openTimeDisplay/openTimeDisplay"
 
 
 
@@ -29,6 +30,7 @@ const OpenTimes = () => {
     const selectedUnit = useSelector(selectUnit)
     const selectedDate = useSelector(selectOpenTimeDate)
     const openTimes = useSelector(selectOpenTimeDisplayData)
+    const displayData = useSelector(selectOpenTimeDisplayData)
 
     useEffect(() => {
         console.log('open times', openTimes)
@@ -45,9 +47,9 @@ const OpenTimes = () => {
 
     return (
     <div className='open-times'>
-        Open times
         <OpenTimeRoomList />
         <OpenTimeCalendar calendarData={calendar}/>
+        <OpenTimeDisplay openTimeData={displayData} />
     </div>)
 }
 export default OpenTimes;

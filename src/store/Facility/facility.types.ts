@@ -176,6 +176,7 @@ export type OpenTimeDisplayInfo = {
 
 
 export type OpenTimeDisplayObject = {
-    [key:string] : OpenTimeDisplayInfo[]
+    room: string;
+    data: OpenTimeDisplayInfo[]
 }
 
