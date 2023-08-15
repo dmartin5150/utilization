@@ -149,8 +149,8 @@ const Block = () => {
     }
 
     useEffect(()=> {
-        console.log('triggered')
-        console.log('unit', unit, 'npis', npis, 'selected', allSurgeonsSelected)
+        // console.log('triggered')
+        // console.log('unit', unit, 'npis', npis, 'selected', allSurgeonsSelected)
         if (unit && npis) {
             const newDate = `${dataCurrentDate.getFullYear()}-${dataCurrentDate.getMonth() +1}-${dataCurrentDate.getDate()}`
             dispatch(fetchBlockDataAsync(unit,allSurgeonsSelected,newDate,npis))
@@ -164,11 +164,11 @@ const Block = () => {
       console.log('daterange', summaryDateRange)
       const startDate = `${summaryDateRange.startDate.getFullYear()}-${summaryDateRange.startDate.getMonth() + 1}-${summaryDateRange.startDate.getDate()}`
       const endDate = `${summaryDateRange.endDate.getFullYear()}-${summaryDateRange.endDate.getMonth() + 1}-${summaryDateRange.endDate.getDate()}`
-      console.log('calendar surgeon option', blockTypeOption.valueOf())
-      console.log('startdate', startDate)
-      console.log('npis', selectedNPIs)
-      console.log('enddate', endDate)
-      console.log('calendar surgeon option',allSurgeonsSelected)
+      // console.log('calendar surgeon option', blockTypeOption.valueOf())
+      // console.log('startdate', startDate)
+      // console.log('npis', selectedNPIs)
+      // console.log('enddate', endDate)
+      // console.log('calendar surgeon option',allSurgeonsSelected)
       const request:BlockTotalRequest = {
         'unit': unit,
         'startDate': startDate,
@@ -191,17 +191,17 @@ const Block = () => {
     useEffect(()=> {
 
       if (curSummaryOption && dataCurrentDate && customDateRange) {
-        if (curSummaryOption == CalendarSummaryOptions.Q4) {
+        if (curSummaryOption === CalendarSummaryOptions.Q4) {
           const newRange = getFY23Q4Dates()
           dispatch(setSummaryDateRange(newRange))
-          console.log(newRange)
+          // console.log(newRange)
         }
-        if (curSummaryOption == CalendarSummaryOptions.RunQ) {
+        if (curSummaryOption === CalendarSummaryOptions.RunQ) {
           const newRange = getRunningQuarterDates(dataCurrentDate)
           dispatch(setSummaryDateRange(newRange))
-          console.log(newRange)
+          // console.log(newRange)
         }
-        if (curSummaryOption == CalendarSummaryOptions.Custom) {
+        if (curSummaryOption === CalendarSummaryOptions.Custom) {
           dispatch(setSummaryDateRange(customDateRange))
         }
       }
@@ -234,7 +234,7 @@ const Block = () => {
 
 
     const updateCalendarRooms = (option: SingleValue<CalendarMenuItem>) => {
-        console.log('room menu',roomMenu)
+        // console.log('room menu',roomMenu)
         if (option) {
             dispatch(setBlockRoomOption(option.value as CalendarMenuOptions))
         }
@@ -242,7 +242,7 @@ const Block = () => {
 
       useEffect(()=> {
         let blockOptionIndex
-        if (blockTypeOption == BlockMenuOptions.Surgeon) {
+        if (blockTypeOption === BlockMenuOptions.Surgeon) {
           blockOptionIndex = 0
         } else {
           blockOptionIndex = 1
@@ -269,9 +269,9 @@ const Block = () => {
 
       useEffect(()=> {
         let roomIndex;
-        if (roomOption == BlockRoomOptions.All) {
+        if (roomOption === BlockRoomOptions.All) {
           roomIndex = 0
-        } else if (roomOption == BlockRoomOptions.In) {
+        } else if (roomOption === BlockRoomOptions.In) {
           roomIndex = 1
         } else {
           roomIndex = 2
@@ -325,7 +325,7 @@ const Block = () => {
       useEffect (() => {
         console.log('all details', allDetails)
         if (blockPopUpIsOpen) {
-            console.log('all details', allDetails)
+            // console.log('all details', allDetails)
             const blockCards:BlockDetailCard[] = allDetails.map((detail) => {
                 const header = getDetailCardHeader(detail.header);
                 const subHeader = getDetailCardSubHeader(detail.subHeader);
@@ -345,7 +345,7 @@ const Block = () => {
                   }
             })
             dispatch(setBlockCards(blockCards))
-            console.log('after', roomMenu)
+            // console.log('after', roomMenu)
         }
     },[blockPopUpIsOpen, allDetails]);
 
@@ -365,7 +365,7 @@ const Block = () => {
 
     const setDetailData = (data:SummaryGridRowData) => {
         const room: FacilityRoom = {"name":data.id, "utilization":data.utilization}
-        console.log('data',data)
+        // console.log('data',data)
         console.log(data.procedures)
         if (data.procedures !== '0H: 0M') {
           dispatch(setSelectedBlockRoom(room.name))
@@ -375,7 +375,7 @@ const Block = () => {
 
       const onMonthChange = (direction:MonthChangeDirection) => {
         let newDate;
-        if (direction == MonthChangeDirection.BACKWARD) {
+        if (direction === MonthChangeDirection.BACKWARD) {
           newDate =getPreviousDate(dataStartDate,dataCurrentDate)
         } else {
           newDate =getNextDate(dataEndDate,dataCurrentDate)

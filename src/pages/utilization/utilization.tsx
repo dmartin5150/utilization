@@ -201,7 +201,7 @@ useEffect(() => {
 
     useEffect (() => {
       if (allPTHours && calendarData){
-        console.log('updating Calendar')
+        // console.log('updating Calendar')
         console.log('ptAll',PTTotalAll)
           const newCalendarData:CalendarDayData[] = PTTotalAll.map((ptTotal) => {
             return { 
@@ -330,17 +330,17 @@ useEffect(()=> {
 useEffect(()=> {
   
   if (curSummaryOption && dataCurrentDate && customDateRange) {
-    if (curSummaryOption == CalendarSummaryOptions.Q4) {
+    if (curSummaryOption === CalendarSummaryOptions.Q4) {
       const newRange = getFY23Q4Dates()
       dispatch(setSummaryDateRange(newRange))
       console.log(newRange)
     }
-    if (curSummaryOption == CalendarSummaryOptions.RunQ) {
+    if (curSummaryOption === CalendarSummaryOptions.RunQ) {
       const newRange = getRunningQuarterDates(dataCurrentDate)
       dispatch(setSummaryDateRange(newRange))
-      console.log(newRange)
+      // console.log(newRange)
     }
-    if (curSummaryOption == CalendarSummaryOptions.Custom) {
+    if (curSummaryOption === CalendarSummaryOptions.Custom) {
       dispatch(setSummaryDateRange(customDateRange))
     }
   }
@@ -355,14 +355,14 @@ useEffect(()=> {
     console.log('daterange', summaryDateRange)
     const startDate = `${summaryDateRange.startDate.getFullYear()}-${summaryDateRange.startDate.getMonth() + 1}-${summaryDateRange.startDate.getDate()}`
     const endDate = `${summaryDateRange.endDate.getFullYear()}-${summaryDateRange.endDate.getMonth() + 1}-${summaryDateRange.endDate.getDate()}`
-    console.log('calendar surgeon option', calendarSurgeonOption.valueOf())
-    console.log('startdate', startDate)
-    console.log('enddate', endDate)
+    // console.log('calendar surgeon option', calendarSurgeonOption.valueOf())
+    // console.log('startdate', startDate)
+    // console.log('enddate', endDate)
     let allSurgeonsSelected = false
-    if (calendarSurgeonOption == CalendarMenuOptions.All) {
+    if (calendarSurgeonOption === CalendarMenuOptions.All) {
       allSurgeonsSelected = true
     } 
-    console.log('calendar surgeon option',allSurgeonsSelected)
+    // console.log('calendar surgeon option',allSurgeonsSelected)
     const request:SummaryTotalRequest = {
       'unit': unit,
       'startDate': startDate,
@@ -405,7 +405,7 @@ useEffect (() => {
 
 const onMonthChange = (direction:MonthChangeDirection) => {
   let newDate;
-  if (direction == MonthChangeDirection.BACKWARD) {
+  if (direction === MonthChangeDirection.BACKWARD) {
     newDate =getPreviousDate(dataStartDate,dataCurrentDate)
   } else {
     newDate =getNextDate(dataEndDate,dataCurrentDate)

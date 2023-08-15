@@ -33,7 +33,7 @@ const OpenTimes = () => {
     const displayData = useSelector(selectOpenTimeDisplayData)
 
     useEffect(() => {
-        console.log('open times', openTimes)
+        // console.log('open times', openTimes)
     },[openTimes, selectedDate] )
 
 

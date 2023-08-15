@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux';
 import { ITEM_DISPLAY_TYPE } from "../ListSelector/ListItem";
 import { selectOpenTimeRoomList} from "../../store/Facility/facility.selector";
 import { useAppDispatch } from "../../hooks/hooks";
-import { setDisplayedRoomList, setOpenTimeRoomList } from "../../store/Facility/facilty.actions";
+import {  setOpenTimeRoomList } from "../../store/Facility/facilty.actions";
 import { UnitRoomListItem } from "../../pages/settings/settings.constants";
 import { selectActiveRoomLists } from "../../store/ORData/selectors/ordata.selector";
-import { selectOpenTimeRoomHours,selectOpenTimeDate,selectDisplayedRoomList } from "../../store/Facility/facility.selector";
-import { SetDisplayedRoomList } from "../../store/Facility/facilty.actions";
+import { selectOpenTimeRoomHours,selectOpenTimeDate } from "../../store/Facility/facility.selector";
+
 
 
 
@@ -23,7 +23,7 @@ const OpenTimeRoomList= () => {
     const roomData = useSelector(selectOpenTimeRoomHours)
     const activeRoomList = useSelector(selectActiveRoomLists)
     const selectedDate = useSelector(selectOpenTimeDate)
-    const displayedRoomList = useSelector(selectDisplayedRoomList)
+
 
 
     

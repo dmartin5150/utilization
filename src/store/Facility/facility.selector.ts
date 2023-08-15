@@ -30,10 +30,7 @@ export const selectOpenTimeDate = createSelector(
     (facilitySlice) => facilitySlice.selectedOpenTimeDate
 )
 
-export const selectDisplayedRoomList= createSelector(
-    [selectFacilityReducer],
-    (facilitySlice) => facilitySlice.displayedRoomList
-)
+
 
 export const selectOpenTimeRoomList= createSelector(
     [selectFacilityReducer],
@@ -241,14 +238,14 @@ export const selectOpenTimeRoomHours = createSelector(
         }
         console.log('room list', roomList)
         roomList.forEach((room,index) => {
-            console.log('roomname', room.name)
-            console.log('room id', room.id)
+            // console.log('roomname', room.name)
+            // console.log('room id', room.id)
             let curData = data.filter((openTime)=> openTime.room === room.name);
-            console.log('opentimes 1', curData)
+            // console.log('opentimes 1', curData)
             curData = curData.filter((data) => data.proc_date.getTime() === curDate.getTime())
-            console.log('opentimes 2', curData)
+            // console.log('opentimes 2', curData)
             let totalUnusedMinutes = calculateUnusedMinutes(curData)
-            console.log('total minutes', totalUnusedMinutes)
+            // console.log('total minutes', totalUnusedMinutes)
             let curItem:UnitRoomListItem = {'id': room.id, 'name':`${room.name}: ${totalUnusedMinutes.toFixed(2)} hours`, 'selected':room.selected}
             roomListItems.push(curItem)
         })

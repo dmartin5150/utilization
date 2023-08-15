@@ -21,6 +21,9 @@ const OpenTimePanel:React.FC<OpenTimePanelProps> = ({room, data}) => {
              } else {
                 roomName = " "
              }
+             if (item.release_date === 'nan') {
+                item.release_date = 'N/A'
+             }
             //  console.log(idx, data.length)
             return (
             <div key={idx} className='open-time-panel'>

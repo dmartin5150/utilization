@@ -133,19 +133,19 @@ const OpenTimeCalendar: React.FC<OpenTimeCalendarProps> = ({calendarData}) => {
       },[openRoomOptions,selectedRoom])
 
     const handleDurationChange = (duration:string) => {
-      console.log('duration changeds', duration)
+      // console.log('duration changeds', duration)
       dispatch(setOpenTimeDuration(parseInt(duration)))
     }
 
     const onMonthChange = (direction:MonthChangeDirection) => {
         let newDate;
-        if (direction == MonthChangeDirection.BACKWARD) {
+        if (direction === MonthChangeDirection.BACKWARD) {
           newDate =getPreviousDate(dataStartDate,dataCurrentDate)
         } else {
           newDate =getNextDate(dataEndDate,dataCurrentDate)
         }
         dispatch(setDataCurrentDate(newDate))
-        console.log(newDate)
+        // console.log(newDate)
       }
 
 
