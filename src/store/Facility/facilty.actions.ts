@@ -14,7 +14,7 @@ import { CalendarMenuItem } from "../../pages/utilization/utilization.constants"
 
 
 
-
+export type SetDisplayedRoomList = ActionWithPayload<FACILITY_TYPES.SET_DISPLAYED_ROOM_LIST, UnitRoomListItem[]>
 export type SetOpenTimeRoomList = ActionWithPayload<FACILITY_TYPES.SET_OPEN_TIME_ROOM_LIST,UnitRoomListItem[]>
 export type SetOpenTimeDuration = ActionWithPayload<FACILITY_TYPES.SET_OPEN_TIME_DURATION, number>
 export type SetSelectedTimeType = ActionWithPayload<FACILITY_TYPES.SET_SELECTED_TIME_TYPE,OpenTimeTypes>
@@ -30,6 +30,11 @@ export type SetOpenTimeCalendar = ActionWithPayload<FACILITY_TYPES.SET_OPEN_TIME
 export type SetSelectedOpenTimeRoom = ActionWithPayload<FACILITY_TYPES.SET_SELECTED_OPEN_TIME_ROOM, CalendarMenuItem>
 export type SetSelectedOpenTimeDate = ActionWithPayload<FACILITY_TYPES.SET_SELECTED_OPEN_TIME_DATE, string>
 
+
+
+export const setDisplayedRoomList = withMatcher((roomList:UnitRoomListItem[]):SetDisplayedRoomList => {
+    return createAction(FACILITY_TYPES.SET_DISPLAYED_ROOM_LIST, roomList)
+})
 
 export const setOpenTimeDuration = withMatcher((duration:number):SetOpenTimeDuration => {
     return createAction(FACILITY_TYPES.SET_OPEN_TIME_DURATION, duration)

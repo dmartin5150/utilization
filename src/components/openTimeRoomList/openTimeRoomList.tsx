@@ -1,14 +1,15 @@
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useState, useMemo} from "react";
 import "./openTimeRoomList.scss"
 import ListSelector from "../ListSelector/ListSelector";
 import { useSelector } from 'react-redux';
 import { ITEM_DISPLAY_TYPE } from "../ListSelector/ListItem";
 import { selectOpenTimeRoomList} from "../../store/Facility/facility.selector";
 import { useAppDispatch } from "../../hooks/hooks";
-import { setOpenTimeRoomList } from "../../store/Facility/facilty.actions";
+import { setDisplayedRoomList, setOpenTimeRoomList } from "../../store/Facility/facilty.actions";
 import { UnitRoomListItem } from "../../pages/settings/settings.constants";
 import { selectActiveRoomLists } from "../../store/ORData/selectors/ordata.selector";
-import { selectOpenTimeRoomHours,selectOpenTimeDate } from "../../store/Facility/facility.selector";
+import { selectOpenTimeRoomHours,selectOpenTimeDate,selectDisplayedRoomList } from "../../store/Facility/facility.selector";
+import { SetDisplayedRoomList } from "../../store/Facility/facilty.actions";
 
 
 
@@ -22,6 +23,7 @@ const OpenTimeRoomList= () => {
     const roomData = useSelector(selectOpenTimeRoomHours)
     const activeRoomList = useSelector(selectActiveRoomLists)
     const selectedDate = useSelector(selectOpenTimeDate)
+    const displayedRoomList = useSelector(selectDisplayedRoomList)
 
 
     
@@ -63,18 +65,17 @@ const OpenTimeRoomList= () => {
     }
 
 
+    useEffect(()=> {
+        console.log('roomdata', roomData)
+    },[roomData])
 
     useEffect(() => {
         if (activeRoomList && activeRoomList.length !== 0) {
-            let filteredList:UnitRoomListItem[] = []
-            roomData.forEach((item) => {
-                const curItem = {'id':item.id, 'name':item.name, 'selected':item.selected}
-                filteredList.push(curItem)
-            })
-            filteredList = filteredList.filter((room) => room.selected === true)
-            dispatch(setOpenTimeRoomList(filteredList))
+            const filteredRoomList = activeRoomList.filter((room) => room.selected === true)
+            dispatch(setOpenTimeRoomList(filteredRoomList))
         }
-    },[ activeRoomList])
+    },[activeRoomList])
+
 
 
 
@@ -84,7 +85,7 @@ const OpenTimeRoomList= () => {
                 <h3>Date: {selectedDate}</h3>
             </div>
             <ListSelector 
-                itemList={openTimeRoomList} 
+                itemList={roomData} 
                 allItemsSelected={allRoomsSelected} 
                 displayType={ITEM_DISPLAY_TYPE.checkbox}
                 onItemChanged={onRoomChanged}

@@ -2,7 +2,7 @@ import { AnyAction } from "redux";
 import { FACILITY_UNITS } from "./facitlityUnits";
 import { setUnit,setDate,setRoom, setPrimeTime, setCustomDateRange, setSelectedOpenTimeRoom } from "./facilty.actions";
 import { fetchOpenTimeFailed,fetchOpenTimeStart,fetchOpenTimeSuccess,setSelectedTimeType,setOpenTimeDuration } from "./facilty.actions";
-import { setOpenTimeCalendar,setOpenTimeRoomList,setSelectedOpenTimeDate} from "./facilty.actions";
+import { setOpenTimeCalendar,setOpenTimeRoomList,setSelectedOpenTimeDate,setDisplayedRoomList} from "./facilty.actions";
 import { PRIME_TIME_END, PRIME_TIME_START, PrimeTime,OpenTimes, OpenTimeTypes, JRIroomList } from "./facility.types";
 import { DateRange } from "../ORData/ordata.types";
 import { CalendarDayData } from "../../components/calendar/calendarDay";
@@ -27,6 +27,7 @@ export type FacilityDataState = {
     openTimeType:OpenTimeTypes,
     openTimeDuration: number,
     openTimeCalendar: CalendarDayData[],
+    displayedRoomList:UnitRoomListItem[];
     openTimeRoomList: UnitRoomListItem[];
     selectedOpenTimeDate: string;
     selectedRoom: string,
@@ -58,6 +59,7 @@ const FACILITY_DATA_INITIAL_STATE: FacilityDataState = {
     openTimeType: OpenTimeTypes.all,
     openTimeDuration:0,
     openTimeCalendar:[],
+    displayedRoomList:JRIroomList,
     openTimeRoomList: JRIroomList,
     selectedRoom:'All',
     selectedOpenTimeDate:'2023-08-01',
@@ -78,6 +80,9 @@ export const FacilityReducer = (state=FACILITY_DATA_INITIAL_STATE, action: AnyAc
     }
     if (setSelectedTimeType.match(action)) {
         return {...state, openTimeType:action.payload}
+    }
+    if (setDisplayedRoomList.match(action)) {
+        return {...state, displayedRoomList:action.payload}
     }
     if (setOpenTimeDuration.match(action)) {
         return {...state, openTimeDuration:action.payload}

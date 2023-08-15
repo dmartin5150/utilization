@@ -30,6 +30,10 @@ export const selectOpenTimeDate = createSelector(
     (facilitySlice) => facilitySlice.selectedOpenTimeDate
 )
 
+export const selectDisplayedRoomList= createSelector(
+    [selectFacilityReducer],
+    (facilitySlice) => facilitySlice.displayedRoomList
+)
 
 export const selectOpenTimeRoomList= createSelector(
     [selectFacilityReducer],
@@ -87,27 +91,29 @@ const getEndDateRange = (curDate:Date) => {
 const getRoomNames = (rooms:UnitRoomListItem[]) => {
     return rooms.map((room) => {
         const nameIndex = room.name.search(':')
-        return room.name.substring(0,nameIndex)
+        if (nameIndex !== - 1) {
+            return room.name.substring(0,nameIndex)
+        } else {
+            return room.name
+        }
+        
     })
 }
 
 const getFilteredOpenTimes = (unit:string, curDate:Date,openType:OpenTimeTypes,rooms:UnitRoomListItem[], duration: number, data: OpenTimes[], selectAllRooms:boolean) => {
     let filteredData:OpenTimes[]
+    console.log('open times rooms', rooms)
     if (rooms && rooms.length >0) {
-    console.log('room ', rooms)
-    const roomList = getRoomNames(rooms)
-    filteredData = data.filter((openTime) => (openTime.unit ===unit)  && (openTime.unused_block_minutes >= duration))
-    console.log('filtered 1', filteredData)
-    console.log('roomList', roomList)
-    filteredData = filteredData.filter((openTime) => ((roomList.includes(openTime.room))))
-    console.log('filtered 2', filteredData)
-    if (openType !== OpenTimeTypes.all)  {
-        filteredData = filteredData.filter((openTime) => (openTime.open_type === openType))
-        console.log('filtered 2', filteredData)
-    }
-    const startDate = new Date(`${curDate.getFullYear()}-${curDate.getMonth()+1}-1`)
-    const endDate = getEndDateRange(curDate)
-    return filteredData.filter((openTime) => ((openTime.proc_date >= startDate) && (openTime.proc_date < endDate)))
+        const roomList = getRoomNames(rooms)
+        console.log('open time room list', roomList)
+        filteredData = data.filter((openTime) => (openTime.unit ===unit)  && (openTime.unused_block_minutes >= duration))
+        filteredData = filteredData.filter((openTime) => ((roomList.includes(openTime.room))))
+        if (openType !== OpenTimeTypes.all)  {
+            filteredData = filteredData.filter((openTime) => (openTime.open_type === openType))
+        }
+        const startDate = new Date(`${curDate.getFullYear()}-${curDate.getMonth()+1}-1`)
+        const endDate = getEndDateRange(curDate)
+        return filteredData.filter((openTime) => ((openTime.proc_date >= startDate) && (openTime.proc_date < endDate)))
 } else {
     return []
 }
@@ -220,25 +226,30 @@ export const getOpenTimeDisplayData = (strDate:string, roomList: UnitRoomListIte
 
 
 export const selectOpenTimeDisplayData = createSelector(
-    [selectOpenTimeDate, selectActiveRoomLists, selectAllRoomOpenTimes],
+    [selectOpenTimeDate, selectOpenTimeRoomList, selectAllRoomOpenTimes],
     (strDate:string, roomList: UnitRoomListItem[],data:OpenTimes[]) => getOpenTimeDisplayData(strDate,roomList,data)
 )
 
 
 export const selectOpenTimeRoomHours = createSelector(
-    [selectActiveRoomLists,selectOpenTimeDate,selectAllRoomOpenTimes],
+    [selectOpenTimeRoomList,selectOpenTimeDate,selectAllRoomOpenTimes],
     (roomList, strDate, data) => {
         const curDate = new Date(strDate + 'T00:00:00')
-        const roomListItems:item[] = []
+        const roomListItems:UnitRoomListItem[] = []
         if (!roomList || roomList.length === 0) {
             return roomListItems
         }
         console.log('room list', roomList)
         roomList.forEach((room,index) => {
+            console.log('roomname', room.name)
+            console.log('room id', room.id)
             let curData = data.filter((openTime)=> openTime.room === room.name);
+            console.log('opentimes 1', curData)
             curData = curData.filter((data) => data.proc_date.getTime() === curDate.getTime())
+            console.log('opentimes 2', curData)
             let totalUnusedMinutes = calculateUnusedMinutes(curData)
-            let curItem:item = {'id': index, 'name':`${room.name}: ${totalUnusedMinutes.toFixed(2)} hours`, 'selected':room.selected}
+            console.log('total minutes', totalUnusedMinutes)
+            let curItem:UnitRoomListItem = {'id': room.id, 'name':`${room.name}: ${totalUnusedMinutes.toFixed(2)} hours`, 'selected':room.selected}
             roomListItems.push(curItem)
         })
         return roomListItems

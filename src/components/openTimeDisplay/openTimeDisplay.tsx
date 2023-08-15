@@ -27,7 +27,7 @@ const OpenTimeDisplay: React.FC<OpenTimeDisplayProps>  = ({openTimeData}) => {
             </div>
             {openTimeData.map((openTime, idx) => {
                 return(
-                    <div className='open-time-display--room-data'>
+                    <div className='open-time-display--room-data' key={idx}>
                         <div className='open-time-display--panel-container'>
                         <OpenTimePanel key={idx} room={openTime.room} data={openTime.data} />
                         </div>
