@@ -129,7 +129,7 @@ export const selectFilteredOpenTimes = createSelector(
 )
 
 export const selectAllRoomOpenTimes = createSelector(
-    [selectUnit,selectDataCurrentDate,selectOpenTimeType,getSelectedOpenTimeRooms, selectOpenTimeDuration, selectOpenTimes],
+    [selectUnit,selectDataCurrentDate,selectOpenTimeType,selectOpenTimeRoomList, selectOpenTimeDuration, selectOpenTimes],
     (unit, curDate,openType,room,duration, data) => getFilteredOpenTimes(unit, curDate,openType,room,duration, data, true)  
 )
 
@@ -226,7 +226,7 @@ export const getOpenTimeDisplayData = (strDate:string, roomList: UnitRoomListIte
 
 
 export const selectOpenTimeDisplayData = createSelector(
-    [selectOpenTimeDate, selectOpenTimeRoomList, selectAllRoomOpenTimes],
+    [selectOpenTimeDate, selectOpenTimeRoomList, selectFilteredOpenTimes],
     (strDate:string, roomList: UnitRoomListItem[],data:OpenTimes[]) => getOpenTimeDisplayData(strDate,roomList,data)
 )
 

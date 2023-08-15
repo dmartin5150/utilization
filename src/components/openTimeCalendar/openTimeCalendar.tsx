@@ -150,7 +150,10 @@ const OpenTimeCalendar: React.FC<OpenTimeCalendarProps> = ({calendarData}) => {
 
 
     const setOpenTimeDate = (date:string) => {
+       if (date !== "") {
         dispatch(setSelectedOpenTimeDate(date));
+       }
+        
     } 
 
     return (
