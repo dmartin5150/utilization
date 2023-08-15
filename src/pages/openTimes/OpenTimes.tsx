@@ -13,6 +13,8 @@ import { setOpenTimeRoomList } from "../../store/Facility/facilty.actions";
 import { selectUnit } from "../../store/Facility/facility.selector";
 import OpenTimeCalendar from "../../components/openTimeCalendar/openTimeCalendar"
 import OpenTimeDisplay from "../../components/openTimeDisplay/openTimeDisplay"
+import { selectDataCurrentDate } from "../../store/ORData/selectors/ordata.selector";
+
 
 
 
@@ -31,6 +33,9 @@ const OpenTimes = () => {
     const selectedDate = useSelector(selectOpenTimeDate)
     const openTimes = useSelector(selectOpenTimeDisplayData)
     const displayData = useSelector(selectOpenTimeDisplayData)
+    const dataCurrentDate = useSelector(selectDataCurrentDate)
+
+
 
     useEffect(() => {
         // console.log('open times', openTimes)
@@ -38,10 +43,16 @@ const OpenTimes = () => {
 
 
     useEffect(()=> {
-        if (selectedUnit && selectedDate) {
-            dispatch(fetchOpenTimesAsync(selectedUnit, selectedDate))
+        dispatch(setOpenTimeCalendar(calendar))
+    },[dataCurrentDate])
+
+    useEffect(()=> {
+        if (selectedUnit && dataCurrentDate) {
+            const curDate = `${dataCurrentDate.getFullYear()}-${dataCurrentDate.getMonth() + 1}-${dataCurrentDate.getDate()}`
+            console.log('curDate', curDate)
+            dispatch(fetchOpenTimesAsync(selectedUnit,curDate))
         }
-    },[selectedUnit,selectedDate])
+    },[selectedUnit,dataCurrentDate])
 
     useEffect(()=> {
         if (roomData) {

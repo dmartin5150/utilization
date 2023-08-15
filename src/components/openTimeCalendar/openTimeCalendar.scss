@@ -4,6 +4,31 @@
     & dropdown {
         color: grey;
     }
+    .heading {
+        background-color: #810f62
+    }
+
+    .header-title {
+        background-color: #810f62
+    }
+
+    .month-control {
+        background-color: #cc35a4
+    }
+
+    .daysofweek {
+        background-color: #a82485
+    }
+
+    & .layout {
+        background-color: #c2379d
+    }
+
+    & .selected.highLightSelected{
+        color:#c2379d; 
+    }
+
+
 
     & .searchBox {
         color:white;

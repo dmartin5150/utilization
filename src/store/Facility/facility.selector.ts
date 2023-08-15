@@ -160,9 +160,9 @@ const getFormattedDate = (curDate:Date) => {
 }
 
 
-const getCalendarData = (strDate:string, data:OpenTimes[]):CalendarDayData[] => {
+const getCalendarData = (curDate:Date, data:OpenTimes[]):CalendarDayData[] => {
     const calendarDays:CalendarDayData[] = []
-    const curDate = new Date(strDate + 'T00:00:00')
+    // const curDate = new Date(strDate + 'T00:00:00')
     console.log('calendar data curDate', curDate)
     const dates = data.map((openTime) => openTime.proc_date)
     const endDate = getEndDateRange(curDate)
@@ -186,7 +186,7 @@ const getCalendarData = (strDate:string, data:OpenTimes[]):CalendarDayData[] => 
 
 
 export const selectOpenTimeCalendar = createSelector(
-   [selectOpenTimeDate, selectFilteredOpenTimes],
+   [selectDataCurrentDate, selectFilteredOpenTimes],
    (curDate, data:OpenTimes[]) => getCalendarData(curDate, data)
 )
 

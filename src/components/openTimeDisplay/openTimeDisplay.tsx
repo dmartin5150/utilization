@@ -21,7 +21,7 @@ const OpenTimeDisplay: React.FC<OpenTimeDisplayProps>  = ({openTimeData}) => {
                     <h3 className='column-heading'>Name</h3>
                     <h3 className='column-heading'>Start</h3>
                     <h3 className='column-heading'>End</h3>
-                    <h3 className='column-heading'>Total</h3>
+                    <h3 className='column-heading'>Unused</h3>
                     <h3 className='column-heading'>Release</h3>
                 </div>
             </div>
