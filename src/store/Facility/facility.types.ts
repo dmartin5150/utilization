@@ -142,7 +142,8 @@ export const MTORroomList:UnitRoomListItem[] = [
 export enum OpenTimeTypes  {
     all = 'ALL',
     open ='OPEN',
-    block = 'BLOCK'
+    block = 'BLOCK',
+    soft = 'SOFT'
 }
 
 

@@ -32,7 +32,8 @@ export interface OpenTimeCalendarProps {
 const OpenTypeOptions:CalendarMenuItem[] = [
     {id:0, label:OpenTimeTypes.all, value:OpenTimeTypes.all},
     {id:1, label:OpenTimeTypes.block, value:OpenTimeTypes.block},
-    {id:2, label:OpenTimeTypes.open, value:OpenTimeTypes.open}
+    {id:2, label:OpenTimeTypes.open, value:OpenTimeTypes.open},
+    {id:3, label:OpenTimeTypes.soft, value:OpenTimeTypes.soft},
 ]
 
 
@@ -157,7 +158,7 @@ const OpenTimeCalendar: React.FC<OpenTimeCalendarProps> = ({calendarData}) => {
     } 
 
     return (
-        <div>
+        <div className='open-time-calendar'>
             {openRoomMenu && openTypeMenu &&  <Calendar 
                 title={'Open Times'} 
                 subTitle={selectedUnit} 
