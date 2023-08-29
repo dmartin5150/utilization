@@ -159,6 +159,7 @@ export type OpenTimes = {
     formatted_minutes:string;
     open_type: OpenTimeTypes;
     release_date:string;
+    open_start_time:Date
 }
 
 

@@ -9,7 +9,7 @@ import { item } from "../../store/ORData/ordata.types";
 import { selectActiveRoomLists } from "../ORData/selectors/ordata.selector";
 import { UnitRoomListItem } from "../../pages/settings/settings.constants";
 import { OpenTimeDisplayInfo, OpenTimeDisplayObject } from "./facility.types";
-
+import { compare } from "../ORData/ordata.utilities";
 
 
 
@@ -190,6 +190,18 @@ export const selectOpenTimeCalendar = createSelector(
    (curDate, data:OpenTimes[]) => getCalendarData(curDate, data)
 )
 
+
+function compareTimes( a:OpenTimes, b:OpenTimes ):number {
+    if ( a.open_start_time < b.open_start_time ){
+      return -1;
+    }
+    if ( a.open_start_time > b.open_start_time ){
+      return 1;
+    }
+    return 0;
+  }
+
+
 export const getOpenTimeDisplayData = (strDate:string, roomList: UnitRoomListItem[],data:OpenTimes[]):OpenTimeDisplayObject[] => {
     let openTimeDisplayItems:OpenTimeDisplayInfo[] = []
     const openTimeDisplayObject: OpenTimeDisplayObject[] =[]
@@ -203,6 +215,7 @@ export const getOpenTimeDisplayData = (strDate:string, roomList: UnitRoomListIte
         openTimeDisplayItems = []
         let curData = data.filter((openTime)=> openTime.room === room.name);
         curData = curData.filter((data) => data.proc_date.getTime() === curDate.getTime())
+        curData.sort(compareTimes)
         let opetTime;
         if (curData.length !== 0) {
             curData.forEach((curItem) => {

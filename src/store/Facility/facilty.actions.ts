@@ -98,7 +98,7 @@ export const fetchOpenTimesAsync = (unit:string, startDate:string) => {
         try {
             let openTimes = await getOpenTimes(unit, startDate);
             openTimes = openTimes.map((openTime:OpenTimes) => {
-               return  {...openTime, proc_date: new Date(openTime.proc_date + 'T00:00:00')}})
+               return  {...openTime, proc_date: new Date(openTime.proc_date + 'T00:00:00'), open_start_time: new Date(openTime.open_start_time)}})
             dispatch(fetchOpenTimeSuccess(openTimes))
         } catch (error) {
         dispatch(fetchOpenTimeFailed(error as Error))
