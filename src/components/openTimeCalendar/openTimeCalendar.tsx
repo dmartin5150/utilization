@@ -34,6 +34,7 @@ const OpenTypeOptions:CalendarMenuItem[] = [
     {id:1, label:OpenTimeTypes.block, value:OpenTimeTypes.block},
     {id:2, label:OpenTimeTypes.open, value:OpenTimeTypes.open},
     {id:3, label:OpenTimeTypes.soft, value:OpenTimeTypes.soft},
+    {id:4, label:OpenTimeTypes.closed, value:OpenTimeTypes.closed},
 ]
 
 

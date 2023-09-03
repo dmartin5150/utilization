@@ -143,7 +143,8 @@ export enum OpenTimeTypes  {
     all = 'ALL',
     open ='OPEN',
     block = 'BLOCK',
-    soft = 'SOFT'
+    soft = 'SOFT',
+    closed = 'CLOSED'
 }
 
 
