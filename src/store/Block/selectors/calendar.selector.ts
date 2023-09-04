@@ -99,9 +99,11 @@ export function compare<T extends hasDate>( a:T, b:T ):number {
 
 
 const getBlockCalendarData = (blockData:BlockData[],roomOption:string,blockOption:string) => {
+    console.log('block Data', blockData)
     const blockCalendar:CalendarDayData[] =[];
     let blockDates = blockData.map((item)=>item.blockDate);
     blockDates = [...new Set(blockDates)]
+    console.log('block Dates', blockDates)
     blockDates.forEach((date) => {
         const weekday = new Date(date + 'T00:00:00').getDay()
         const blockDay = blockData.filter((day) => {

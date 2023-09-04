@@ -27,7 +27,6 @@ function SelectorList <T extends Option >({title, showBorder, isDisabled, select
         console.log('option ', option)
         if (option) {
             onChange(option)
-            console.log('option List', optionList)
             setSelectedValue(option)
         }
     }
