@@ -96,6 +96,20 @@ const Navigation = () => {
               :{}
               )
             }
+          to="/findroom" className="nav__link">
+            Find Room
+          </NavLink>
+          <NavLink  
+            style={
+            ({isActive}) => (
+              isActive 
+              ? {
+                textDecoration: 'none',
+                color: '#1b4297'
+                }
+              :{}
+              )
+            }
           to="/settings" className="nav__link">
             Settings
           </NavLink>
