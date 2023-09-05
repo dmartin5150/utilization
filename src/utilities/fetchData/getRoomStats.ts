@@ -11,6 +11,7 @@ const getRoomStats = async (unit:string)=> {
       });
       if (response) {
         const data: RoomStats[] = await response.json();
+        console.log('stats',data)
         return data
       }
       return []

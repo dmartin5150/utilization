@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { selectActiveSurgeons } from "../../store/ORData/selectors/ordata.selector";
 import { SurgeonMenuItem } from "../../store/Stats/stats.types";
 import {SingleValue} from "react-select";
+import "./surgeonSelector.scss"
 
 
 

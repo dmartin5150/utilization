@@ -37,7 +37,11 @@ export type SurgeonMenuItem = {
     label:string;
 }
 
-
+export type SelectorMenuItem = {
+    id:string;
+    value:string;
+    label:string;
+}
 
 export type StatSummaryResults = {
     surgeon: SurgeonMenuItem;
