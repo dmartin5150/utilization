@@ -23,6 +23,25 @@ export const selectStatMainCard = createSelector(
     (ORStatsSlice) => ORStatsSlice.mainCard
 )
 
+export const selectStatLoading = createSelector(
+    [selectStatReducer],
+    (ORStatsSlice) => ORStatsSlice.roomStatsLoading
+)
+
+export const selectRoomStats = createSelector(
+    [selectStatReducer],
+    (ORStatsSlice) => ORStatsSlice.roomStats
+)
+
+export const selectStatsError = createSelector(
+    [selectStatReducer],
+    (ORStatsSlice) => ORStatsSlice.error
+)
+
+export const selectProcedures = createSelector(
+    [selectStatReducer],
+    (ORStatsSlice) => ORStatsSlice.procedures
+)
 
 
 export const selectStatSecondaryCards = createSelector(
