@@ -75,7 +75,8 @@ export const fetchRoomStatsAsync = (unit:string) => {
             const roomStats = await getRoomStats(unit);
             const procedures = roomStats.map((procedure) => procedure.procedureName)
             dispatch(fetchRoomStatsSuccess(roomStats))
-            dispatch(setRoomProcedures(procedures))
+            const filteredProcedures = [...new Set(procedures)];
+            dispatch(setRoomProcedures(filteredProcedures))
         }catch (error) {
             dispatch(fetchRoomStatsFailed(error as Error))
         }
