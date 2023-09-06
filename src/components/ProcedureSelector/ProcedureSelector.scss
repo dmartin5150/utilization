@@ -1,4 +1,38 @@
 .procedure_selector {
         display:flex;
         flex-direction: row;
+
+        .selector {
+                margin-left:2rem;
+                margin-right:2rem;  
+                min-width:40rem;  
+        }
+
+
+        .searchBox {
+                margin-top:1rem;
+                margin-right:2rem;
+                input {
+                        height:3.8rem;
+                }
+        }
+        .date-selector {
+                margin-top:1rem;
+                margin-right:2rem;
+                input {
+                        height:3.8rem;
+                }  
+        }
+        .submit-button {
+                margin-top:3.4rem;
+                margin-right:2rem;
+                button{
+                        height:3.8rem;
+                        padding:1rem;
+                }
+        }
+
+        
+
+
 }
