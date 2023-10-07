@@ -104,14 +104,14 @@ const OR_DATA_INITIAL_STATE: ORDataState = {
     orGridLoading:false,
     ptHoursLoading:false,
     surgeonListsLoading:false,
-    dataStartDate:new Date('2023-4-1'),
-    dataEndDate:new Date('2023-9-1'),
+    dataStartDate:new Date('2023-5-1'),
+    dataEndDate:new Date('2023-10-1'),
     // dataCurentDate: new Date('2023-7-1'),
     dataCurentDate: new Date('2023-8-1'),
     summaryTotals: [],
     summaryTotalsLoading:false,
     summaryDateRange: {
-        startDate: new Date('2023-4-1'),
+        startDate: new Date('2023-5-1'),
         endDate: new Date('2023-6-30')
     },
     popOpen: false,

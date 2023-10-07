@@ -62,7 +62,7 @@ export const createDateRange = (start: Date, end:Date):DateRange => {
 }
 
 export const getFY23Q4Dates = ():DateRange => {
-    return createDateRange(new Date('2023-4-1'), new Date('2023-6-30'))
+    return createDateRange(new Date('2023-5-1'), new Date('2023-6-30'))
 }
 
 export const getRunningQuarterDates = (currentDate:Date):DateRange => {
